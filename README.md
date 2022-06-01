@@ -118,3 +118,9 @@ Run by typing `run` in the command line (batch file which calls `main.py`).
         # return nx.kamada_kawai_layout(G)
         # return nx.spring_layout(G)  # Fruchterman-Reingold algorithm
 ```
+
+**Stages of execution:**
+1. Get computer info from `ipconfig`
+2. Read cache (if requested)
+3. Split to sniffing ARP thread and graph rendering thread.
+4. On each packet, save it. On each graph closed, display updated one.
