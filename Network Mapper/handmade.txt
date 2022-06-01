@@ -1,0 +1,26 @@
+Nodes:
+    1.1.1.1
+    2.2.2.2
+    Timed out001
+    Timed out002
+    Timed out003
+    Timed out004
+    Timed out005
+    Timed out006
+Edges:
+    1.1.1.1, Timed out001
+    Timed out001, Timed out002
+    Timed out002, 2.2.2.2
+    1.1.1.1, Timed out003
+    Timed out003, Timed out004
+    Timed out004, 2.2.2.2
+    1.1.1.1, Timed out005
+    Timed out005, Timed out006
+    Timed out006, 2.2.2.2
+    1.1.1.1, Timed out007
+    Timed out007, Timed out008
+    Timed out008, 2.2.2.2
+Subnet: 2.2.2.2
+Here: 1.1.1.1
+DNS: 8.8.8.8
+Addresses: 4.2.2.1
