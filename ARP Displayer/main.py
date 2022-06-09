@@ -26,7 +26,7 @@ no_hosts = False
 # Start sniffing from scratch (True) or load cache and start from there (False)?
 from_scratch = True
 # Remove edges indicating a who-has ARP request (True) or not (False)?
-no_who_has = True
+no_who_has = False
 # Include nodes outside the local network? Yes=True; No=False
 outta_net = False
 # Print only unique and new ARP packets or sus alerts
