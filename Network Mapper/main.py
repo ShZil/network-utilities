@@ -31,7 +31,7 @@ position_generator = {}
 
 # True = do network scanning and then render
 # False = no internet, just rendering
-scan = True
+scan = False
 # Number of times to repeat scanning which determines
 # connectable IPv4 devices. [TODO 3.2]
 # Min = 0. WARNING: Heavy on performance

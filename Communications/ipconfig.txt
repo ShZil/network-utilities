@@ -1,0 +1,12 @@
+{
+    "Physical Address": "80-CE-62-A4-E6-E5",
+    "IPv4 Address": "10.0.0.19",
+    "Subnet Mask": "255.255.255.0",
+    "Default Gateway": "10.0.0.138",
+    "DHCP Server": "10.0.0.138",
+    "DNS Servers": [
+        "127.0.0.1",
+        "8.8.8.8"
+    ],
+    "Interface": "Ethernet adapter Ethernet"
+}

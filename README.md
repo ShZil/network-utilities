@@ -1,9 +1,12 @@
 # Network Utilities
 ## For cyber programmers!
-### by Shzil
+#### by Shzil
 A few network utilities to analyse and act on internet networks. Mostly python-scapy.
 **DO NOT USE FOR MALICIOUS INTENTS!**
 **ALWAYS MAKE SURE YOU HAVE CONSENT FROM NETWORK OWNER(S) TO EXECUTE THESE CODES.**
+
+## Additional ideas:
+- [ ] See in-network packet distrubution between protocols (not just ARP)
 
 ## TCP Port Scanner
 Using `TCP_Port_Scanner.py`, you can scan open ports of a remote device using the Transmission Control Protocol.
@@ -83,16 +86,20 @@ Run by typing `run` in the command line (batch file which calls `main.py`).
 ```
 
 **Stages of execution:**
-TODO: 1 √ Repurpose personal tracert.py
-TODO: 2 √ Get information from `>ipconfig`
-TODO: 3 √ Realise map of local area network:
-TODO:     3.1 √ Do some Cybery math to list all computers.
-TODO:     3.2 √ Check which computers actually exist.
-TODO:     3.3 √ Trace route (todo1) to every computer.
-TODO: 4 √ Visualise (using NetworkX)
-TODO:     4.1 √ Colours! (IPv4 → Integer Number → colour for the node).
-             \*   Close addresses (similar networks) -- closer colours
-TODO: 5 √ Cache and re-render of graph
+
+1. √ Repurpose personal tracert.py
+
+2. √ Get information from `>ipconfig`
+
+3. √ Realise map of local area network:
+    1. √ Do some Cybery math to list all computers.
+    2. √ Check which computers actually exist.
+    3. √ Trace route (todo1) to every computer.
+
+4. √ Visualise (using NetworkX)
+    1. √ Colours! (IPv4 → Integer Number → colour for the node).
+    Close addresses (similar networks) -- closer colours
+5. √ Cache and re-render of graph
 
 ## ARP Displayer
 Under `./ARP Displayer`, you'll find code which can preform operations using the Address Resolution Protocol.
