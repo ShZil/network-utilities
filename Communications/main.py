@@ -26,6 +26,34 @@ def isipv4(text):
     return len(text.split('.')) == 4
 
 
+def isipv6(text):
+    """Is `text` in IPv6 address format (0000:0000:0000:0000:0000:0000:0000:0000 and similar)?"""
+    hexdigits = [hex(i)[2:].upper() for i in range(16)]
+    text = text.replace("(Preferred)", "")
+    max_len = 0
+    for seg in text.split(':'):
+        for letter in seg:
+            if letter.upper() not in hexdigits:
+                return False
+        if len(seg) > max_len: max_len = len(seg)
+    return len(text.split(':')) > 1 and max_len > 2
+
+
+def ismac(text):
+    """Is `text` in MAC address format (00:00:00:00:00:00 to FF:FF:FF:FF:FF:FF)?"""
+    hexdigits = [hex(i)[2:].upper() for i in range(16)]
+    text = text.replace("(Preferred)", "")
+    text = text.replace(":", "-")
+    for seg in text.split('-'):
+        if len(seg) != 2:
+            return False
+        if seg[0].upper() not in hexdigits:
+            return False
+        if seg[1].upper() not in hexdigits:
+            return False
+    return len(text.split('-')) == 6
+
+
 ### NetEntity class
 class NetEntity:
     def __init__(self, *args):
@@ -33,32 +61,32 @@ class NetEntity:
         self.mac = self.mac.replace('-', ':')
 
     def __str__(self):
-        return f"(( {self.mac} | {self.ip} ))"
+        return f"(MAC: {self.mac} | IP: {self.ip} | IPv6: {self.ipv6})"
+    
+    def hasMAC(self): return self.mac != '0'
 
-    def destruct(self):
-        return f"{self.mac}%{self.ip}"
+    def hasIP(self): return self.ip != '0'
 
-    @staticmethod
-    def restruct(text):
-        mac, ip = tuple(text.split('%'))
-        return NetEntity(mac, ip)
+    def hasIPv6(self): return self.ipv6 != '0'
     
     @staticmethod
     def _parse(args):
-        if not (2 <= len(args) <= 3):
-            raise ValueError("NetEntity must recevive 2 to 3 arguments.")
-        a = args[0]
-        b = args[1]
-        try:
-            c = args[2]
-        except IndexError:
-            c = ""
-        ipv4 = [ip for ip in [a, b, c] if isipv4(ip)]
-        if len(ipv4) != 1:
-            raise ValueError(("Multiple" if len(ipv4) > 1 else "No") + " IPv4 addresses given.")
-        ipv4 = ipv4[0]
-
-        
+        if isinstance(args[0], list):
+            args = args[0]
+        else:
+            args = list(args)
+        addresses = []
+        for method in [ismac, isipv4, isipv6]:
+            address = [address for address in args if method(address)]
+            if len(address) > 1:
+                raise ValueError("Multiple similar addresses given.")
+            elif len(address) == 1:
+                addresses.append(address[0])
+            else:
+                addresses.append('0')
+        unknown = set(args) - set(addresses)
+        for u in unknown: print("NetEntity init: Unable to resolve format [MAC/IPv4/IPv6] of", u)
+        return tuple(addresses)
 
 
 ### IPCONFIG related functions
@@ -144,12 +172,12 @@ def clarify_filter(data):
 
 
 ###### Automation
-def auto_select_interface(ip):
+def auto_select_interface(ip, description):
     """Select the interface which matches the IP given"""
     for iface in get_working_ifaces():
         if iface.ip == ip:
             conf.iface = iface
-    print("Interface:", conf.iface)
+    print("Interface:", conf.iface, f'  ( {description} )')
 
 
 ### Main 
@@ -159,14 +187,14 @@ def main():
         print("An error happened.", err, msg)
         return
     here = NetEntity(ipconfig_data["Physical Address"], ipconfig_data["IPv4 Address"], ipconfig_data["IPv6 Address"])
-    auto_select_interface(here.ip)
-    # If you wanna do an active ARP scan, do it here.
-    router_ip = ipconfig_data["Default Gateway"]
+    auto_select_interface(here.ip, ipconfig_data["Description"])
+    router = NetEntity(ipconfig_data["Default Gateway"])
     subnet_mask = ipconfig_data["Subnet Mask"]
     with open('ipconfig.json', 'w') as f:
         f.write(json.dumps(ipconfig_data, indent=4))
-    print("Default gateway:", router_ip)
-    print("Mask:", subnet_mask)
+    print("Default gateway:", router)
+    print("Subnet Mask:", subnet_mask)
+    print("Here:", here)
 
 
 if __name__ == '__main__':
