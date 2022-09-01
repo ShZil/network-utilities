@@ -121,7 +121,7 @@ def clarify_filter(data):
         if isinstance(value, list):
             result[key] = []
             for item in value:
-                result[key].append(item.replace("(Preferred)", ""))
+                result[key].append(item.replace("(Preferred)", "").split('%')[0])
             if len(result[key]) == 1:
                 result[key] = result[key][0]
             elif len(result[key]) == 0:
@@ -132,7 +132,7 @@ def clarify_filter(data):
             elif value in ["No", "Disabled"]:
                 result[key] = False
             else:
-                result[key] = value
+                result[key] = value.replace("(Preferred)", "").split('%')[0]
     return result
 
 
@@ -306,7 +306,7 @@ def dictify(text):
     return result
 
 
-def get_ipconfig() -> int:
+def get_ipconfig() -> tuple[int, str]:
     """Get information from >ipconfig,
     select the first interface with a Default Gateway,
     insert its info as a dictionary into `global ipconfig_data`.
@@ -320,11 +320,11 @@ def get_ipconfig() -> int:
     except IndexError:
         print("ERROR: Could not find an interface with a default gateway.")
         print("Check connection to internet. Execute `ipconfig` to debug.")
-        return -1
+        return -1, "No internet connection found."
     interface, data = selected[0], selected[1]
     ipconfig_data = clarify_filter(data)
     ipconfig_data["Interface"] = interface
-    return 0
+    return 0, ''
 
 
 ###### Automation
@@ -644,19 +644,16 @@ def render(G, printing=True):
 
 
 def main():
-    err = get_ipconfig()
-    if err == -1:
-        print("No internet connection found. Terminating...")
-        return
+    err, msg = get_ipconfig()
     if err != 0:
-        print("An error happened.", err)
+        print("An error happened.", err, msg)
         return
     here = NetEntity(ipconfig_data["Physical Address"], ipconfig_data["IPv4 Address"])
     auto_select_interface(here.ip)
     # If you wanna do an active ARP scan, do it here.
     router_ip = ipconfig_data["Default Gateway"]
     subnet_mask = ipconfig_data["Subnet Mask"]
-    with open('ipconfig.txt', 'w') as f:
+    with open('ipconfig.json', 'w') as f:
         f.write(json.dumps(ipconfig_data, indent=4))
     return
     global G

@@ -1,0 +1,28 @@
+{
+    "Connection-specific DNS Suffix": "local",
+    "Description": "Intel(R) Ethernet Connection I219-LM",
+    "Physical Address": "80-CE-62-A4-E6-E5",
+    "DHCP Enabled": true,
+    "Autoconfiguration Enabled": true,
+    "IPv6 Address": "2a02:ed0:4361:d100:501:15e9:ddd3:b1d6",
+    "Temporary IPv6 Address": "2a02:ed0:4361:d100:b4c1:2d81:48c:e75e",
+    "Link-local IPv6 Address": "fe80::501:15e9:ddd3:b1d6",
+    "IPv4 Address": "10.0.0.19",
+    "Subnet Mask": "255.255.255.0",
+    "Default Gateway": [
+        "fe80::2b8:c2ff:fea1:ffe3",
+        "10.0.0.138"
+    ],
+    "DHCP Server": "10.0.0.138",
+    "DHCPv6 IAID": "152592420",
+    "DHCPv6 Client DUID": "00-01-00-01-28-85-95-9E-80-CE-62-A4-E6-E5",
+    "DNS Servers": [
+        "2a02:ed0:4361:d100:2b8:c2ff:fea1:ffe3",
+        "127.0.0.1",
+        "8.8.8.8",
+        "2a02:ed0:3800:2::201",
+        "2a02:ed0:3800:1::201"
+    ],
+    "NetBIOS over Tcpip": true,
+    "Interface": "Ethernet adapter Ethernet"
+}

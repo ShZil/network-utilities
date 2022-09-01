@@ -16,12 +16,21 @@ from networkx.exception import NetworkXError as nxerr
 __author__ = 'Shaked Dan Zilberman'
 ipconfig_data = None
 
+### Utility methods
+def isipv4(text):
+    """Is `text` in IPv4 address format (0.0.0.0 to 255.255.255.255)?"""
+    text = text.replace("(Preferred)", "")
+    for seg in text.split('.'):
+        if not seg.isnumeric():
+            return False
+    return len(text.split('.')) == 4
+
 
 ### NetEntity class
 class NetEntity:
-    def __init__(self, mac, ip):
-        self.mac = mac.replace('-', ':')
-        self.ip = ip
+    def __init__(self, *args):
+        self.mac, self.ip, self.ipv6 = NetEntity._parse(args)
+        self.mac = self.mac.replace('-', ':')
 
     def __str__(self):
         return f"(( {self.mac} | {self.ip} ))"
@@ -33,6 +42,23 @@ class NetEntity:
     def restruct(text):
         mac, ip = tuple(text.split('%'))
         return NetEntity(mac, ip)
+    
+    @staticmethod
+    def _parse(args):
+        if not (2 <= len(args) <= 3):
+            raise ValueError("NetEntity must recevive 2 to 3 arguments.")
+        a = args[0]
+        b = args[1]
+        try:
+            c = args[2]
+        except IndexError:
+            c = ""
+        ipv4 = [ip for ip in [a, b, c] if isipv4(ip)]
+        if len(ipv4) != 1:
+            raise ValueError(("Multiple" if len(ipv4) > 1 else "No") + " IPv4 addresses given.")
+        ipv4 = ipv4[0]
+
+        
 
 
 ### IPCONFIG related functions
@@ -74,7 +100,7 @@ def dictify(text):
     return result
 
 
-def get_ipconfig() -> int:
+def get_ipconfig() -> tuple[int, str]:
     """Get information from >ipconfig,
     select the first interface with a Default Gateway,
     insert its info as a dictionary into `global ipconfig_data`.
@@ -88,11 +114,11 @@ def get_ipconfig() -> int:
     except IndexError:
         print("ERROR: Could not find an interface with a default gateway.")
         print("Check connection to internet. Execute `ipconfig` to debug.")
-        return -1
+        return -1, "No internet connection found."
     interface, data = selected[0], selected[1]
     ipconfig_data = clarify_filter(data)
     ipconfig_data["Interface"] = interface
-    return 0
+    return 0, ''
 
 
 def clarify_filter(data):
@@ -102,7 +128,7 @@ def clarify_filter(data):
         if isinstance(value, list):
             result[key] = []
             for item in value:
-                result[key].append(item.replace("(Preferred)", ""))
+                result[key].append(item.replace("(Preferred)", "").split('%')[0])
             if len(result[key]) == 1:
                 result[key] = result[key][0]
             elif len(result[key]) == 0:
@@ -113,7 +139,7 @@ def clarify_filter(data):
             elif value in ["No", "Disabled"]:
                 result[key] = False
             else:
-                result[key] = value
+                result[key] = value.replace("(Preferred)", "").split('%')[0]
     return result
 
 
@@ -128,19 +154,16 @@ def auto_select_interface(ip):
 
 ### Main 
 def main():
-    err = get_ipconfig()
-    if err == -1:
-        print("No internet connection found. Terminating...")
-        return
+    err, msg = get_ipconfig()
     if err != 0:
-        print("An error happened.", err)
+        print("An error happened.", err, msg)
         return
-    here = NetEntity(ipconfig_data["Physical Address"], ipconfig_data["IPv4 Address"])
+    here = NetEntity(ipconfig_data["Physical Address"], ipconfig_data["IPv4 Address"], ipconfig_data["IPv6 Address"])
     auto_select_interface(here.ip)
     # If you wanna do an active ARP scan, do it here.
     router_ip = ipconfig_data["Default Gateway"]
     subnet_mask = ipconfig_data["Subnet Mask"]
-    with open('ipconfig.txt', 'w') as f:
+    with open('ipconfig.json', 'w') as f:
         f.write(json.dumps(ipconfig_data, indent=4))
     print("Default gateway:", router_ip)
     print("Mask:", subnet_mask)
