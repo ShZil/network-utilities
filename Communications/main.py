@@ -367,7 +367,7 @@ def colorof(address):
     network, nettoo, center, device = [int(part) for part in address.split('.')]
     h, s, v = (
         pseudo_random(network + nettoo),
-        1 - (center) / 255,
+        1 - (0.5 * center) / 255,
         1 - pseudo_random(device)/4
     )
     r, g, b = hsv_to_rgb(h, s, v)
@@ -508,7 +508,7 @@ def render(G, printing=True):
         pos=pos,
         node_color=colorify(list(H.nodes)),
         node_size=300,
-        connectionstyle="arc3,rad=0.02",
+        # connectionstyle="arc3,rad=0.02",
         arrowstyle='<-',
         arrowsize=20,
         edge_color=['#000000' for edge in edges]
