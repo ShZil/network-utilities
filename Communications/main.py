@@ -182,6 +182,7 @@ class NetEntity:
 
     def isEmpty(self) -> bool: return not (self.hasMAC() or self.hasIP() or self.hasIPv6())
 
+
     def sameAs(self, other) -> bool:
         if not isinstance(other, NetEntity): return False
         if self.hasMAC() and other.hasMAC():
@@ -205,6 +206,12 @@ class NetEntity:
         return available
     
 
+    def unite(self, other):
+        if not isinstance(other, NetEntity): return self
+        addresses = [getattr(self, attr) if getattr(self, has)() else getattr(other, attr) for attr, has in zip(["mac", "ip", "ipv6"], ["hasMAC", "hasIP", "hasIPv6"])]
+        self.mac, self.ip, self.ipv6 = tuple(addresses)
+
+
     @staticmethod
     def _parse(args) -> tuple[str, str, str]:
         if isinstance(args[0], list):
@@ -218,7 +225,7 @@ class NetEntity:
             if len(address) > 1:
                 raise ValueError("Multiple similar addresses given.")
             elif len(address) == 1 and address[0] not in GENERAL:
-                addresses.append(address[0])
+                addresses.append(address[0].strip())
             else:
                 addresses.append('0')
         unknown = set(args) - set(addresses) - set(GENERAL)
@@ -458,7 +465,7 @@ def read_graph(printing=True):
     G.add_edges_from(edges_tuples)
     if printing:
         print("\nRead graph from graph.txt")
-    return process_graph(G)
+    return G
 
 
 
@@ -627,6 +634,7 @@ def process_graph(G):
 
 def merge_nodes(G, a, b):
     """Merge the node `b` into node `a` in the graph."""
+    a.unite(b)
     for u, v, info in list(G.in_edges([b], data=True)):
         G.add_edge(u, a, weight=info['weight'])
     for u, v, info in list(G.out_edges([b], data=True)):
@@ -662,7 +670,7 @@ def main():
     subnet_mask = ipconfig_data["Subnet Mask"]
     with open('ipconfig.json', 'w') as f:
         f.write(json.dumps(ipconfig_data, indent=4))
-    print("Default gateway:", router)
+    print("Default Gateway:", router)
     print("Subnet Mask:", subnet_mask)
     print("Here:", here)
 
