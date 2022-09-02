@@ -24,10 +24,9 @@ here, router = None, None
 disable_hostify = False
 from_scratch = False
 def layout(G):
-    nodes = ipv4sort(list(G.nodes))
-    # return nx.circular_layout(nodes)
-    return nx.kamada_kawai_layout(G)
-    # return nx.spring_layout(G)  # Fruchterman-Reingold algorithm
+    # return nx.circular_layout(ipv4sort(list(G.nodes)))
+    # return nx.kamada_kawai_layout(G, weight="nonexistant")
+    return nx.spring_layout(G, weight="nonexistant", k=0.06)  # Fruchterman-Reingold algorithm
 
 
 ### Utility methods
@@ -122,6 +121,13 @@ def mask_on(a, mask):
     """Apply a subnet mask to address `a`.
     Assuming both are valid."""
     return a[:mask.count('1')]
+
+
+def no_weights(G):
+    G = G.copy()
+    for u, v, d in G.edges(data=True):
+        d['weight'] = 1
+    return G
 
 
 ### Hostify
@@ -405,8 +411,8 @@ def save_graph(G, printing=True):
         for node in list(G.nodes):
             file.write("    " + node.destruct() + "\n")
         file.write("Edges:\n")
-        for edge in list(G.edges):
-            file.write("    " + edge[0].destruct() + " > " + edge[1].destruct() + "\n")
+        for u, v, info in list(G.edges(data=True)):
+            file.write(f"    {u.destruct()} > {v.destruct()} M {info['weight']}\n")
     if printing:
         print("\nSaved graph to graph.txt")
 
@@ -432,9 +438,14 @@ def read_graph(printing=True):
         except ValueError:
             print("Invalid edge:", edge)
             continue
+        try:
+            right, weight = tuple(right.split("M"))
+        except ValueError:
+            weight = 1
         left = NetEntity.restruct(left.strip())
         right = NetEntity.restruct(right.strip())
-        edges_tuples.append((left, right))
+        info = {"weight": int(weight.strip())}
+        edges_tuples.append((left, right, info))
     real_nodes = []
     for node in nodes:
         real_nodes.append(NetEntity.restruct(node))
@@ -616,10 +627,10 @@ def process_graph(G):
 
 def merge_nodes(G, a, b):
     """Merge the node `b` into node `a` in the graph."""
-    for edge in list(G.in_edges([b])):
-        G.add_edge(edge[0], a)
-    for edge in list(G.out_edges([b])):
-        G.add_edge(a, edge[1])
+    for u, v, info in list(G.in_edges([b], data=True)):
+        G.add_edge(u, a, weight=info['weight'])
+    for u, v, info in list(G.out_edges([b], data=True)):
+        G.add_edge(a, v, weight=info['weight'])
     try:
         G.remove_node(b)
     except nxerr:
@@ -636,6 +647,35 @@ def do_invisible(node):
     #     if node.mac == "FF:FF:FF:FF:FF:FF":
     #         return True
     return False
+
+
+### Main 
+def main():
+    err, msg = get_ipconfig()
+    if err != 0:
+        print("An error happened.", err, msg)
+        return
+    global here, router
+    here = NetEntity(ipconfig_data["Physical Address"], ipconfig_data["IPv4 Address"], ipconfig_data["IPv6 Address"])
+    auto_select_interface(here.ip, ipconfig_data["Description"])
+    router = NetEntity(ipconfig_data["Default Gateway"])
+    subnet_mask = ipconfig_data["Subnet Mask"]
+    with open('ipconfig.json', 'w') as f:
+        f.write(json.dumps(ipconfig_data, indent=4))
+    print("Default gateway:", router)
+    print("Subnet Mask:", subnet_mask)
+    print("Here:", here)
+
+    global G
+    if from_scratch:
+        G = nx.DiGraph()
+    else:
+        G = read_graph()
+    G.add_node(here)
+    G = process_graph(G)
+    render(G, printing=False)
+    Thread(target=sniffer).start()
+    start_graphing()
 
 
 def graph_it(packet):
@@ -692,35 +732,6 @@ def graph_it(packet):
             G[dst][src]['weight'] += 1
         else:
             G.add_edge(dst, src, weight=1)
-
-
-### Main 
-def main():
-    err, msg = get_ipconfig()
-    if err != 0:
-        print("An error happened.", err, msg)
-        return
-    global here, router
-    here = NetEntity(ipconfig_data["Physical Address"], ipconfig_data["IPv4 Address"], ipconfig_data["IPv6 Address"])
-    auto_select_interface(here.ip, ipconfig_data["Description"])
-    router = NetEntity(ipconfig_data["Default Gateway"])
-    subnet_mask = ipconfig_data["Subnet Mask"]
-    with open('ipconfig.json', 'w') as f:
-        f.write(json.dumps(ipconfig_data, indent=4))
-    print("Default gateway:", router)
-    print("Subnet Mask:", subnet_mask)
-    print("Here:", here)
-
-    global G
-    if from_scratch:
-        G = nx.DiGraph()
-    else:
-        G = read_graph()
-    G.add_node(here)
-    G = process_graph(G)
-    render(G, printing=False)
-    Thread(target=sniffer).start()
-    start_graphing()
 
 
 if __name__ == '__main__':
