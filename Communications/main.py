@@ -1,5 +1,5 @@
 import json
-from scapy.all import conf, get_working_ifaces, sniff, ARP
+from scapy.all import conf, get_working_ifaces, sniff, IP, Ether, Dot3, IPv6
 from subprocess import check_output as read_command
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
@@ -14,16 +14,20 @@ from networkx.exception import NetworkXError as nxerr
 
 
 __author__ = 'Shaked Dan Zilberman'
-ipconfig_data = None
-disable_hostify = False
 lookup_hostify = {}
+past_messages = []
+ipconfig_data = None
 G = None
+_dot = False
+here, router = None, None
+
+disable_hostify = False
 from_scratch = False
 def layout(G):
     nodes = ipv4sort(list(G.nodes))
-    return nx.circular_layout(nodes)
+    # return nx.circular_layout(nodes)
     # return nx.kamada_kawai_layout(G)
-    # return nx.spring_layout(G)  # Fruchterman-Reingold algorithm
+    return nx.spring_layout(G)  # Fruchterman-Reingold algorithm
 
 
 ### Utility methods
@@ -32,7 +36,7 @@ def isipv4(text):
     if not isinstance(text, str): return False
     text = text.replace("(Preferred)", "")
     for seg in text.split('.'):
-        if not seg.isnumeric():
+        if not seg.strip().isnumeric():
             return False
     return len(text.split('.')) == 4
 
@@ -89,6 +93,37 @@ def ipv4sort(addresses):
     return sorted(addresses, key=lambda x: int(bitify(x.ip), base=2))
 
 
+def print_once(*msg, instead=".", sep=" "):
+    global _dot
+    msg = [str(o) for o in msg]
+    if sep.join(msg) in past_messages:
+        print(instead, end="")
+        _dot = True
+        return
+    else:
+        if _dot:
+            print()
+            _dot = False
+        past_messages.append(sep.join(msg))
+    print(sep.join(msg))
+
+
+def is_in_network(address):
+    """Is the IPv4 address in the local network?"""
+    gateway = ipconfig_data["Default Gateway"]
+    mask = ipconfig_data["Subnet Mask"]
+    gateway, mask, address = bitify(gateway), bitify(mask), bitify(address)
+    base = mask_on(gateway, mask)
+    network = mask_on(address, mask)
+    return network == base
+
+
+def mask_on(a, mask):
+    """Apply a subnet mask to address `a`.
+    Assuming both are valid."""
+    return a[:mask.count('1')]
+
+
 ### Hostify
 def hostify(address):
     """Returns the host name of an IPv4 address. Uses a cache."""
@@ -122,36 +157,82 @@ def hostify_sync(addresses):
 class NetEntity:
     def __init__(self, *args):
         self.mac, self.ip, self.ipv6 = NetEntity._parse(args)
-        self.mac = self.mac.replace('-', ':')
+        self.mac = self.mac.replace('-', ':').upper()
         self.name = hostify(self.ip) if self.hasIP() else "Unknown"
+        if self.name.strip() == "": self.name = "Unknown"
 
     def __str__(self):
-        return f"<{self.name} | MAC: {self.mac} | IP: {self.ip} | IPv6: {self.ipv6}>"
+        parts = [f"{title} {value}" for title, value in zip(["", "MAC:", "IP:", "IPv6:"], [self.name, self.mac, self.ip, self.ipv6]) if value not in ['0', "Unknown"]]
+        parts = ' | '.join(parts)
+        parts = parts.strip()
+        return f"< {parts} >"
     
     def hasMAC(self): return self.mac != '0'
 
     def hasIP(self): return self.ip != '0'
 
     def hasIPv6(self): return self.ipv6 != '0'
+
+    def sameAs(self, other) -> bool:
+        if not isinstance(other, NetEntity): return False
+        result = False
+        if self.hasMAC() and other.hasMAC():
+            result = self.mac == other.mac
+            if self.mac == "FF:FF:FF:FF:FF:FF" or other.mac == "FF:FF:FF:FF:FF:FF":
+                result = True
+                if not (self.hasIP() and other.hasIP()) and not (self.hasIPv6() and other.hasIPv6()):
+                    result = True
+                    if self.hasIP() or self.hasIPv6():
+                        result = False
+                    if other.hasIP() or other.hasIPv6():
+                        result = False
+            if self.hasIP() and other.hasIP():
+                result &= self.ip == other.ip
+            if self.hasIPv6() and other.hasIPv6():
+                result &= self.ipv6 == other.ipv6
+        else:
+            if self.hasIP() and other.hasIP():
+                result = self.ip == other.ip
+        return result
     
+
+    def destruct(self):
+        return '|'.join([self.mac, self.ip, self.ipv6])
+    
+
+    def get_available(self):
+        available = []
+        if self.hasMAC(): available.append(self.mac)
+        if self.hasIP(): available.append(self.ip)
+        if self.hasIPv6(): available.append(self.ipv6)
+        return available
+    
+
     @staticmethod
     def _parse(args):
         if isinstance(args[0], list):
             args = args[0]
         else:
             args = list(args)
+        GENERAL = ["0.0.0.0", "255.255.255.255", "00:00:00:00:00:00", "FF:FF:FF:FF:FF:FF", "::"]
         addresses = []
         for method in [ismac, isipv4, isipv6]:
             address = [address for address in args if method(address)]
             if len(address) > 1:
                 raise ValueError("Multiple similar addresses given.")
-            elif len(address) == 1:
+            elif len(address) == 1 and address[0] not in GENERAL:
                 addresses.append(address[0])
             else:
                 addresses.append('0')
-        unknown = set(args) - set(addresses)
-        for u in unknown: print("NetEntity init: Unable to resolve format [MAC/IPv4/IPv6] of", u)
+        unknown = set(args) - set(addresses) - set(GENERAL)
+        for u in unknown:
+            if u != None:
+                print(f"NetEntity init: Unable to resolve format [MAC/IPv4/IPv6] of \"{u}\"")
         return tuple(addresses)
+    
+    @staticmethod
+    def restruct(line):
+        return NetEntity(line.split('|'))
 
 
 ### IPCONFIG related functions
@@ -246,9 +327,16 @@ def auto_select_interface(ip, description):
 
 
 ### Colours
-def colorify(addresses):
-    """Returns a list of colours matching the NetEntities in `addresses` list"""
-    return [colorof(address) for address in addresses]
+def colorify(nodes):
+    """Returns a list of colours matching the NetEntities in `nodes` list"""
+    return [
+        colorof(entity.ip) if entity.hasIP() else
+        (
+            colorofmac(entity.mac) if entity.hasMAC else
+            "#000000"
+        )
+        for entity in nodes
+        ]
 
 
 def colorconfig(key):
@@ -259,12 +347,10 @@ def colorconfig(key):
         "Subnet Mask": "#7c79b0",
         "Default Gateway": "#b835b8",
         "DHCP Server": "#8f0000",
-        "DNS Servers": "#9dff00"
+        "DNS Servers": "#9dff00",
+        "DNS Server": "#9dff00"
     }
-    try:
-        return colors[key]
-    except KeyError:
-        return "#666666"
+    return colors[key]
 
 
 def colorof(address):
@@ -279,6 +365,22 @@ def colorof(address):
     )
     r, g, b = hsv_to_rgb(h, s, v)
     x = lambda a: hex(int(a * 255))[2:].zfill(2)
+    r, g, b = x(r), x(g), x(b)
+    return f'#{r}{g}{b}'
+
+
+def colorofmac(address):
+    """Colours a specific MAC address.
+    From #000000 to #FFFFFF."""
+    if not ismac(address): return '#000000'
+    parts = [int(part, base=16) for part in address.replace('-', ':').split(':')]
+    h, s, v = (
+        pseudo_random(parts[0] + parts[1]),
+        1 - (parts[2] + parts[3]) / 255,
+        1 - pseudo_random(parts[4] + parts[5]) / 4
+    )
+    r, g, b = hsv_to_rgb(h, s, v)
+    x = lambda a: hex(int(a * 255))[2:].zfill(2)[:2]
     r, g, b = x(r), x(g), x(b)
     return f'#{r}{g}{b}'
 
@@ -303,8 +405,7 @@ def readall(path):
     create_file(path)
     with open(path, 'r') as file:
         return [line.strip('\n') for line in file.readlines()]
-    raise FileNotFoundError()
-    return []
+
 
 ### File managment
 def save_graph(G, printing=True):
@@ -352,7 +453,7 @@ def read_graph(printing=True):
     G.add_edges_from(edges_tuples)
     if printing:
         print("\nRead graph from graph.txt")
-    return G
+    return process_graph(G)
 
 
 
@@ -362,42 +463,7 @@ def start_graphing():
     while True:
         render(G, printing=False)
         plt.show()
-        save_graph(G, printing=False)
-
-
-def read_graph(printing=True):
-    lines = readall("graph.txt")
-    nodes = []
-    edges = []
-    current = None
-    for line in lines:
-        if "Nodes" in line:
-            current = nodes
-            continue
-        elif "Edges" in line:
-            current = edges
-            continue
-        else:
-            current.append(line.strip())
-    edges_tuples = []
-    for edge in edges:
-        try:
-            left, right = tuple(edge.split('>'))
-        except ValueError:
-            print("Invalid edge:", edge)
-            continue
-        left = NetEntity.restruct(left.strip())
-        right = NetEntity.restruct(right.strip())
-        edges_tuples.append((left, right))
-    real_nodes = []
-    for node in nodes:
-        real_nodes.append(NetEntity.restruct(node))
-    G = nx.DiGraph()
-    G.add_nodes_from(real_nodes)
-    G.add_edges_from(edges_tuples)
-    if printing:
-        print("\nRead graph from graph.txt")
-    return G
+        save_graph(G, printing=True)
 
 
 def render(G, printing=True):
@@ -441,7 +507,7 @@ def render(G, printing=True):
 
     ax = plt.gca()
     ax.margins(0.20)
-    ax.set_title('Network Analysis - ARP Display / Shzil')
+    ax.set_title('Network Analysis - Communications / Shzil')
 
     data = ipconfig_data
     if data == -1:
@@ -472,21 +538,25 @@ def config_legend(ax, data):
         else:
             info = [value]
         for element in info:
-            if isipv4(element):
-                color = colorof(element)
-            else:
-                color = colorconfig(key)
-            elements.append(
-                Line2D(
-                    [0],
-                    [0],
-                    marker='o',
-                    color='w',
-                    label=f"{key}: {element}",
-                    markerfacecolor=color,
-                    markersize=6
+            try:
+                if isipv4(element):
+                    color = colorof(element)
+                else:
+                    color = colorconfig(key)
+                elements.append(
+                    Line2D(
+                        [0],
+                        [0],
+                        marker='o',
+                        color='w',
+                        label=f"{key}: {element}",
+                        markerfacecolor=color,
+                        markersize=6
+                    )
                 )
-            )
+            except KeyError:
+                # print("Could not colour ipconfig option:", key)
+                pass
     additional = {}  # {Color (hex with #): title (str)}
     for color, label in additional.items():
         elements.append(
@@ -505,12 +575,65 @@ def config_legend(ax, data):
 
 def labels(H, pos, nodes):
     """Add the labels to the rendered graph"""
-    hostify_sync([node.ip for node in nodes])
-    labels = {
-        node: f"{node.mac}\n{node.ip}\n{hostify(node.ip)}"
-        for node in nodes
-    }
+    hostify_sync([node.ip for node in nodes if node.hasIP()])
+    labels = {}
+    for node in nodes:
+        available = node.get_available()
+        match len(available):
+            case 0:
+                labels[node] = "\n\n"
+            case 1:
+                labels[node] = f"{available[0]}\n\n\n\n{hostify(node.ip)}"
+            case 2:
+                labels[node] = f"{available[0]}\n{available[1]}\n\n\n\n{hostify(node.ip)}"
+            case 3:
+                labels[node] = f"{available[0]}\n{available[1]}\n\n\n{available[2]}\n{hostify(node.ip)}"
+            case _:
+                labels[node] = ""
+                print("Weird 'get_available' length for:", node)
+        labels[node] = specials(node) + labels[node]
     nx.draw_networkx_labels(H, pos, labels=labels, font_size=8, font_color="black")
+
+
+def specials(node):
+    if node.hasMAC():
+        if node.mac == "FF:FF:FF:FF:FF:FF":
+            if node.hasIP() and node.ip.endswith(".255") and is_in_network(node.ip):
+                return "Local broadcast\n"
+            else:
+                return "Broadcast\n"
+    if here.sameAs(node):
+        return "Here\n"
+    if here.sameAs(node):
+        return "Router\n"
+    return ""
+
+
+### Graph analysis
+def process_graph(G):
+    """This method merges equal nodes in `G` and treats their edges."""
+    if G is None: return
+    for a in list(G.nodes):
+        for b in list(G.nodes):
+            if a is b:
+                continue
+            if not isinstance(a, NetEntity) and isinstance(b, NetEntity):
+                continue
+            if a.sameAs(b):
+                merge_nodes(G, a, b)
+    return G
+
+
+def merge_nodes(G, a, b):
+    """Merge the node `b` into node `a` in the graph."""
+    for edge in list(G.in_edges([b])):
+        G.add_edge(edge[0], a)
+    for edge in list(G.out_edges([b])):
+        G.add_edge(a, edge[1])
+    try:
+        G.remove_node(b)
+    except nxerr:
+        return
 
 
 ### Sniffing
@@ -519,13 +642,36 @@ def sniffer():
 
 
 def do_invisible(node):
+    if node.hasMAC():
+        if node.mac == "FF:FF:FF:FF:FF:FF":
+            return True
     return False
 
 
 def graph_it(packet):
     """Graph a packet onto `G`"""
     global G
-    print(packet.summary())
+    # print(packet.summary())
+    mac = {"src": None, "dst": None}
+    if not Ether in packet:
+        if Dot3 in packet:
+            mac["src"], mac["dst"] = packet[Dot3].src, packet[Dot3].dst
+        else:
+            print("Unknown packet.")
+            packet.show()
+    else:
+        mac["src"], mac["dst"] = packet[Ether].src, packet[Ether].dst
+    ip = {"src": None, "dst": None}
+    if IP in packet:
+        ip["src"], ip["dst"] = packet[IP].src, packet[IP].dst
+    ipv6 = {"src": None, "dst": None}
+    if IPv6 in packet:
+        ipv6["src"], ipv6["dst"] = packet[IPv6].src, packet[IPv6].dst
+    source = NetEntity(mac["src"], ip["src"], ipv6["src"])
+    destin = NetEntity(mac["dst"], ip["dst"], ipv6["dst"])
+    print_once("SRC:", source)
+    print_once("DST:", destin)
+    # packet.show()
     # if ARP not in packet:
     #     return
     # arp = packet[ARP]
@@ -544,14 +690,10 @@ def graph_it(packet):
     # print(msg)
     # src = NetEntity(src_mac, src_ip)
     # dst = NetEntity(dst_mac, dst_ip)
-    # G.add_node(src)
-    # G.add_node(dst)
-    # if operation == "is-at":
-    #     G.add_edge(dst, src, weight=20)
-    # elif operation == "who-has":
-    #     if not no_who_has:
-    #         G.add_edge(src, dst, weight=1)
-    # G = process_graph(G)
+    G.add_node(source)
+    G.add_node(destin)
+    G.add_edge(destin, source, weight=1)
+    G = process_graph(G)
 
 
 ### Main 
@@ -560,6 +702,7 @@ def main():
     if err != 0:
         print("An error happened.", err, msg)
         return
+    global here, router
     here = NetEntity(ipconfig_data["Physical Address"], ipconfig_data["IPv4 Address"], ipconfig_data["IPv6 Address"])
     auto_select_interface(here.ip, ipconfig_data["Description"])
     router = NetEntity(ipconfig_data["Default Gateway"])
@@ -570,14 +713,13 @@ def main():
     print("Subnet Mask:", subnet_mask)
     print("Here:", here)
 
-    
     global G
     if from_scratch:
         G = nx.DiGraph()
         G.add_node(here)
     else:
         G = read_graph()
-    render(G)
+    render(G, printing=False)
     Thread(target=sniffer).start()
     start_graphing()
 
