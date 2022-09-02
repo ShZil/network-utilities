@@ -1,4 +1,5 @@
 import json
+from math import ceil
 from scapy.all import conf, get_working_ifaces, sniff, IP, Ether, Dot3, IPv6
 from subprocess import check_output as read_command
 import matplotlib.pyplot as plt
@@ -26,7 +27,7 @@ from_scratch = False
 def layout(G):
     # return nx.circular_layout(ipv4sort(list(G.nodes)))
     # return nx.kamada_kawai_layout(G, weight="nonexistant")
-    return nx.spring_layout(G, weight="nonexistant", k=0.06)  # Fruchterman-Reingold algorithm
+    return nx.spring_layout(G, weight="nonexistant", k=0.6)  # Fruchterman-Reingold algorithm
 
 
 ### Utility methods
@@ -325,14 +326,17 @@ def auto_select_interface(ip, description):
 ### Colours
 def colorify(nodes):
     """Returns a list of colours matching the NetEntities in `nodes` list"""
-    return [
-        colorof(entity.ip) if entity.hasIP() else
-        (
-            colorofmac(entity.mac) if entity.hasMAC else
-            f"#000000{print('Black', entity)}"
-        )
-        for entity in nodes
-        ]
+    colors = []
+    for node in nodes:
+        if here.sameAs(node):
+            colors.append('#00FF00')
+        elif node.hasIP():
+            colors.append(colorof(node.ip))
+        elif node.hasMAC():
+            colors.append(colorofmac(node.mac))
+        else:
+            colors.append("#000000")
+    return colors
 
 
 def colorconfig(key):
@@ -580,33 +584,29 @@ def labels(H, pos, nodes):
     labels = {}
     for node in nodes:
         available = node.get_available()
-        match len(available):
-            case 0:
-                labels[node] = "\n\n"
-            case 1:
-                labels[node] = f"{available[0]}\n\n\n\n{hostify(node.ip)}"
-            case 2:
-                labels[node] = f"{available[0]}\n{available[1]}\n\n\n\n{hostify(node.ip)}"
-            case 3:
-                labels[node] = f"{available[0]}\n{available[1]}\n\n\n{available[2]}\n{hostify(node.ip)}"
-            case _:
-                labels[node] = ""
-                print("Weird 'get_available' length for:", node)
-        labels[node] = specials(node) + labels[node]
-    nx.draw_networkx_labels(H, pos, labels=labels, font_size=8, font_color="black")
+        available.insert(0, specials(node))
+        available.append(hostify(node.ip))
+        try:
+            available.remove("")
+            available.remove("")
+        except ValueError:
+            pass
+        available.insert(ceil(len(available) / 2), '\n')
+        labels[node] = '\n'.join(available)
+    nx.draw_networkx_labels(H, pos, labels=labels, font_size=9, font_color="black")
 
 
 def specials(node):
     if node.hasMAC():
         if node.mac == "FF:FF:FF:FF:FF:FF":
             if node.hasIP() and node.ip.endswith(".255") and is_in_network(node.ip):
-                return "Local broadcast\n"
+                return "Local broadcast"
             else:
-                return "Broadcast\n"
+                return "Broadcast"
     if here.sameAs(node):
-        return "Here\n"
+        return "Here"
     if here.sameAs(node):
-        return "Router\n"
+        return "Router"
     return ""
 
 
@@ -646,7 +646,7 @@ def do_invisible(node):
     # if node.hasMAC():
     #     if node.mac == "FF:FF:FF:FF:FF:FF":
     #         return True
-    return False
+    return node.isEmpty()
 
 
 ### Main 
