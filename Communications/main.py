@@ -26,8 +26,8 @@ from_scratch = False
 def layout(G):
     nodes = ipv4sort(list(G.nodes))
     # return nx.circular_layout(nodes)
-    # return nx.kamada_kawai_layout(G)
-    return nx.spring_layout(G)  # Fruchterman-Reingold algorithm
+    return nx.kamada_kawai_layout(G)
+    # return nx.spring_layout(G)  # Fruchterman-Reingold algorithm
 
 
 ### Utility methods
@@ -110,7 +110,7 @@ def print_once(*msg, instead=".", sep=" "):
 
 def is_in_network(address):
     """Is the IPv4 address in the local network?"""
-    gateway = ipconfig_data["Default Gateway"]
+    gateway = list(filter(isipv4, ipconfig_data["Default Gateway"]))[0]
     mask = ipconfig_data["Subnet Mask"]
     gateway, mask, address = bitify(gateway), bitify(mask), bitify(address)
     base = mask_on(gateway, mask)
@@ -161,39 +161,29 @@ class NetEntity:
         self.name = hostify(self.ip) if self.hasIP() else "Unknown"
         if self.name.strip() == "": self.name = "Unknown"
 
-    def __str__(self):
+    def __str__(self) -> str:
         parts = [f"{title} {value}" for title, value in zip(["", "MAC:", "IP:", "IPv6:"], [self.name, self.mac, self.ip, self.ipv6]) if value not in ['0', "Unknown"]]
         parts = ' | '.join(parts)
         parts = parts.strip()
         return f"< {parts} >"
     
-    def hasMAC(self): return self.mac != '0'
+    def hasMAC(self) -> bool: return self.mac != '0'
 
-    def hasIP(self): return self.ip != '0'
+    def hasIP(self) -> bool: return self.ip != '0'
 
-    def hasIPv6(self): return self.ipv6 != '0'
+    def hasIPv6(self) -> bool: return self.ipv6 != '0'
+
+    def isEmpty(self) -> bool: return not (self.hasMAC() or self.hasIP() or self.hasIPv6())
 
     def sameAs(self, other) -> bool:
         if not isinstance(other, NetEntity): return False
-        result = False
         if self.hasMAC() and other.hasMAC():
-            result = self.mac == other.mac
-            if self.mac == "FF:FF:FF:FF:FF:FF" or other.mac == "FF:FF:FF:FF:FF:FF":
-                result = True
-                if not (self.hasIP() and other.hasIP()) and not (self.hasIPv6() and other.hasIPv6()):
-                    result = True
-                    if self.hasIP() or self.hasIPv6():
-                        result = False
-                    if other.hasIP() or other.hasIPv6():
-                        result = False
-            if self.hasIP() and other.hasIP():
-                result &= self.ip == other.ip
-            if self.hasIPv6() and other.hasIPv6():
-                result &= self.ipv6 == other.ipv6
-        else:
-            if self.hasIP() and other.hasIP():
-                result = self.ip == other.ip
-        return result
+            return self.mac == other.mac
+        if self.hasIP() and other.hasIP():
+            return self.ip == other.ip
+        if self.hasIPv6() and other.hasIPv6():
+            return self.ipv6 == other.ipv6
+        return self.isEmpty() and other.isEmpty()
     
 
     def destruct(self):
@@ -209,7 +199,7 @@ class NetEntity:
     
 
     @staticmethod
-    def _parse(args):
+    def _parse(args) -> tuple[str, str, str]:
         if isinstance(args[0], list):
             args = args[0]
         else:
@@ -333,7 +323,7 @@ def colorify(nodes):
         colorof(entity.ip) if entity.hasIP() else
         (
             colorofmac(entity.mac) if entity.hasMAC else
-            "#000000"
+            f"#000000{print('Black', entity)}"
         )
         for entity in nodes
         ]
@@ -642,9 +632,9 @@ def sniffer():
 
 
 def do_invisible(node):
-    if node.hasMAC():
-        if node.mac == "FF:FF:FF:FF:FF:FF":
-            return True
+    # if node.hasMAC():
+    #     if node.mac == "FF:FF:FF:FF:FF:FF":
+    #         return True
     return False
 
 
@@ -692,8 +682,16 @@ def graph_it(packet):
     # dst = NetEntity(dst_mac, dst_ip)
     G.add_node(source)
     G.add_node(destin)
-    G.add_edge(destin, source, weight=1)
     G = process_graph(G)
+    src, dst = None, None
+    for node in list(G.nodes):
+        if source.sameAs(node): src = node
+        if destin.sameAs(node): dst = node
+    if src != None and dst != None:
+        if G.has_edge(dst, src):
+            G[dst][src]['weight'] += 1
+        else:
+            G.add_edge(dst, src, weight=1)
 
 
 ### Main 
@@ -716,9 +714,10 @@ def main():
     global G
     if from_scratch:
         G = nx.DiGraph()
-        G.add_node(here)
     else:
         G = read_graph()
+    G.add_node(here)
+    G = process_graph(G)
     render(G, printing=False)
     Thread(target=sniffer).start()
     start_graphing()
