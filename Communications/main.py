@@ -338,6 +338,11 @@ def do_invisible(node):
         return True
     if is_in_network(node.ip, ipconfig_data):
         return False
+    if node.ip in ipconfig_data["DNS Servers"]:
+        return False
+    if node.hasIPv6():
+        if node.ipv6 in ipconfig_data["DNS Servers"]:
+            return False
     return True
 
 
