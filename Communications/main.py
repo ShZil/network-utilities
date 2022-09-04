@@ -1,96 +1,40 @@
+from functools import cache
 import json
-from math import ceil
-from scapy.all import conf, get_working_ifaces, sniff, IP, Ether, Dot3, IPv6
-from subprocess import check_output as read_command
+from math import ceil, exp, sqrt
+from scapy.all import conf, get_working_ifaces, sniff, Ether, Dot3, IP, IPv6
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.patches import Arrow
 import networkx as nx
 from colorsys import hsv_to_rgb
-from socket import gethostbyaddr as hostify_base
-from socket import herror as hostify_error1
-from socket import gaierror as hostify_error2
 from threading import Thread
 from networkx.exception import NetworkXError as nxerr
 
+from GraphCache import GraphCache
+from NetEntity import NetEntity
+from hostify import hostify, hostify_sync
+from ipconfig import get_ipconfig
+from util import *
+
 
 __author__ = 'Shaked Dan Zilberman'
-lookup_hostify = {}
 past_messages = []
 ipconfig_data = None
 G = None
 _dot = False
 here, router = None, None
+counter = 0
+cache = None
 
-disable_hostify = False
+# Ignores cache in initialisation
 from_scratch = False
+# Selects layout for the graph
 def layout(G):
     # return nx.circular_layout(ipv4sort(list(G.nodes)))
     # return nx.kamada_kawai_layout(G, weight="nonexistant")
     return nx.spring_layout(G, weight="nonexistant", k=0.6)  # Fruchterman-Reingold algorithm
 
-
 ### Utility methods
-def isipv4(text):
-    """Is `text` in IPv4 address format (0.0.0.0 to 255.255.255.255)?"""
-    if not isinstance(text, str): return False
-    text = text.replace("(Preferred)", "")
-    for seg in text.split('.'):
-        if not seg.strip().isnumeric():
-            return False
-    return len(text.split('.')) == 4
-
-
-def isipv6(text):
-    """Is `text` in IPv6 address format (0000:0000:0000:0000:0000:0000:0000:0000 and similar)?"""
-    if not isinstance(text, str): return False
-    hexdigits = [hex(i)[2:].upper() for i in range(16)]
-    text = text.replace("(Preferred)", "")
-    max_len = 0
-    for seg in text.split(':'):
-        for letter in seg:
-            if letter.upper() not in hexdigits:
-                return False
-        if len(seg) > max_len: max_len = len(seg)
-    return len(text.split(':')) > 1 and max_len > 2
-
-
-def ismac(text):
-    """Is `text` in MAC address format (00:00:00:00:00:00 to FF:FF:FF:FF:FF:FF)?"""
-    if not isinstance(text, str): return False
-    hexdigits = [hex(i)[2:].upper() for i in range(16)]
-    text = text.replace("(Preferred)", "")
-    text = text.replace(":", "-")
-    for seg in text.split('-'):
-        if len(seg) != 2:
-            return False
-        if seg[0].upper() not in hexdigits:
-            return False
-        if seg[1].upper() not in hexdigits:
-            return False
-    return len(text.split('-')) == 6
-
-
-def bitify(address):
-    """Returns the address in binary.
-    Example: 127.0.0.1 to '01111111000000000000000000000001'"""
-    if not isipv4(address):
-        return '00000000000000000000000000000000'
-    result = ''
-    for part in address.split('.'):
-        try:
-            binary = "{0:08b}".format(int(part, base=10))
-        except ValueError:
-            # Return 0.0.0.0 if address is invalid
-            print("Invalid address:", address)
-            return '00000000000000000000000000000000'
-        result += binary
-    return result
-
-
-def ipv4sort(addresses):
-    """Sorts the given list by the network entities' addresses' actual numerical value."""
-    return sorted(addresses, key=lambda x: int(bitify(x.ip), base=2))
 
 
 def print_once(*msg, instead=".", sep=" "):
@@ -102,26 +46,10 @@ def print_once(*msg, instead=".", sep=" "):
         return
     else:
         if _dot:
-            print()
+            if instead != '': print()
             _dot = False
         past_messages.append(sep.join(msg))
     print(sep.join(msg))
-
-
-def is_in_network(address):
-    """Is the IPv4 address in the local network?"""
-    gateway = list(filter(isipv4, ipconfig_data["Default Gateway"]))[0]
-    mask = ipconfig_data["Subnet Mask"]
-    gateway, mask, address = bitify(gateway), bitify(mask), bitify(address)
-    base = mask_on(gateway, mask)
-    network = mask_on(address, mask)
-    return network == base
-
-
-def mask_on(a, mask):
-    """Apply a subnet mask to address `a`.
-    Assuming both are valid."""
-    return a[:mask.count('1')]
 
 
 def no_weights(G):
@@ -131,194 +59,11 @@ def no_weights(G):
     return G
 
 
-### Hostify
-def hostify(address):
-    """Returns the host name of an IPv4 address. Uses a cache."""
-    if disable_hostify:
-        return "HOST"
-    global lookup_hostify
-    try:
-        return lookup_hostify[address]
-    except KeyError:
-        try:
-            host = hostify_base(address)[0]
-            lookup_hostify[address] = host
-            return host
-        except (hostify_error1, hostify_error2):
-            lookup_hostify[address] = ""
-            return ""
-
-
-def hostify_sync(addresses):
-    """Quickly add hosts of an IPv4 list to hostify cache"""
-    threads = []
-    for address in addresses:
-        t = Thread(target=hostify, args=(address,))
-        threads.append(t)
-        t.start()
-    for t in threads:
-        t.join()
-
-
-### NetEntity class
-class NetEntity:
-    def __init__(self, *args):
-        self.mac, self.ip, self.ipv6 = NetEntity._parse(args)
-        self.mac = self.mac.replace('-', ':').upper()
-        self.name = hostify(self.ip) if self.hasIP() else "Unknown"
-        if self.name.strip() == "": self.name = "Unknown"
-
-    def __str__(self) -> str:
-        parts = [f"{title} {value}" for title, value in zip(["", "MAC:", "IP:", "IPv6:"], [self.name, self.mac, self.ip, self.ipv6]) if value not in ['0', "Unknown"]]
-        parts = ' | '.join(parts)
-        parts = parts.strip()
-        return f"< {parts} >"
-    
-    def hasMAC(self) -> bool: return self.mac != '0'
-
-    def hasIP(self) -> bool: return self.ip != '0'
-
-    def hasIPv6(self) -> bool: return self.ipv6 != '0'
-
-    def isEmpty(self) -> bool: return not (self.hasMAC() or self.hasIP() or self.hasIPv6())
-
-
-    def sameAs(self, other) -> bool:
-        if not isinstance(other, NetEntity): return False
-        if self.hasMAC() and other.hasMAC():
-            return self.mac == other.mac
-        if self.hasIP() and other.hasIP():
-            return self.ip == other.ip
-        if self.hasIPv6() and other.hasIPv6():
-            return self.ipv6 == other.ipv6
-        return self.isEmpty() and other.isEmpty()
-    
-
-    def destruct(self):
-        return '|'.join([self.mac, self.ip, self.ipv6])
-    
-
-    def get_available(self):
-        available = []
-        if self.hasMAC(): available.append(self.mac)
-        if self.hasIP(): available.append(self.ip)
-        if self.hasIPv6(): available.append(self.ipv6)
-        return available
-    
-
-    def unite(self, other):
-        if not isinstance(other, NetEntity): return self
-        addresses = [getattr(self, attr) if getattr(self, has)() else getattr(other, attr) for attr, has in zip(["mac", "ip", "ipv6"], ["hasMAC", "hasIP", "hasIPv6"])]
-        self.mac, self.ip, self.ipv6 = tuple(addresses)
-
-
-    @staticmethod
-    def _parse(args) -> tuple[str, str, str]:
-        if isinstance(args[0], list):
-            args = args[0]
-        else:
-            args = list(args)
-        GENERAL = ["0.0.0.0", "255.255.255.255", "00:00:00:00:00:00", "FF:FF:FF:FF:FF:FF", "::"]
-        addresses = []
-        for method in [ismac, isipv4, isipv6]:
-            address = [address for address in args if method(address)]
-            if len(address) > 1:
-                raise ValueError("Multiple similar addresses given.")
-            elif len(address) == 1 and address[0] not in GENERAL:
-                addresses.append(address[0].strip())
-            else:
-                addresses.append('0')
-        unknown = set(args) - set(addresses) - set(GENERAL)
-        for u in unknown:
-            if u != None:
-                print(f"NetEntity init: Unable to resolve format [MAC/IPv4/IPv6] of \"{u}\"")
-        return tuple(addresses)
-    
-    @staticmethod
-    def restruct(line):
-        return NetEntity(line.split('|'))
-
-
-### IPCONFIG related functions
-def read_ipconfig():
-    """Read the command `>ipconfig /all` from console and decode it to UTF-8 text."""
-    data = read_command(['ipconfig','/all'])
-    data = data.split(b'\n')
-    decoded = []
-    for line in data:
-        try:
-            decoded.append(line.decode('utf-8'))
-        except UnicodeDecodeError:
-            continue
-    return decoded
-
-
-def dictify(text):
-    """Turn `text` to a python dictionary"""
-    result = {}
-    current = None
-    mini = None
-    for line in text:
-        if line.strip() == '':
-            continue
-        elif line[0].strip() == '':
-            if '. :' in line:
-                data = line.split(':', 1)
-                mini, value = data[0].strip(), data[1].strip()
-                mini = mini.strip(' .')
-                result[current][mini] = value
-            else:
-                value = line.strip()
-                if not isinstance(result[current][mini], list):
-                    result[current][mini] = [result[current][mini]]
-                result[current][mini].append(value)
-        else:
-            current = line.strip().strip(':')
-            result[current] = {}
-    return result
-
-
-def get_ipconfig() -> tuple[int, str]:
-    """Get information from >ipconfig,
-    select the first interface with a Default Gateway,
-    insert its info as a dictionary into `global ipconfig_data`.
-    Returns the error level (0 = fine; anything else is error)."""
-    global ipconfig_data
-
-    d = dictify(read_ipconfig())
-    try:
-        filtered = filter(lambda elem: 'Default Gateway' in elem[1], d.items())
-        selected = list(filtered)[0]
-    except IndexError:
-        print("ERROR: Could not find an interface with a default gateway.")
-        print("Check connection to internet. Execute `ipconfig` to debug.")
-        return -1, "No internet connection found."
-    interface, data = selected[0], selected[1]
-    ipconfig_data = clarify_filter(data)
-    ipconfig_data["Interface"] = interface
-    return 0, ''
-
-
-def clarify_filter(data):
-    """Filters unnecessary parts of the >ipconfig dictionary."""
-    result = {}
-    for key, value in data.items():
-        if isinstance(value, list):
-            result[key] = []
-            for item in value:
-                result[key].append(item.replace("(Preferred)", "").split('%')[0])
-            if len(result[key]) == 1:
-                result[key] = result[key][0]
-            elif len(result[key]) == 0:
-                del result[key]
-        else:
-            if value in ["Yes", "Enabled"]:
-                result[key] = True
-            elif value in ["No", "Disabled"]:
-                result[key] = False
-            else:
-                result[key] = value.replace("(Preferred)", "").split('%')[0]
-    return result
+def width_from_weight(x):
+    """Calculates a width of an edge from its weight."""
+    f = 1 - exp(-0.1 * x)
+    g = 4 - 2.4 * exp(-0.01 * x * x)
+    return 13.2 * f / g
 
 
 ### Automation
@@ -400,82 +145,13 @@ def pseudo_random(value):
     return ((value * 295) % 256) / 255
 
 
-### File handling
-def create_file(path):
-    try:
-        f = open(path, "x")
-    except FileExistsError:
-        return
-
-
-def readall(path):
-    create_file(path)
-    with open(path, 'r') as file:
-        return [line.strip('\n') for line in file.readlines()]
-
-
-### File managment
-def save_graph(G, printing=True):
-    create_file("graph.txt")
-    with open("graph.txt", 'w', encoding="utf-8") as file:
-        file.write("Nodes:\n")
-        for node in list(G.nodes):
-            file.write("    " + node.destruct() + "\n")
-        file.write("Edges:\n")
-        for u, v, info in list(G.edges(data=True)):
-            file.write(f"    {u.destruct()} > {v.destruct()} M {info['weight']}\n")
-    if printing:
-        print("\nSaved graph to graph.txt")
-
-
-def read_graph(printing=True):
-    lines = readall("graph.txt")
-    nodes = []
-    edges = []
-    current = None
-    for line in lines:
-        if "Nodes" in line:
-            current = nodes
-            continue
-        elif "Edges" in line:
-            current = edges
-            continue
-        else:
-            current.append(line.strip())
-    edges_tuples = []
-    for edge in edges:
-        try:
-            left, right = tuple(edge.split('>'))
-        except ValueError:
-            print("Invalid edge:", edge)
-            continue
-        try:
-            right, weight = tuple(right.split("M"))
-        except ValueError:
-            weight = 1
-        left = NetEntity.restruct(left.strip())
-        right = NetEntity.restruct(right.strip())
-        info = {"weight": int(weight.strip())}
-        edges_tuples.append((left, right, info))
-    real_nodes = []
-    for node in nodes:
-        real_nodes.append(NetEntity.restruct(node))
-    G = nx.DiGraph()
-    G.add_nodes_from(real_nodes)
-    G.add_edges_from(edges_tuples)
-    if printing:
-        print("\nRead graph from graph.txt")
-    return G
-
-
-
 ### Graphing
 def start_graphing():
     """Commance the graphing."""
     while True:
         render(G, printing=False)
         plt.show()
-        save_graph(G, printing=True)
+        cache.save_graph(G, printing=True)
 
 
 def render(G, printing=True):
@@ -486,18 +162,15 @@ def render(G, printing=True):
     if printing:
         print(H)
         print("Nodes:")
-        for node in nodes:
-            print("    ", node)
+        for node in nodes: print("    ", node)
         print("Edges:")
-        for edge in edges:
-            print("    ", edge[0], "↔", edge[1])
+        for edge in edges: print("    ", edge[0], "↔", edge[1])
 
     for node in H.copy():
         if do_invisible(node):
             H.remove_node(node)
     pos = layout(H)
-    if printing:
-        print("\n\n  Created position dictionary.")
+    if printing: print("\n\n  Created position dictionary.")
 
     nodes = ipv4sort(list(H.nodes))
     edges = list(H.edges)
@@ -508,13 +181,21 @@ def render(G, printing=True):
         pos=pos,
         node_color=colorify(list(H.nodes)),
         node_size=300,
+        edgelist=[]
         # connectionstyle="arc3,rad=0.02",
+    )
+    if printing: print("  Drawn network.")
+
+    
+    nx.draw_networkx_edges(
+        H,
+        pos,
+        width=[max(5 * width_from_weight(edge[2]) / sqrt(counter), 0.2) for edge in H.edges(data='weight')],
         arrowstyle='<-',
         arrowsize=20,
-        edge_color=['#000000' for edge in edges]
+        edge_color=['#000000' for edge in H.edges(data='weight')]
     )
-    if printing:
-        print("  Drawn network.")
+    if printing: print("  Drawn edges.")
 
 
     ax = plt.gca()
@@ -526,17 +207,14 @@ def render(G, printing=True):
         data = {"Has Internet": "False"}
 
     config_legend(ax, data)
-    if printing:
-        print("  Added legend.")
+    if printing: print("  Added legend.")
 
     labels(H, pos, nodes)
-    if printing:
-        print("  Added labels.")
+    if printing: print("  Added labels.")
 
     plt.axis("off")
     plt.subplots_adjust(bottom=0, left=0, right=1, top=0.9)
-    if printing:
-        print("Graph rendered!")
+    if printing: print("Graph rendered!")
 
 
 ###### Pyplot helper functions
@@ -606,7 +284,7 @@ def labels(H, pos, nodes):
 def specials(node):
     if node.hasMAC():
         if node.mac == "FF:FF:FF:FF:FF:FF":
-            if node.hasIP() and node.ip.endswith(".255") and is_in_network(node.ip):
+            if node.hasIP() and node.ip.endswith(".255") and is_in_network(node.ip, ipconfig_data):
                 return "Local broadcast"
             else:
                 return "Broadcast"
@@ -654,16 +332,22 @@ def do_invisible(node):
     # if node.hasMAC():
     #     if node.mac == "FF:FF:FF:FF:FF:FF":
     #         return True
-    return node.isEmpty()
+    if node.isEmpty():
+        return True
+    if not node.hasIP():
+        return True
+    if is_in_network(node.ip, ipconfig_data):
+        return False
+    return True
 
 
 ### Main 
 def main():
-    err, msg = get_ipconfig()
+    global ipconfig_data, here, router, G, cache, counter
+    ipconfig_data, err, msg = get_ipconfig()
     if err != 0:
         print("An error happened.", err, msg)
         return
-    global here, router
     here = NetEntity(ipconfig_data["Physical Address"], ipconfig_data["IPv4 Address"], ipconfig_data["IPv6 Address"])
     auto_select_interface(here.ip, ipconfig_data["Description"])
     router = NetEntity(ipconfig_data["Default Gateway"])
@@ -674,11 +358,11 @@ def main():
     print("Subnet Mask:", subnet_mask)
     print("Here:", here)
 
-    global G
+    cache = GraphCache()
     if from_scratch:
-        G = nx.DiGraph()
+        G, counter = nx.DiGraph(), 0
     else:
-        G = read_graph()
+        G, counter = cache.read_graph()
     G.add_node(here)
     G = process_graph(G)
     render(G, printing=False)
@@ -707,27 +391,8 @@ def graph_it(packet):
         ipv6["src"], ipv6["dst"] = packet[IPv6].src, packet[IPv6].dst
     source = NetEntity(mac["src"], ip["src"], ipv6["src"])
     destin = NetEntity(mac["dst"], ip["dst"], ipv6["dst"])
-    print_once("SRC:", source)
-    print_once("DST:", destin)
-    # packet.show()
-    # if ARP not in packet:
-    #     return
-    # arp = packet[ARP]
-    # src_ip = arp.psrc
-    # src_mac = arp.hwsrc.upper()
-    # dst_ip = arp.pdst
-    # dst_mac = arp.hwdst.upper()
-    # operation = "Unknown"
-    # if arp.op == 1:
-    #     operation = "who-has"
-    # if arp.op == 2:
-    #     operation = "is-at"
-    # if not outta_net and not is_in_network(dst_ip):
-    #     return
-    # msg = f"ARP {operation:7} {'from ' + src_ip:>21} {src_mac} {'to ' + dst_ip:>19} {dst_mac}"
-    # print(msg)
-    # src = NetEntity(src_mac, src_ip)
-    # dst = NetEntity(dst_mac, dst_ip)
+    print_once("SRC:", source, instead='')
+    print_once("DST:", destin, instead='')
     G.add_node(source)
     G.add_node(destin)
     G = process_graph(G)
@@ -740,6 +405,8 @@ def graph_it(packet):
             G[dst][src]['weight'] += 1
         else:
             G.add_edge(dst, src, weight=1)
+        global counter
+        if G[dst][src]['weight'] > counter: counter = G[dst][src]['weight']
 
 
 if __name__ == '__main__':
