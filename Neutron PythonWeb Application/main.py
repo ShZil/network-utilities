@@ -1,13 +1,24 @@
 import Neutron
-from time import sleep
 __author__ = 'ShZil'
+print("Hi 1")
 
-win = Neutron.Window("Example", size=(600,100))
+win = Neutron.Window("Example", css="main.css")
+print("Hi 2")
 
-# The loader covers while all the other elements and css loads
-win.loader(content="<h3>Loading App...</h3>", color="#fff", after=lambda: win.toggle_fullscreen())
+HeaderObject = Neutron.elements.Header(win, id="title", content="Hello")
 
-print("Hi")
+print("Hi 3")
 
-# win.show()
-sleep(1)
+def setName():
+    HeaderObject.setAttribute("style", "color: red;")
+    HeaderObject.innerHTML = "Hello world!"
+    win.getElementById("submit").innerHTML = "clicked!"
+    print("Hi 7")
+
+print("Hi 4")
+
+Neutron.elements.Button(win, id="submit", content="Hi", onclick=Neutron.event(setName))
+
+print("Hi 5")
+win.show()
+print("Hi 6")
