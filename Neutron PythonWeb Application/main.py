@@ -1,24 +1,24 @@
 import Neutron
-__author__ = 'ShZil'
-print("Hi 1")
 
-win = Neutron.Window("Example", css="main.css")
-print("Hi 2")
-
-HeaderObject = Neutron.elements.Header(win, id="title", content="Hello")
-
-print("Hi 3")
+win = Neutron.Window("Example")
 
 def setName():
-    HeaderObject.setAttribute("style", "color: red;")
-    HeaderObject.innerHTML = "Hello world!"
-    win.getElementById("submit").innerHTML = "clicked!"
-    print("Hi 7")
+    name = win.getElementById("inputName").value
+    win.getElementById("title").innerHTML = "Hello: " + name
 
-print("Hi 4")
 
-Neutron.elements.Button(win, id="submit", content="Hi", onclick=Neutron.event(setName))
+win.display(f"""
 
-print("Hi 5")
+<!DOCTYPE html>
+<html>
+   <head lang="en">
+      <meta charset="UTF-8">
+   </head>
+   <body>
+      <h1 id="title">Hello: </h1>
+      <input id="inputName">
+      <button id="submitName" onclick="setName()">Submit</button>
+   </body>
+</html>
+""", pyfunctions=[setName]) # Link up any Python functions so that they can be used inside the HTML
 win.show()
-print("Hi 6")
