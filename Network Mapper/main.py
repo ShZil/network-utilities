@@ -31,23 +31,23 @@ position_generator = {}
 
 # True = do network scanning and then render
 # False = no internet, just rendering
-scan = False
+scan = True
 # Number of times to repeat scanning which determines
 # connectable IPv4 devices. [TODO 3.2]
 # Min = 0. WARNING: Heavy on performance
 repeats = 10
 # Number of times to repeat scanning from cache
 # for connectable IPv4 devices.
-cache_repeats = 4
+cache_repeats = 0
 # Number of times to repeat tracing routes.
 # Note: each trace includes 3 checks. This is for information, not reliability.
-route_repeats = 1
+route_repeats = 3
 # Completely disable `hostify` by setting this to True
 no_hosts = False
 # Allowing self-loops (edge whose `start node == end node`) in graph?
 self_loops = False
 # Draw text labels (ip+host name) on Graph for all nodes
-do_labels = False
+do_labels = True
 # Render the ghost nodes? [Setting this to false
 #                          might disconnect some parts of the graph]
 show_ghosts = True
@@ -56,7 +56,7 @@ tpp = 0.09
 # Timeout for each scapy.sr1. Do not raise too much
 timeout = 1
 # Maximum number of hops in traceroute. Windows uses 30.
-route_max = 20
+route_max = 30
 # On the graph, display the IP and Host of destinations?
 # (overrides do_labels for certain nodes)
 display_destinations = True
@@ -68,7 +68,7 @@ display_base = True
 # Technical meaning:
 #   how many Timed-out nodes allowed in parallel chains between the same ends?
 #   max value, any shorter/equal chain will be merged.
-guess_ghosts = 25
+guess_ghosts = 35
 # How many times to repeat the Timed-out node-chain merging?
 chain_removal_repeats = 3
 # How many hex digits allowed for each timedout ghost node?

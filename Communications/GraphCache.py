@@ -65,7 +65,8 @@ class GraphCache:
         G.add_nodes_from(real_nodes)
         G.add_weighted_edges_from(edges_tuples)
         if printing:
-            print("\nRead graph from ", self.path)
+            print("\nRead graph from", self.path)
+            print(G)
         return G, counter
 
 

@@ -5,7 +5,7 @@
     "DHCP Enabled": true,
     "Autoconfiguration Enabled": true,
     "IPv6 Address": "2a02:ed0:4361:d100:501:15e9:ddd3:b1d6",
-    "Temporary IPv6 Address": "2a02:ed0:4361:d100:b9cb:8705:7fa3:5b97",
+    "Temporary IPv6 Address": "2a02:ed0:4361:d100:8dcd:c181:c4b5:8f6c",
     "Link-local IPv6 Address": "fe80::501:15e9:ddd3:b1d6",
     "IPv4 Address": "10.0.0.19",
     "Subnet Mask": "255.255.255.0",

@@ -1,6 +1,7 @@
 from functools import cache
 import json
 from math import ceil, exp, sqrt
+from time import sleep
 from scapy.all import conf, get_working_ifaces, sniff, Ether, Dot3, IP, IPv6
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
@@ -9,6 +10,7 @@ import networkx as nx
 from colorsys import hsv_to_rgb
 from threading import Thread
 from networkx.exception import NetworkXError as nxerr
+import plotly.graph_objects as go
 
 from GraphCache import GraphCache
 from NetEntity import NetEntity
@@ -26,15 +28,20 @@ here, router = None, None
 counter = 0
 cache = None
 
+# Select visualisation library
+PLOTLIB_NOT_DASH = False
 # Ignores cache in initialisation
 from_scratch = False
 # Selects layout for the graph
+
+
 def layout(G):
     # return nx.circular_layout(ipv4sort(list(G.nodes)))
     # return nx.kamada_kawai_layout(G, weight="nonexistant")
-    return nx.spring_layout(G, weight="nonexistant", k=0.6)  # Fruchterman-Reingold algorithm
+    # Fruchterman-Reingold algorithm
+    return nx.spring_layout(G, weight="nonexistant", k=0.6)
 
-### Utility methods
+# Utility methods
 
 
 def print_once(*msg, instead=".", sep=" "):
@@ -46,7 +53,8 @@ def print_once(*msg, instead=".", sep=" "):
         return
     else:
         if _dot:
-            if instead != '': print()
+            if instead != '':
+                print()
             _dot = False
         past_messages.append(sep.join(msg))
     print(sep.join(msg))
@@ -66,7 +74,7 @@ def width_from_weight(x):
     return 13.2 * f / g
 
 
-### Automation
+# Automation
 def auto_select_interface(ip, description):
     """Select the interface which matches the IP given"""
     for iface in get_working_ifaces():
@@ -75,7 +83,7 @@ def auto_select_interface(ip, description):
     print("Interface:", conf.iface, f'  ( {description} )')
 
 
-### Colours
+# Colours
 def colorify(nodes):
     """Returns a list of colours matching the NetEntities in `nodes` list"""
     colors = []
@@ -108,15 +116,17 @@ def colorconfig(key):
 def colorof(address):
     """Colours a specific IPv4 address.
     From #000000 to #FFFFFF."""
-    if not isipv4(address): return '#000000'
-    network, nettoo, center, device = [int(part) for part in address.split('.')]
+    if not isipv4(address):
+        return '#000000'
+    network, nettoo, center, device = [
+        int(part) for part in address.split('.')]
     h, s, v = (
         pseudo_random(network + nettoo),
         1 - (0.5 * center) / 255,
         1 - pseudo_random(device)/4
     )
     r, g, b = hsv_to_rgb(h, s, v)
-    x = lambda a: hex(int(a * 255))[2:].zfill(2)
+    def x(a): return hex(int(a * 255))[2:].zfill(2)
     r, g, b = x(r), x(g), x(b)
     return f'#{r}{g}{b}'
 
@@ -124,15 +134,17 @@ def colorof(address):
 def colorofmac(address):
     """Colours a specific MAC address.
     From #000000 to #FFFFFF."""
-    if not ismac(address): return '#000000'
-    parts = [int(part, base=16) for part in address.replace('-', ':').split(':')]
+    if not ismac(address):
+        return '#000000'
+    parts = [int(part, base=16)
+             for part in address.replace('-', ':').split(':')]
     h, s, v = (
         pseudo_random(parts[0] + parts[1]),
         1 - (parts[2] + parts[3]) / 255,
         1 - pseudo_random(parts[4] + parts[5]) / 4
     )
     r, g, b = hsv_to_rgb(h, s, v)
-    x = lambda a: hex(int(a * 255))[2:].zfill(2)[:2]
+    def x(a): return hex(int(a * 255))[2:].zfill(2)[:2]
     r, g, b = x(r), x(g), x(b)
     return f'#{r}{g}{b}'
 
@@ -145,32 +157,42 @@ def pseudo_random(value):
     return ((value * 295) % 256) / 255
 
 
-### Graphing
+# Graphing
 def start_graphing():
     """Commance the graphing."""
     while True:
         render(G, printing=False)
-        plt.show()
         cache.save_graph(G, printing=True)
 
 
 def render(G, printing=True):
     H = G.copy()
+    if PLOTLIB_NOT_DASH:
+        render_matplotlib(H, printing=printing)
+        plt.show()
+    else:
+        render_dash(H, printing=printing)
+
+
+def render_matplotlib(H, printing=True):
     print("\n----\n")
     nodes = ipv4sort(list(H.nodes))
     edges = list(H.edges)
     if printing:
         print(H)
         print("Nodes:")
-        for node in nodes: print("    ", node)
+        for node in nodes:
+            print("    ", node)
         print("Edges:")
-        for edge in edges: print("    ", edge[0], "↔", edge[1])
+        for edge in edges:
+            print("    ", edge[0], "↔", edge[1])
 
     for node in H.copy():
         if do_invisible(node):
             H.remove_node(node)
     pos = layout(H)
-    if printing: print("\n\n  Created position dictionary.")
+    if printing:
+        print("\n\n  Created position dictionary.")
 
     nodes = ipv4sort(list(H.nodes))
     edges = list(H.edges)
@@ -184,19 +206,20 @@ def render(G, printing=True):
         edgelist=[]
         # connectionstyle="arc3,rad=0.02",
     )
-    if printing: print("  Drawn network.")
+    if printing:
+        print("  Drawn network.")
 
-    
     nx.draw_networkx_edges(
         H,
         pos,
-        width=[max(5 * width_from_weight(edge[2]) / sqrt(counter), 0.2) for edge in H.edges(data='weight')],
+        width=[max(5 * width_from_weight(edge[2]) / sqrt(counter), 0.2)
+               for edge in H.edges(data='weight')],
         arrowstyle='<-',
         arrowsize=20,
         edge_color=['#000000' for edge in H.edges(data='weight')]
     )
-    if printing: print("  Drawn edges.")
-
+    if printing:
+        print("  Drawn edges.")
 
     ax = plt.gca()
     ax.margins(0.20)
@@ -207,17 +230,111 @@ def render(G, printing=True):
         data = {"Has Internet": "False"}
 
     config_legend(ax, data)
-    if printing: print("  Added legend.")
+    if printing:
+        print("  Added legend.")
 
     labels(H, pos, nodes)
-    if printing: print("  Added labels.")
+    if printing:
+        print("  Added labels.")
 
     plt.axis("off")
     plt.subplots_adjust(bottom=0, left=0, right=1, top=0.9)
-    if printing: print("Graph rendered!")
+    if printing:
+        print("Graph rendered!")
 
 
-###### Pyplot helper functions
+def render_dash(H, printing=True):
+    print("    Rendering (Dash).")
+    pos = layout(H)
+    # from: https://plotly.com/python/network-graphs/
+    # edge_x = []
+    # edge_y = []
+    # for edge in H.edges():
+    #     x0, y0 = pos[edge[0]]
+    #     x1, y1 = pos[edge[1]]
+    #     edge_x.extend([x0, x1, None])
+    #     edge_x.extend([y0, y1, None])
+
+    # edge_trace = go.Scatter(
+    #     x=edge_x, y=edge_y,
+    #     line=dict(width=0.5, color='#888'),
+    #     hoverinfo='none',
+    #     mode='lines')
+
+    # node_x = []
+    # node_y = []
+    # for node in H.nodes():
+    #     x, y = pos[node]
+    #     node_x.append(x)
+    #     node_y.append(y)
+
+    # node_trace = go.Scatter(
+    #     x=node_x, y=node_y,
+    #     mode='markers',
+    #     hoverinfo='text',
+    #     marker=dict(
+    #         showscale=True,
+    #         # colorscale options
+    #         # 'Greys' | 'YlGnBu' | 'Greens' | 'YlOrRd' | 'Bluered' | 'RdBu' |
+    #         # 'Reds' | 'Blues' | 'Picnic' | 'Rainbow' | 'Portland' | 'Jet' |
+    #         # 'Hot' | 'Blackbody' | 'Earth' | 'Electric' | 'Viridis' |
+    #         colorscale='YlGnBu',
+    #         reversescale=True,
+    #         color=[],
+    #         size=10,
+    #         colorbar=dict(
+    #             thickness=15,
+    #             title='Node Connections',
+    #             xanchor='left',
+    #             titleside='right'
+    #         ),
+    #         line_width=2))
+
+    # node_adjacencies = []
+    # node_text = []
+    # for node, adjacencies in enumerate(H.adjacency()):
+    #     node_adjacencies.append(len(adjacencies[1]))
+    #     node_text.append('# of connections: '+str(len(adjacencies[1])))
+
+    # node_trace.marker.color = node_adjacencies
+    # node_trace.text = node_text
+    # fig = go.Figure(data=[edge_trace, node_trace],
+    #                 layout=go.Layout(
+    #     title='<br>Network graph made with Python',
+    #     titlefont_size=16,
+    #     showlegend=False,
+    #     hovermode='closest',
+    #     margin=dict(b=20, l=5, r=5, t=40),
+    #     annotations=[dict(
+    #         text="Python code: <a href='https://plotly.com/ipython-notebooks/network-graphs/'> https://plotly.com/ipython-notebooks/network-graphs/</a>",
+    #         showarrow=False,
+    #         xref="paper", yref="paper",
+    #         x=0.005, y=-0.002)],
+    #     xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+    #     yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
+    # )
+    # fig.show(renderer="browser")
+
+    # from: https://towardsdatascience.com/tutorial-network-visualization-basics-with-networkx-and-plotly-and-a-little-nlp-57c9bbb55bb9
+    _layout = go.Layout(
+        paper_bgcolor='rgba(0,0,0,0)',  # transparent background
+        plot_bgcolor='rgba(0,0,0,0)',  # transparent 2nd background
+        xaxis={'showgrid': False, 'zeroline': False},  # no gridlines
+        yaxis={'showgrid': False, 'zeroline': False},  # no gridlines
+    )
+    fig = go.Figure(layout=_layout)
+    for trace in edge_trace(H, pos):
+        fig.add_trace(trace)
+    fig.add_trace(node_trace(H, pos))
+    fig.update_layout(showlegend=False)
+    fig.update_xaxes(showticklabels=False)
+    fig.update_yaxes(showticklabels=False)
+    print("Done rendering1")
+    Thread(target=fig.show, kwargs={"renderer": "browser"}).start()
+    sleep(4)
+
+
+# Pyplot helper functions
 def config_legend(ax, data):
     """Draw a legend to `ax` containing ipconfig data from `data`"""
     elements = []
@@ -278,7 +395,8 @@ def labels(H, pos, nodes):
             pass
         available.insert(ceil(len(available) / 2), '\n')
         labels[node] = '\n'.join(available)
-    nx.draw_networkx_labels(H, pos, labels=labels, font_size=9, font_color="black")
+    nx.draw_networkx_labels(H, pos, labels=labels,
+                            font_size=9, font_color="black")
 
 
 def specials(node):
@@ -295,10 +413,62 @@ def specials(node):
     return ""
 
 
-### Graph analysis
+# Plotly helper functions
+def make_edge(x, y, text, width):
+    return go.Scatter(x=x,
+                      y=y,
+                      line=dict(width=width,
+                                color='cornflowerblue'),
+                      hoverinfo='text',
+                      hovertext=([text]),
+                      mode='lines+markers+text',
+                      name="Nodes",
+                      marker=dict(size=5))
+
+
+def edge_trace(H, pos):
+    result = []
+    for edge in H.edges(data='weight'):
+        weight = edge[2]
+        if weight > 0:
+            char_1 = edge[0]
+            char_2 = edge[1]
+        x0, y0 = pos[char_1]
+        x1, y1 = pos[char_2]
+        text = str(char_1) + '--' + str(char_2) + ': ' + str(weight)
+
+        trace = make_edge([x0, x1, None], [y0, y1, None],
+                          text, width=1)
+        result.append(trace)
+    return result
+
+
+def node_trace(H, pos):
+    result = go.Scatter(x=[],
+                        y=[],
+                        text=[],
+                        textposition="top center",
+                        textfont_size=10,
+                        mode='markers+text',
+                        hoverinfo='none',
+                        marker=dict(color=[],
+                                     size=[],
+                                     line=None))
+    for node in H.nodes():
+        x, y = pos[node]
+        result['x'] += tuple([x])
+        result['y'] += tuple([y])
+        result['marker']['color'] += tuple(['cornflowerblue'])
+        # result['marker']['size'] += tuple([5*H.nodes()[node]['size']])
+        result['text'] += tuple(['<b>' + str(node) + '</b>'])
+    return result
+
+
+# Graph analysis
 def process_graph(G):
     """This method merges equal nodes in `G` and treats their edges."""
-    if G is None: return
+    if G is None:
+        return
     for a in list(G.nodes):
         for b in list(G.nodes):
             if a is b:
@@ -323,7 +493,7 @@ def merge_nodes(G, a, b):
         return
 
 
-### Sniffing
+# Sniffing
 def sniffer():
     sniff(count=-1, prn=graph_it)
 
@@ -346,14 +516,15 @@ def do_invisible(node):
     return True
 
 
-### Main 
+# Main
 def main():
     global ipconfig_data, here, router, G, cache, counter
     ipconfig_data, err, msg = get_ipconfig()
     if err != 0:
         print("An error happened.", err, msg)
         return
-    here = NetEntity(ipconfig_data["Physical Address"], ipconfig_data["IPv4 Address"], ipconfig_data["IPv6 Address"])
+    here = NetEntity(ipconfig_data["Physical Address"],
+                     ipconfig_data["IPv4 Address"], ipconfig_data["IPv6 Address"])
     auto_select_interface(here.ip, ipconfig_data["Description"])
     router = NetEntity(ipconfig_data["Default Gateway"])
     subnet_mask = ipconfig_data["Subnet Mask"]
@@ -403,15 +574,18 @@ def graph_it(packet):
     G = process_graph(G)
     src, dst = None, None
     for node in list(G.nodes):
-        if source.sameAs(node): src = node
-        if destin.sameAs(node): dst = node
+        if source.sameAs(node):
+            src = node
+        if destin.sameAs(node):
+            dst = node
     if src != None and dst != None:
         if G.has_edge(dst, src):
             G[dst][src]['weight'] += 1
         else:
             G.add_edge(dst, src, weight=1)
         global counter
-        if G[dst][src]['weight'] > counter: counter = G[dst][src]['weight']
+        if G[dst][src]['weight'] > counter:
+            counter = G[dst][src]['weight']
 
 
 if __name__ == '__main__':
