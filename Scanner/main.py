@@ -5,14 +5,110 @@ __author__ = 'Shaked Dan Zilberman'
 # A range for the scanned ports.
 PORT_RANGE = range(0, 1024)
 
+
 ###### IPCONFIG related functions
 def read_ipconfig():
-    """Read the command `>ipconfig /all` from console and decode it to UTF-8 text."""
+    """Read the command `>ipconfig /all` from console and decode it to UTF-8 text.
+
+    Returns:
+        list[str]: the command's output as a list of lines
+    
+    Raises:
+        subprocess.CalledProcessError: if subprocess.check_output fails.
+    """
     try:
         return read_command(['ipconfig','/all']).decode(encoding='utf-8', errors='ignore').split('\n')
     except CalledProcessError:
         print(">ipconfig /all raised an error.")
         raise
+
+
+def dictify(text: list[str]) -> dict:
+    """Turn `text` to a python dictionary.
+    The nested dictionary is created according to the following rules:
+    - loop over the lines.
+    - if the line isn't indented, inistalise a new subdictionary.
+    This is a new network interface, e.g. Ethernet, Wireless LAN, Bluetooth; or general info ("Windows IP Configuration").
+    - otherwise,
+        - if the line is formatted like "key . . . . : value", add this pair to the current active dictionary.
+        - otherwise, convert the pair to a (key, list) pair, and add the line's contents as a new value.
+    
+    Examples:
+
+        `Windows IP Configuration`
+            `Host Name . . . . . . . . . . . . : MyComputer-007`
+            `Primary Dns Suffix  . . . . . . . :`
+            `Node Type . . . . . . . . . . . . : Hybrid`
+            `IP Routing Enabled. . . . . . . . : No`
+        
+        {
+            "Windows IP Configuration": {
+                "Host Name": "MyComputer-007",
+                "Primary Dns Suffix": "",
+                "Node Type": "Hybrid",
+                "IP Routing Enabled": "No"
+            }
+        }
+
+        ``Wireless LAN adapter Wi-Fi:``
+            ``Media State . . . . . . . . . . . : Media disconnected``
+            ``Connection-specific DNS Suffix  . : local``
+            ``Description . . . . . . . . . . . : Wireless-ABCDE``
+            ``Physical Addresses. . . . . . . . : AB-CD-EF-01-02-03``
+            ``                                    AB-CD-EF-01-02-04``
+            ``                                    AB-CD-EF-01-02-05``
+            ``DHCP Enabled. . . . . . . . . . . : Yes``
+            ``Autoconfiguration Enabled . . . . : Yes``
+        
+        {
+            "Wireless LAN adapter Wi-Fi:": {
+                "Media State": "Media disconnected",
+                "Connection-specific DNS Suffix": "local",
+                "Description": "Wireless-ABCDE",
+                "Physical Addresses": [
+                    "AB-CD-EF-01-02-03",
+                    "AB-CD-EF-01-02-04",
+                    "AB-CD-EF-01-02-05"
+                ],
+                "DHCP Enabled": "Yes",
+                "Autoconfiguration Enabled": "Yes"
+            }
+        }
+        
+
+
+    Args:
+        text (list[str]): the text to be converted. Expected to be from ipconfig or similar.
+
+    Returns:
+        dict: the text in dictionary format.
+
+    Raises:
+        IndexError: if the format is invalid.
+    """
+    if isinstance(text, str): text = text.split('\n')
+    result = {}  # The dictionary to be returned.
+    interface = None  # The current interface whose configuration values are being decoded.
+    title = None  # The current title, inside the interface, whose value/s are being decoded.
+    for line in text:
+        if line.strip() == '': continue
+
+        if line[0].strip() != '':
+            # New interface found. Initialise dictionary.
+            interface = line.strip(": ")
+            result[interface] = {}
+
+        else:
+            if '. :' in line:
+                key, value = line.split(':', 1)
+                title, value = key.strip(' .'), value.strip()
+                result[interface][title] = value
+            else:
+                value = line.strip()
+                if not isinstance(result[interface][title], list):
+                    result[interface][title] = [result[interface][title]]
+                result[interface][title].append(value)
+    return result
 
 
 
