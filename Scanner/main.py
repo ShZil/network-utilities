@@ -1,5 +1,6 @@
 from subprocess import CalledProcessError, check_output as read_command
 
+
 __author__ = 'Shaked Dan Zilberman'
 
 # A range for the scanned ports.
@@ -95,16 +96,19 @@ def dictify(text: list[str]) -> dict:
 
         if line[0].strip() != '':
             # New interface found. Initialise dictionary.
-            interface = line.strip(": ")
+            interface = line.strip(": \r")
             result[interface] = {}
 
         else:
+            # Adding information to current `interface`.
             if '. :' in line:
+                # New property (title).
                 key, value = line.split(':', 1)
-                title, value = key.strip(' .'), value.strip()
+                title, value = key.strip(' .'), value.strip().replace("(Preferred)", "")
                 result[interface][title] = value
             else:
-                value = line.strip()
+                # Last property is a list, appending item.
+                value = line.strip().replace("(Preferred)", "")
                 if not isinstance(result[interface][title], list):
                     result[interface][title] = [result[interface][title]]
                 result[interface][title].append(value)
