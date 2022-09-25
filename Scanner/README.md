@@ -7,3 +7,4 @@ Created file run.bat
     - `title Shzil Network Scanner` to set the CMD's title.
     - `python main.py %*` to activate `main.py`, with all the command line arguments (`%*`).
     - `pause` so the window doesn't automatically close on error.
+Created file util.py
