@@ -115,6 +115,34 @@ def dictify(text: list[str]) -> dict:
     return result
 
 
+def get_ip_configuration() -> dict:
+    """Get information from `>ipconfig /all`,
+    select the first interface with a Default Gateway (i.e. online),
+    return its information as a dictionary. Has cache.
+
+    Returns:
+        dict: the interface's information.
+        dict: Windows IP Configuration dictionary.
+    
+    Raises:
+        RuntimeError: if no Default Gateway is found, meaning the computer is disconnected from the Internet.
+    """
+    if hasattr(get_ip_configuration, 'cache'):
+        return get_ip_configuration.cache
+    
+    information = dictify(read_ipconfig())
+
+    for interface, info in information.items():
+        if 'Default Gateway' in info.keys():
+            selected = interface
+            break
+    else:
+        raise RuntimeError("Computer is not connected to Internet.")
+    
+    data = {**information["Windows IP Configuration"], **information[selected], 'Interface': interface}
+    get_ip_configuration.cache = data
+    return data
+
 
 def main():
     pass
