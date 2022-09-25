@@ -145,7 +145,9 @@ def get_ip_configuration() -> dict:
 
 
 def main():
-    pass
+    from tests import test
+    test()
+    print(get_ip_configuration())
 
 
 if __name__ == '__main__':
