@@ -1,4 +1,5 @@
 from subprocess import CalledProcessError, check_output as read_command
+from util import *
 
 
 __author__ = 'Shaked Dan Zilberman'
@@ -101,17 +102,20 @@ def dictify(text: list[str]) -> dict:
 
         else:
             # Adding information to current `interface`.
-            if '. :' in line:
+            if '. :' in line or (not line.startswith("     ") and ':' in line):
                 # New property (title).
                 key, value = line.split(':', 1)
                 title, value = key.strip(' .'), value.strip().replace("(Preferred)", "")
-                result[interface][title] = value
+                if value.strip() == "": result[interface][title] = []
+                else: result[interface][title] = value
             else:
                 # Last property is a list, appending item.
                 value = line.strip().replace("(Preferred)", "")
                 if not isinstance(result[interface][title], list):
                     result[interface][title] = [result[interface][title]]
                 result[interface][title].append(value)
+                if len(result[interface][title]) == 1:
+                    result[interface][title] = result[interface][title][0]
     return result
 
 
@@ -147,7 +151,7 @@ def get_ip_configuration() -> dict:
 def main():
     from tests import test
     test()
-    print(get_ip_configuration())
+    print_dict(get_ip_configuration())
 
 
 if __name__ == '__main__':
