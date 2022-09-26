@@ -148,11 +148,14 @@ def get_ip_configuration() -> dict:
     get_ip_configuration.cache = data
     return data
 
+# Define alias
+ipconfig = get_ip_configuration
 
 def main():
+    get_ip_configuration()
     from tests import test
     test()
-    print_dict(get_ip_configuration())
+    print_dict(ipconfig())
 
 
 if __name__ == '__main__':
