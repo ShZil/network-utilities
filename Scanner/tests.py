@@ -4,7 +4,7 @@ import os
 
 def dictify_example1():
     x = 'Windows IP Configuration\n            Host Name . . . . . . . . . . . . : MyComputer-007\n            Primary Dns Suffix  . . . . . . . :\n            Node Type . . . . . . . . . . . . : Hybrid\n            IP Routing Enabled. . . . . . . . : No'
-    return dictify(x) == {'Windows IP Configuration': {'Host Name': 'MyComputer-007', 'Primary Dns Suffix': '', 'Node Type': 'Hybrid', 'IP Routing Enabled': 'No'}}
+    return dictify(x) == {'Windows IP Configuration': {'Host Name': 'MyComputer-007', 'Primary Dns Suffix': [], 'Node Type': 'Hybrid', 'IP Routing Enabled': 'No'}}
 
 
 def dictify_example2():

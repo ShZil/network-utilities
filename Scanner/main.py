@@ -34,6 +34,7 @@ def dictify(text: list[str]) -> dict:
     - otherwise,
         - if the line is formatted like "key . . . . : value", add this pair to the current active dictionary.
         - otherwise, convert the pair to a (key, list) pair, and add the line's contents as a new value.
+        - if the value is empty, use an empty list to represent it.
     
     Examples:
 
