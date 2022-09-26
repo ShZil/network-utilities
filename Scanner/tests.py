@@ -1,4 +1,5 @@
 from main import *
+import os
 
 
 def dictify_example1():
@@ -13,6 +14,7 @@ def dictify_example2():
 
 tests = [dictify_example1, dictify_example2]
 def test():
+    os.system("")  # Enables ANSI colouring
     results = [not run() for run in tests]
     if any(results):
         print("Failed tests:")
@@ -20,6 +22,7 @@ def test():
             print("    ", tests[i].__name__)
     else:
         print("All tests were successful.")
+    print("\033[0m")  # End colors
 
 if __name__ == '__main__':
     print("This module runs a few tests.")
