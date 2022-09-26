@@ -36,3 +36,6 @@ Created file util.py
 - No CMD! web/html or Android or py.UI
 - Git
 - Document EVERYTHING
+
+### 2022-09-26
+[14:48] Adding util.print_dict
