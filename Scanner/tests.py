@@ -12,6 +12,14 @@ def dictify_example2():
     return dictify(x) == {'Wireless LAN adapter Wi-Fi': {'Media State': 'Media disconnected', 'Connection-specific DNS Suffix': 'local', 'Description': 'Wireless-ABCDE', 'Physical Addresses': ['AB-CD-EF-01-02-03', 'AB-CD-EF-01-02-04', 'AB-CD-EF-01-02-05'], 'DHCP Enabled': 'Yes', 'Autoconfiguration Enabled': 'Yes'}}
 
 
+def ipconfig_data():
+    data = ipconfig()
+    for key in ["IPv4 Address", "Subnet Mask"]:
+        if not key in data:
+            print("ipconfig() has no key \"" + key + "\".")
+            return False
+    return True
+
 # Each element is a boolean function. False means the test failed.
 tests = [dictify_example1, dictify_example2]
 def test():
