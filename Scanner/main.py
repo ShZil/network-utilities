@@ -154,20 +154,36 @@ ipconfig = get_ip_configuration
 
 
 def get_all_possible_addresses() -> list[str]:
-    here, mask = bitify(here), bitify(mask)
-    base = mask_on(here, mask)
-    max = 2 ** (mask.count('0'))
-    return [unbitify(base + bin(i)[2:].zfill(mask.count('0'))) for i in range(max)]
+    """This method calculates all the possible IPv4 addresses in the current subnet,
+    according to this device's IP address and the Subnet Mask, both from `ipconfig()`.
+
+    Returns:
+        list[str]: a list of IPv4 addresses, that are all the possible ones in the current network.
+    """    
+    this_device_ip = ipconfig()["IPv4 Address"]
+    subnet_mask = ipconfig()["Subnet Mask"]
+
+    this_device_ip, subnet_mask = bitify(this_device_ip), bitify(subnet_mask)
+    unique, mutual = subnet_mask.count('0'), subnet_mask.count('1')
+
+    base = this_device_ip[:mutual]
+    binary = lambda number: bin(number)[2:].zfill(unique)
+
+    # All possible addresses in binary look like `[mutual part to all in network][special identifier]`,
+    # i.e. base + binary representation of i (where i ranges from (0) to (2 ^ unique))
+    return [unbitify(base + binary(i)) for i in range(2 ** unique)]
 
 
 def main():
+    get_ip_configuration()
+
     from tests import test
     test()
 
-    get_ip_configuration()
     print_dict(ipconfig())
 
     all_possible_IPv4_addresses = get_all_possible_addresses()
+    print("There are", len(all_possible_IPv4_addresses), "possible addresses in this subnet.")
 
 
 if __name__ == '__main__':
