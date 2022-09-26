@@ -20,6 +20,19 @@ def ipconfig_data():
             return False
     return True
 
+
+def bitify_examples():
+    return bitify("0.0.0.0") == '00000000000000000000000000000000' \
+        and bitify("255.255.255.255") == '11111111111111111111111111111111' \
+        and bitify("192.168.0.1") == '11000000101010000000000000000001'
+
+
+def unbitify_examples():
+    return unbitify('00000000000000000000000000000000') == "0.0.0.0" \
+        and unbitify('11111111111111111111111111111111') == "255.255.255.255" \
+        and unbitify('11000000101010000000000000000001') == "192.168.0.1"
+
+
 # Each element is a boolean function. False means the test failed.
 tests = [dictify_example1, dictify_example2]
 def test():
