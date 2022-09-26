@@ -12,6 +12,7 @@ def dictify_example2():
     return dictify(x) == {'Wireless LAN adapter Wi-Fi': {'Media State': 'Media disconnected', 'Connection-specific DNS Suffix': 'local', 'Description': 'Wireless-ABCDE', 'Physical Addresses': ['AB-CD-EF-01-02-03', 'AB-CD-EF-01-02-04', 'AB-CD-EF-01-02-05'], 'DHCP Enabled': 'Yes', 'Autoconfiguration Enabled': 'Yes'}}
 
 
+# Each element is a boolean function. False means the test failed.
 tests = [dictify_example1, dictify_example2]
 def test():
     os.system("")  # Enables ANSI colouring
