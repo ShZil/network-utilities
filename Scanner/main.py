@@ -1,5 +1,6 @@
 from subprocess import CalledProcessError, check_output as read_command
 from util import *
+from ip_handler import *
 
 
 __author__ = 'Shaked Dan Zilberman'
@@ -151,12 +152,22 @@ def get_ip_configuration() -> dict:
 # Define an alias
 ipconfig = get_ip_configuration
 
+
+def get_all_possible_addresses() -> list[str]:
+    here, mask = bitify(here), bitify(mask)
+    base = mask_on(here, mask)
+    max = 2 ** (mask.count('0'))
+    return [unbitify(base + bin(i)[2:].zfill(mask.count('0'))) for i in range(max)]
+
+
 def main():
     from tests import test
     test()
 
     get_ip_configuration()
     print_dict(ipconfig())
+
+    all_possible_IPv4_addresses = get_all_possible_addresses()
 
 
 if __name__ == '__main__':
