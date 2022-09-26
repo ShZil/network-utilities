@@ -1,4 +1,5 @@
 from main import *
+from ip_handler import *
 import os
 
 
@@ -33,8 +34,24 @@ def unbitify_examples():
         and unbitify('11000000101010000000000000000001') == "192.168.0.1"
 
 
+def valid_subnet_mask():
+    mask = ipconfig()["Subnet Mask"]
+    mask = bitify(mask)
+    counting, ones, zeros = "ones", 0, 0
+    for c in mask:
+        if c == '1':
+            if not counting == "ones": return False
+            ones += 1
+        elif c == '0':
+            counting = "zeros"
+            zeros += 1
+        else:
+            return False
+    return ones + zeros == 32
+
+
 # Each element is a boolean function. False means the test failed.
-tests = [dictify_example1, dictify_example2]
+tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask]
 def test():
     os.system("")  # Enables ANSI colouring
     results = [not run() for run in tests]
