@@ -43,6 +43,8 @@ Created file util.py
 [20:45] Created file ip_handler.py
 
 ### 2022-09-27
-Making a few plans:
-- Add @async(arg=list[]) decorator! (Threading)
+[16:15] Making a few plans:
+- Add @async(arg=list[]) decorator! (Threading; w/ progress bar)
 - Add method find_device_ARP and find_device_ICMP, both @async
+- Apply them to all_possible_IPv4_addresses
+- Add @timing decorator
