@@ -41,3 +41,8 @@ Created file util.py
 [14:48] Adding util.print_dict
 [20:42] Some more changes listed in GitHub commits
 [20:45] Created file ip_handler.py
+
+### 2022-09-27
+Making a few plans:
+- Add @async(arg=list[]) decorator! (Threading)
+- Add method find_device_ARP and find_device_ICMP, both @async
