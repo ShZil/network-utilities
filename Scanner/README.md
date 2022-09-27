@@ -44,7 +44,7 @@ Created file util.py
 
 ### 2022-09-27
 [16:15] Making a few plans:
-- Add @async(arg=list[]) decorator! (Threading; w/ progress bar)
-- Add method find_device_ARP and find_device_ICMP, both @async
+- Add @threadify(arg=list[]) decorator! (Threading; w/ progress bar)
+- Add method find_device_ARP and find_device_ICMP, both @threadify
 - Apply them to all_possible_IPv4_addresses
 - Add @timing decorator
