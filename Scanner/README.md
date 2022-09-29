@@ -54,6 +54,7 @@ Created file util.py
 maybe read the output of those too?
 https://www.techrepublic.com/article/ten-windows-10-network-commands-everyone-one-should-know/
 https://www.digitalcitizen.life/command-prompt-advanced-networking-commands/
+http://support.seagate.com/rightnow/Flash/central_axis/IPCommands.pdf
 
 [00:58] maybe switch to `ipconfig /allcompartments /all`, rewrite some parser and have possibly more info. Or maybe it doesn't give more info.
 
