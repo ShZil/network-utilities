@@ -1,3 +1,4 @@
+from re import X
 from main import *
 from ip_handler import *
 import os
@@ -50,8 +51,14 @@ def valid_subnet_mask():
     return ones + zeros == 32
 
 
+def threadify_echo_test():
+    echo = lambda x: x
+    echo = threadify(echo)
+    return echo([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]
+
+
 # Each element is a boolean function. False means the test failed.
-tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask]
+tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask, threadify_echo_test]
 def test():
     os.system("")  # Enables ANSI colouring
     results = [not run() for run in tests]
@@ -64,5 +71,7 @@ def test():
         print("All tests were successful.")
     print("\033[0m")  # End colors
 
+
 if __name__ == '__main__':
     print("This module runs a few tests.")
+    test()
