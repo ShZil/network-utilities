@@ -59,3 +59,5 @@ http://support.seagate.com/rightnow/Flash/central_axis/IPCommands.pdf
 [00:58] maybe switch to `ipconfig /allcompartments /all`, rewrite some parser and have possibly more info. Or maybe it doesn't give more info.
 
 [01:02] DHCP testing could use command(s) `ipconfig /release & ipconfig /renew`
+
+[15:34] Gonna rewrite the @threadify to limit the amount of active threads.

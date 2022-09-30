@@ -1,7 +1,9 @@
 from math import floor, ceil
-from threading import Thread
+from threading import Thread, active_count
 from time import sleep
+
 __author__ = 'Shaked Dan Zilberman'
+MAX_THREADS = 300
 
 
 def print_dict(x: dict) -> None:
@@ -60,7 +62,10 @@ def threadify(f):
             raise TypeError("Threadify-ied functions must receive a single argument of type list.")
         
         threads = [Thread(target=f, args=(x if isinstance(x, tuple) else (x, )), daemon=True) for x in args]
-        for thread in threads: thread.start()
+        for thread in threads:
+            thread.start()
+            while active_count() > MAX_THREADS:
+                sleep(0.01)
         
         if options["printing"]:
             while any([thread.is_alive() for thread in threads]):
