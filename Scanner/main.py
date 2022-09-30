@@ -241,7 +241,7 @@ def main():
         in zip(all_possible_addresses, can_connect_ICMP(all_possible_addresses))
         if online
     ]
-    print("There are", len(connectable_addresses), "connectable addresses in this subnet.")
+    print("There are", len(connectable_addresses), "ICMP connectable addresses in this subnet.")
     print(', '.join(connectable_addresses))
 
 
