@@ -66,3 +66,5 @@ http://support.seagate.com/rightnow/Flash/central_axis/IPCommands.pdf
 
 [21:02] Found a site that contains python code for basically the entire project: 
 https://thepacketgeek.com/scapy/building-network-tools/part-10/
+
+[21:23] Enjoying myself with some data analysis on the threadified task :)

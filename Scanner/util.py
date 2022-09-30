@@ -132,7 +132,18 @@ def threadify(f):
                 print(type(err), err, sep="\n")
             raise Exception("@threadify-ied function has raised some exceptions.")
 
-        print("Tasks' output:", output.getvalue())
+        output = output.getvalue()
+        if output.strip() != "": print("\nTasks' output:", output, end="\n\n\n")
+
+        data = output.split()
+        process = [0]
+        for num in data:
+            process.append(process[-1] + (-1 if num == '1' else +1))
+        from matplotlib import pyplot as plt
+        if len(process) > 1:
+            plt.plot(process)
+            plt.show()
+
         # Return the return values from the tasks as an ordered list.
         return values
         

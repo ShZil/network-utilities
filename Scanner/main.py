@@ -199,7 +199,9 @@ def can_connect_ICMP(address: str) -> bool:
         bool: a boolean indicating whether the echo ping had been successfully sent and received.
     """
     packet = IP(dst=address) / ICMP()
+    print("0")
     response = sr1(packet, verbose=False, timeout=2)
+    print("1")
     if response is not None:
         if response[ICMP].type == 0:
             return True
