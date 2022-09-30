@@ -187,6 +187,7 @@ def get_all_possible_addresses() -> list[str]:
     return [unbitify(base + binary(i)) for i in range(2 ** unique)]
 
 
+@threadify
 def can_connect_ICMP(address: str) -> bool:
     """This function tests whether it's possible to connect to another IPv4 address `address`,
     using an Internet Control Message Protocol (ICMP) ping request.
@@ -198,7 +199,7 @@ def can_connect_ICMP(address: str) -> bool:
         bool: a boolean indicating whether the echo ping had been successfully sent and received.
     """
     packet = IP(dst=address) / ICMP()
-    response = sr1(packet, verbose=False)
+    response = sr1(packet, verbose=False, timeout=2)
     if response is not None:
         if response[ICMP].type == 0:
             return True
