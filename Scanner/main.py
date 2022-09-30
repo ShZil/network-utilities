@@ -1,6 +1,11 @@
 from subprocess import CalledProcessError, check_output as read_command
+from scapy.sendrecv import sr1
+from scapy.layers.inet import IP, ICMP
+from scapy.config import conf
+from scapy.interfaces import get_working_ifaces
 from util import *
 from ip_handler import *
+
 
 
 __author__ = 'Shaked Dan Zilberman'
@@ -127,8 +132,15 @@ def get_ip_configuration() -> dict:
     return its information as a dictionary. Has cache.
 
     Returns:
-        dict: the interface's information.
-        dict: Windows IP Configuration dictionary.
+        dict: containing the following information:
+    ```
+        {
+            **information["Windows IP Configuration"],
+            **information["Interface with Gateway"],
+            'Interface': interface,
+            'Auto-Selected Interface': auto_select_interface(...)
+        }
+    ```
     
     Raises:
         RuntimeError: if no Default Gateway is found, meaning the computer is disconnected from the Internet.
@@ -145,7 +157,8 @@ def get_ip_configuration() -> dict:
     else:
         raise RuntimeError("Computer is not connected to Internet.")
     
-    data = {**information["Windows IP Configuration"], **information[selected], 'Interface': interface}
+    auto_selected_interface = auto_select_interface(information[selected]["IPv4 Address"])
+    data = {**information["Windows IP Configuration"], **information[selected], 'Interface': interface, 'Auto-Selected Interface': auto_selected_interface}
     get_ip_configuration.cache = data
     return data
 
@@ -174,6 +187,41 @@ def get_all_possible_addresses() -> list[str]:
     return [unbitify(base + binary(i)) for i in range(2 ** unique)]
 
 
+def can_connect_ICMP(address: str) -> bool:
+    """This function tests whether it's possible to connect to another IPv4 address `address`,
+    using an Internet Control Message Protocol (ICMP) ping request.
+
+    Args:
+        address (str): the IPv4 address to try pinging.
+
+    Returns:
+        bool: a boolean indicating whether the echo ping had been successfully sent and received.
+    """
+    packet = IP(dst=address) / ICMP()
+    response = sr1(packet, verbose=False)
+    if response is not None:
+        if response[ICMP].type == 0:
+            return True
+    return False
+
+
+def auto_select_interface(ip: str):
+    """Automatically selects the interface whose IP matches the given value.
+    Uses the list given in `scapy.interfaces.get_working_ifaces()`.
+    Sets the `scapy.config.conf.iface` to the correct value.
+
+    Args:
+        ip (str): the IPv4 address of the correct interface.
+
+    Returns:
+        str: `str(scapy.config.conf.iface)`
+    """    
+    for iface in get_working_ifaces():
+        if iface.ip == ip:
+            conf.iface = iface
+    return str(conf.iface)
+
+
 def main():
     get_ip_configuration()
 
@@ -182,9 +230,18 @@ def main():
 
     print_dict(ipconfig())
 
-    all_possible_IPv4_addresses = get_all_possible_addresses()
-    print("There are", len(all_possible_IPv4_addresses), "possible addresses in this subnet.")
-    print(all_possible_IPv4_addresses)
+    all_possible_addresses = get_all_possible_addresses()
+    print("There are", len(all_possible_addresses), "possible addresses in this subnet.")
+    # print(all_possible_addresses)
+
+    can_connect_all_ICMP = threadify(can_connect_ICMP)
+    can = can_connect_all_ICMP(all_possible_addresses)
+    print(can)
+    connectable_addresses = [address for address, online in zip(all_possible_addresses, can) if online]
+    print("There are", len(all_possible_addresses), "connectable addresses in this subnet.")
+    print(connectable_addresses)
+
+    print("Done")
 
 
 if __name__ == '__main__':
