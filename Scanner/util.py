@@ -59,7 +59,7 @@ def threadify(f):
     options={
         "daemon": True,
         "printing": True,
-        "printing_length": 30,
+        "printing_length": 50,
         "format": "[- ]"
     }
     # Add options set via `f.options`, if such an attribute exists.
@@ -84,6 +84,8 @@ def threadify(f):
             args = arg if isinstance(arg, tuple) else (arg, )
             try:
                 # Execute the function & save to `values` list.
+
+                # Force the function to end within a given timeout!
                 values[index] = func(*args)
             except Exception as e:
                 # Catch any exception and add it to the `fails` queue
@@ -91,8 +93,8 @@ def threadify(f):
                 return
         
         # Redirect printing
-        # real_stdout = sys.stdout
-        # sys.stdout = output = StringIO()
+        real_stdout = sys.stdout
+        sys.stdout = output = StringIO()
         
         # Create Thread objects
         threads = [Thread(target=task, args=(f, x, i), daemon=True) for i, x in enumerate(args)]
@@ -100,9 +102,9 @@ def threadify(f):
         # Activate the threads, waiting for threads to be freed if needed.
         for thread in threads:
             thread.start()
-            # while active_count() >= MAX_THREADS and MAX_THREADS > 0:
-            #     print(active_count(), "threads active.")
-            #     sleep(0.01)
+            while active_count() >= MAX_THREADS and MAX_THREADS > 0:
+                print(active_count(), "threads active.")
+                sleep(0.01)
         
         # Print a progress bar if requested
         if options["printing"]:
@@ -111,8 +113,8 @@ def threadify(f):
                 done = options["format"][1] * floor(options["printing_length"] * (1 - ratio))
                 waiting = options["format"][2] * ceil(options["printing_length"] * (ratio))
                 start, end = options["format"][0], options["format"][3]
-                print(f"{start}{done}{waiting}{end}  ({floor(100 * ratio)}%)    ", end='\r')# , file=real_stdout)
-                sleep(0.01)
+                print(f"{start}{done}{waiting}{end}  ({floor(100 * (1 - ratio))}%)    ", end='\r', file=real_stdout)
+                sleep(0.1)
             print("\n")
         
         # Join all threads
@@ -120,7 +122,7 @@ def threadify(f):
             thread.join()
         
         # Restore printing
-        # sys.stdout = real_stdout
+        sys.stdout = real_stdout
 
         # If any exceptions happened, print them orderly and raise another.
         if not fails.empty:
@@ -129,7 +131,7 @@ def threadify(f):
                 print(type(err), err, sep="\n")
             raise Exception("@threadify-ied function has raised some exceptions.")
 
-        # print(output.getvalue())
+        print(output.getvalue())
         # Return the return values from the tasks as an ordered list.
         return values
         
