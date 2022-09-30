@@ -94,7 +94,8 @@ def threadify(f):
         
         # Redirect printing
         real_stdout = sys.stdout
-        sys.stdout = output = StringIO()
+        output = StringIO()
+        sys.stdout = output
         
         # Create Thread objects
         threads = [Thread(target=task, args=(f, x, i), daemon=True) for i, x in enumerate(args)]
@@ -131,7 +132,7 @@ def threadify(f):
                 print(type(err), err, sep="\n")
             raise Exception("@threadify-ied function has raised some exceptions.")
 
-        print(output.getvalue())
+        print("Tasks' output:", output.getvalue())
         # Return the return values from the tasks as an ordered list.
         return values
         
