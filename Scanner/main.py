@@ -234,15 +234,15 @@ def main():
     all_possible_addresses = get_all_possible_addresses()
     print("There are", len(all_possible_addresses), "possible addresses in this subnet.")
     # print(all_possible_addresses)
-
-    can_connect_all_ICMP = threadify(can_connect_ICMP)
-    can = can_connect_all_ICMP(all_possible_addresses)
-    print(can)
-    connectable_addresses = [address for address, online in zip(all_possible_addresses, can) if online]
-    print("There are", len(all_possible_addresses), "connectable addresses in this subnet.")
-    print(connectable_addresses)
-
-    print("Done")
+    
+    connectable_addresses = [
+        address
+        for address, online
+        in zip(all_possible_addresses, can_connect_ICMP(all_possible_addresses))
+        if online
+    ]
+    print("There are", len(connectable_addresses), "connectable addresses in this subnet.")
+    print(', '.join(connectable_addresses))
 
 
 if __name__ == '__main__':
