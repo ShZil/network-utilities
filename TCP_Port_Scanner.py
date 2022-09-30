@@ -1,10 +1,11 @@
-from scapy.all import *
+from threading import Thread
+from scapy.all import IP, TCP, sr1
 from random import randint
 from time import sleep
 from multiprocessing import Process
 
 MINPORT = 0
-MAXPORT = 1023
+MAXPORT = 65534
 ip = '10.0.0.138'
 ports = {}
 
@@ -62,21 +63,27 @@ def print_port_if_open(port):
 
 
 def main():
-    animate = Process(target=animation, args=("Starting",.3))
-    animate.start()
-    threads = []
-    for port in range(MINPORT, MAXPORT+1, 1):
-        t = Thread(target=task, args=(port,))
-        threads.append(t)
-        t.start()
-    ready(threads)
-    print("\rDone!      ")
-    animate.terminate()
-    # for port in range(MINPORT, MAXPORT+1, 1):
-        # print_port(port)
-    print("==============")
-    for port in range(MINPORT, MAXPORT+1, 1):
-        print_port_if_open(port)
+    try:
+        animate = Process(target=animation, args=("Starting",.3))
+        animate.start()
+        threads = []
+        for port in range(MINPORT, MAXPORT+1, 1):
+            t = Thread(target=task, args=(port,))
+            threads.append(t)
+            t.start()
+        ready(threads)
+        print("\rDone!      ")
+        animate.terminate()
+        # for port in range(MINPORT, MAXPORT+1, 1):
+            # print_port(port)
+        print("==============")
+        for port in range(MINPORT, MAXPORT+1, 1):
+            print_port_if_open(port)
+    except KeyboardInterrupt:
+        print("(^C) Interrupted.")
+        for port in range(MINPORT, MAXPORT+1, 1):
+            print_port_if_open(port)
+    input("Press any key to continue. . .")
 
 
 if __name__ == "__main__":
