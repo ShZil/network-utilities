@@ -63,3 +63,6 @@ http://support.seagate.com/rightnow/Flash/central_axis/IPCommands.pdf
 [15:34] Gonna rewrite the @threadify to limit the amount of active threads.
 
 [18:54] Done lol. See util.py:88 for additional change
+
+[21:02] Found a site that contains python code for basically the entire project: 
+https://thepacketgeek.com/scapy/building-network-tools/part-10/
