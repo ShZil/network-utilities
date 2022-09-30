@@ -61,3 +61,5 @@ http://support.seagate.com/rightnow/Flash/central_axis/IPCommands.pdf
 [01:02] DHCP testing could use command(s) `ipconfig /release & ipconfig /renew`
 
 [15:34] Gonna rewrite the @threadify to limit the amount of active threads.
+
+[18:54] Done lol. See util.py:88 for additional change
