@@ -1,4 +1,7 @@
+from io import StringIO
 from math import floor, ceil
+from queue import Queue
+import sys
 from threading import Thread, active_count
 from time import sleep
 
@@ -52,13 +55,14 @@ def threadify(f):
     Returns:
         list: a list of values returned from the multiple calls to the function, sorted by the call order (i.e. not disorganised by the threads).
     """
-
+    # Set up the options dictionary with default values.
     options={
         "daemon": True,
         "printing": True,
-        "printing_length": 10,
+        "printing_length": 30,
         "format": "[- ]"
     }
+    # Add options set via `f.options`, if such an attribute exists.
     try:
         options = {**options, **f.options}
     except AttributeError:
@@ -69,35 +73,67 @@ def threadify(f):
         if not isinstance(args, list):
             raise TypeError("Threadify-ied functions must receive a single argument of type list.")
         
+        # The return values from the function calls.
         values = [None] * len(args)
+        # The exceptions raised during tasks thread-safe queue.
+        fails = Queue(maxsize=len(args))
         
+        # Define a task inner wrapper for `f`
         def task(func, arg, index):
+            # Convert arg to tuple if needed ("If the function receives a single not-tuple argument,..." in docstring)
             args = arg if isinstance(arg, tuple) else (arg, )
-            value = func(*args)
-            values[index] = value
+            try:
+                # Execute the function & save to `values` list.
+                values[index] = func(*args)
+            except Exception as e:
+                # Catch any exception and add it to the `fails` queue
+                fails.put(e)
+                return
         
+        # Redirect printing
+        # real_stdout = sys.stdout
+        # sys.stdout = output = StringIO()
+        
+        # Create Thread objects
         threads = [Thread(target=task, args=(f, x, i), daemon=True) for i, x in enumerate(args)]
+        
+        # Activate the threads, waiting for threads to be freed if needed.
         for thread in threads:
             thread.start()
-            while active_count() >= MAX_THREADS:
-                sleep(0.01)
+            # while active_count() >= MAX_THREADS and MAX_THREADS > 0:
+            #     print(active_count(), "threads active.")
+            #     sleep(0.01)
         
+        # Print a progress bar if requested
         if options["printing"]:
             while any([thread.is_alive() for thread in threads]):
                 ratio = sum([thread.is_alive() for thread in threads]) / len(threads)
                 done = options["format"][1] * floor(options["printing_length"] * (1 - ratio))
                 waiting = options["format"][2] * ceil(options["printing_length"] * (ratio))
                 start, end = options["format"][0], options["format"][3]
-                print(f"{start}{done}{waiting}{end}  ({floor(100 * ratio)}%)    ", end='\r')
-                sleep(0.1)
+                print(f"{start}{done}{waiting}{end}  ({floor(100 * ratio)}%)    ", end='\r')# , file=real_stdout)
+                sleep(0.01)
             print("\n")
         
+        # Join all threads
         for thread in threads:
             thread.join()
         
+        # Restore printing
+        # sys.stdout = real_stdout
+
+        # If any exceptions happened, print them orderly and raise another.
+        if not fails.empty:
+            while not fails.empty:
+                err = fails.get()
+                print(type(err), err, sep="\n")
+            raise Exception("@threadify-ied function has raised some exceptions.")
+
+        # print(output.getvalue())
+        # Return the return values from the tasks as an ordered list.
         return values
         
-        
+    # Make `wrapper` inherit `f`'s properties.
     wrapper.__name__ = f.__name__
     wrapper.__doc__ = f.__doc__
     return wrapper
