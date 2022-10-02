@@ -78,3 +78,5 @@ https://thepacketgeek.com/scapy/building-network-tools/part-10/
 And larger DB for passive fingerprinting: https://ostechnix.com/identify-operating-system-ttl-ping/
 
 [22:25] A PDF describing the packets for an active Nmap-like scan: https://www.giac.org/paper/gsec/159/tcp-ip-stack-fingerprinting-principles/100625
+
+[23:49] Nmap is short for Network Mapper. I'm creating an Nmap copy.
