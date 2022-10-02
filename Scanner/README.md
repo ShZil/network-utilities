@@ -75,3 +75,4 @@ https://thepacketgeek.com/scapy/building-network-tools/part-10/
 [21:28] Related link: https://nmap.org/book/nmap-os-db.html
 
 [21:57] Passive method: https://www.netresec.com/?page=Blog&month=2011-11&post=Passive-OS-Fingerprinting
+And larger DB for passive fingerprinting: https://ostechnix.com/identify-operating-system-ttl-ping/
