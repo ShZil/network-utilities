@@ -71,3 +71,5 @@ https://thepacketgeek.com/scapy/building-network-tools/part-10/
 
 ### 2022-10-02
 [21:23] Found out about a technique called "TCP/IP Fingerprinting". Each OS has a slightly different implementation of the protocols, and using these differences one can guess whether what the OS of a remote device is.
+
+[21:28] Related link: https://nmap.org/book/nmap-os-db.html
