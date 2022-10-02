@@ -68,3 +68,6 @@ http://support.seagate.com/rightnow/Flash/central_axis/IPCommands.pdf
 https://thepacketgeek.com/scapy/building-network-tools/part-10/
 
 [21:23] Enjoying myself with some data analysis on the threadified task :)
+
+### 2022-10-02
+[21:23] Found out about a technique called "TCP/IP Fingerprinting". Each OS has a slightly different implementation of the protocols, and using these differences one can guess whether what the OS of a remote device is.
