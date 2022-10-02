@@ -67,7 +67,7 @@ def threadify(f):
         options = {**options, **f.options}
     except AttributeError:
         pass
-
+    name = f.__name__
 
     def wrapper(args: list[tuple]):
         if not isinstance(args, list):
@@ -114,7 +114,8 @@ def threadify(f):
                 done = options["format"][1] * floor(options["printing_length"] * (1 - ratio))
                 waiting = options["format"][2] * ceil(options["printing_length"] * (ratio))
                 start, end = options["format"][0], options["format"][3]
-                print(f"{start}{done}{waiting}{end}  ({floor(100 * (1 - ratio))}%)    ", end='\r', file=real_stdout)
+                percent = floor(100 * (1 - ratio))
+                print(f"@threadify:{name} - {start}{done}{waiting}{end}  ({percent}%)    ", end='\r', file=real_stdout)
                 sleep(0.1)
             print("\n")
         
@@ -133,16 +134,8 @@ def threadify(f):
             raise Exception("@threadify-ied function has raised some exceptions.")
 
         output = output.getvalue()
-        if output.strip() != "": print("\nTasks' output:", output, end="\n\n\n")
-
-        data = output.split()
-        process = [0]
-        for num in data:
-            process.append(process[-1] + (-1 if num == '1' else +1))
-        from matplotlib import pyplot as plt
-        if len(process) > 1:
-            plt.plot(process)
-            plt.show()
+        if output.strip() != "": print("\nTasks' output:", output)
+        print("\n\n")
 
         # Return the return values from the tasks as an ordered list.
         return values
