@@ -117,8 +117,8 @@ def threadify(f):
                 done = options["format"][1] * ceil(options["printing_length"] * (1 - ratio))
                 waiting = options["format"][2] * floor(options["printing_length"] * (ratio))
                 start, end = options["format"][0], options["format"][3]
-                percent = floor(100 * (1 - ratio))
-                print(f"@threadify:{name} - {start}{done}{waiting}{end}  ({percent}%)    ", end='\r', file=real_stdout)
+                percent = ceil(100 * (1 - ratio))
+                print(f"@threadify: {name} {start}{done}{waiting}{end}  ({percent}%)    ", end='\r', file=real_stdout)
                 sleep(0.1)
             print("\n")
         
