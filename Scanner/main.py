@@ -42,47 +42,54 @@ def dictify(text: list[str] | str) -> dict:
         - otherwise, convert the pair to a (key, list) pair, and add the line's contents as a new value.
         - if the value is empty, use an empty list to represent it.
     
-    Examples:
-
-        `Windows IP Configuration`
-            `Host Name . . . . . . . . . . . . : MyComputer-007`
-            `Primary Dns Suffix  . . . . . . . :`
-            `Node Type . . . . . . . . . . . . : Hybrid`
-            `IP Routing Enabled. . . . . . . . : No`
-        
-        {
-            "Windows IP Configuration": {
-                "Host Name": "MyComputer-007",
-                "Primary Dns Suffix": "",
-                "Node Type": "Hybrid",
-                "IP Routing Enabled": "No"
-            }
+    Example:
+    ```r
+    Windows IP Configuration
+        Host Name . . . . . . . . . . . . : MyComputer-007
+        Primary Dns Suffix  . . . . . . . :
+        Node Type . . . . . . . . . . . . : Hybrid
+        IP Routing Enabled. . . . . . . . : No
+    ```
+    &darr;&darr;&darr;
+    ```json
+    {
+        "Windows IP Configuration": {
+            "Host Name": "MyComputer-007",
+            "Primary Dns Suffix": "",
+            "Node Type": "Hybrid",
+            "IP Routing Enabled": "No"
         }
-
-        ``Wireless LAN adapter Wi-Fi:``
-            ``Media State . . . . . . . . . . . : Media disconnected``
-            ``Connection-specific DNS Suffix  . : local``
-            ``Description . . . . . . . . . . . : Wireless-ABCDE``
-            ``Physical Addresses. . . . . . . . : AB-CD-EF-01-02-03``
-            ``                                    AB-CD-EF-01-02-04``
-            ``                                    AB-CD-EF-01-02-05``
-            ``DHCP Enabled. . . . . . . . . . . : Yes``
-            ``Autoconfiguration Enabled . . . . : Yes``
-        
-        {
-            "Wireless LAN adapter Wi-Fi:": {
-                "Media State": "Media disconnected",
-                "Connection-specific DNS Suffix": "local",
-                "Description": "Wireless-ABCDE",
-                "Physical Addresses": [
-                    "AB-CD-EF-01-02-03",
-                    "AB-CD-EF-01-02-04",
-                    "AB-CD-EF-01-02-05"
-                ],
-                "DHCP Enabled": "Yes",
-                "Autoconfiguration Enabled": "Yes"
-            }
+    }
+    ```
+    Another example:
+    ```r
+    Wireless LAN adapter Wi-Fi:
+            Media State . . . . . . . . . . . : Media disconnected
+            Connection-specific DNS Suffix  . : local
+            Description . . . . . . . . . . . : Wireless-ABCDE
+            Physical Addresses. . . . . . . . : AB-CD-EF-01-02-03
+                                                AB-CD-EF-01-02-04
+                                                AB-CD-EF-01-02-05
+            DHCP Enabled. . . . . . . . . . . : Yes
+            Autoconfiguration Enabled . . . . : Yes
+    ```
+    &darr;&darr;&darr;
+    ```json
+    {
+        "Wireless LAN adapter Wi-Fi:": {
+            "Media State": "Media disconnected",
+            "Connection-specific DNS Suffix": "local",
+            "Description": "Wireless-ABCDE",
+            "Physical Addresses": [
+                "AB-CD-EF-01-02-03",
+                "AB-CD-EF-01-02-04",
+                "AB-CD-EF-01-02-05"
+            ],
+            "DHCP Enabled": "Yes",
+            "Autoconfiguration Enabled": "Yes"
         }
+    }
+    ```
         
 
 
@@ -196,7 +203,7 @@ def can_connect_ICMP(address: str) -> bool:
         address (str): the IPv4 address to try pinging.
 
     Returns:
-        bool: a boolean indicating whether the echo ping had been successfully sent and received.
+        bool: a boolean indicating whether the echo ping had been successfully sent, and a response was received.
     """
     packet = IP(dst=address) / ICMP()
     response = sr1(packet, verbose=False, timeout=2)
