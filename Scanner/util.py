@@ -30,6 +30,13 @@ def threadify(f):
     Also, if the arguments were `f(a, b, c)`, the new argument is `f(list[tuple(a, b, c)])`.
     E.g., the function `add(x: int, y: int)`, if it's `@threadify`-ied, will be called by `add([(x0, y0), (x1, y1), (x2, y2)...])`.
     If the function receives a single not-tuple argument, you can just put it in the list `[a, b, c, d]` -> f(a) + f(b) + f(c) + f(d).
+    If the function receives a single tuple as an argument, wrap it in another tuple: `[a: tuple, b: tuple, c: tuple, d: tuple]` -> `f([(a, ), (b, ), (c, ), (d, )])`.
+    If a code-based explanation for the logic is better, here are the relevant (pseudo)code pieces:
+    ```py
+    for arg in args:
+        a = arg if isinstance(arg, tuple) else (arg, )
+        f(*a)
+    ```
     Doesn't support keyword-arguments.
     The amount of threads per decorated function call is limited by `MAX_THREADS`.
     
@@ -72,7 +79,7 @@ def threadify(f):
         pass
     name = f.__name__
 
-    def wrapper(args: list[tuple] | list):
+    def wrapper(args: list[tuple] | list) -> list:
         if not isinstance(args, list):
             raise TypeError("Threadify-ied functions must receive a single argument of type list.")
         
