@@ -85,3 +85,5 @@ And larger DB for passive fingerprinting: https://ostechnix.com/identify-operati
 Working some more on the project. Updates in GitHub.
 
 [23:54] Do it so new computers are added to the graph, and computers which disconnect are slowly faded away.
+
+[-00:05] Add repeats for can_connect_ICMP and can_connect_ICMP
