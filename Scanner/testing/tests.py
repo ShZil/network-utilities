@@ -62,6 +62,12 @@ tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unb
 def test() -> None:
     os.system("")  # Enables ANSI colouring
     results = [not run() for run in tests]
+    with open('tests_log.txt', 'w') as log:
+        log.write('\n'.join([
+                test.__name__ + " " + ("Successful" if not result else "Unsucessful")
+                for test, result in zip(tests, results)
+            ]))
+        if not any(results): log.write("\n\nAll tests were successful.")
     if any(results):
         print("Failed tests:")
         for i in [index for index, bad_result in enumerate(results) if bad_result]:
