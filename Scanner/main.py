@@ -1,5 +1,5 @@
 from subprocess import CalledProcessError, check_output as read_command
-from scapy.sendrecv import sr1, sendp, sniff
+from scapy.sendrecv import sr1, sendp, AsyncSniffer
 from scapy.layers.inet import IP, ICMP
 from scapy.layers.l2 import Ether, ARP
 from scapy.config import conf
@@ -209,7 +209,7 @@ def can_connect_ICMP(address: str) -> bool:
     packet = IP(dst=address) / ICMP()
     response = sr1(packet, verbose=0, timeout=2)
     if response is not None:
-        print(response[IP].show())
+        # print(response[IP].show())
         if response[ICMP].type == 0:
             return True
     return False
@@ -220,17 +220,25 @@ def can_connect_ARP(addresses: list[str]) -> list[str]:
     using Address Resolution Protocol (ARP) who-has requests.
 
     Args:
-        address (str): the IPv4 address to try connecting to.
+        addresses (list[str]): the IPv4 addresses to try connecting to.
 
     Returns:
-        bool: a boolean indicating whether the who-has had been successfully sent, and received an is-at response.
+        list[str]: the addresses that sent an is-at response.
     """
+    results = []
+    appender = lambda x: results.append((x[ARP].hwsrc, x[ARP].psrc))
+    filter_is_at_ARP = lambda x: ARP in x and x[ARP].op == 2 and x[ARP].psrc != ipconfig()["IPv4 Address"]
+    sniffer = AsyncSniffer(prn=appender, lfilter=filter_is_at_ARP, store=False)
+    sniffer.start()
+
+    send_ARP = lambda packet: sendp(packet, verbose=0)
+    send_ARP.__name__ = "can_connect_ARP"
     packets = [Ether() / ARP(pdst=address) for address in addresses]
-    sniff(prn=lambda x: x.summary(), lfilter=lambda x: ARP in x and x[ARP].op == 2, timeout=20)
-    sender = lambda packet: sendp(packet, verbose=0)
-    threadify(sender)(packets)
-    print("Done l232")
-    return False
+    threadify(send_ARP)(packets)
+
+    sniffer.stop()
+    # ******************* SAVE result[0] (i.e. MAC addresses) in a lookup table!
+    return [result[1] for result in results]
 
 
 def auto_select_interface(ip: str):
@@ -262,21 +270,16 @@ def main():
     print("There are", len(all_possible_addresses), "possible addresses in this subnet.")
     # print(all_possible_addresses)
     
-    # connectable_addresses = [
-    #     address
-    #     for address, online
-    #     in zip(all_possible_addresses, can_connect_ICMP(all_possible_addresses))
-    #     if online
-    # ]
-    # print("There are", len(connectable_addresses), "ICMP connectable addresses in this subnet.")
-    # print(', '.join(connectable_addresses))
-
     connectable_addresses = [
         address
         for address, online
-        in zip(all_possible_addresses, can_connect_ARP(all_possible_addresses))
+        in zip(all_possible_addresses, can_connect_ICMP(all_possible_addresses))  # type: ignore
         if online
     ]
+    print("There are", len(connectable_addresses), "ICMP connectable addresses in this subnet.")
+    print(', '.join(connectable_addresses))
+
+    connectable_addresses = can_connect_ARP(all_possible_addresses)
     print("There are", len(connectable_addresses), "ARP connectable addresses in this subnet.")
     print(', '.join(connectable_addresses))
 
