@@ -69,7 +69,7 @@ def threadify(f):
         pass
     name = f.__name__
 
-    def wrapper(args: list[tuple]):
+    def wrapper(args: list[tuple] | list):
         if not isinstance(args, list):
             raise TypeError("Threadify-ied functions must receive a single argument of type list.")
         

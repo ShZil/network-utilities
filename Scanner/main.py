@@ -31,7 +31,7 @@ def read_ipconfig():
         raise
 
 
-def dictify(text: list[str]) -> dict:
+def dictify(text: list[str] | str) -> dict:
     """Turn `text` to a python dictionary.
     The nested dictionary is created according to the following rules:
     - loop over the lines.
