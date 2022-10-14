@@ -1,6 +1,7 @@
 from subprocess import CalledProcessError, check_output as read_command
-from scapy.sendrecv import sr1
+from scapy.sendrecv import sr1, sendp, sniff
 from scapy.layers.inet import IP, ICMP
+from scapy.layers.l2 import Ether, ARP
 from scapy.config import conf
 from scapy.interfaces import get_working_ifaces
 from util import *
@@ -206,8 +207,9 @@ def can_connect_ICMP(address: str) -> bool:
         bool: a boolean indicating whether the echo ping had been successfully sent, and a response was received.
     """
     packet = IP(dst=address) / ICMP()
-    response = sr1(packet, verbose=False, timeout=2)
+    response = sr1(packet, verbose=0, timeout=2)
     if response is not None:
+        print(response[IP].show())
         if response[ICMP].type == 0:
             return True
     return False
