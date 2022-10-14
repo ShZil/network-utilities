@@ -25,7 +25,9 @@ def threadify(f):
     The values are not messy (which is what normally happens with threading), but organised according to the `args`.
     Meaning, `returned[0] = f(args[0]); returned[1] = f(args(1))...`.
 
-    *This function is blocking.* Its internals run asyncronosly, but calling this will wait until all the tasks are done.
+    **This function is blocking.**
+    Its internals run asyncronosly, but calling this will wait until all the tasks are done.
+    **It will slurp up any printing done by other threads!**
 
     Also, if the arguments were `f(a, b, c)`, the new argument is `f(list[tuple(a, b, c)])`.
     E.g., the function `add(x: int, y: int)`, if it's `@threadify`-ied, will be called by `add([(x0, y0), (x1, y1), (x2, y2)...])`.
@@ -54,7 +56,10 @@ def threadify(f):
             # For printing_length=6 and this format, after half the execution, the bar would look like "[---   ]  (50%)".
             "format": "[- ]",
             # output: bool -- should the output (via print()s) of the tasks be logged?
-            "output": True
+            "output": True,
+            # give: str -- decides what the function returns: "results" is the return value of the tasks; "output" is the printing of the tasks; "both" is a tuple of both.
+            # Any other value defaults to "results".
+            "give": "results"
         }
     ```
 
@@ -70,7 +75,8 @@ def threadify(f):
         "printing": True,
         "printing_length": 50,
         "format": "[- ]",
-        "output": True
+        "output": True,
+        "give": "results"
     }
     # Add options set via `f.options`, if such an attribute exists.
     try:
@@ -79,7 +85,7 @@ def threadify(f):
         pass
     name = f.__name__
 
-    def wrapper(args: list[tuple] | list) -> list:
+    def wrapper(args: list[tuple] | list) -> list | str | tuple[list, str]:
         if not isinstance(args, list):
             raise TypeError("Threadify-ied functions must receive a single argument of type list.")
         
@@ -102,10 +108,11 @@ def threadify(f):
                 fails.put(e)
                 return
         
-        # Redirect printing
         real_stdout = sys.stdout
         output = StringIO()
-        sys.stdout = output
+        if options["output"]:
+            # Redirect printing
+            sys.stdout = output
         
         # Create Thread objects
         threads = [Thread(target=task, args=(f, x, i), daemon=True) for i, x in enumerate(args)]
@@ -149,7 +156,9 @@ def threadify(f):
             print("\n\nTasks' output:\n", output, sep='')
         print("\n\n")
 
-        # Return the return values from the tasks as an ordered list.
+        # Returning logic.
+        if options["give"] == "output": return output
+        if options["give"] == "both": return values, output
         return values
         
     # Make `wrapper` inherit `f`'s properties.
