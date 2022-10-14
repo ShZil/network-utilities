@@ -59,7 +59,7 @@ def threadify_echo_test():
 
 # Each element is a boolean function. False means the test failed.
 tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask, threadify_echo_test]
-def test():
+def test() -> None:
     os.system("")  # Enables ANSI colouring
     results = [not run() for run in tests]
     if any(results):
