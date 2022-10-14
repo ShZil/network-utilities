@@ -253,7 +253,7 @@ def auto_select_interface(ip: str):
 def main():
     get_ip_configuration()
 
-    from tests import test
+    from testing.tests import test
     test()
 
     print_dict(ipconfig())
