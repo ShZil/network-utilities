@@ -80,3 +80,8 @@ And larger DB for passive fingerprinting: https://ostechnix.com/identify-operati
 [22:25] A PDF describing the packets for an active Nmap-like scan: https://www.giac.org/paper/gsec/159/tcp-ip-stack-fingerprinting-principles/100625
 
 [23:49] Nmap is short for Network Mapper. I'm creating an Nmap copy.
+
+# 2022-10-14
+Working some more on the project. Updates in GitHub.
+
+[23:54] Do it so new computers are added to the graph, and computers which disconnect are slowly faded away.
