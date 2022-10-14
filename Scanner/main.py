@@ -215,6 +215,24 @@ def can_connect_ICMP(address: str) -> bool:
     return False
 
 
+def can_connect_ARP(addresses: list[str]) -> list[str]:
+    """This function tests whether it's possible to connect to other IPv4 addresses `addresses`,
+    using Address Resolution Protocol (ARP) who-has requests.
+
+    Args:
+        address (str): the IPv4 address to try connecting to.
+
+    Returns:
+        bool: a boolean indicating whether the who-has had been successfully sent, and received an is-at response.
+    """
+    packets = [Ether() / ARP(pdst=address) for address in addresses]
+    sniff(prn=lambda x: x.summary(), lfilter=lambda x: ARP in x and x[ARP].op == 2, timeout=20)
+    sender = lambda packet: sendp(packet, verbose=0)
+    threadify(sender)(packets)
+    print("Done l232")
+    return False
+
+
 def auto_select_interface(ip: str):
     """Automatically selects the interface whose IP matches the given value.
     Uses the list given in `scapy.interfaces.get_working_ifaces()`.
@@ -244,13 +262,22 @@ def main():
     print("There are", len(all_possible_addresses), "possible addresses in this subnet.")
     # print(all_possible_addresses)
     
+    # connectable_addresses = [
+    #     address
+    #     for address, online
+    #     in zip(all_possible_addresses, can_connect_ICMP(all_possible_addresses))
+    #     if online
+    # ]
+    # print("There are", len(connectable_addresses), "ICMP connectable addresses in this subnet.")
+    # print(', '.join(connectable_addresses))
+
     connectable_addresses = [
         address
         for address, online
-        in zip(all_possible_addresses, can_connect_ICMP(all_possible_addresses))
+        in zip(all_possible_addresses, can_connect_ARP(all_possible_addresses))
         if online
     ]
-    print("There are", len(connectable_addresses), "ICMP connectable addresses in this subnet.")
+    print("There are", len(connectable_addresses), "ARP connectable addresses in this subnet.")
     print(', '.join(connectable_addresses))
 
 
