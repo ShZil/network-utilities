@@ -45,7 +45,9 @@ def threadify(f):
             "printing_length": 10,
             # format: str -- the format of the progress bar. 
             # For printing_length=6 and this format, after half the execution, the bar would look like "[---   ]  (50%)".
-            "format": "[- ]"
+            "format": "[- ]",
+            # output: bool -- should the output (via print()s) of the tasks be logged?
+            "output": True
         }
     ```
 
@@ -60,7 +62,8 @@ def threadify(f):
         "daemon": True,
         "printing": True,
         "printing_length": 50,
-        "format": "[- ]"
+        "format": "[- ]",
+        "output": True
     }
     # Add options set via `f.options`, if such an attribute exists.
     try:
@@ -133,8 +136,10 @@ def threadify(f):
                 print(type(err), err, sep="\n")
             raise Exception("@threadify-ied function has raised some exceptions.")
 
+        # Handle the output from the tasks
         output = output.getvalue()
-        if output.strip() != "": print("\nTasks' output:", output)
+        if options["output"] and output.strip() != "":
+            print("\n\nTasks' output:\n", output, sep='')
         print("\n\n")
 
         # Return the return values from the tasks as an ordered list.
