@@ -114,8 +114,8 @@ def threadify(f):
         if options["printing"]:
             while any([thread.is_alive() for thread in threads]):
                 ratio = sum([thread.is_alive() for thread in threads]) / len(threads)
-                done = options["format"][1] * floor(options["printing_length"] * (1 - ratio))
-                waiting = options["format"][2] * ceil(options["printing_length"] * (ratio))
+                done = options["format"][1] * ceil(options["printing_length"] * (1 - ratio))
+                waiting = options["format"][2] * floor(options["printing_length"] * (ratio))
                 start, end = options["format"][0], options["format"][3]
                 percent = floor(100 * (1 - ratio))
                 print(f"@threadify:{name} - {start}{done}{waiting}{end}  ({percent}%)    ", end='\r', file=real_stdout)
