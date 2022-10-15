@@ -100,3 +100,6 @@ Working some more on the project. Updates in GitHub.
 
 [01:53] Loosely using the term: this is a Minimum Viable Product.
 It can see the devices on the network and has a fine-ish graphical interface.
+
+[02:00] Do: make the addresses print in increasing order pls.
+Do: reconsider this decision -- what happens when address 10.0.0.2 joins the network and the last one is 10.0.0.138? Should we shift the entire log of 10.0.0.138?
