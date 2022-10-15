@@ -88,3 +88,5 @@ Working some more on the project. Updates in GitHub.
 
 ### 2022-10-15
 [00:05] Add repeats for can_connect_ICMP and can_connect_ICMP
+
+[19:04] To identify dis/re-connected devices, send continous ICMP ping requests. Do some tests with the bare data before visualising
