@@ -301,6 +301,7 @@ def main():
                 table[address] = table[address][-60:]
         # *********** Move the following code to another thread.
         if i % every == 0:
+            print("Scanning for new devices...")
             connectable_addresses = list(set(connectable_addresses).union(get_new_ICMP_devices()))
         i += 1
 
