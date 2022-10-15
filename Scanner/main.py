@@ -275,7 +275,7 @@ def main():
 
     conf.warning_threshold = 10000  # Disables "MAC address to reach not found" warnings.
     
-    ICMP_inital_check_repeats = 3
+    ICMP_inital_check_repeats = 4
     connectable_addresses = set()
     for _ in range(ICMP_inital_check_repeats):
         connectable_addresses = connectable_addresses.union([address for address, online in zip(all_possible_addresses, can_connect_ICMP(all_possible_addresses)) if online])
