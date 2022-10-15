@@ -210,7 +210,7 @@ def can_connect_ICMP(address: str) -> bool:
     """
     if (address == ipconfig()["IPv4 Address"]): return False
     packet = IP(dst=address) / ICMP()
-    response = sr1(packet, verbose=0, timeout=2)
+    response = sr1(packet, verbose=0, timeout=1)
     if response is not None:
         # print(response[IP].show())
         if response[ICMP].type == 0:
