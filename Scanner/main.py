@@ -272,6 +272,8 @@ def main():
     all_possible_addresses = get_all_possible_addresses()
     print("There are", len(all_possible_addresses), "possible addresses in this subnet.")
     # print(all_possible_addresses)
+
+    conf.warning_threshold = 10000  # Disables "MAC address to reach not found" warnings.
     
     ICMP_inital_check_repeats = 3
     connectable_addresses = set()
