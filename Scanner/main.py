@@ -284,11 +284,11 @@ def main():
     print('    ' + '\n    '.join(connectable_addresses))
     # input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
 
-    i = 0
-    every = 15
+    i = 1
+    every = 30
     table = dict()
     while True:
-        sleep(0.5)
+        # sleep(0.5)
         for address, online in zip(connectable_addresses, can_connect_ICMP(connectable_addresses)):
             if address not in table: table[address] = []
             table[address].append(online)
