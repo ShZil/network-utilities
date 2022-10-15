@@ -276,9 +276,10 @@ def main():
     conf.warning_threshold = 10000  # Disables "MAC address to reach not found" warnings.
     
     ICMP_inital_check_repeats = 4
+    get_new_ICMP_devices = lambda: [address for address, online in zip(all_possible_addresses, can_connect_ICMP(all_possible_addresses)) if online]
     connectable_addresses = set()
     for _ in range(ICMP_inital_check_repeats):
-        connectable_addresses = connectable_addresses.union([address for address, online in zip(all_possible_addresses, can_connect_ICMP(all_possible_addresses)) if online])
+        connectable_addresses = connectable_addresses.union(get_new_ICMP_devices())
     connectable_addresses = sorted(connectable_addresses, key=lambda x: int(x.split('.')[-1]))
     print("There are", len(connectable_addresses), "ICMP connectable addresses in this subnet:")
     print('    ' + '\n    '.join(connectable_addresses))
@@ -300,7 +301,7 @@ def main():
                 table[address] = table[address][-60:]
         # *********** Move the following code to another thread.
         if i % every == 0:
-            connectable_addresses = list(set(connectable_addresses).union([address for address, online in zip(all_possible_addresses, can_connect_ICMP(all_possible_addresses)) if online]))
+            connectable_addresses = list(set(connectable_addresses).union(get_new_ICMP_devices()))
         i += 1
 
     # connectable_addresses = can_connect_ARP(all_possible_addresses)

@@ -97,3 +97,6 @@ Working some more on the project. Updates in GitHub.
 
 ### 2022-10-16
 [01:42] Better printing. The table is now horizontal.
+
+[01:53] Loosely using the term: this is a Minimum Viable Product.
+It can see the devices on the network and has a fine-ish graphical interface.
