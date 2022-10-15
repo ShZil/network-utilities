@@ -124,6 +124,8 @@ def threadify(f):
                 print(active_count(), "threads active.")
                 sleep(0.01)
         
+        # BUGFIX ************: Make it so the progress bar starts already during threads.starts()
+
         # Print a progress bar if requested
         if options["printing"]:
             while any([thread.is_alive() for thread in threads]):
@@ -132,7 +134,7 @@ def threadify(f):
                 waiting = options["format"][2] * floor(options["printing_length"] * (ratio))
                 start, end = options["format"][0], options["format"][3]
                 percent = ceil(100 * (1 - ratio))
-                print(f"@threadify: {name} {start}{done}{waiting}{end}  ({percent}%)    ", end='\r', file=real_stdout)
+                print(f"@threadify: {name} {start}{done}{waiting}{end} ({percent}%)   ", end='\r', file=real_stdout)
                 sleep(0.1)
             print("\n")
         
