@@ -90,3 +90,10 @@ Working some more on the project. Updates in GitHub.
 [00:05] Add repeats for can_connect_ICMP and can_connect_ICMP
 
 [19:04] To identify dis/re-connected devices, send continous ICMP ping requests. Do some tests with the bare data before visualising
+
+[23:55] ICMP_inital_check_repeats was added in main.main(), repeating can_connect_ICMP 3 times over the entire network.
+
+[23:59] Improving the printing
+
+### 2022-10-16
+[01:42] Better printing. The table is now horizontal.

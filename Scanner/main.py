@@ -284,15 +284,24 @@ def main():
     print('    ' + '\n    '.join(connectable_addresses))
     # input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
 
-    table = []
+    i = 0
+    every = 15
+    table = dict()
     while True:
         sleep(0.5)
-        table.append(can_connect_ICMP(connectable_addresses))
+        for address, online in zip(connectable_addresses, can_connect_ICMP(connectable_addresses)):
+            if address not in table: table[address] = []
+            table[address].append(online)
         os.system("cls")
-        print("Connection testing (ICMP ping) to", '.'.join(connectable_addresses[0].split('.')[0:3]) + ".___")
-        print_table(table, header=connectable_addresses, head=lambda x: x.split('.')[-1].center(3), cell=lambda x: ' █ ' if x else '   ')
-        if len(table) > 20:
-            table = table[-20:]
+        print("Connection testing (ICMP ping) to", '.'.join(connectable_addresses[0].split('.')[0:3]) + ".___\n")
+        for address in table:
+            print(address.rjust(15) + ':', ''.join(['█' if x else ' ' for x in table[address]]))
+            if len(table[address]) > 60:
+                table[address] = table[address][-60:]
+        # *********** Move the following code to another thread.
+        if i % every == 0:
+            connectable_addresses = list(set(connectable_addresses).union([address for address, online in zip(all_possible_addresses, can_connect_ICMP(all_possible_addresses)) if online]))
+        i += 1
 
     # connectable_addresses = can_connect_ARP(all_possible_addresses)
     # print("There are", len(connectable_addresses), "ARP connectable addresses in this subnet:")
