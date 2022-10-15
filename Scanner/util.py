@@ -169,5 +169,16 @@ def threadify(f):
     return wrapper
 
 
+def print_table(table: list[list], *, header: list = None, head=lambda x: x, cell=lambda x: x):
+    from prettytable import PrettyTable
+    header = [head(title) for title in header]
+    t = PrettyTable(header)
+    for row in table:
+        row = [cell(datum) for datum in row]
+        t.add_row(row)
+    t.border = 0
+    print(t)
+
+
 if __name__ == '__main__':
     print("This is a utility module.")
