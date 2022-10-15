@@ -1,3 +1,4 @@
+import os
 from subprocess import CalledProcessError, check_output as read_command
 from scapy.sendrecv import sr1, sendp, AsyncSniffer
 from scapy.layers.inet import IP, ICMP
@@ -270,18 +271,32 @@ def main():
     print("There are", len(all_possible_addresses), "possible addresses in this subnet.")
     # print(all_possible_addresses)
     
-    connectable_addresses = [
-        address
-        for address, online
-        in zip(all_possible_addresses, can_connect_ICMP(all_possible_addresses))  # type: ignore
-        if online
-    ]
-    print("There are", len(connectable_addresses), "ICMP connectable addresses in this subnet.")
-    print(', '.join(connectable_addresses))
+    ICMP_inital_check_repeats = 3
+    connectable_addresses = set()
+    for _ in range(ICMP_inital_check_repeats):
+        connectable_addresses = connectable_addresses.union([address for address, online in zip(all_possible_addresses, can_connect_ICMP(all_possible_addresses)) if online])
+    connectable_addresses = sorted(connectable_addresses, key=lambda x: int(x.split('.')[-1]))
+    print("There are", len(connectable_addresses), "ICMP connectable addresses in this subnet:")
+    print('    ' + '\n    '.join(connectable_addresses))
+    # input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
 
-    connectable_addresses = can_connect_ARP(all_possible_addresses)
-    print("There are", len(connectable_addresses), "ARP connectable addresses in this subnet.")
-    print(', '.join(connectable_addresses))
+    table = []
+    while True:
+        sleep(0.5)
+        table.append(can_connect_ICMP(connectable_addresses))
+        os.system("cls")
+        print("Connection testing (ICMP ping) to", '.'.join(connectable_addresses[0].split('.')[0:3]) + ".___")
+        print_table(table, header=connectable_addresses, head=lambda x: x.split('.')[-1].center(3), cell=lambda x: ' █ ' if x else '   ')
+        if len(table) > 20:
+            table = table[-20:]
+
+    # connectable_addresses = can_connect_ARP(all_possible_addresses)
+    # print("There are", len(connectable_addresses), "ARP connectable addresses in this subnet:")
+    # print(', '.join(connectable_addresses))
+
+
+
+
 
 
 if __name__ == '__main__':
