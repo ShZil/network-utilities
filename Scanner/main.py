@@ -200,6 +200,7 @@ def get_all_possible_addresses() -> list[str]:
 def can_connect_ICMP(address: str) -> bool:
     """This function tests whether it's possible to connect to another IPv4 address `address`,
     using an Internet Control Message Protocol (ICMP) ping request.
+    If the address given is localhost, `return False`.
 
     Args:
         address (str): the IPv4 address to try pinging.
@@ -207,6 +208,7 @@ def can_connect_ICMP(address: str) -> bool:
     Returns:
         bool: a boolean indicating whether the echo ping had been successfully sent, and a response was received.
     """
+    if (address == ipconfig()["IPv4 Address"]): return False
     packet = IP(dst=address) / ICMP()
     response = sr1(packet, verbose=0, timeout=2)
     if response is not None:
