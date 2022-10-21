@@ -103,3 +103,15 @@ It can see the devices on the network and has a fine-ish graphical interface.
 
 [02:00] Do: make the addresses print in increasing order pls.
 Do: reconsider this decision -- what happens when address 10.0.0.2 joins the network and the last one is 10.0.0.138? Should we shift the entire log of 10.0.0.138?
+
+### 2022-10-22
+[01:09] Finished a vc with Almog working on the Project Proposal and discussing ideas.
+
+[01:25] Found this command for an mDNS abstact function, which also revealed that my ICMP scanner is faulty and doesn't always find all addresses.
+(ServerFault Thread)[https://serverfault.com/questions/30738/get-ip-addresses-and-computer-names-in-the-same-network]
+Command: `for /L %N in (1,1,254) do @nslookup 10.0.0.%N >> names.txt`
+
+[01:27] Do add: in the "identify dis/re-connected devices with continous ICMP ping echo requests",
+have the "Discover New Devices" and "Check Connection to Known Devices" parts execute on different threads and communicate with the data.
+Note, discovering new devices should be slower and silent.
+Additionally, add an "opacity" variable as perperation for the visual GUI integration.
