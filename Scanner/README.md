@@ -109,7 +109,7 @@ Do: reconsider this decision -- what happens when address 10.0.0.2 joins the net
 
 [01:25] Found this command for an mDNS abstact function, which also revealed that my ICMP scanner is faulty and doesn't always find all addresses.
 (ServerFault Thread)[https://serverfault.com/questions/30738/get-ip-addresses-and-computer-names-in-the-same-network]
-Command: `for /L %N in (1,1,254) do @nslookup 10.0.0.%N >> names.txt`
+Command: `for /L %N in (1,1,254) do @nslookup 10.0.0.%N >> names.txt`  // make this formatted better, i.e. just `addr=name`, without all the padding and the server UnKnown thingy. Batch abilities required.
 
 [01:27] Do add: in the "identify dis/re-connected devices with continous ICMP ping echo requests",
 have the "Discover New Devices" and "Check Connection to Known Devices" parts execute on different threads and communicate with the data.
