@@ -17,7 +17,7 @@ def print_dict(x: dict) -> None:
     print(colorful_json)
 
 
-def threadify(f):
+def threadify(f, silent=False):
     """This function turns methods (tasks) into thread-based on-list execution.
     Therefore, the execution will be faster.
     
@@ -65,6 +65,7 @@ def threadify(f):
 
     Args:
         f (function): The task to be turned into a threaded task.
+        silent (bool): forces `options["output"]` and `options["printing"]` to be `False`.
 
     Returns:
         list: a list of values returned from the multiple calls to the function, sorted by the call order (i.e. not disorganised by the threads).
@@ -83,7 +84,11 @@ def threadify(f):
         options = {**options, **f.options}
     except AttributeError:
         pass
+    
     name = f.__name__
+    if silent:
+        options["output"] = False
+        options["printing"] = False
 
     def wrapper(args: list[tuple] | list) -> list | str | tuple[list, str]:
         if not isinstance(args, list):
