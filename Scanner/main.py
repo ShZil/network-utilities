@@ -140,6 +140,13 @@ def get_ip_configuration() -> dict:
     select the first interface with a Default Gateway (i.e. online),
     return its information as a dictionary. Has cache.
 
+    Guaranteed keys:
+    ```
+    "IPv4 Address"
+    "Subnet Mask"
+    ```
+
+
     Returns:
         dict: containing the following information:
     ```
