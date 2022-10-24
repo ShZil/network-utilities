@@ -126,7 +126,7 @@ def threadify(f, silent=False):
         for thread in threads:
             thread.start()
             while active_count() >= MAX_THREADS and MAX_THREADS > 0:
-                print(active_count(), "threads active.")
+                print(active_count(), "threads active.", file=real_stdout)
                 sleep(0.01)
         
         # BUGFIX ************: Make it so the progress bar starts already during threads.starts()
@@ -141,6 +141,7 @@ def threadify(f, silent=False):
                 percent = ceil(100 * (1 - ratio))
                 print(f"@threadify: {name} {start}{done}{waiting}{end} ({percent}%)   ", end='\r', file=real_stdout)
                 sleep(0.1)
+                print("slept 0.1s")
             print("\n")
         
         # Join all threads
