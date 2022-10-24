@@ -251,6 +251,44 @@ def can_connect_ARP(addresses: list[str]) -> list[str]:
     return [result[1] for result in results]
 
 
+def display_continuous_connections_ICMP(addresses, get_new_devices):
+    table = {address: [] for address in addresses}
+    waiting = Queue()
+
+
+    def new_devices():
+        while True:
+            for address in get_new_devices():
+                if address in table.keys(): continue
+                if address in waiting.queue: continue
+                waiting.put(address)
+            sleep(5)
+
+
+    t = Thread(target=new_devices)
+    t.start()
+    while True:
+        sleep(1)
+        print("slept 1s")
+        while not waiting.empty():
+            address = waiting.get()
+            print("Adding address", address)
+            if address not in addresses:
+                addresses.append(address)
+        for address, online in zip(addresses, can_connect_ICMP(addresses)):
+            if address not in table: table[address] = []
+            table[address].append(online)
+        # print(table)
+        # os.system("cls")
+        # ** Change this to more dynamic, including the subnet mask...
+        print("Connection testing (ICMP ping) to", '.'.join(ipconfig()["IPv4 Address"].split('.')[0:3]) + ".___\n")
+        # ***** Change to immidiate printing
+        for address in table:
+            print(address.rjust(15) + ':', ''.join(['█' if x else ' ' for x in table[address]]) + "┅")
+            if len(table[address]) > 60:
+                table[address] = table[address][-60:]
+
+
 def auto_select_interface(ip: str):
     """Automatically selects the interface whose IP matches the given value.
     Uses the list given in `scapy.interfaces.get_working_ifaces()`.
@@ -292,25 +330,10 @@ def main():
     print('    ' + '\n    '.join(connectable_addresses))
     # input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
 
-    i = 1
-    every = 30
-    table = dict()
-    while True:
-        # sleep(0.5)
-        for address, online in zip(connectable_addresses, can_connect_ICMP(connectable_addresses)):
-            if address not in table: table[address] = []
-            table[address].append(online)
-        os.system("cls")
-        print("Connection testing (ICMP ping) to", '.'.join(connectable_addresses[0].split('.')[0:3]) + ".___\n")
-        for address in table:
-            print(address.rjust(15) + ':', ''.join(['█' if x else ' ' for x in table[address]]))
-            if len(table[address]) > 60:
-                table[address] = table[address][-60:]
-        # *********** Move the following code to another thread.
-        if i % every == 0:
-            print("Scanning for new devices...")
-            connectable_addresses = list(set(connectable_addresses).union(get_new_ICMP_devices()))
-        i += 1
+    get_new_ICMP_devices_silent = lambda: [address for address, online in zip(all_possible_addresses, can_connect_ICMP_silent(all_possible_addresses)) if online]
+    display_continuous_connections_ICMP(connectable_addresses, get_new_ICMP_devices_silent)
+
+    
 
     # connectable_addresses = can_connect_ARP(all_possible_addresses)
     # print("There are", len(connectable_addresses), "ARP connectable addresses in this subnet:")
