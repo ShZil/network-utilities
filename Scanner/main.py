@@ -224,6 +224,9 @@ def can_connect_ICMP(address: str) -> bool:
             return True
     return False
 
+can_connect_ICMP_silent = threadify(can_connect_ICMP, silent=True)
+can_connect_ICMP = threadify(can_connect_ICMP)
+
 
 def can_connect_ARP(addresses: list[str]) -> list[str]:
     """This function tests whether it's possible to connect to other IPv4 addresses `addresses`,
