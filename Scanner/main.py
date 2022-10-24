@@ -203,7 +203,6 @@ def get_all_possible_addresses() -> list[str]:
     return [unbitify(base + binary(i)) for i in range(2 ** unique)]
 
 
-@threadify
 def can_connect_ICMP(address: str) -> bool:
     """This function tests whether it's possible to connect to another IPv4 address `address`,
     using an Internet Control Message Protocol (ICMP) ping request.
