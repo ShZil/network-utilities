@@ -115,3 +115,13 @@ Command: `for /L %N in (1,1,254) do @nslookup 10.0.0.%N >> names.txt`  // make t
 have the "Discover New Devices" and "Check Connection to Known Devices" parts execute on different threads and communicate with the data.
 Note, discovering new devices should be slower and silent.
 Additionally, add an "opacity" variable as perperation for the visual GUI integration.
+
+### 2022-10-24
+[23:24] Working on it, separated into threads.
+I just got an idea on how to calculate the opacity!
+It should be a weighted average, where the most recent value has the heighest weight (decreasing exponentially).
+
+### 2022-10-25
+[00:37] Bug: the continouos display just freezes after a while.
+Theory: there's a thread that keeps being alive.
+A possible way to limit runtime of tasks: https://stackoverflow.com/questions/366682/how-to-limit-execution-time-of-a-function-call
