@@ -1,5 +1,6 @@
 import os
 from subprocess import CalledProcessError, check_output as read_command
+from tokenize import tabsize
 from scapy.sendrecv import sr1, sendp, AsyncSniffer
 from scapy.layers.inet import IP, ICMP
 from scapy.layers.l2 import Ether, ARP
@@ -203,7 +204,7 @@ def get_all_possible_addresses() -> list[str]:
     return [unbitify(base + binary(i)) for i in range(2 ** unique)]
 
 
-def can_connect_ICMP(address: str) -> bool:
+def can_connect_ICMP_base(address: str) -> bool:
     """This function tests whether it's possible to connect to another IPv4 address `address`,
     using an Internet Control Message Protocol (ICMP) ping request.
     If the address given is localhost, `return False`.
@@ -223,8 +224,8 @@ def can_connect_ICMP(address: str) -> bool:
             return True
     return False
 
-can_connect_ICMP_silent = threadify(can_connect_ICMP, silent=True)
-can_connect_ICMP = threadify(can_connect_ICMP)
+can_connect_ICMP_silent = threadify(can_connect_ICMP_base, silent=True)
+can_connect_ICMP = threadify(can_connect_ICMP_base)
 
 
 def can_connect_ARP(addresses: list[str]) -> list[str]:
@@ -253,25 +254,31 @@ def can_connect_ARP(addresses: list[str]) -> list[str]:
     return [result[1] for result in results]
 
 
-def display_continuous_connections_ICMP(addresses, get_new_devices):
+def display_continuous_connections_ICMP(addresses, all_possible_addresses):
     table = {address: [] for address in addresses}
     waiting = Queue()
 
 
-    def new_devices():
+    def new_devices(reverse: bool):
+        # ** Maybe weights here? Addresses are more likely to be a low number like 10.0.0.13 and not a large one like 10.0.0.234
+        if reverse: all_addresses = reversed(all_possible_addresses)
+        else: all_addresses = all_possible_addresses
         while True:
-            for address in get_new_devices():
+            for address in all_addresses:
                 if address in table.keys(): continue
                 if address in waiting.queue: continue
-                waiting.put(address)
-            sleep(5)
+                print(address)
+                if can_connect_ICMP_base(address):
+                    waiting.put(address)
+            # sleep(5)
 
 
-    t = Thread(target=new_devices)
-    t.start()
+    Thread(target=new_devices, args=(True, )).start()
+    Thread(target=new_devices, args=(False, )).start()
+    
     while True:
-        sleep(1)
-        print("slept 1s")
+        sleep(1.1)
+        print("slept 1.1s")
         while not waiting.empty():
             address = waiting.get()
             print("Adding address", address)
@@ -281,7 +288,7 @@ def display_continuous_connections_ICMP(addresses, get_new_devices):
             if address not in table: table[address] = []
             table[address].append(online)
         # print(table)
-        # os.system("cls")
+        os.system("cls")
         # ** Change this to more dynamic, including the subnet mask...
         print("Connection testing (ICMP ping) to", '.'.join(ipconfig()["IPv4 Address"].split('.')[0:3]) + ".___\n")
         # ***** Change to immidiate printing
@@ -332,8 +339,7 @@ def main():
     print('    ' + '\n    '.join(connectable_addresses))
     # input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
 
-    get_new_ICMP_devices_silent = lambda: [address for address, online in zip(all_possible_addresses, can_connect_ICMP_silent(all_possible_addresses)) if online]
-    display_continuous_connections_ICMP(connectable_addresses, get_new_ICMP_devices_silent)
+    display_continuous_connections_ICMP(connectable_addresses, all_possible_addresses)
 
     
 
