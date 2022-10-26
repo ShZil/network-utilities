@@ -9,6 +9,10 @@ from scapy.interfaces import get_working_ifaces
 from util import *
 from ip_handler import *
 
+from socket import gethostbyaddr as hostify_base
+from socket import herror as hostify_error1
+from socket import gaierror as hostify_error2
+
 
 
 __author__ = 'Shaked Dan Zilberman'
@@ -32,6 +36,27 @@ def read_ipconfig():
     except CalledProcessError:
         print(">ipconfig /all raised an error.")
         raise
+
+
+# ************ The subprocess windows open and disturb users (aka me)
+# Potential fix: https://stackoverflow.com/questions/1813872/running-a-process-in-pythonw-with-popen-without-a-console
+# or https://stackoverflow.com/a/55758810
+def hostify(address):
+    host = "Unknown"
+
+    # First method -> nslookup
+    lines = read_command(['nslookup','address']).decode(encoding='utf-8', errors='ignore').split('\n')
+    for line in lines:
+        if line.strip().startswith('Name:'):
+            host = line[len("Name:"):].strip()
+            break
+    else:
+        # If first method failed, second method -> socket.gethostbyaddr
+        try:
+            host = hostify_base(address)[0]
+        except (hostify_error1, hostify_error2):
+            pass
+    return host
 
 
 def dictify(text: list[str] | str) -> dict:
