@@ -192,6 +192,28 @@ def threadify(f, silent=False):
     return wrapper
 
 
+def memorise(f):
+    """A decorator that saves the return value of a function to a cache,
+    so that when it's called again (with the same arguments!),
+    no calculations are made and the result is returned from the cache.
+
+    Args:
+        f (function): the function to decorate and add a cache to
+
+    Returns:
+        function: the decorated function with a cache
+    """
+    memory = {}
+    def wrapper(*args):
+        if args in memory:
+            return memory[args]
+        else:
+            result = f(*args)
+            memory[args] = result
+            return result
+    return wrapper
+
+
 def print_table(table: list[list], *, header: list = None, head=lambda x: x, cell=lambda x: x):
     from prettytable import PrettyTable
     header = [head(title) for title in header]
