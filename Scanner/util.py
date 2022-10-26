@@ -205,12 +205,16 @@ def memorise(f):
     """
     memory = {}
     def wrapper(*args):
-        if args in memory:
-            return memory[args]
-        else:
-            result = f(*args)
-            memory[args] = result
-            return result
+        try:
+            if args in memory:
+                return memory[args]
+            else:
+                result = f(*args)
+                memory[args] = result
+                return result
+        except TypeError:
+            print("@memorise function cannot receive unhashable types! (e.g. lists, sets)")
+            raise
     return wrapper
 
 
