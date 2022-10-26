@@ -229,6 +229,60 @@ def print_table(table: list[list], *, header: list = None, head=lambda x: x, cel
     print(t)
 
 
+def render_opacity(percent: int | float):
+    """Returns a character to display a given opacity/fillness,
+    according to a percent:
+    0%-20% -> " "
+    ...
+    40%-60% -> "▒"
+    ...
+    80%-100% -> "█"
+
+    if the percent is outside the range [0, 100], returns "X".
+
+    ```
+        -10%  X
+         -5%  X
+         0%   
+         5%   
+         10%   
+         15%   
+         20%   
+         25%  ░
+         30%  ░
+         35%  ░
+         40%  ░
+         45%  ▒
+         50%  ▒
+         55%  ▒
+         60%  ▒
+         65%  ▓
+         70%  ▓
+         75%  ▓
+         80%  ▓
+         85%  █
+         90%  █
+         95%  █
+        100%  █
+        105%  X
+        110%  X
+        115%  X
+        120%  X
+    ```
+
+    Args:
+        percent (int | float): the percent to match.
+
+    Returns:
+        str: a single character representing that percent of fillness.
+    """
+    if not (0 <= percent <= 100): return "X"
+
+    characters = " ░▒▓█"
+    level = floor(percent / 20.1)
+    return characters[level]
+
+
 class InstantPrinting:
     """This context manager delays and stores all outputs via `print`s, and prints everything when closed.
     Usage:
