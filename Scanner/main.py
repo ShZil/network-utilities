@@ -333,7 +333,7 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
         
         with InstantPrinting():
             for address in sorted(table.keys(), key=lambda x: int(x.split('.')[-1])):
-                print(address.rjust(15) + ':', ''.join(['█' if x else ' ' for x in table[address]]) + "┅")
+                print(f"{address} ({hostify(address)})".rjust(40) + ':', ''.join(['█' if x else ' ' for x in table[address]]) + "┅")
                 if len(table[address]) > 60:
                     table[address] = table[address][-60:]
 
