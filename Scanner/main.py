@@ -41,7 +41,19 @@ def read_ipconfig():
 # ************ The subprocess windows open and disturb users (aka me)
 # Potential fix: https://stackoverflow.com/questions/1813872/running-a-process-in-pythonw-with-popen-without-a-console
 # or https://stackoverflow.com/a/55758810
-def hostify(address):
+@memorise
+def hostify(address: str):
+    """This function turns an IPv4 address to a host name using one of these methods:
+    1. Calling `>nslookup` with that address. If that fails,
+    2. Using `socket.gethostbyaddr` function. If that fails,
+    3. Returns "Unknown" since all the methods failed.
+
+    Args:
+        address (str): the IPv4 address to turn into a host.
+
+    Returns:
+        str: the host name.
+    """
     host = "Unknown"
 
     # First method -> nslookup
