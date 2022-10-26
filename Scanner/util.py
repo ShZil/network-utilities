@@ -204,5 +204,27 @@ def print_table(table: list[list], *, header: list = None, head=lambda x: x, cel
     print(t)
 
 
+class InstantPrinting:
+    """This context manager delays and stores all outputs via `print`s, and prints everything when closed.
+    Usage:
+    ```py
+    with InstantPrinting():
+        # do some stuff here including printing
+    # Here, exiting the context, the printing will all happen immediately.
+    ```
+    """
+    def __init__(self):
+        self.output = StringIO()
+
+    def __enter__(self):
+        self.real_stdout = sys.stdout
+        sys.stdout = self.output
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        sys.stdout = self.real_stdout
+        print(self.output.getvalue())
+
+
 if __name__ == '__main__':
     print("This is a utility module.")

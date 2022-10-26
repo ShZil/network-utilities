@@ -295,12 +295,12 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
         os.system("cls")
         # ** Change this to more dynamic, including the subnet mask...
         print("Connection testing (ICMP ping) to", '.'.join(ipconfig()["IPv4 Address"].split('.')[0:3]) + ".___\n")
-        # ***** Change to immidiate printing
-        table = sorted(table, key=lambda x: int(x.split('.')[-1]))
-        for address in table:
-            print(address.rjust(15) + ':', ''.join(['█' if x else ' ' for x in table[address]]) + "┅")
-            if len(table[address]) > 60:
-                table[address] = table[address][-60:]
+        
+        with InstantPrinting():
+            for address in sorted(table.keys(), key=lambda x: int(x.split('.')[-1])):
+                print(address.rjust(15) + ':', ''.join(['█' if x else ' ' for x in table[address]]) + "┅")
+                if len(table[address]) > 60:
+                    table[address] = table[address][-60:]
 
 
 def auto_select_interface(ip: str):
