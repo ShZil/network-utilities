@@ -5,5 +5,6 @@ bitify_examples Successful
 unbitify_examples Successful
 valid_subnet_mask Successful
 threadify_echo_test Successful
+shift_list_test Successful
 
 All tests were successful.
