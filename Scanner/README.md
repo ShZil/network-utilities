@@ -130,3 +130,5 @@ A possible way to limit runtime of tasks: https://stackoverflow.com/questions/36
 [19:47] Possible additions outlined in this comment: https://serverfault.com/a/30792
 
 [19:57] Idea: use `arp -a` to list the ARP routing table and read that information
+
+[22:46] Calculate the opacity based on whatever algorithm you choose and display it next to the continouos ICMP screen
