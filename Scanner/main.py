@@ -71,6 +71,9 @@ def hostify(address: str):
     return host
 
 
+hostify_sync = threadify(hostify)
+
+
 def dictify(text: list[str] | str) -> dict:
     """Turn `text` to a python dictionary.
     The nested dictionary is created according to the following rules:
