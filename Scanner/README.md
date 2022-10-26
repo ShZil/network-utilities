@@ -125,3 +125,8 @@ It should be a weighted average, where the most recent value has the heighest we
 [00:37] Bug: the continouos display just freezes after a while.
 Theory: there's a thread that keeps being alive.
 A possible way to limit runtime of tasks: https://stackoverflow.com/questions/366682/how-to-limit-execution-time-of-a-function-call
+
+### 2022-10-26
+[19:47] Possible additions outlined in this comment: https://serverfault.com/a/30792
+
+[19:57] Idea: use `arp -a` to list the ARP routing table and read that information
