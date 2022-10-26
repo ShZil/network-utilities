@@ -272,7 +272,7 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
             for address in all_addresses:
                 if address in table.keys(): continue
                 if address in waiting.queue: continue
-                print(address)
+                # print(address)
                 if can_connect_ICMP_base(address):
                     waiting.put(address)
             # sleep(5)
@@ -296,6 +296,7 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
         # ** Change this to more dynamic, including the subnet mask...
         print("Connection testing (ICMP ping) to", '.'.join(ipconfig()["IPv4 Address"].split('.')[0:3]) + ".___\n")
         # ***** Change to immidiate printing
+        table = sorted(table, key=lambda x: int(x.split('.')[-1]))
         for address in table:
             print(address.rjust(15) + ':', ''.join(['█' if x else ' ' for x in table[address]]) + "┅")
             if len(table[address]) > 60:
