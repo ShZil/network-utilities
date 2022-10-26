@@ -272,7 +272,6 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
             for address in all_addresses:
                 if address in table.keys(): continue
                 if address in waiting.queue: continue
-                # print(address)
                 if can_connect_ICMP_base(address):
                     waiting.put(address)
             # sleep(5)
@@ -282,7 +281,6 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
     
     while True:
         sleep(1.1)
-        print("slept 1.1s")
         while not waiting.empty():
             address = waiting.get()
             print("Adding address", address)

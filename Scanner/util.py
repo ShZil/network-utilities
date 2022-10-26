@@ -158,7 +158,6 @@ def threadify(f, silent=False):
                 percent = ceil(100 * (1 - ratio))
                 print(f"@threadify: {name} {start}{done}{waiting}{end} ({percent}%)   ", end='\r', file=real_stdout)
                 sleep(0.1)
-                print("slept 0.1s")
             print("\n")
         
         # Join all threads
