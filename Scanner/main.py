@@ -291,6 +291,43 @@ def can_connect_ARP(addresses: list[str]) -> list[str]:
     return [result[1] for result in results]
 
 
+def calculate_opcaity(connections: list[bool]) -> float:
+    """This function calculates the opacity of a given connection list (a list of booleans indicating some contacting attempts' successes),
+    according to a linear interpolation: if the last attempt succeeded, returns `1.0`; if the last `n`* attempts failed, return `0.0`.
+
+    (*) The amount of attempts needed to register a disconnection is set in `GONE_AFTER: int` inside the function.
+
+    Args:
+        connections (list[bool]): a list of contact attempts' successes, taking the form of `[...True, True, False, True, False]`
+
+    Returns:
+        float: a value between `0.0` (disconnected) and `1.0` (connected) representing certainty that the device is still connected (a.k.a its opacity).
+    """
+    
+    #   │++                             │+++++++++ 
+    #   │  ++                           │         +++++  
+    #   │    ++                         │              ++
+    #   │      ++                       │                ++ 
+    #   │        ++                =>   │                  + 
+    #   │          ++                   │                   + 
+    #   │            ++                 │                    +
+    #   │              ++               │                    + 
+    #   │                ++             │                     +
+    #   │                  ++           │                     + 
+    # ──┼─────────────────────────    ──┼────────────────────────
+    #   │                               │
+
+    GONE_AFTER: int = 11
+
+    if len(connections) == 0: return 0.0
+    if not any(connections): return 0.0
+    distance_to_last = list(reversed(connections)).index(True)
+    # Change this function? (see art above)
+    opacity = 1.0 - distance_to_last / GONE_AFTER
+    if opacity < 0: return 0.0
+    return opacity
+
+
 def display_continuous_connections_ICMP(addresses, all_possible_addresses):
     table = {address: [] for address in addresses}
     waiting = Queue()
@@ -313,7 +350,7 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
                     waiting.put(address)
             # sleep(5)
 
-    for i in range(18):
+    for i in range(SCANNER_THREADS):
         Thread(target=new_devices, args=(i, )).start()
     
     while True:
@@ -327,13 +364,18 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
             if address not in table: table[address] = []
             table[address].append(online)
         # print(table)
+        hostify_sync(list(table.keys()))
         os.system("cls")
         # ** Change this to more dynamic, including the subnet mask...
         print("Connection testing (ICMP ping) to", '.'.join(ipconfig()["IPv4 Address"].split('.')[0:3]) + ".___\n")
         
         with InstantPrinting():
             for address in sorted(table.keys(), key=lambda x: int(x.split('.')[-1])):
-                print(f"{address} ({hostify(address)})".rjust(40) + ':', ''.join(['█' if x else ' ' for x in table[address]]) + "┅")
+                print(
+                    f"{address} ({hostify(address)}):".rjust(len("255.255.255.255 (Smartphone-Galaxy-S90-5G)")),
+                    (''.join(['█' if x else ' ' for x in table[address]]) + "┅ ").rjust(63),
+                    f"[{render_opacity(100 * calculate_opcaity(table[address]))}]"
+                )
                 if len(table[address]) > 60:
                     table[address] = table[address][-60:]
 
