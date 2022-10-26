@@ -215,6 +215,10 @@ def memorise(f):
         except TypeError:
             print("@memorise function cannot receive unhashable types! (e.g. lists, sets)")
             raise
+    
+    # Make `wrapper` inherit `f`'s properties.
+    wrapper.__name__ = f.__name__
+    wrapper.__doc__ = f.__doc__
     return wrapper
 
 
