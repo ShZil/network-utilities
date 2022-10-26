@@ -398,3 +398,4 @@ if __name__ == '__main__':
     except Exception as err:
         with open('error log.txt', 'w') as f:
             f.write('An exception occurred - %s' % err)
+        raise
