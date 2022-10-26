@@ -17,6 +17,23 @@ def print_dict(x: dict) -> None:
     print(colorful_json)
 
 
+def shift(seq: list, n: int) -> list:
+    """Shifts / Rotates / Rolls a list `seq` by `n` places.
+
+    Args:
+        seq (list): The list to shift.
+        n (int): The amount of places to shift by.
+
+    Returns:
+        list: the shifted list.
+    """
+    if len(seq) == 0: return []
+    if len(seq) == 1: return seq
+    if n == 0: return seq
+    n = n % len(seq)
+    return seq[n:] + seq[:n]
+
+
 def threadify(f, silent=False):
     """This function turns methods (tasks) into thread-based on-list execution.
     Therefore, the execution will be faster.

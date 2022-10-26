@@ -57,8 +57,13 @@ def threadify_echo_test():
     return echo([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]
 
 
+def shift_list_test():
+    a = [1, 2, 3]
+    return shift(a, 1) == [2, 3, 1] and shift(a, 2) == [3, 1, 2] and shift(a, 3) == a
+
+
 # Each element is a boolean function. False means the test failed.
-tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask, threadify_echo_test]
+tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask, threadify_echo_test, shift_list_test]
 def test() -> None:
     os.system("")  # Enables ANSI colouring
     results = [not run() for run in tests]
