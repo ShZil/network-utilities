@@ -258,11 +258,16 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
     table = {address: [] for address in addresses}
     waiting = Queue()
 
+    # How many threads should be dedicated to the detection of new devices?
+    # The iteration shifts in different threads by `shifting = thread_index * 71 mod 255`, to ensure efficiency.
+    # Range of values: 1 to 18 (inclusive).
+    # Optimal values: 18, 6, 3, 2, 1
+    SCANNER_THREADS = 18
 
-    def new_devices(reverse: bool):
+
+    def new_devices(order: int):
         # ** Maybe weights here? Addresses are more likely to be a low number like 10.0.0.13 and not a large one like 10.0.0.234
-        if reverse: all_addresses = reversed(all_possible_addresses)
-        else: all_addresses = all_possible_addresses
+        all_addresses = shift(all_possible_addresses, 71*order)
         while True:
             for address in all_addresses:
                 if address in table.keys(): continue
@@ -272,9 +277,8 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
                     waiting.put(address)
             # sleep(5)
 
-
-    Thread(target=new_devices, args=(True, )).start()
-    Thread(target=new_devices, args=(False, )).start()
+    for i in range(18):
+        Thread(target=new_devices, args=(i, )).start()
     
     while True:
         sleep(1.1)
