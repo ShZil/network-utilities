@@ -336,6 +336,7 @@ def calculate_opcaity(connections: list[bool]) -> float:
 
 
 def display_continuous_connections_ICMP(addresses, all_possible_addresses):
+    if not isinstance(addresses, list): addresses = list(addresses)
     table = {address: [] for address in addresses}
     waiting = Queue()
 
