@@ -311,5 +311,20 @@ class InstantPrinting:
         print(self.output.getvalue())
 
 
+def handle_module_error(err):
+    import sys
+    from subprocess import check_call as do_command, CalledProcessError
+    import os
+    
+    print(f"Module `{err.name}` was not found. Attempting `pip install {err.name}`...\n")
+    try:
+        do_command([sys.executable, "-m", "pip", "install", err.name])
+    except CalledProcessError:
+        print(f"\nModule `{err.name}` could not be pip-installed. Please install manually.")
+        sys.exit(1)
+    argv = ['\"' + sys.argv[0] + '\"'] + sys.argv[1:]
+    os.execv(sys.executable, ['python'] + argv)
+
+
 if __name__ == '__main__':
     print("This is a utility module.")
