@@ -404,6 +404,50 @@ def auto_select_interface(ip: str):
     return str(conf.iface)
 
 
+def do_simple_scan(scan, all_possible_addresses, *, results=True, repeats=3):
+    """This is a wrapper for simple* scans, like ARP or ICMP.
+
+    (*) Simple means they are standardised:
+    [X] Have been @threadify-ied.
+    [X] Get list[str] of IPv4 addresses as input (post-threadify).
+    [X] Output list[bool] indicating online-ness of the addresses (index-correlated) (post-threadify).
+
+    Note: index-correlatedness, lists as input, and lists as output are handled by @threadify.
+    The requirements for the base function are just that it's of the form: `scan: str (IPv4 address) -> bool (connectivity)`.
+
+
+    Args:
+        scan (function): a @threadify-ied method from list[str] all_possible_addresses -> list[bool] online.
+        all_possible_addresses (list[str]): a list of IPv4 to test connectivity to.
+        results (bool, optional): Decides whether to print the results. Defaults to True.
+        repeats (int, optional): How many times should the full-range of addresses be scanned? Defaults to 3.
+
+    Returns:
+        list[str]: the addresses which replied, at least once, to the scan.
+    """
+    # Parsing the title & protocol.
+    title = scan.__name__
+    protocol = "".join(char for char in title if char.isupper())
+
+    # Define a <lambda> that returns a list[str] of connectable addresses.
+    get_new = lambda: [address for address, online in zip(all_possible_addresses, scan(all_possible_addresses)) if online]
+
+    # Call it `repeats` times and unite all results.
+    connectable_addresses = set()
+    for _ in range(repeats):
+        connectable_addresses = connectable_addresses.union(get_new())
+
+    # Turn it into a sorted list (just for convenience, order doesn't matter).
+    connectable_addresses = sorted(connectable_addresses, key=lambda x: int(''.join(x.split('.'))))
+
+    # Print if asked
+    if results:
+        print("There are", len(connectable_addresses), protocol, "connectable addresses in this subnet:")
+        print('    ' + '\n    '.join(connectable_addresses))
+    
+    return connectable_addresses
+
+
 def main():
     get_ip_configuration()
 
@@ -417,24 +461,25 @@ def main():
     # print(all_possible_addresses)
 
     conf.warning_threshold = 10000  # Disables "MAC address to reach not found" warnings.
-    
-    ICMP_inital_check_repeats = 0
-    get_new_ICMP_devices = lambda: [address for address, online in zip(all_possible_addresses, can_connect_ICMP(all_possible_addresses)) if online]
+
     connectable_addresses = set()
-    for _ in range(ICMP_inital_check_repeats):
-        connectable_addresses = connectable_addresses.union(get_new_ICMP_devices())
-    connectable_addresses = sorted(connectable_addresses, key=lambda x: int(x.split('.')[-1]))
-    print("There are", len(connectable_addresses), "ICMP connectable addresses in this subnet:")
-    print('    ' + '\n    '.join(connectable_addresses))
-    # input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
 
-    display_continuous_connections_ICMP(connectable_addresses, all_possible_addresses)
-
+    # ICMP scans
+    ICMP_inital_check_repeats = 3
+    connectable_addresses.update(do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=ICMP_inital_check_repeats))
     
 
-    # connectable_addresses = can_connect_ARP(all_possible_addresses)
+    # ARP scans
+    ARP_inital_check_repeats = 3
+    connectable_addresses.update(do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=ARP_inital_check_repeats))
+    # connectable_addresses = connectable_addresses + can_connect_ARP(all_possible_addresses)
+    # connectable_addresses = list(set(connectable_addresses))
     # print("There are", len(connectable_addresses), "ARP connectable addresses in this subnet:")
-    # print(', '.join(connectable_addresses))
+    # print('    ' + '\n    '.join(connectable_addresses))
+
+    # Continuous ICMP scans
+    input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
+    display_continuous_connections_ICMP(connectable_addresses, all_possible_addresses)
 
 
 

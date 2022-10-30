@@ -138,3 +138,7 @@ A possible way to limit runtime of tasks: https://stackoverflow.com/questions/36
 
 ### 2022-10-30
 [18:05] Gonna work on the ideas from the mail.
+
+[20:05] I think I'm done. I added the auto-pip-installer for `ModuleNotFound` errors, and the sorting in `continouos_ICMP` is enhanced.
+
+[20:58] Somewhat more standard interface for the simple scans.
