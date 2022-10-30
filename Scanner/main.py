@@ -377,7 +377,7 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
         print("Connection testing (ICMP ping) to", '.'.join(ipconfig()["IPv4 Address"].split('.')[0:3]) + ".___\n")
         
         with InstantPrinting():
-            for address in sorted(table.keys(), key=lambda x: int(x.split('.')[-1])):
+            for address in sorted(table.keys(), key=lambda x: int(''.join(x.split('.')))):
                 print(
                     f"{address} ({hostify(address)}):".rjust(len("255.255.255.255 (Smartphone-Galaxy-S90-5G)")),
                     (''.join(['█' if x else ' ' for x in table[address]]) + "┅ ").rjust(63),
