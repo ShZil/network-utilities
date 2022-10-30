@@ -1,1 +1,1 @@
-An exception occurred - 'list_reverseiterator' object has no attribute 'index'
+An exception occurred - name 'auto_install' is not defined
