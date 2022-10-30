@@ -1,18 +1,23 @@
-import os
-from subprocess import CalledProcessError, check_output as read_command
-from scapy.sendrecv import sr1, sendp, AsyncSniffer
-from scapy.layers.inet import IP, ICMP
-from scapy.layers.l2 import Ether, ARP
-from scapy.config import conf
-from scapy.interfaces import get_working_ifaces
-from util import *
-from ip_handler import *
+try:
+    import os
+    from subprocess import CalledProcessError, check_output as read_command
+    from util import *
+    from ip_handler import *
+    from scapy.sendrecv import sr1, sendp, AsyncSniffer
+    from scapy.layers.inet import IP, ICMP
+    from scapy.layers.l2 import Ether, ARP
+    from scapy.config import conf
+    from scapy.interfaces import get_working_ifaces
 
-from socket import gethostbyaddr as hostify_base
-from socket import herror as hostify_error1
-from socket import gaierror as hostify_error2
+    from socket import gethostbyaddr as hostify_base
+    from socket import herror as hostify_error1
+    from socket import gaierror as hostify_error2
 
+except ModuleNotFoundError as err:
+    handle_module_error(err)
 
+os.system('cls')
+print("All imports were successful.")
 
 __author__ = 'Shaked Dan Zilberman'
 
