@@ -1,1 +1,0 @@
-An exception occurred - name 'auto_install' is not defined
