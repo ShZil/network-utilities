@@ -135,3 +135,6 @@ A possible way to limit runtime of tasks: https://stackoverflow.com/questions/36
 
 ### 2022-10-27
 [21:41] I wrote down some ideas in class today. They're in a self-directed mail on the school account.
+
+### 2022-10-30
+[18:05] Gonna work on the ideas from the mail.

@@ -4,14 +4,17 @@ from queue import Queue
 import sys
 from threading import Thread, active_count
 from time import sleep
+import subprocess
+import sys
+from pygments import highlight, lexers, formatters
+from json import dumps
+from prettytable import PrettyTable
 
 __author__ = 'Shaked Dan Zilberman'
 MAX_THREADS: int = 300
 
 
 def print_dict(x: dict) -> None:
-    from pygments import highlight, lexers, formatters
-    from json import dumps
     formatted_json = dumps(x, sort_keys=False, indent=4)
     colorful_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
     print(colorful_json)
@@ -223,7 +226,6 @@ def memorise(f):
 
 
 def print_table(table: list[list], *, header: list = None, head=lambda x: x, cell=lambda x: x):
-    from prettytable import PrettyTable
     header = [head(title) for title in header]
     t = PrettyTable(header)
     for row in table:

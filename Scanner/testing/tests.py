@@ -1,4 +1,3 @@
-from re import X
 from main import *
 from ip_handler import *
 import os

@@ -1,6 +1,5 @@
 import os
 from subprocess import CalledProcessError, check_output as read_command
-from tokenize import tabsize
 from scapy.sendrecv import sr1, sendp, AsyncSniffer
 from scapy.layers.inet import IP, ICMP
 from scapy.layers.l2 import Ether, ARP
@@ -431,9 +430,6 @@ def main():
     # connectable_addresses = can_connect_ARP(all_possible_addresses)
     # print("There are", len(connectable_addresses), "ARP connectable addresses in this subnet:")
     # print(', '.join(connectable_addresses))
-
-
-
 
 
 
