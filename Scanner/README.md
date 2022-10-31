@@ -157,3 +157,6 @@ but after testing in my local network, having 0 hosts respond, and reading that
 "Not all hosts (or networks) will accept or respond to multicast traffic.",
 I have concluded I shall not include them right now.
 Maybe in the future, as a more complex scan which has a low chance of reward.
+
+[22:19] Maybe add an hostify loop? And have a small chance for `hostify` to not return from cache.
+Make it an `@probabilistic_cache`
