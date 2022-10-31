@@ -64,7 +64,7 @@ http://support.seagate.com/rightnow/Flash/central_axis/IPCommands.pdf
 
 [18:54] Done lol. See util.py:88 for additional change
 
-[21:02] Found a site that contains python code for basically the entire project: 
+[21:02] Found a site that contains python code for basically the entire project:
 https://thepacketgeek.com/scapy/building-network-tools/part-10/
 
 [21:23] Enjoying myself with some data analysis on the threadified task :)
@@ -142,3 +142,18 @@ A possible way to limit runtime of tasks: https://stackoverflow.com/questions/36
 [20:05] I think I'm done. I added the auto-pip-installer for `ModuleNotFound` errors, and the sorting in `continouos_ICMP` is enhanced.
 
 [20:58] Somewhat more standard interface for the simple scans.
+
+### 2022-10-31
+[21:00] This command is analogous to my simple ICMP scan:
+```bat
+@echo off
+cls
+FOR /L %i IN (1,1,254) DO ping.exe -n 1 -w 500 10.0.0.%i | FIND /i "Reply"
+```
+
+[21:02] I have considered using broadcast (255.255.255.255 / 10.0.0.255) and multicast (224.0.0.1),
+but after testing in my local network, having 0 hosts respond, and reading that
+"Many modern OS are now disabling response to the broadcast. They ignore them to avoid security issues."
+"Not all hosts (or networks) will accept or respond to multicast traffic.",
+I have concluded I shall not include them right now.
+Maybe in the future, as a more complex scan which has a low chance of reward.
