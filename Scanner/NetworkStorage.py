@@ -10,6 +10,14 @@ class NetworkEntity:
         self.ipv6 = extend_ipv6(ipv6)
         self.name = name
     
+    def __getitem__(self, key):
+        if key == "mac": return self.mac
+        if key == "ip": return self.ip
+        if key == "ipv6": return self.ipv6
+        if key == "name": return self.name
+        raise TypeError("Subscripting in NetworkEntity must be `mac`, `ip`, `ipv6`, or `name`.")
+
+
 def standard_mac(mac: str) -> str:
     MAC_REGEX = r'^([0-9A-F]{2}-){5}([0-9A-F]{2})$'
     # using the IEEE Std 802-2014 definition.
