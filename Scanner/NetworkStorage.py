@@ -10,6 +10,30 @@ class NetworkEntity:
         self.ipv6 = extend_ipv6(ipv6)
         self.name = name
     
+def standard_mac(mac: str) -> str:
+    MAC_REGEX = r'^([0-9A-F]{2}-){5}([0-9A-F]{2})$'
+    # using the IEEE Std 802-2014 definition.
+    mac = mac.replace(':', '-').upper()
+    if not re.match(MAC_REGEX, mac):
+        raise ValueError(f"Invalid MAC address: \"{mac}\"")
+    return mac
+
+
+def check_ip(ip: str) -> str:
+    IP_REGEX = r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
+    if not re.match(IP_REGEX, ip):
+        raise ValueError(f"Invalid IP address: \"{ip}\"")
+    return ip
+
+
+def extend_ipv6(ipv6: str) -> str:
+    IPV6_REGEX = r'([a-f0-9:]+:+)+[a-f0-9]+'
+    ipv6 = ipv6.lower()
+    if not re.match(IPV6_REGEX, ipv6):
+        raise ValueError(f"Invalid IPv6 address: \"{ipv6}\"")
+    return ipaddress.ip_address(ipv6).exploded.lower()
+
+
 class NetworkStorage:
     data = []
 
