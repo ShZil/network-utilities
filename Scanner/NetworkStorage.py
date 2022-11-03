@@ -34,6 +34,11 @@ def extend_ipv6(ipv6: str) -> str:
     return ipaddress.ip_address(ipv6).exploded.lower()
 
 
+nothing = NetworkEntity(mac="00:00:00:00:00:00", ip="0.0.0.0", ipv6="::", name="Unknown")
+localhost = NetworkEntity(mac=nothing.mac, ip="127.0.0.1", ipv6="::1", name="loopback")
+multicast = NetworkEntity(mac=nothing.mac, ip="224.0.0.2", ipv6="ff00::", name="multicast")  # hostify returns '*.mcast.net' (* differs for 224.0.0.*)
+broadcast = NetworkEntity(mac="FF-FF-FF-FF-FF-FF", ip="255.255.255.255", ipv6=nothing.ipv6, name="broadcast")
+
 class NetworkStorage:
     data = []
 
