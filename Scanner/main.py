@@ -272,6 +272,7 @@ def can_connect_ICMP_base(address: str) -> bool:
     if response is not None:
         # print(response[IP].show())
         if response[ICMP].type == 0:
+            lookup.add(ip=response[IP].src)
             return True
     return False
 
@@ -486,7 +487,7 @@ def main():
     # print("There are", len(connectable_addresses), "ARP connectable addresses in this subnet:")
     # print('    ' + '\n    '.join(connectable_addresses))
 
-    for entity in lookup.sort(key='ip'):
+    for entity in lookup:
         print(entity)
 
     # Continuous ICMP scans

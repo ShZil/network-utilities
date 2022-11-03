@@ -86,7 +86,7 @@ class NetworkEntity:
     
 
     def __str__(self):
-        return "< " + '; '.join([self[field] for field in ["mac", "ip", "ipv6", "name"] if self[field] != nothing[field]]) + " >"
+        return "< " + ' | '.join([self[field] for field in ["mac", "ip", "ipv6", "name"] if self[field] != nothing[field]]) + " >"
     
 
     def compare(self):
