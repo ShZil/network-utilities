@@ -475,17 +475,12 @@ def main():
     connectable_addresses = set()
 
     # ICMP scans
-    ICMP_inital_check_repeats = 1
-    connectable_addresses.update(do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=ICMP_inital_check_repeats))
+    connectable_addresses.update(do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=3))
     
 
     # ARP scans
-    ARP_inital_check_repeats = 3
-    connectable_addresses.update(do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=ARP_inital_check_repeats))
-    # connectable_addresses = connectable_addresses + can_connect_ARP(all_possible_addresses)
-    # connectable_addresses = list(set(connectable_addresses))
-    # print("There are", len(connectable_addresses), "ARP connectable addresses in this subnet:")
-    # print('    ' + '\n    '.join(connectable_addresses))
+    connectable_addresses.update(do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=3))
+    
 
     for entity in lookup:
         print(entity)
