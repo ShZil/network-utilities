@@ -108,19 +108,16 @@ class NetworkEntity:
         """Merges the information from two equal NetworkEntity-ies.
         This method fills in any missing information in `self` with the information from `other`.
         Note: they must be equal.
+        Note: merges right-into-left -- in `A.merge(B)`, A is full with information, and B is unchanged.
 
         Args:
             other (NetworkEntity): the entity to be merged with.
-
-        Returns:
-            NetworkEntity: returns `self`.
         """
         if self != other: raise ValueError("In NetworkEntity.merge(self,other), the entities must be equal.")
         for field in ["mac", "ip", "ipv6", "name"]:
             if other[field] != nothing[field]:
                 self[field] = other[field]
         self._compare = None
-        return self
 
 
 def standard_mac(mac: str) -> str:
@@ -157,4 +154,8 @@ class NetworkStorage:
 
     def add(self, *args, mac=nothing.mac, ip=nothing.ip, ipv6=nothing.ipv6, name=nothing.name):
         entity = NetworkEntity(mac, ip, ipv6, name)
+        for other in self.data:
+            if entity == other:
+                other.merge(entity)
+                return
         self.data.append(entity)
