@@ -61,18 +61,24 @@ def hostify(address: str):
     """
     host = "Unknown"
 
-    # First method -> nslookup
-    lines = read_command(['nslookup','address']).decode(encoding='utf-8', errors='ignore').split('\n')
-    for line in lines:
-        if line.strip().startswith('Name:'):
-            host = line[len("Name:"):].strip()
-            break
-    else:
-        # If first method failed, second method -> socket.gethostbyaddr
+    def use_hostify_base(address):
         try:
-            host = hostify_base(address)[0]
+            return hostify_base(address)[0]
         except (hostify_error1, hostify_error2):
-            pass
+            return "Unknown"
+
+    # First method -> nslookup
+    # If first method failed, second method -> socket.gethostbyaddr
+    try:
+        lines = read_command(['nslookup','address']).decode(encoding='utf-8', errors='ignore').split('\n')
+        for line in lines:
+            if line.strip().startswith('Name:'):
+                host = line[len("Name:"):].strip()
+                break
+        else:
+            host = use_hostify_base(address)
+    except CalledProcessError:
+        host = use_hostify_base(address)
     return host
 
 
