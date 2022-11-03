@@ -184,4 +184,9 @@ class NetworkStorage:
 
         if len(self.data) == 0: return [nothing]
         return sorted(self.data, key=lambda entity: tuple([entity.compare()[field] for field in keys]))
+    
+
+    def __iter__(self):
+        for elem in self.sort():
+            yield elem
 
