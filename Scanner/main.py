@@ -486,6 +486,9 @@ def main():
     # print("There are", len(connectable_addresses), "ARP connectable addresses in this subnet:")
     # print('    ' + '\n    '.join(connectable_addresses))
 
+    for entity in lookup.sort(key='ip'):
+        print(entity)
+
     # Continuous ICMP scans
     input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
     display_continuous_connections_ICMP(connectable_addresses, all_possible_addresses)

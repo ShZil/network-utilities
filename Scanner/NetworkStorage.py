@@ -63,12 +63,18 @@ class NetworkEntity:
         
         return True
     
+
     def __getitem__(self, key):
         if key == "mac": return self.mac
         if key == "ip": return self.ip
         if key == "ipv6": return self.ipv6
         if key == "name": return self.name
         raise TypeError("Subscripting in NetworkEntity must be `mac`, `ip`, `ipv6`, or `name`.")
+    
+
+    def __str__(self):
+        return "<" + '; '.join([self[field] for field in ["mac", "ip", "ipv6", "name"] if self[field] != nothing[field]]) + ">"
+
 
 
 def standard_mac(mac: str) -> str:
@@ -88,7 +94,7 @@ def check_ip(ip: str) -> str:
 
 
 def extend_ipv6(ipv6: str) -> str:
-    IPV6_REGEX = r'([a-f0-9:]+:+)+[a-f0-9]+'
+    IPV6_REGEX = r'(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))'
     ipv6 = ipv6.lower()
     if not re.match(IPV6_REGEX, ipv6):
         raise ValueError(f"Invalid IPv6 address: \"{ipv6}\"")
