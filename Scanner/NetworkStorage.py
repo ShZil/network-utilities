@@ -9,6 +9,8 @@ class NetworkEntity:
         self.ip = check_ip(ip)
         self.ipv6 = extend_ipv6(ipv6)
         self.name = name
+        self._compare = None
+    
     
     def __eq__(self, other: object) -> bool:
         """This method checks equality between `self` and `other`.
@@ -71,7 +73,7 @@ class NetworkEntity:
         if key == "name": return self.name
         raise TypeError("Subscripting in NetworkEntity must be `mac`, `ip`, `ipv6`, or `name`.")
     
-    
+
     def __setitem__(self, key, value):
         if key == "mac": self.mac = value
         if key == "ip": self.ip = value
@@ -84,6 +86,23 @@ class NetworkEntity:
         return "< " + '; '.join([self[field] for field in ["mac", "ip", "ipv6", "name"] if self[field] != nothing[field]]) + " >"
     
 
+    def compare(self):
+        """Turns the values of the Entity's fields into integers to be used in a comparison.
+
+        Returns:
+            dict: field names as the keys, integers as the values.
+        """
+        if self._compare is None:
+            result = {}
+            result["ip"] = [int(part, base=10) for part in self.ip.split('.')]
+            result["ip"] = sum([result["ip"][i] * (256**i) for i in range(4)])
+            result["mac"] = [int(part, base=16) for part in self.mac.split('-')]
+            result["mac"] = sum([result["mac"][i] * (256**i) for i in range(6)])
+            result["ipv6"] = [int(part, base=16) for part in self.ipv6.split(':')]
+            result["ipv6"] = sum([result["ipv6"][i] * (65536**i) for i in range(8)])
+            self._compare = result
+        return self._compare
+    
 
 
 def standard_mac(mac: str) -> str:
