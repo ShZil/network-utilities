@@ -160,3 +160,7 @@ Maybe in the future, as a more complex scan which has a low chance of reward.
 
 [22:19] Maybe add an hostify loop? And have a small chance for `hostify` to not return from cache.
 Make it an `@probabilistic_cache`
+
+### 2022-11-03
+[17:13] From class today: I moved the function `util.handle_module_error()` into a context manager `import_handler.ImportDefence()` (for easier syntax).
+

@@ -1,4 +1,5 @@
-try:
+from import_handler import ImportDefence
+with ImportDefence():
     import os
     from subprocess import CalledProcessError, check_output as read_command
     from util import *
@@ -13,8 +14,6 @@ try:
     from socket import herror as hostify_error1
     from socket import gaierror as hostify_error2
 
-except ModuleNotFoundError as err:
-    handle_module_error(err)
 
 os.system('cls')
 print("All imports were successful.")
