@@ -104,6 +104,24 @@ class NetworkEntity:
         return self._compare
     
 
+    def merge(self, other):
+        """Merges the information from two equal NetworkEntity-ies.
+        This method fills in any missing information in `self` with the information from `other`.
+        Note: they must be equal.
+
+        Args:
+            other (NetworkEntity): the entity to be merged with.
+
+        Returns:
+            NetworkEntity: returns `self`.
+        """
+        if self != other: raise ValueError("In NetworkEntity.merge(self,other), the entities must be equal.")
+        for field in ["mac", "ip", "ipv6", "name"]:
+            if other[field] != nothing[field]:
+                self[field] = other[field]
+        self._compare = None
+        return self
+
 
 def standard_mac(mac: str) -> str:
     MAC_REGEX = r'^([0-9A-F]{2}-){5}([0-9A-F]{2})$'
@@ -131,7 +149,7 @@ def extend_ipv6(ipv6: str) -> str:
 
 nothing = NetworkEntity(mac="00:00:00:00:00:00", ip="0.0.0.0", ipv6="::", name="Unknown")
 localhost = NetworkEntity(mac=nothing.mac, ip="127.0.0.1", ipv6="::1", name="loopback")
-multicast = NetworkEntity(mac=nothing.mac, ip="224.0.0.2", ipv6="ff00::", name="multicast")  # hostify returns '*.mcast.net' (* differs for 224.0.0.*)
+multicast = NetworkEntity(mac=nothing.mac, ip="224.0.0.2", ipv6="ff00::", name="multicast")  # hostify returns '*.mcast.net' (differs for 224.0.0.*)
 broadcast = NetworkEntity(mac="FF-FF-FF-FF-FF-FF", ip="255.255.255.255", ipv6=nothing.ipv6, name="broadcast")
 
 class NetworkStorage:
