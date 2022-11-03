@@ -301,7 +301,8 @@ def can_connect_ARP(addresses: list[str]) -> list[str]:
     threadify(send_ARP)(packets)
 
     sniffer.stop()
-    # ******************* SAVE result[0] (i.e. MAC addresses) in a lookup table!
+    for result in results:
+        lookup.add(mac=result[0], ip=result[1])
     return [result[1] for result in results]
 
 
