@@ -72,15 +72,15 @@ class NetworkEntity:
         if key == "ip": return self.ip
         if key == "ipv6": return self.ipv6
         if key == "name": return self.name
-        raise TypeError("Subscripting in NetworkEntity must be `mac`, `ip`, `ipv6`, or `name`.")
+        raise TypeError(f"Subscripting in NetworkEntity must be `mac`, `ip`, `ipv6`, or `name`; got `{key}`")
     
 
     def __setitem__(self, key, value):
         if key == "mac": self.mac = value
-        if key == "ip": self.ip = value
-        if key == "ipv6": self.ipv6 = value
-        if key == "name": self.name = value
-        raise TypeError("Item assignment in NetworkEntity must be `mac`, `ip`, `ipv6`, or `name`.")
+        elif key == "ip": self.ip = value
+        elif key == "ipv6": self.ipv6 = value
+        elif key == "name": self.name = value
+        else: raise TypeError(f"Item assignment in NetworkEntity must be `mac`, `ip`, `ipv6`, or `name`; got `{key}`")
     
 
     def __str__(self):
