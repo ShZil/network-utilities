@@ -170,3 +170,6 @@ Moti (Zvika's assistant; knows **a lot** about cyber-y stuff) suggested there be
 He also said I could check the MAC addresses, maybe they're all from the same source? Or maybe it's generating random MACs?
 I tried using a dictionary, but because of key-uniqueness, I could not see duplicate MACs (or IPs if I use them as the key).
 Therefore, I had to use a `list[tuple[str(MAC), str(IP)]]`. This seems... not extensible. So, a custom class is probably the way.
+
+[23:14] Maybe add a Virtual Network option, where you define the ipconfig screen manually,
+and can place some entities with handpicked values -- to test the maths (like numbers of possible IPv4s in subnet).
