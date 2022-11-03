@@ -159,3 +159,15 @@ class NetworkStorage:
                 other.merge(entity)
                 return
         self.data.append(entity)
+    
+
+    def sort(self, key="ip"):
+        try:
+            others = ['ip', 'mac', 'ipv6']
+            others.remove(key)
+        except ValueError:
+            raise ValueError('Sorting key must be either `mac`, `ip`, or `ipv6`.')
+        keys = [key] + others
+
+        return sorted(self.data, key=lambda entity: tuple([entity.compare()[field] for field in keys]))
+
