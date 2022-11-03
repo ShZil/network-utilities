@@ -1,3 +1,15 @@
+from import_handler import ImportDefence
+with ImportDefence():
+    import re
+    import ipaddress
+
+class NetworkEntity:
+    def __init__(self, mac, ip, ipv6, name):
+        self.mac = standard_mac(mac)
+        self.ip = check_ip(ip)
+        self.ipv6 = extend_ipv6(ipv6)
+        self.name = name
+    
 class NetworkStorage:
     data = []
 
