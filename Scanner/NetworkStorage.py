@@ -162,13 +162,15 @@ class NetworkStorage:
     
 
     def _resolve(self):
-        while not self.waiting.empty:
-            entity = self.waiting.get()
+        def append(entity):
             for other in self.data:
                 if entity == other:
                     other.merge(entity)
                     return
             self.data.append(entity)
+        
+        for entity in self.waiting.queue:
+            append(entity)
 
 
     def sort(self, key="ip"):
@@ -180,5 +182,6 @@ class NetworkStorage:
             raise ValueError('Sorting key must be either `mac`, `ip`, or `ipv6`.')
         keys = [key] + others
 
+        if len(self.data) == 0: return [nothing]
         return sorted(self.data, key=lambda entity: tuple([entity.compare()[field] for field in keys]))
 
