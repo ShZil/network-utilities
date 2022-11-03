@@ -4,6 +4,7 @@ with ImportDefence():
     from subprocess import CalledProcessError, check_output as read_command
     from util import *
     from ip_handler import *
+    from NetworkStorage import NetworkStorage
     from scapy.sendrecv import sr1, sendp, AsyncSniffer
     from scapy.layers.inet import IP, ICMP
     from scapy.layers.l2 import Ether, ARP
@@ -22,6 +23,7 @@ __author__ = 'Shaked Dan Zilberman'
 
 # A range for the scanned ports.
 PORT_RANGE = range(0, 1024)
+lookup = NetworkStorage()
 
 
 ###### IPCONFIG related functions

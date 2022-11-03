@@ -1,0 +1,2 @@
+class NetworkStorage:
+    pass
