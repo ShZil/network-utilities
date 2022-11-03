@@ -1,3 +1,4 @@
+from queue import Queue
 from import_handler import ImportDefence
 with ImportDefence():
     import re
@@ -151,17 +152,25 @@ broadcast = NetworkEntity(mac="FF-FF-FF-FF-FF-FF", ip="255.255.255.255", ipv6=no
 
 class NetworkStorage:
     data = []
+    waiting = Queue()
 
     def add(self, *args, mac=nothing.mac, ip=nothing.ip, ipv6=nothing.ipv6, name=nothing.name):
         entity = NetworkEntity(mac, ip, ipv6, name)
-        for other in self.data:
-            if entity == other:
-                other.merge(entity)
-                return
-        self.data.append(entity)
+        self.waiting.put(entity)
     
 
+    def _resolve(self):
+        while not self.waiting.empty:
+            entity = self.waiting.get()
+            for other in self.data:
+                if entity == other:
+                    other.merge(entity)
+                    return
+            self.data.append(entity)
+
+
     def sort(self, key="ip"):
+        self._resolve()
         try:
             others = ['ip', 'mac', 'ipv6']
             others.remove(key)

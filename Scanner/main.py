@@ -474,7 +474,7 @@ def main():
     connectable_addresses = set()
 
     # ICMP scans
-    ICMP_inital_check_repeats = 3
+    ICMP_inital_check_repeats = 1
     connectable_addresses.update(do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=ICMP_inital_check_repeats))
     
 
