@@ -50,5 +50,78 @@ def unbitify(binary: str) -> str:
     return result.strip('.')
 
 
+def subnet_address_range(subnet_mask: str, *some_addresses: tuple[str]):
+    """This function computes the address range of a subnet (i.e. the Network ID, with all (*)s in the Device ID section).
+
+    Code explanation:
+
+    Define a wrapper for `bitify` which also converts the result to an integer. Apply it to subnet_mask.
+    ```
+    bits = lambda address: int(bitify(address), base=2)
+    mask = bits(subnet_mask)
+    ```
+
+    Compute the *bitwise logical AND* of each address and the mask.
+    ```
+    base = [bits(address) & mask for address in some_addresses]
+    ```
+
+    Raise exceptions if no unique values are found / more than one unique value is found.
+
+    Find the network ID: using the bitwise AND result, zfill it up to 32 characters, and cut only the part with 1s in the mask.
+    ```
+    mask = format(mask, 'b')
+    network = format(base[0], 'b').zfill(32)[:mask.count('1')]
+    ```
+
+    Find the lowest and highest possible addresses by filling the empty space with 0s or 1s respectively.
+    ```
+    lowest = unbitify(network + ('0' * mask.count('0')))
+    highest = unbitify(network + ('1' * mask.count('0')))
+    ```
+
+    For each part of the address (i.e. `A.B.C.D`, then A, B, C, and D are parts), find the correct format.
+    ```
+    if low == high:
+        result += low
+    elif low == '0' and high == '255':
+        result += '*'
+    else:
+        result += f"{low}-{high}"
+    ```
+
+    Args:
+        subnet_mask (str): the subnet mask, `like 255.255.255.0`.
+        *some_addresses (str, str, str...): some example addresses of devices in the network. Must be at least one.
+
+    Raises:
+        TypeError: If no example addresses are given.
+        ValueError: If the example addresses belong to different networks.
+
+    Returns:
+        str: the address range. Note: this is not a valid IPv4 address, it uses (*)s and (-)s in the Device ID portion.
+    """
+    bits = lambda address: int(bitify(address), base=2)
+    mask = bits(subnet_mask)
+    base = [bits(address) & mask for address in some_addresses]
+    base = list(set(base))
+    if len(base) == 0:
+        raise TypeError("No addresses were given besides the mask.")
+    if len(base) > 1:
+        raise ValueError("The addresses given fit different networks.")
+    mask = format(mask, 'b')
+    network = format(base[0], 'b').zfill(32)[:mask.count('1')]
+    lowest = unbitify(network + ('0' * mask.count('0')))
+    highest = unbitify(network + ('1' * mask.count('0')))
+    result = ''
+    for low, high in zip(lowest.split('.'), highest.split('.')):
+        if low == high: result += low
+        elif low == '0' and high == '255': result += '*'
+        else: result += f"{low}-{high}"
+        result += '.'
+    return result.strip('.')
+
+
+
 if __name__ == '__main__':
     print("This is a module for doing calculations on IPv4 addresses.")

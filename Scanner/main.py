@@ -371,12 +371,12 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
         Thread(target=new_devices, args=(i, )).start()
     
     while True:
-        sleep(1.1)
+        sleep(1.1)  # Change this to global setting
         while not waiting.empty():
             address = waiting.get()
-            print("Adding address", address)
             if address not in addresses:
                 addresses.append(address)
+                print("Adding address", address)
         for address, online in zip(addresses, can_connect_ICMP(addresses)):
             if address not in table: table[address] = []
             table[address].append(online)
@@ -384,7 +384,7 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
         hostify_sync(list(table.keys()))
         os.system("cls")
         # ** Change this to more dynamic, including the subnet mask...
-        print("Connection testing (ICMP ping) to", '.'.join(ipconfig()["IPv4 Address"].split('.')[0:3]) + ".___\n")
+        print("Connection testing (ICMP ping) to", subnet_address_range(ipconfig()["Subnet Mask"], ipconfig()["IPv4 Address"]) + "\n")
         
         with InstantPrinting():
             for address in sorted(table.keys(), key=lambda x: int(''.join(x.split('.')))):
@@ -475,11 +475,11 @@ def main():
     connectable_addresses = set()
 
     # ICMP scans
-    connectable_addresses.update(do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=3))
+    connectable_addresses.update(do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=1))
     
 
     # ARP scans
-    connectable_addresses.update(do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=3))
+    connectable_addresses.update(do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=1))
     
 
     for entity in lookup:
