@@ -173,3 +173,6 @@ Therefore, I had to use a `list[tuple[str(MAC), str(IP)]]`. This seems... not ex
 
 [23:14] Maybe add a Virtual Network option, where you define the ipconfig screen manually,
 and can place some entities with handpicked values -- to test the maths (like numbers of possible IPv4s in subnet).
+
+### 2022-11-08
+[22:25] Correction from Cyber class: the indexes should be reversed (negated, in Python) for the sorting to happen correctly.

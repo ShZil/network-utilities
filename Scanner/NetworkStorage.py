@@ -98,11 +98,11 @@ class NetworkEntity:
         if self._compare is None:
             result = {}
             result["ip"] = [int(part, base=10) for part in self.ip.split('.')]
-            result["ip"] = sum([result["ip"][i] * (256**i) for i in range(4)])
+            result["ip"] = sum([result["ip"][-i] * (256**i) for i in range(4)])
             result["mac"] = [int(part, base=16) for part in self.mac.split('-')]
-            result["mac"] = sum([result["mac"][i] * (256**i) for i in range(6)])
+            result["mac"] = sum([result["mac"][-i] * (256**i) for i in range(6)])
             result["ipv6"] = [int(part, base=16) for part in self.ipv6.split(':')]
-            result["ipv6"] = sum([result["ipv6"][i] * (65536**i) for i in range(8)])
+            result["ipv6"] = sum([result["ipv6"][-i] * (65536**i) for i in range(8)])
             self._compare = result
         return self._compare
     
