@@ -176,3 +176,6 @@ and can place some entities with handpicked values -- to test the maths (like nu
 
 ### 2022-11-08
 [22:25] Correction from Cyber class: the indexes should be reversed (negated, in Python) for the sorting to happen correctly.
+
+[23:48] I added the address range subnet something, but on the way I made the base-address solver, so why not add it too?
+It's not used right now, but it might be in the future. Plus, it's more practial than the range thing, because it's an actual IPv4 address.

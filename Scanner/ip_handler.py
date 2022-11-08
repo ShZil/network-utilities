@@ -122,6 +122,51 @@ def subnet_address_range(subnet_mask: str, *some_addresses: tuple[str]):
     return result.strip('.')
 
 
+def base_subnet_address(subnet_mask: str, *some_addresses: tuple[str]):
+    """This function computes the base address of a network (i.e. the Network ID, with all 0s in the Device ID section)
+
+    Code explanation:
+
+    Define a wrapper for `bitify` which also converts the result to an integer. Apply it to subnet_mask.
+    ```
+    bits = lambda address: int(bitify(address), base=2)
+    mask = bits(subnet_mask)
+    ```
+
+    Compute the *bitwise logical AND* of each address and the mask.
+    ```
+    base = [bits(address) & mask for address in some_addresses]
+    ```
+
+    Raise exceptions if no unique values are found / more than one unique value is found.
+
+    Turn `base[0]` (the only unique value) to a binary string, zfill it to 32 characters, pass it to `unbitify`, and return.
+    ```
+    return unbitify(format(base[0], 'b').zfill(32))
+    ```
+
+    Args:
+        subnet_mask (str): the subnet mask, `like 255.255.255.0`.
+        *some_addresses (str, str, str...): some example addresses of devices in the network. Must be at least one.
+
+    Raises:
+        TypeError: If no example addresses are given.
+        ValueError: If the example addresses belong to different networks.
+
+    Returns:
+        str: the base address. Note: this is a valid IPv4 address, the lowest in the network.
+    """
+    bits = lambda address: int(bitify(address), base=2)
+    mask = bits(subnet_mask)
+    base = [bits(address) & mask for address in some_addresses]
+    base = list(set(base))
+    if len(base) == 0:
+        raise TypeError("No addresses were given besides the mask.")
+    if len(base) > 1:
+        raise ValueError("The addresses given fit different networks.")
+    return unbitify(format(base[0], 'b').zfill(32))
+
+
 
 if __name__ == '__main__':
     print("This is a module for doing calculations on IPv4 addresses.")
