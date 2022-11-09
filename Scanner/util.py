@@ -393,7 +393,52 @@ class JustifyPrinting(InstantPrinting):
             sep *= ' '
             print(sep.join(line).center(width))
 
+
+class TablePrinting(InstantPrinting):
+    """This context manager delays and stores all outputs via `print`s, and prints everything when closed,
+    justifying every print statement to form a nice-looking table.
+
+    Note: Messing with `print`'s default values (`sep=' ', end='\\n'`) is not recommended,
+    since this context manager treats space-separated strings as belonging to the same statement,
+    and newline-separated string as belonging to different statements.
+
+    Usage:
+    ```py
+    with TablePrinting():
+        # do some stuff here including printing
+    # Here, exiting the context, the printing will all happen immediately and (hopefully) nicely.
+    ```
+    """
+
+    def __init__(self):
+        self.output = _SplitStringIO()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        sys.stdout = self.real_stdout
+        blocks = self.output.getvalue()
+        width = int(os.get_terminal_size().columns)
+
+        # align = lambda s, w: s.ljust(w)
+        align = lambda s, w: s.center(w)
+        # align = lambda s, w: s.rjust(w)
+
+        statements = [""]
+        for block in blocks:
+            if block == '\n':
+                statements.append("")
+            else:
+                statements[-1] += block
+        blocks = statements
         
+        
+        n = max(width // len("255.255.255.255 (Smartphone-Galaxy-S90-5G)"), 3)
+        lines = [blocks[i:i + n] for i in range(0, len(blocks), n)]
+        for line in lines:
+            for part in line:
+                w = width // n
+                print(align(part, w), end="")
+            print()
+
 
 
 if __name__ == '__main__':
