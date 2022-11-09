@@ -357,7 +357,6 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, compa
 
 
     def new_devices(order: int):
-        # ** Maybe weights here? Addresses are more likely to be a low number like 10.0.0.13 and not a large one like 10.0.0.234
         all_addresses = shift(all_possible_addresses, 71*order)
         while True:
             for address in all_addresses:
@@ -365,7 +364,6 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, compa
                 if address in waiting.queue: continue
                 if can_connect_ICMP_base(address):
                     waiting.put(address)
-            # sleep(5)
 
     for i in range(SCANNER_THREADS):
         Thread(target=new_devices, args=(i, )).start()
@@ -499,7 +497,7 @@ def main():
 
     # Continuous ICMP scans
     input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
-    display_continuous_connections_ICMP(lookup['ip'], all_possible_addresses, compact_printing=False)
+    display_continuous_connections_ICMP(lookup['ip'], all_possible_addresses, compact_printing=True)
 
 
 
