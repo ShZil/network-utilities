@@ -378,8 +378,11 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
                 addresses.append(address)
                 print("Adding address", address)
         for address, online in zip(addresses, can_connect_ICMP(addresses)):
-            if address not in table: table[address] = []
+            if address not in table:
+                table[address] = []
             table[address].append(online)
+            if len(table[address]) > 60:
+                table[address] = table[address][-60:]
         # print(table)
         hostify_sync(list(table.keys()))
         os.system("cls")
@@ -393,8 +396,6 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
                     (''.join(['█' if x else ' ' for x in table[address]]) + "┅ ").rjust(63),
                     f"[{render_opacity(100 * calculate_opcaity(table[address]))}]"
                 )
-                if len(table[address]) > 60:
-                    table[address] = table[address][-60:]
 
 
 def auto_select_interface(ip: str):
