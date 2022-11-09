@@ -10,6 +10,7 @@ with ImportDefence():
     from pygments import highlight, lexers, formatters
     from json import dumps
     from prettytable import PrettyTable
+    import os
 
 __author__ = 'Shaked Dan Zilberman'
 MAX_THREADS: int = 300
@@ -310,6 +311,86 @@ class InstantPrinting:
     def __exit__(self, exc_type, exc_val, exc_tb):
         sys.stdout = self.real_stdout
         print(self.output.getvalue())
+
+
+
+class _SplitStringIO:
+    def __init__(self):
+        self.content = []
+
+
+    def write(self, data):
+        self.content.append(StringIO())
+        self.content[-1].write(data)
+        
+    
+    def getvalue(self):
+        return [string.getvalue() for string in self.content]
+
+
+
+class JustifyPrinting(InstantPrinting):
+    """This context manager delays and stores all outputs via `print`s, and prints everything when closed,
+    justifying every print statement to form a nice-looking grid/table.
+
+    Note: Messing with `print`'s default values (`sep=' ', end='\\n'`) is not recommended,
+    since this context manager treats space-separated strings as belonging to the same statement,
+    and newline-separated string as belonging to different statements.
+
+    Usage:
+    ```py
+    with JustifyPrinting():
+        # do some stuff here including printing
+    # Here, exiting the context, the printing will all happen immediately and (hopefully) nicely.
+    ```
+    """
+
+    def __init__(self):
+        self.output = _SplitStringIO()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        sys.stdout = self.real_stdout
+        blocks = self.output.getvalue()
+        width = os.get_terminal_size().columns
+
+        MIN_SEP = 1  # There must be at least one space between blocks.
+        MAX_SEP = 10  # There cannot be more than ten spaces between blocks.
+
+        statements = [""]
+        for block in blocks:
+            if block == '\n':
+                statements.append("")
+            else:
+                statements[-1] += block
+        blocks = statements
+
+        lines = [[]]
+        for block in blocks:
+            # Lengths of all previous blocks
+            # + Length of current block
+            # + assuming `MIN_SEP` spaces in-between (thus, #spaces = #blocks * MIN_SEP)
+            # > width of console in characters
+            if sum(map(len, lines[-1])) + len(block) + len(lines[-1]) * MIN_SEP > width:
+                lines.append([])
+            lines[-1].append(block)
+
+        for line in lines:
+            # Optimal case: total_length + total_separator_length = width
+            # total_separator_length = sep * (len(line) - 1)
+            # => sep = (width - total_length) // (len(line) - 1)
+            total_length = sum([len(block) for block in line])
+            sep = (width - total_length) // (len(line) - 1)
+            if sep > MAX_SEP: sep = MAX_SEP
+            # Optimal case: left_indent + total_length + total_separator_length + right_indent = width
+            # Center: left_indent = right_indent = indent
+            # total_separator_length = sep * (len(line) - 1)
+            # => left_indent + right_indent = 2 * indent = (width - total_length - sep * (len(line) - 1))
+            indent = (width - total_length - (sep * (len(line) - 1))) // 2
+            indent *= ' '
+            sep *= ' '
+            print(indent + sep.join(line))
+
+        
 
 
 if __name__ == '__main__':

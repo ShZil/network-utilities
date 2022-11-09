@@ -385,19 +385,17 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, compa
         os.system("cls")
         print("Connection testing (ICMP ping) to", subnet_address_range(ipconfig()["Subnet Mask"], ipconfig()["IPv4 Address"]) + "\n")
         
-        with InstantPrinting():
-            sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
-            if compact_printing:
-                for addresses in [sorted_table[i:i + 4] for i in range(0, len(sorted_table), 4)]:
-                    for address in addresses:
-                        print(
-                            address,
-                            f"({hostify(address)})",
-                            f"[{render_opacity(100 * calculate_opcaity(table[address]))}]",
-                            end="  ", sep=" "
-                        )
-                    print()
-            else:
+        sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
+        if compact_printing:
+            with JustifyPrinting():
+                for address in sorted_table:
+                    print(
+                        address,
+                        f"({hostify(address)})",
+                        f"[{render_opacity(100 * calculate_opcaity(table[address]))}]"
+                    )
+        else:   
+            with InstantPrinting():
                 for address in sorted_table:
                     print(
                         f"{address} ({hostify(address)}):".rjust(len("255.255.255.255 (Smartphone-Galaxy-S90-5G)")),
@@ -489,9 +487,9 @@ def main():
     # ARP scans
     do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=1)
     
-
-    for entity in lookup:
-        print(entity)
+    with JustifyPrinting():
+        for entity in lookup:
+            print(entity)
 
     # Continuous ICMP scans
     input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
