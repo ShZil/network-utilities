@@ -381,10 +381,8 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, compa
             table[address].append(online)
             if len(table[address]) > 60:
                 table[address] = table[address][-60:]
-        # print(table)
         hostify_sync(list(table.keys()))
         os.system("cls")
-        # ** Change this to more dynamic, including the subnet mask...
         print("Connection testing (ICMP ping) to", subnet_address_range(ipconfig()["Subnet Mask"], ipconfig()["IPv4 Address"]) + "\n")
         
         with InstantPrinting():
