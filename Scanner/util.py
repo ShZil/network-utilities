@@ -72,8 +72,8 @@ def threadify(f, silent=False):
             "daemon": True,
             # printing: bool -- should there be a progress bar?
             "printing": True,
-            # printing_length: int -- the size of the progress bar (in characters).
-            "printing_length": 10,
+            # min_printing_length: int -- the minimal size of the progress bar (in characters). The actual length can be larger, if the terminal is wide enough.
+            "min_printing_length": 10,
             # format: str -- the format of the progress bar. 
             # For printing_length=6 and this format, after half the execution, the bar would look like "[---   ]  (50%)".
             "format": "[- ]",
@@ -96,8 +96,8 @@ def threadify(f, silent=False):
     options={
         "daemon": True,
         "printing": True,
-        "printing_length": 50,
-        "format": "[- ]",
+        "min_printing_length": 10,
+        "format": "[─ ]",
         "output": True,
         "give": "results"
     }
@@ -157,12 +157,14 @@ def threadify(f, silent=False):
         if options["printing"]:
             while any([thread.is_alive() for thread in threads]):
                 ratio = sum([thread.is_alive() for thread in threads]) / len(threads)
-                # ***** You can make it so the bar length is responsive (relative to the window width)
-                done = options["format"][1] * ceil(options["printing_length"] * (1 - ratio))
-                waiting = options["format"][2] * floor(options["printing_length"] * (ratio))
                 start, end = options["format"][0], options["format"][3]
+                width = os.get_terminal_size().columns - len(f"@threadify: {name} {start}{end} (100%)   ")
+                if width < options["min_printing_length"]: width = options["min_printing_length"]
+                done = options["format"][1] * ceil(width * (1 - ratio))
+                waiting = options["format"][2] * floor(width * (ratio))
                 percent = ceil(100 * (1 - ratio))
-                print(f"@threadify: {name} {start}{done}{waiting}{end} ({percent}%)   ", end='\r', file=real_stdout)
+
+                print(f"@threadify: {name} {start}{done}{waiting}{end} ({percent}%)   \r", end='', file=real_stdout)
                 sleep(0.1)
             print("\n")
         
