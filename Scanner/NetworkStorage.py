@@ -189,4 +189,24 @@ class NetworkStorage:
     def __iter__(self):
         for elem in self.sort():
             yield elem
+    
+
+    def __getitem__(self, key):
+        """Gets a single "column" (key, property, field) as a list from all the NetworkEntity-ies stored.
+        Note: this will not include empty values. E.g., asking for `lookup['ipv6']` will not return any data from entities without an IPv6 datum.
+
+        Args:
+            key (str): the key to select from all the entities. Must be 'mac', 'ip', 'ipv6', or 'name'.
+
+        Raises:
+            TypeError: if the key is invalid.
+
+        Returns:
+            list: a list containing all the requested data.
+        """
+        if key in ["mac", "ip", "ipv6", "name"]:
+            self._resolve()
+            return [entity[key] for entity in self.data if entity[key] != nothing[key]]
+        raise TypeError(f"Subscripting in NetworkStorage must be `mac`, `ip`, `ipv6`, or `name`; got `{key}`")
+
 
