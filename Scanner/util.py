@@ -157,6 +157,7 @@ def threadify(f, silent=False):
         if options["printing"]:
             while any([thread.is_alive() for thread in threads]):
                 ratio = sum([thread.is_alive() for thread in threads]) / len(threads)
+                # ***** You can make it so the bar length is responsive (relative to the window width)
                 done = options["format"][1] * ceil(options["printing_length"] * (1 - ratio))
                 waiting = options["format"][2] * floor(options["printing_length"] * (ratio))
                 start, end = options["format"][0], options["format"][3]
