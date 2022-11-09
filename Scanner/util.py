@@ -381,7 +381,9 @@ class JustifyPrinting(InstantPrinting):
             lines[-1].append(block)
 
         for line in lines:
-            if len(line) == 1: print(line[0].justify(width))
+            if len(line) == 1:
+                print(line[0].center(width))
+                continue
             # Optimal case: total_length + total_separator_length = width
             # total_separator_length = sep * (len(line) - 1)
             # => sep = (width - total_length) // (len(line) - 1)
