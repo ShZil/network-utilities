@@ -70,7 +70,7 @@ def hostify(address: str):
     # First method -> nslookup
     # If first method failed, second method -> socket.gethostbyaddr
     try:
-        lines = read_command(['nslookup','address']).decode(encoding='utf-8', errors='ignore').split('\n')
+        lines = read_command(['nslookup', address]).decode(encoding='utf-8', errors='ignore').split('\n')
         for line in lines:
             if line.strip().startswith('Name:'):
                 host = line[len("Name:"):].strip()
