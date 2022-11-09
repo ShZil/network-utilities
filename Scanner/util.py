@@ -290,7 +290,9 @@ def render_opacity(percent: int | float):
     if not (0 <= percent <= 100): return "X"
 
     characters = " ░▒▓█"
-    level = floor(percent / 20.1)
+    # characters = " -─=≡▄█"
+    jump = 0.1 + 100 / len(characters)
+    level = floor(percent / jump)
     return characters[level]
 
 
