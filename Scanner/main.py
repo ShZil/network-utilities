@@ -344,7 +344,7 @@ def calculate_opcaity(connections: list[bool]) -> float:
     return opacity
 
 
-def display_continuous_connections_ICMP(addresses, all_possible_addresses):
+def display_continuous_connections_ICMP(addresses, all_possible_addresses, compact_printing=True):
     if not isinstance(addresses, list): addresses = list(addresses)
     table = {address: [] for address in addresses}
     waiting = Queue()
@@ -390,12 +390,25 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses):
         print("Connection testing (ICMP ping) to", subnet_address_range(ipconfig()["Subnet Mask"], ipconfig()["IPv4 Address"]) + "\n")
         
         with InstantPrinting():
-            for address in sorted(table.keys(), key=lambda x: int(''.join(x.split('.')))):
-                print(
-                    f"{address} ({hostify(address)}):".rjust(len("255.255.255.255 (Smartphone-Galaxy-S90-5G)")),
-                    (''.join(['█' if x else ' ' for x in table[address]]) + "┅ ").rjust(63),
-                    f"[{render_opacity(100 * calculate_opcaity(table[address]))}]"
-                )
+            sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
+            if compact_printing:
+                for addresses in [sorted_table[i:i + 4] for i in range(0, len(sorted_table), 4)]:
+                    for address in addresses:
+                        print(
+                            address,
+                            f"({hostify(address)})",
+                            f"[{render_opacity(100 * calculate_opcaity(table[address]))}]",
+                            end="  ", sep=" "
+                        )
+                    print()
+            else:
+                for address in sorted_table:
+                    print(
+                        f"{address} ({hostify(address)}):".rjust(len("255.255.255.255 (Smartphone-Galaxy-S90-5G)")),
+                        (''.join(['█' if x else ' ' for x in table[address]]) + "┅ ").rjust(63),
+                        f"[{render_opacity(100 * calculate_opcaity(table[address]))}]"
+                    )
+            print()
 
 
 def auto_select_interface(ip: str):
