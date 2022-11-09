@@ -179,3 +179,6 @@ and can place some entities with handpicked values -- to test the maths (like nu
 
 [23:48] I added the address range subnet something, but on the way I made the base-address solver, so why not add it too?
 It's not used right now, but it might be in the future. Plus, it's more practial than the range thing, because it's an actual IPv4 address.
+
+### 2022-11-09
+[16:24] Some changes listed in GitHub.
