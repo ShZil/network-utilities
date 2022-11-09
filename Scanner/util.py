@@ -336,7 +336,7 @@ class _SplitStringIO:
 
 class JustifyPrinting(InstantPrinting):
     """This context manager delays and stores all outputs via `print`s, and prints everything when closed,
-    justifying every print statement to form a nice-looking grid/table.
+    justifying every print statement to form a nice-looking block of text, where each line is centred and as widespread as is allowed.
 
     Note: Messing with `print`'s default values (`sep=' ', end='\\n'`) is not recommended,
     since this context manager treats space-separated strings as belonging to the same statement,
@@ -356,9 +356,9 @@ class JustifyPrinting(InstantPrinting):
     def __exit__(self, exc_type, exc_val, exc_tb):
         sys.stdout = self.real_stdout
         blocks = self.output.getvalue()
-        width = os.get_terminal_size().columns
+        width = int(os.get_terminal_size().columns)
 
-        MIN_SEP = 1  # There must be at least one space between blocks.
+        MIN_SEP = 3  # There must be at least one space between blocks.
         MAX_SEP = 10  # There cannot be more than ten spaces between blocks.
 
         statements = [""]
@@ -368,6 +368,7 @@ class JustifyPrinting(InstantPrinting):
             else:
                 statements[-1] += block
         blocks = statements
+        
 
         lines = [[]]
         for block in blocks:
