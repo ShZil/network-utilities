@@ -6,7 +6,6 @@ with ImportDefence():
     import sys
     from threading import Thread, active_count
     from time import sleep
-    import subprocess
     import sys
     from pygments import highlight, lexers, formatters
     from json import dumps
