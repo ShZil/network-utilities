@@ -486,14 +486,12 @@ def main():
 
     conf.warning_threshold = 10000  # Disables "MAC address to reach not found" warnings.
 
-    connectable_addresses = set()
-
     # ICMP scans
-    connectable_addresses.update(do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=1))
+    do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=1)
     
 
     # ARP scans
-    connectable_addresses.update(do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=1))
+    do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=1)
     
 
     for entity in lookup:
