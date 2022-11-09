@@ -387,7 +387,7 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, compa
         
         sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
         if compact_printing:
-            with JustifyPrinting():
+            with TablePrinting():
                 for address in sorted_table:
                     print(
                         address,
