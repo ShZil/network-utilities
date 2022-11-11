@@ -341,6 +341,7 @@ def calculate_opcaity(connections: list[bool]) -> float:
     # Change this function? (see art above)
     opacity = 1.0 - distance_to_last / GONE_AFTER
     if opacity < 0: return 0.0
+    # Maybe calculate the average amount of disconnected time for devices? And not just choose some random numbers?
     return opacity
 
 
