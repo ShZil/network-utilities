@@ -425,13 +425,14 @@ class TablePrinting(InstantPrinting):
         output = self.output.getvalue()
         width = int(os.get_terminal_size().columns)
 
+        # Separate `print statements`.
+        # Every block which is just a newline is (probably) a different print, so I'll treat it as such.
         blocks = [""]
         for block in output:
-            if block == '\n':
-                blocks.append("")
-            else:
-                blocks[-1] += block
+            if block == '\n': blocks.append("")
+            else: blocks[-1] += block
         
+        # Split the blocks into a `chunk list` (e.g. [a, b, c, d, e, f] + n=2 -> [[a, b], [c, d], [e, f]])
         cell_width = len("255.255.255.255 (Smartphone-Galaxy-S90-5G)")
         n = max(width // cell_width, 3)
         lines = [blocks[i:i + n] for i in range(0, len(blocks), n)]
