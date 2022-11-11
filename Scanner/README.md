@@ -182,3 +182,8 @@ It's not used right now, but it might be in the future. Plus, it's more practial
 
 ### 2022-11-09
 [16:24] Some changes listed in GitHub.
+
+### 2022-11-11
+[12:01] In util.TablePrinting, I added a static dictionary `aligns` with three options (left, center, right),
+from which a value (lambda function) is chosen.
+Also, renamed some symbols to improve readability.

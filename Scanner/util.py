@@ -409,29 +409,31 @@ class TablePrinting(InstantPrinting):
     # Here, exiting the context, the printing will all happen immediately and (hopefully) nicely.
     ```
     """
+    aligns = {
+        'left': lambda s, w: s.ljust(w),
+        'center': lambda s, w: s.center(w),
+        'right': lambda s, w: s.rjust(w)
+    }
 
     def __init__(self):
         self.output = _SplitStringIO()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        align = TablePrinting.aligns.center
+
         sys.stdout = self.real_stdout
-        blocks = self.output.getvalue()
+        output = self.output.getvalue()
         width = int(os.get_terminal_size().columns)
 
-        # align = lambda s, w: s.ljust(w)
-        align = lambda s, w: s.center(w)
-        # align = lambda s, w: s.rjust(w)
-
-        statements = [""]
-        for block in blocks:
+        blocks = [""]
+        for block in output:
             if block == '\n':
-                statements.append("")
+                blocks.append("")
             else:
-                statements[-1] += block
-        blocks = statements
+                blocks[-1] += block
         
-        
-        n = max(width // len("255.255.255.255 (Smartphone-Galaxy-S90-5G)"), 3)
+        cell_width = len("255.255.255.255 (Smartphone-Galaxy-S90-5G)")
+        n = max(width // cell_width, 3)
         lines = [blocks[i:i + n] for i in range(0, len(blocks), n)]
         for line in lines:
             for part in line:
