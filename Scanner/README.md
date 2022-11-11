@@ -199,6 +199,7 @@ Therefore, I'm currently researching this.
 2. Each computer has a hostname, accessible via the `hostname` command,
 and changable through the Windows Control Panel interface (at `Control Panel\System and Security\System\See the name of this computer`, or just `Settings\Search "name"`).
 3. I cannot find how this happens... Maybe I'll sniff packets when it happens and try to understand.
+4. Bluetooth discovery (under `Settings/Bluetooth & other devices`) has the text "Now discoverable as {hostname}" under a tickbox that turns Bluetooth on/off.
 
 [19:25] Added locked NetworkEntity `mDNS` according to this site:
 https://stevessmarthomeguide.com/multicast-dns/
