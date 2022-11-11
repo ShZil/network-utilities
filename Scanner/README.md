@@ -191,3 +191,12 @@ Also, renamed some symbols to improve readability.
 [13:07] Added hostify.batch which is a tester/copy/interactive version of `main.hostify()`.
 
 [13:18] Added support for multiple addresses at once.
+
+[18:57] A question was raised last lesson -- where do the Reverse DNS hostnames come from?
+They aren't servers, these are not domain names, but accessing them is supposedly through the same command(s).
+Therefore, I'm currently researching this.
+1. Windows computers have a `hosts` file (no extension), stored in `%SystemRoot%\System32\drivers\etc\hosts`.
+2. Each computer has a hostname, accessible via the `hostname` command,
+and changable through the Windows Control Panel interface (at `Control Panel\System and Security\System\See the name of this computer`, or just `Settings\Search "name"`).
+3. I cannot find how this happens... Maybe I'll sniff packets when it happens and try to understand.
+
