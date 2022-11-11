@@ -443,6 +443,8 @@ def do_simple_scan(scan, all_possible_addresses, *, results=True, repeats=3):
     Returns:
         list[str]: the addresses which replied, at least once, to the scan.
     """
+    if repeats < 1: return []
+
     # Parsing the title & protocol.
     title = scan.__name__
     protocol = "".join(char for char in title if char.isupper())
@@ -481,11 +483,11 @@ def main():
     conf.warning_threshold = 10000  # Disables "MAC address to reach not found" warnings.
 
     # ICMP scans
-    do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=1)
+    do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=0)
     
 
     # ARP scans
-    do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=1)
+    do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=5)
     
     with JustifyPrinting():
         for entity in lookup:
