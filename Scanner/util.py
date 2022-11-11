@@ -434,8 +434,8 @@ class TablePrinting(InstantPrinting):
             else: blocks[-1] += block
         
         # Split the blocks into a `chunk list` (e.g. [a, b, c, d, e, f] + n=2 -> [[a, b], [c, d], [e, f]])
-        cell_width = len("255.255.255.255 (Smartphone-Galaxy-S90-5G)")
-        n = max(width // cell_width, 3)
+        lengths = [len(block) for block in blocks]
+        n = max(width // max(lengths), 3)
         lines = [blocks[i:i + n] for i in range(0, len(blocks), n)]
         for line in lines:
             for part in line:
