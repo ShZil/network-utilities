@@ -495,7 +495,7 @@ def main():
 
     # Continuous ICMP scans
     input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
-    display_continuous_connections_ICMP(lookup['ip'], all_possible_addresses, compact_printing=True)
+    display_continuous_connections_ICMP(lookup['ip'], all_possible_addresses, compact_printing=False)
 
 
 

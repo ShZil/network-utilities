@@ -187,3 +187,7 @@ It's not used right now, but it might be in the future. Plus, it's more practial
 [12:01] In util.TablePrinting, I added a static dictionary `aligns` with three options (left, center, right),
 from which a value (lambda function) is chosen.
 Also, renamed some symbols to improve readability.
+
+[13:07] Added hostify.batch which is a tester/copy/interactive version of `main.hostify()`.
+
+[13:18] Added support for multiple addresses at once.
