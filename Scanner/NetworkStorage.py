@@ -149,6 +149,7 @@ def extend_ipv6(ipv6: str) -> str:
 
 nothing = NetworkEntity(mac="00:00:00:00:00:00", ip="0.0.0.0", ipv6="::", name="Unknown", lock=True)
 localhost = NetworkEntity(mac=nothing.mac, ip="127.0.0.1", ipv6="::1", name="loopback", lock=True)
+mDNS = NetworkEntity(mac=nothing.mac, ip="224.0.0.251", ipv6="ff02::fb", name="multicast DNS", lock=True)
 multicast = NetworkEntity(mac=nothing.mac, ip="224.0.0.2", ipv6="ff00::", name="multicast", lock=True)  # hostify returns '*.mcast.net' (differs for 224.0.0.*)
 broadcast = NetworkEntity(mac="FF-FF-FF-FF-FF-FF", ip="255.255.255.255", ipv6=nothing.ipv6, name="broadcast", lock=True)
 

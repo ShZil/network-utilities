@@ -200,3 +200,5 @@ Therefore, I'm currently researching this.
 and changable through the Windows Control Panel interface (at `Control Panel\System and Security\System\See the name of this computer`, or just `Settings\Search "name"`).
 3. I cannot find how this happens... Maybe I'll sniff packets when it happens and try to understand.
 
+[19:25] Added locked NetworkEntity `mDNS` according to this site:
+https://stevessmarthomeguide.com/multicast-dns/
