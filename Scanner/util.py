@@ -419,7 +419,7 @@ class TablePrinting(InstantPrinting):
         self.output = _SplitStringIO()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        align = TablePrinting.aligns.center
+        align = TablePrinting.aligns["center"]
 
         sys.stdout = self.real_stdout
         output = self.output.getvalue()
