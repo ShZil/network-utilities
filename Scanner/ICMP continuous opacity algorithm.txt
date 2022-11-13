@@ -1,0 +1,76 @@
+On 2022-11-13, I was thinking a lot (documented in README.md).
+I used some paper with a blue pen. The following is a digital copy of the paper's contents. Afterwards, comes an explanation of the algorithm.
+
+
+
+[Paper #1]
+:yum:  13/11/2022
+
+c=1    XX0000000000  --->  0%
+c=1    XXXXXXXXXXXX  ---> 100%
+c=6/7  X0XXXXX00000  ---> 50%
+c=4/7  X00X0XX00000  ---> 70%
+c=3/7  0000XXX00000  ---> 75%
+
+                              --> d->0 => p->100%
+d = distance_to_last_positive --> d->∞ => p->0%
+c = connectivity      =      percent of positives before
+        |                    last positive (our of total
+the connection's quality     requests).
+
+`c` "softens" the gradients caused by `d`.
+a = avg of the last 60 calls. (low weight)
+b = best strike = the longest series of 1s
+                  / 0s?
+a, b, c, d, e
+                    e = weighted avg
+                        recent = more important
+
+
+
+[Paper #2]
+d =    reversed(data).indexOf(False)
+        if -1:       <-----
+            length
+        else:
+            the index (- 1?)
+┎
+|  c = reversed(data)[d:]
+|  c = c.count(True) / len(c)
+└
+a = sum([1 if datum else 0 for datum in data]) / len(data)
+
+┎
+|  _1Lengths = data.split(0).map(len)
+|  _0Lengths = data.split(1).map(len)
+|  b0 = max(_0Lengths)
+|  b1 = max(_1Lengths)  [*3]
+└
+--------------------------------------------------------------
+d=0 => p=100%    /    d=∞ => p=0%
+c=1 => p=100%    /    c=0 => p=0%
+d⭧c⭨ ≈ d→c→  (cancelling)  [*1]
+a ~ p  (low weight)  [*2]   / b1⭨ => c⭨
+`e` like `a` (but smarter!) \ b0⭧ => c⭨
+
+◜    Multidimensional ◝
+◟    Functions !      ◞
+
+
+
+[Paper #3]
+[*0] 0X000 > X0000    !
+[*1] 0X0X0X0000 = XXXXXX00
+     ╰----╯╰--╯   ╰----╯╰╯
+      c=0.5 d=4    c=1.0 d=2
+[*2] X0X0X0 < XXX0X0
+                                  `d` is stronger
+     0X0X0X = XXX0X0 = 100%   <--- than `a`
+     ╰----╯   ╰----╯
+      a=0.5    a=2/3
+[*3] is there a formula relating b1 and b0?
+[*4] think a lot about edge cases!
+
+
+
+[Desmos Analysis]
