@@ -70,7 +70,8 @@ def hostify(address: str):
     # First method -> nslookup
     # If first method failed, second method -> socket.gethostbyaddr
     try:
-        lines = read_command(['nslookup', address]).decode(encoding='utf-8', errors='ignore').split('\n')
+        with NoPrinting():
+            lines = read_command(['nslookup', address]).decode(encoding='utf-8', errors='ignore').split('\n')
         for line in lines:
             if line.strip().startswith('Name:'):
                 host = line[len("Name:"):].strip()
@@ -484,13 +485,14 @@ def main():
     conf.warning_threshold = 10000  # Disables "MAC address to reach not found" warnings.
 
     # ICMP scans
-    do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=0)
+    do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=1)
     
 
     # ARP scans
-    do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=5)
+    do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=3)
     
     with JustifyPrinting():
+        raise ArithmeticError("Ohh-wee too complicated calculation!")
         for entity in lookup:
             print(entity)
 
