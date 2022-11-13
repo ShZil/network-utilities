@@ -398,10 +398,12 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, paral
                     )
         else:   
             with InstantPrinting():
+                example_length = len("255.255.255.255 (Smartphone-Galaxy-S90-5G)")
+                bar_length = os.get_terminal_size().columns - example_length - len(":  ") - len("┅  [ ]")
                 for address in sorted_table:
                     print(
-                        f"{address} ({hostify(address)}):".rjust(len("255.255.255.255 (Smartphone-Galaxy-S90-5G)")),
-                        (''.join(['█' if x else ' ' for x in table[address]]) + "┅ ").rjust(63),
+                        f"{address} ({hostify(address)}): ".rjust(example_length),
+                        (''.join(['█' if x else ' ' for x in table[address][-bar_length:]]) + "┅ ").rjust(bar_length),
                         f"[{render_opacity(100 * calculate_opcaity(table[address]))}]"
                     )
             print()
