@@ -203,3 +203,26 @@ and changable through the Windows Control Panel interface (at `Control Panel\Sys
 
 [19:25] Added locked NetworkEntity `mDNS` according to this site:
 https://stevessmarthomeguide.com/multicast-dns/
+
+
+### 2022-11-13
+[21:03] I've been walking around the house for a few good hours, using my parents and grandma as rubber ducks, and I think I finally cracked it!
+So the problem that's been weighing on me is this: How, from a binary string, do you get the opacity value of a device? (ICMP continuous)
+Firstly, I reduced the problem to two steps:
+1. Calculate meaningful quantities from the binary string.
+2. Use those quantities to determine the opacity.
+In the current version (LERP by distance to last positive), I only have one meaningful quantity: `distance_to_last`. When it equals 0, the opacity is 100%. When it passes a certain threshold, the opacity is 0%.
+The first quest was thus to find more.
+Motivated by the observation that some devices have a "shaky" connections (they'll randomly not respond to half the ICMP echoes), I conjured that I should be more lenient when judging them.
+How shall I measure this "shakiness"? By defining `connectivity`, or "the connection's quality", by: the percent of positives before last positive out of total requests.
+I shall demonstrate via an example: `101010100000`'s connectivity would consider the part before `distance_to_last`, i.e. `1010101`. It has 4 `1`s, and a total of `7` digits. Thus, its connectivity is `4/7`.
+At this point I noticed I have two parameters, and kind of got stuck, missing additional inspiration or creativity.
+Then I saw this silly coincidence, which led to 3 more parameters: `distance_to_last` starts with a `d`, whereas `connectivity` starts with a `c`. How cool would it be if the next two parameters started with `b` and `a`?
+The first one I concieved was `a`: average pf the last 60 data points. Pretty standard, would be the naive approach. Perhaps I could integrate it here too.
+Now, I had `a`, `c`, and `d`. I just had to get a `b`! What words start with B?... Best. Best what? Best strike, longest series.
+I can measure the length of the longest continuous chain of positive responses! (And while I'm at it, negative too, 'cause why not?).
+I later thought of `e` - `wEighted average`, which is like `a` but using a function `f: x (time since response) -> y (importance of that response)`, which will probably just be a dropping exponential.
+
+Now, with all my 5 parameters, A, B, C, D, and E, I can unite them into a formula!
+Not so fast. First, I shall determine how each parameter relates to the opacity.
+Then, using a lovely Desmos utility Ron Dorman made for me, I can try out different functions, and find the optimal one.
