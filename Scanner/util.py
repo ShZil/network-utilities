@@ -290,7 +290,24 @@ def render_opacity(percent: int | float):
     return characters[level]
 
 
-class InstantPrinting:
+class _Printing:
+    """This context manager delays and stores all outputs via `print`s.
+    It is not meant to be used directly, but other classes can inherit it.
+    """
+    def __init__(self):
+        pass
+
+    def __enter__(self):
+        self.real_stdout = sys.stdout
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        sys.stdout = self.real_stdout
+        print(exc_type, exc_val, exc_tb)
+
+
+
+class InstantPrinting(_Printing):
     """This context manager delays and stores all outputs via `print`s, and prints everything when closed.
     Usage:
     ```py
