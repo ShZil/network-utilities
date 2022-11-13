@@ -9,7 +9,6 @@ with ImportDefence():
     import sys
     from pygments import highlight, lexers, formatters
     from json import dumps
-    from prettytable import PrettyTable
     import os
 
 __author__ = 'Shaked Dan Zilberman'
@@ -228,16 +227,6 @@ def memorise(f):
     wrapper.__name__ = f.__name__
     wrapper.__doc__ = f.__doc__
     return wrapper
-
-
-def print_table(table: list[list], *, header: list = None, head=lambda x: x, cell=lambda x: x):
-    header = [head(title) for title in header]
-    t = PrettyTable(header)
-    for row in table:
-        row = [cell(datum) for datum in row]
-        t.add_row(row)
-    t.border = 0
-    print(t)
 
 
 def render_opacity(percent: int | float):

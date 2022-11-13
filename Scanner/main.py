@@ -43,7 +43,7 @@ def read_ipconfig():
         raise
 
 
-# ************ The subprocess windows open and disturb users (aka me)
+# ************ The subprocess windows open and disturb users (aka me) / Prints the errors into the console which is annoying.
 # Potential fix: https://stackoverflow.com/questions/1813872/running-a-process-in-pythonw-with-popen-without-a-console
 # or https://stackoverflow.com/a/55758810
 @memorise
