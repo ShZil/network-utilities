@@ -329,6 +329,20 @@ class InstantPrinting(_Printing):
         print(self.output.getvalue())
 
 
+class NoPrinting(_Printing):
+    """This context manager prevents all output (through `sys.stdout`, e.g. normal `print` statements) from showing.
+    Usage:
+    ```py
+    with NoPrinting():
+        # do some stuff here including printing
+        # Nothing will actually display
+    ```
+
+    Technical note: this just inherits `_Printing` with no additional behaviour.
+    """
+    pass
+
+
 
 class _SplitStringIO:
     """This class is like the io.StringIO, but it splits different `write` statements.
