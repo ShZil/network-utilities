@@ -346,29 +346,29 @@ def calculate_opcaity(connections: list[bool]) -> float:
     return opacity
 
 
-def display_continuous_connections_ICMP(addresses, all_possible_addresses, compact_printing=True):
+def display_continuous_connections_ICMP(addresses, all_possible_addresses, parallel_device_discovery=True, compact_printing=True):
     if not isinstance(addresses, list): addresses = list(addresses)
     table = {address: [] for address in addresses}
     waiting = Queue()
 
-    # How many threads should be dedicated to the detection of new devices?
-    # The iteration shifts in different threads by `shifting = thread_index * 71 mod 255`, to ensure efficiency.
-    # Range of values: 1 to 18 (inclusive).
-    # Optimal values: 18, 6, 3, 2, 1
-    SCANNER_THREADS = 18
+    if parallel_device_discovery:
+        # How many threads should be dedicated to the detection of new devices?
+        # The iteration shifts in different threads by `shifting = thread_index * 71 mod 255`, to ensure efficiency.
+        # Range of values: 1 to 18 (inclusive).
+        # Optimal values: 18, 6, 3, 2, 1
+        SCANNER_THREADS = 18
 
+        def new_devices(order: int):
+            all_addresses = shift(all_possible_addresses, 71*order)
+            while True:
+                for address in all_addresses:
+                    if address in table.keys(): continue
+                    if address in waiting.queue: continue
+                    if can_connect_ICMP_base(address):
+                        waiting.put(address)
 
-    def new_devices(order: int):
-        all_addresses = shift(all_possible_addresses, 71*order)
-        while True:
-            for address in all_addresses:
-                if address in table.keys(): continue
-                if address in waiting.queue: continue
-                if can_connect_ICMP_base(address):
-                    waiting.put(address)
-
-    for i in range(SCANNER_THREADS):
-        Thread(target=new_devices, args=(i, )).start()
+        for i in range(SCANNER_THREADS):
+            Thread(target=new_devices, args=(i, )).start()
     
     while True:
         sleep(1.1)  # Change this to global setting
