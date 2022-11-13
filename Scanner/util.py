@@ -342,6 +342,10 @@ class _SplitStringIO:
     
     def getvalue(self):
         return [string.getvalue() for string in self.content]
+    
+
+    def flush():
+        pass
 
 
 
