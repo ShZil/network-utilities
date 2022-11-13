@@ -331,6 +331,10 @@ class InstantPrinting(_Printing):
 
 
 class _SplitStringIO:
+    """This class is like the io.StringIO, but it splits different `write` statements.
+    Internally, this is a `list` of `StringIO`s.
+    Not meant for use outside the `util` module.
+    """
     def __init__(self):
         self.content = []
 
