@@ -318,14 +318,14 @@ class InstantPrinting(_Printing):
     """
     def __init__(self):
         self.output = StringIO()
-
+    
     def __enter__(self):
-        self.real_stdout = sys.stdout
+        super().__enter__()
         sys.stdout = self.output
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        sys.stdout = self.real_stdout
+        super().__exit__(exc_type, exc_val, exc_tb)
         print(self.output.getvalue())
 
 
@@ -365,7 +365,7 @@ class JustifyPrinting(InstantPrinting):
         self.output = _SplitStringIO()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        sys.stdout = self.real_stdout
+        _Printing.__exit__(self, exc_type, exc_val, exc_tb)
         blocks = self.output.getvalue()
         width = int(os.get_terminal_size().columns)
 
@@ -431,9 +431,9 @@ class TablePrinting(InstantPrinting):
         self.output = _SplitStringIO()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        align = TablePrinting.aligns["center"]
+        _Printing.__exit__(self, exc_type, exc_val, exc_tb)
 
-        sys.stdout = self.real_stdout
+        align = TablePrinting.aligns["center"]
         output = self.output.getvalue()
         width = int(os.get_terminal_size().columns)
 
