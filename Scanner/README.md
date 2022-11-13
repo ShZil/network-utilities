@@ -226,3 +226,10 @@ I later thought of `e` - `wEighted average`, which is like `a` but using a funct
 Now, with all my 5 parameters, A, B, C, D, and E, I can unite them into a formula!
 Not so fast. First, I shall determine how each parameter relates to the opacity.
 Then, using a lovely Desmos utility Ron Dorman made for me, I can try out different functions, and find the optimal one.
+
+[22:30] Maybe find edge cases of `hostify`? Where each method returns a different string.
+
+[22:33] Also implement that `@probabilistic_cache` for hostify; testing `hostify` now returns different results than what's rendered, pointing at some old data (which is unfavourable).
+However, balance that. Treat `hostify` as a costy function.
+
+[22:35] Please add something in `@threadify` that prevents finished processes appearing as 99%! (Print a 100% statement just before returning)
