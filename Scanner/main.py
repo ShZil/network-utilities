@@ -492,7 +492,6 @@ def main():
     do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=3)
     
     with JustifyPrinting():
-        raise ArithmeticError("Ohh-wee too complicated calculation!")
         for entity in lookup:
             print(entity)
 
