@@ -346,6 +346,21 @@ def calculate_opcaity(connections: list[bool]) -> float:
     return opacity
 
 
+def calculate_opacity_advanced(connections: list[bool]) -> float:
+    if len(connections) == 0: return 0.0
+    if not any(connections): return 0.0
+    d = list(reversed(connections)).index(True)
+    c = list(reversed(connections))[d:]
+    c = c.count(True) / len(c)
+    c = c if c > 0 else 0.01
+    a = connections.count(True) / len(connections)
+    opacity = 1 - (d ** 4) / (500_000*c) + a / 100
+    if opacity > 1: return 1.0
+    if opacity < 0: return 0.0
+    return opacity
+
+
+
 def display_continuous_connections_ICMP(addresses, all_possible_addresses, parallel_device_discovery=True, compact_printing=True):
     if not isinstance(addresses, list): addresses = list(addresses)
     table = {address: [] for address in addresses}
