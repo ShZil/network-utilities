@@ -37,13 +37,13 @@ d =    reversed(data).indexOf(False)
             length
         else:
             the index (- 1?)
-┎
+┌
 │  c = reversed(data)[d:]
 │  c = c.count(True) / len(c)
 └
 a = sum([1 if datum else 0 for datum in data]) / len(data)
 
-┎
+┌
 │  _1Lengths = data.split(0).map(len)
 │  _0Lengths = data.split(1).map(len)
 │  b0 = max(_0Lengths)
