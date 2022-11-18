@@ -348,8 +348,8 @@ def calculate_opacity(connections: list[bool]) -> float:
 
 def calculate_opacity_advanced(connections: list[bool]) -> float:
     NOISE_P_MIN = 0.1
-    if len(connections) == 0: return 0.0
-    if not any(connections): return 0.0
+    if len(connections) == 0: return 1.0
+    if not any(connections): return 1.0
     n = list(reversed(connections)).index(True)
     connected_period = list(reversed(connections))[n:]
     a = connected_period.count(True) / len(connected_period)
@@ -415,7 +415,7 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, paral
                     print(
                         f"{address} ({hostify(address)}): ".rjust(example_length),
                         (''.join(['█' if x else ' ' for x in table[address][-bar_length:]]) + "┅ ").rjust(bar_length),
-                        f"[{100 * calculate_opacity_advanced(table[address])}]"
+                        f"[{100 - 100 * calculate_opacity_advanced(table[address])}]"
                         # f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
                     )
             print()
@@ -499,7 +499,7 @@ def main():
     conf.warning_threshold = 10000  # Disables "MAC address to reach not found" warnings.
 
     # ICMP scans
-    do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=1)
+    do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=2)
     
 
     # ARP scans
