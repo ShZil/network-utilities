@@ -308,7 +308,7 @@ def can_connect_ARP(addresses: list[str]) -> list[str]:
     return [result[1] for result in results]
 
 
-def calculate_opcaity(connections: list[bool]) -> float:
+def calculate_opacity(connections: list[bool]) -> float:
     """This function calculates the opacity of a given connection list (a list of booleans indicating some contacting attempts' successes),
     according to a linear interpolation: if the last attempt succeeded, returns `1.0`; if the last `n`* attempts failed, return `0.0`.
 
@@ -409,7 +409,7 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, paral
                     print(
                         address,
                         f"({hostify(address)})",
-                        f"[{render_opacity(100 * calculate_opcaity(table[address]))}]"
+                        f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
                     )
         else:   
             with InstantPrinting():
@@ -419,7 +419,8 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, paral
                     print(
                         f"{address} ({hostify(address)}): ".rjust(example_length),
                         (''.join(['█' if x else ' ' for x in table[address][-bar_length:]]) + "┅ ").rjust(bar_length),
-                        f"[{render_opacity(100 * calculate_opcaity(table[address]))}]"
+                        f"[{100 * calculate_opacity_advanced(table[address])}]"
+                        # f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
                     )
             print()
 
