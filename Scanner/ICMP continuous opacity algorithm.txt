@@ -269,3 +269,10 @@ induction:  p(T) = 1 - aᵀ
 ־־־־־־־־   p(T+1) = p(T) + (1 - p(T))(1-a) = 1-aᵀ + aᵀ(1-a)
                    = 1 - aᵀ + aᵀ - aᵀa = 1 - aᵀ⁺¹    ✓
                                          ========
+
+
+[Thoughts from 2022-11-18 19:17]
+P(disconnected) = 1 - P(connected)
+opacity ~ P(connected)
+=> opacity ~ 1 - (1 - aⁿ)
+=> opacity ~ aⁿ  (`return a ** n`)

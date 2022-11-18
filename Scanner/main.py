@@ -347,14 +347,12 @@ def calculate_opacity(connections: list[bool]) -> float:
 
 
 def calculate_opacity_advanced(connections: list[bool]) -> float:
-    NOISE_P_MIN = 0.1
     if len(connections) == 0: return 1.0
     if not any(connections): return 1.0
     n = list(reversed(connections)).index(True)
     connected_period = list(reversed(connections))[n:]
     a = connected_period.count(True) / len(connected_period)
-    if a < NOISE_P_MIN: a = NOISE_P_MIN
-    return 1 - a ** n
+    return a ** n
 
 
 def display_continuous_connections_ICMP(addresses, all_possible_addresses, parallel_device_discovery=True, compact_printing=True):
@@ -415,8 +413,7 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, paral
                     print(
                         f"{address} ({hostify(address)}): ".rjust(example_length),
                         (''.join(['█' if x else ' ' for x in table[address][-bar_length:]]) + "┅ ").rjust(bar_length),
-                        f"[{100 - 100 * calculate_opacity_advanced(table[address])}]"
-                        # f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
+                        f"[{render_opacity(100 * calculate_opacity_advanced(table[address]))}]"
                     )
             print()
 
