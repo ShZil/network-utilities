@@ -350,8 +350,7 @@ def calculate_opacity_advanced(connections: list[bool]) -> float:
     if len(connections) == 0: return 1.0
     if not any(connections): return 1.0
     n = list(reversed(connections)).index(True)
-    connected_period = list(reversed(connections))[n:]
-    a = connected_period.count(True) / len(connected_period)
+    a = connections.count(True) / len(connections)
     return a ** n
 
 
