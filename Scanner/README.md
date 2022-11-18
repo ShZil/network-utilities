@@ -250,3 +250,7 @@ However, balance that. Treat `hostify` as a costy function.
 
 ### 2022-11-18
 [17:50] Finished uploading the papers (manually) into their digital copy.
+
+[18:54] Protocols for possible new scans:
+- Neighbor Discovery Protocol (NDP) over ICMPv6 (Neighbor Solicitation, found via sniffing; Router Solicitation)
+- Reverse Address Resolution Protocol (RARP) over IPv4 (found with the Wikipedia article on NDP).
