@@ -1,7 +1,10 @@
 On 2022-11-13, I was thinking a lot (documented in README.md).
-I used some paper with a blue pen. The following is a digital copy of the paper's contents. Afterwards, comes an explanation of the algorithm.
+The following is a digital copy of the paper's contents.
+On 2022-11-17, a lot of progress was made.
+I used multiple papers and a whiteboard; the following contains a digital copy of them.
 
 
+### 2022-11-13
 
 [Paper #1]
 :yum:  13/11/2022
@@ -15,7 +18,7 @@ c=3/7  0000XXX00000  ---> 75%
                               --> d->0 => p->100%
 d = distance_to_last_positive --> d->∞ => p->0%
 c = connectivity      =      percent of positives before
-        |                    last positive (our of total
+        │                    last positive (our of total
 the connection's quality     requests).
 
 `c` "softens" the gradients caused by `d`.
@@ -30,21 +33,21 @@ a, b, c, d, e
 
 [Paper #2]
 d =    reversed(data).indexOf(False)
-        if -1:       <-----
+        if -1:       <-----╯
             length
         else:
             the index (- 1?)
 ┎
-|  c = reversed(data)[d:]
-|  c = c.count(True) / len(c)
+│  c = reversed(data)[d:]
+│  c = c.count(True) / len(c)
 └
 a = sum([1 if datum else 0 for datum in data]) / len(data)
 
 ┎
-|  _1Lengths = data.split(0).map(len)
-|  _0Lengths = data.split(1).map(len)
-|  b0 = max(_0Lengths)
-|  b1 = max(_1Lengths)  [*3]
+│  _1Lengths = data.split(0).map(len)
+│  _0Lengths = data.split(1).map(len)
+│  b0 = max(_0Lengths)
+│  b1 = max(_1Lengths)  [*3]
 └
 --------------------------------------------------------------
 d=0 => p=100%    /    d=∞ => p=0%
@@ -61,16 +64,208 @@ a ~ p  (low weight)  [*2]   / b1⭨ => c⭨
 [Paper #3]
 [*0] 0X000 > X0000    !
 [*1] 0X0X0X0000 = XXXXXX00
-     ╰----╯╰--╯   ╰----╯╰╯
+     ╰────╯╰──╯   ╰────╯╰╯
       c=0.5 d=4    c=1.0 d=2
 [*2] X0X0X0 < XXX0X0
                                   `d` is stronger
      0X0X0X = XXX0X0 = 100%   <--- than `a`
-     ╰----╯   ╰----╯
+     ╰────╯   ╰────╯
       a=0.5    a=2/3
 [*3] is there a formula relating b1 and b0?
 [*4] think a lot about edge cases!
 
 
 
-[Desmos Analysis]
+### 2022-11-17
+[In notebook]
+
+17/11/2022    00:46
+___________________
+
+This was divinely revealed
+to me during a shower:
+
+Use probability theory to find
+the opacity value!
+             _________
+P(noise) + P(connected) = P(no response)
+    ↓           ↓             ↓
+via avg?   trying to find    integrate over
+                             the last values...?
+
+P( k long no-response streak 
+   out of n datapoints       ) = ?
+
+Plan: speak to Erez (math teacher)
+      after maths class tmr, then
+      implement/finish developing during
+      Cyber class.
+
+
+[On whiteboard with Erez]
+
+           1) רעש
+           2) מנותק
+
+                        → t                                       _____
+                1011000           P(3•'0' רק מרעש) = P(רעש)³ = P(מנותק ⋂ ‎3•'0')
+                ╰──╯╰─╯↑
+                ←      │
+    P(רעש)=0.25        P(מנותק)
+
+    אם קיבלתי הודעת ניתוק
+מה ההסתברות שהמחשב מנותק?
+
+
+[During Cyber class]
+:wave: :wave: :wave: :wave: :wave:
+:wave: :wave: :wave: :wave: :wave:
+:wave: :wave: :wave:        :wave:
+
+192.168.0.6:  ↓
+    0100011100
+    ---→ t
+
+    P(רעש)
+
+                                                                                   0
+┌──────────────┬──────────────┐                     ╭──────────────╮╭─────────────╮
+│  1           │  0           │                     │  1           │|   Noise     │
+│              │    Noise     │                     │              │╰─────────────╯
+│              ├──────────────┤                     │  Connected   |╭─────────────╮
+│   Connected  │  0           │                     │              │|           ed│
+│              │    Disconnect│ed                   │              │|   Disconnect│
+└──────────────┴──────────────┘                     ╰──────────────╯╰─────────────╯
+
+                                                         - Assume P(Noise) = const.
+P( Disconnected / 0100011100 ) = ?                                   p
+
+
+
+
+
+
+[Library papers]
+#1
+    0 0 0 0 0 1 1 1 0 1 1 0 0 1 1 1 1 1 1 0 0 0 1 0 1 1 0 0 0 0 0
+    ╰───────╯ ↑
+padding       │
+to equalize   must always
+length        start with
+              1; might
+              be trimmed
+              later.
+
+ודאות p(...1) = 0  [formerly 1] (redef as opposite)
+־־־־־
+                                                    Ω = {0, 1}; P(Ω) = 1
+for a single bit:                                   {1}
+┌─────────────────────────────┐                     {0}
+│                           Ω │                     {1} ⋂ {0} = ∅  :זרים
+│                             │                                     ־־־־
+│                             │
+│                             │
+│                             │
+│                             │
+└─────────────────────────────┘
+
+P(noise) = P(0 ⋂ connected)
+┌─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─┐
+¦ 1   1   1   1   0   0   0   0   0   ¦
+¦              ↑   ↑   ↑   ↑   ↑   ↑  ¦
+¦             T-5 T-4 T-3 T-2 T-1  T  ¦
+└─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─┘
+
+p(T) = P(disconnected @ T-1) + P(disconnected @ T-2)  [with strikethrough]
+
+p(T-5) = 0                                         במילים: ההסתברות שמנותק
+                    1                              שווה להתסברות שנותק
+            0     ╭────╮                           לפני שנייה, או שלא נותק
+         ╭────╮     ___   _____                    לפני שנייה וגם ה0 נגרם
+p(T-4) = p(T-5) + p(T-5)p(noise)                   .לא על ידי רעש (אלא ניתוק)
+           _____                                                             ־־
+       = p(noise)
+                    ___   _____
+p(T-3) = p(T-4) + p(T-4)p(noise)
+           _____              _____
+       = p(noise) + p(noise)p(noise)
+
+
+let a = p(noise)
+
+
+#2
+
+               #0
+P(noise) = -----------
+            length of
+            connected
+            period
+
+                  T-5 T-3 T-1
+                   ↓   ↓   ↓
+1 1 1 1 0 1 0 0 1 1 0 0 0 0 0
+└─────────────────┘  ↑   ↑   ↑
+ connected period   T-4 T-2  T
+
+==================================
+
+T-5  after no    0s
+T-4  after one   0
+T-3  after two   0s
+T-2  after three 0s
+T-1  after four  0s
+T    after five  0s
+
+              chances of being disconnected when the
+p(T-5) = 0  ← last bit is 1 are nonexistant.
+        ╰─╯= 1 - a⁰
+p(T-4) = 1 - a¹   (explained in page #1)
+        ╰──────╯
+p(T-3) = 1-a + a(1 - a) = 1 - a + a - a² = 1 - a²
+                                          ╰──────╯
+                    ___   _____
+p(T-2) = p(T-3) + p(T-3)P(noise)
+       = 1-a² + a²(1-a) = 1 - a² + a² - a³ = 1 - a³
+                                            ╰──────╯
+
+p(t) = 1 - aⁿ
+                    _   _____                      induction!
+p(t + 1) = p(t) + p(t)p(noise) = 1-aⁿ + aⁿ(1-a) = 1 - aⁿ⁺¹
+                                                 └────────┘
+┌──────────────────────────────────────────────────┐
+│ n = distance (in 0s) to last positive (1).       │
+│                                                  │
+│ p = 1 - aⁿ                                       │
+│                                                  │
+│       #0                                         │
+│ a = ------  in connected period (T-n and before) │
+│     length                                       │
+└──────────────────────────────────────────────────┘
+                                                  ___   _____
+Assumption: if bit(T) = 0, then p(T) = p(T-1) + p(T-1)p(noise)
+
+
+
+#3
+Assumption justification:
+                                                   _____        _____
+       p(T)       =      p( T - 1 )       +     p( T - 1 ) · p( noise )
+
+chances of being  =  having disconnected   OR    not having disconnected at
+disconnected         at the previous step        the previous step
+                                                         AND
+                                                 the 0 being caused
+                                                 by disconnecting
+                                                    ╰───────────╯
+                                                         ↓
+                                                        = not noise
+
+
+let p(T=0) = 1 - a⁰ = 0     ( no 0s, computer still alive, )
+                            (  no chance of disconnecting  )
+
+induction:  p(T) = 1 - aᵀ
+־־־־־־־־   p(T+1) = p(T) + (1 - p(T))(1-a) = 1-aᵀ + aᵀ(1-a)
+                   = 1 - aᵀ + aᵀ - aᵀa = 1 - aᵀ⁺¹    ✓
+                                         ========

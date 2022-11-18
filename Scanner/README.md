@@ -238,3 +238,15 @@ However, balance that. Treat `hostify` as a costy function.
 
 ### 2022-11-14
 [16:00] At class today, Ran downloaded the wanted programs (Git; Nmap; VSCode), and I made a Batch file that `git clone`s the repository to a local path.
+
+### 2022-11-17
+[00:46] A new approach was divinely revealed to me during a shower. I can solve the problem percisely instead of guessing and tuning parameters.
+
+[09:40] I spoke to Erez after maths ended; I explained the problem and started (with his assistance) thinking of it in terms of Probability Theory.
+
+[14:40] During Cyber class today (for ~40 minutes) I tried continuing what Erez and I did, but no progress (it's really noisy with lots of distractions).
+
+[19:30] I went to the local library, sat down with a Statistics & Probability textbook, and did maths. And I got a formula.
+
+### 2022-11-18
+[17:50] Finished uploading the papers (manually) into their digital copy.
