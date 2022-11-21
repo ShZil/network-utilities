@@ -492,7 +492,7 @@ def main():
     print("There are", len(all_possible_addresses), "possible addresses in this subnet.")
     # print(all_possible_addresses)
 
-    conf.warning_threshold = 10000  # Disables "MAC address to reach not found" warnings.
+    conf.warning_threshold = 100000  # Time between warnings of the same source should be infinite (100000 seconds).
 
     # ICMP scans
     do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=2)
