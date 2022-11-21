@@ -518,7 +518,7 @@ def main():
 
     print_dict(ipconfig())
 
-    all_possible_addresses = get_all_possible_addresses()
+    ipconfig.cache["All Possible Addresses"] = all_possible_addresses = get_all_possible_addresses()
     print("There are", len(all_possible_addresses), "possible addresses in this subnet.")
     # print(all_possible_addresses)
 
