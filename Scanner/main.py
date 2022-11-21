@@ -488,6 +488,13 @@ def do_simple_scan(scan, all_possible_addresses, *, results=True, repeats=3):
     return connectable_addresses
 
 
+def standardise_simple_scans(scans: list[tuple[function, int]]) -> list[function]:
+    scans = [scan if isinstance(scan, tuple) else (scan, 1) for scan in scans]
+    return [
+        lambda all_possible_addresses: do_simple_scan(scan, ipconfig()["All Possible Addresses"], repeats=repeats)
+        for scan, repeats in scans
+    ]
+
 def main():
     get_ip_configuration()
 
@@ -504,6 +511,10 @@ def main():
 
     # ICMP scans
     do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=2)
+    simple_scans = standardise_simple_scans([
+        (can_connect_ICMP, 2),
+        (can_connect_ARP, 3)
+    ])
     
 
     # ARP scans
