@@ -495,6 +495,21 @@ def standardise_simple_scans(scans: list[tuple[function, int]]) -> list[function
         for scan, repeats in scans
     ]
 
+
+def print_lookup():
+    with JustifyPrinting():
+        for entity in lookup:
+            print(entity)
+
+
+def user_confirmation():
+    input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
+
+
+def continuous_ICMP():
+    display_continuous_connections_ICMP(lookup['ip'], ipconfig()["All Possible Addresses"], compact_printing=False)
+
+
 def main():
     get_ip_configuration()
 
@@ -508,9 +523,6 @@ def main():
     # print(all_possible_addresses)
 
     conf.warning_threshold = 100000  # Time between warnings of the same source should be infinite (100000 seconds).
-
-    # ICMP scans
-    do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=2)
     simple_scans = standardise_simple_scans([
         (can_connect_ICMP, 2),
         (can_connect_ARP, 3)
@@ -531,18 +543,16 @@ def main():
     for action in actions:
         action()
 
+    # # ICMP scans
+    # do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=2)
     
 
-    # ARP scans
-    do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=3)
+    # # ARP scans
+    # do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=3)
     
-    with JustifyPrinting():
-        for entity in lookup:
-            print(entity)
 
-    # Continuous ICMP scans
-    input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
-    display_continuous_connections_ICMP(lookup['ip'], all_possible_addresses, compact_printing=False)
+    
+    
 
 
 
