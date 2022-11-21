@@ -550,18 +550,6 @@ def main():
     for action in actions:
         action()
 
-    # # ICMP scans
-    # do_simple_scan(can_connect_ICMP, all_possible_addresses, repeats=2)
-    
-
-    # # ARP scans
-    # do_simple_scan(can_connect_ARP, all_possible_addresses, repeats=3)
-    
-
-    
-    
-
-
 
 if __name__ == '__main__':
     try:
