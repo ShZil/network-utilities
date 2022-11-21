@@ -504,7 +504,6 @@ def standardise_simple_scans(scans: list[tuple[Callable, int]]) -> list[Callable
 
 
 
-
 def main():
     get_ip_configuration()
 
@@ -522,6 +521,9 @@ def main():
         (can_connect_ICMP, 2),
         (can_connect_ARP, 3)
     ])
+
+    simple_scans[0]()
+    # **************************************************** This is supposed to be ICMP, not ARP!
 
     def print_lookup():
         with JustifyPrinting():
