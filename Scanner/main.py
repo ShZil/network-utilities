@@ -493,17 +493,15 @@ def do_simple_scan(scan, all_possible_addresses, *, results=True, repeats=3):
 
 def standardise_simple_scans(scans: list[tuple[Callable, int]]) -> list[Callable]:
     scans = [scan if isinstance(scan, tuple) else (scan, 1) for scan in scans]
-    [print(scan[0].__name__) for scan in scans]
+    
     def does_simple_scan(scan):
         scan, repeats = scan
         return (lambda: do_simple_scan(scan, ipconfig()["All Possible Addresses"], repeats=repeats))
-    lambdas = [
-        does_simple_scan(scan)
-        for scan in scans
-    ]
-    # for scan, method in zip(scans, lambdas):
-    #     prefix = f"{scan[1]} × " if scan[1] > 1 else ""
-    #     method.__name__, method.__doc__ = prefix + scan[0].__name__, prefix + scan[0].__doc__
+    lambdas = [does_simple_scan(scan) for scan in scans]
+
+    for scan, method in zip(scans, lambdas):
+        prefix = f"{scan[1]} × " if scan[1] > 1 else ""
+        method.__name__, method.__doc__ = prefix + scan[0].__name__, prefix + scan[0].__doc__
     return lambdas
 
 
@@ -533,6 +531,7 @@ def main():
 
     def user_confirmation(): input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
     def continuous_ICMP(): display_continuous_connections_ICMP(lookup['ip'], ipconfig()["All Possible Addresses"], compact_printing=False)
+
     nameof = lambda action: action.__doc__ if action.__doc__ and len(action.__doc__) < 100 else action.__name__
 
     actions = [
@@ -549,7 +548,7 @@ def main():
 
 
     for action in actions:
-        print("\n" + nameof(action))
+        # print("\n" + nameof(action))
         action()
 
 
