@@ -531,7 +531,7 @@ def main():
         (can_connect_ARP, 3)
     ])
     actions = [
-        simple_scans,
+        *simple_scans,
         print_lookup,
         user_confirmation,
         continuous_ICMP
