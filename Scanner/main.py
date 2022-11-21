@@ -544,7 +544,7 @@ def main():
     with InstantPrinting():
         print("The following actions are queued:")
         for action in actions:
-            print("    -", action.__doc__ if action.__doc__ else action.__name__)
+            print("    -", action.__doc__ if action.__doc__ and len(action.__doc__) < 100 else action.__name__)
 
 
     for action in actions:
