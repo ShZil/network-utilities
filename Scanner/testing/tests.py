@@ -75,7 +75,8 @@ def test() -> None:
     if any(results):
         print("Failed tests:")
         for i in [index for index, bad_result in enumerate(results) if bad_result]:
-            print("    ", tests[i].__name__)
+            test = tests[i]
+            print("    •", test.__doc__ if test.__doc__ else test.__name__)
         input("Press any key to continue. . . ")
     else:
         print("All tests were successful.")
