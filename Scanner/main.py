@@ -301,7 +301,7 @@ def can_connect_ARP(addresses: list[str]) -> list[str]:
     sniffer.start()
 
     send_ARP = lambda packet: sendp(packet, verbose=0)
-    send_ARP.__name__ = "can_connect_ARP"
+    send_ARP.__name__ = "can_connect_ARP_base"
     packets = [Ether() / ARP(pdst=address) for address in addresses]
     threadify(send_ARP)(packets)
 
