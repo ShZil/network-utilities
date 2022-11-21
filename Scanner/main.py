@@ -515,6 +515,22 @@ def main():
         (can_connect_ICMP, 2),
         (can_connect_ARP, 3)
     ])
+    actions = [
+        simple_scans,
+        print_lookup,
+        user_confirmation,
+        continuous_ICMP
+    ]
+
+    with InstantPrinting():
+        print("The following actions are queued:")
+        for action in actions():
+            print("    -", action.__doc__ if action.__doc__ else action.__name__)
+
+
+    for action in actions:
+        action()
+
     
 
     # ARP scans
