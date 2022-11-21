@@ -503,18 +503,6 @@ def standardise_simple_scans(scans: list[tuple[Callable, int]]) -> list[Callable
     return lambdas
 
 
-def print_lookup():
-    with JustifyPrinting():
-        for entity in lookup:
-            print(entity)
-
-
-def user_confirmation():
-    input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
-
-
-def continuous_ICMP():
-    display_continuous_connections_ICMP(lookup['ip'], ipconfig()["All Possible Addresses"], compact_printing=False)
 
 
 def main():
@@ -523,17 +511,27 @@ def main():
     from testing.tests import test
     test()
 
-    print_dict(ipconfig())
+    # print_dict(ipconfig())
 
     ipconfig.cache["All Possible Addresses"] = all_possible_addresses = get_all_possible_addresses()
     print("There are", len(all_possible_addresses), "possible addresses in this subnet.")
-    # print(all_possible_addresses)
 
     conf.warning_threshold = 100000  # Time between warnings of the same source should be infinite (100000 seconds).
+    
     simple_scans = standardise_simple_scans([
         (can_connect_ICMP_fast, 2),
         (can_connect_ARP, 3)
     ])
+
+    def print_lookup():
+        with JustifyPrinting():
+            for entity in lookup:
+                print(entity)
+
+    def user_confirmation(): input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
+    def continuous_ICMP(): display_continuous_connections_ICMP(lookup['ip'], ipconfig()["All Possible Addresses"], compact_printing=False)
+    nameof = lambda action: action.__doc__ if action.__doc__ and len(action.__doc__) < 100 else action.__name__
+
     actions = [
         *simple_scans,
         print_lookup,
@@ -544,10 +542,11 @@ def main():
     with InstantPrinting():
         print("The following actions are queued:")
         for action in actions:
-            print("    -", action.__doc__ if action.__doc__ and len(action.__doc__) < 100 else action.__name__)
+            print("    -", nameof(action))
 
 
     for action in actions:
+        print("\n" + nameof(action))
         action()
 
 
