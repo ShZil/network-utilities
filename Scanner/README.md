@@ -259,3 +259,6 @@ However, balance that. Treat `hostify` as a costy function.
 [20:16] Inserting changes from Cyber class today:
 - Better user interface in tests.py module.
 - New test: check whether Npcap exists
+
+[21:37] I implemented a new system that queues all actions in advance, prints them to the CMD, and then executes them.
+
