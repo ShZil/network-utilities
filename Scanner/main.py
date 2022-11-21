@@ -2,9 +2,12 @@ from import_handler import ImportDefence
 with ImportDefence():
     import os
     from subprocess import CalledProcessError, check_output as read_command
+    from typing import Callable
+
     from util import *
     from ip_handler import *
     from NetworkStorage import NetworkStorage
+
     from scapy.sendrecv import sr1, sendp, AsyncSniffer
     from scapy.layers.inet import IP, ICMP
     from scapy.layers.l2 import Ether, ARP
@@ -488,7 +491,7 @@ def do_simple_scan(scan, all_possible_addresses, *, results=True, repeats=3):
     return connectable_addresses
 
 
-def standardise_simple_scans(scans: list[tuple[function, int]]) -> list[function]:
+def standardise_simple_scans(scans: list[tuple[Callable, int]]) -> list[Callable]:
     scans = [scan if isinstance(scan, tuple) else (scan, 1) for scan in scans]
     return [
         lambda all_possible_addresses: do_simple_scan(scan, ipconfig()["All Possible Addresses"], repeats=repeats)
