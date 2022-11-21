@@ -68,7 +68,8 @@ def does_winpcap_exist():
     except (ImportError, ModuleNotFoundError):
         return False
     try:
-        sendp(Ether() / IP() / ICMP())  # Sends a default to ICMP packet to localhost (so no network traffic generated).
+        with NoPrinting():
+            sendp(Ether() / IP() / ICMP(), verbose=0)  # Sends a default to ICMP packet to localhost (so no network traffic generated).
     except RuntimeError:
         return False
     return True
