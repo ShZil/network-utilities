@@ -61,8 +61,21 @@ def shift_list_test():
     return shift(a, 1) == [2, 3, 1] and shift(a, 2) == [3, 1, 2] and shift(a, 3) == a
 
 
+def does_winpcap_exist():
+    """WinPcap / Npcap aren't installed. It is essential that you install either one. https://npcap.com/#download"""
+    try:
+        from scapy.all import sendp
+    except (ImportError, ModuleNotFoundError):
+        return False
+    try:
+        sendp(Ether() / IP() / ICMP())  # Sends a default to ICMP packet to localhost (so no network traffic generated).
+    except RuntimeError:
+        return False
+    return True
+
+
 # Each element is a boolean function. False means the test failed.
-tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask, threadify_echo_test, shift_list_test]
+tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask, threadify_echo_test, shift_list_test, does_winpcap_exist]
 def test() -> None:
     os.system("")  # Enables ANSI colouring
     results = [not run() for run in tests]

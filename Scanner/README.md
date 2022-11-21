@@ -254,3 +254,8 @@ However, balance that. Treat `hostify` as a costy function.
 [18:54] Protocols for possible new scans:
 - Neighbor Discovery Protocol (NDP) over ICMPv6 (Neighbor Solicitation, found via sniffing; Router Solicitation)
 - Reverse Address Resolution Protocol (RARP) over IPv4 (found with the Wikipedia article on NDP).
+
+### 2022-11-21
+[20:16] Inserting changes from Cyber class today:
+- Better user interface in tests.py module.
+- New test: check whether Npcap exists
