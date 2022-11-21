@@ -539,7 +539,7 @@ def main():
 
     with InstantPrinting():
         print("The following actions are queued:")
-        for action in actions():
+        for action in actions:
             print("    -", action.__doc__ if action.__doc__ else action.__name__)
 
 
