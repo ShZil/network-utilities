@@ -302,7 +302,15 @@ def can_connect_ARP(addresses: list[str]) -> list[str]:
     packets = [Ether() / ARP(pdst=address) for address in addresses]
     threadify(send_ARP)(packets)
 
-    sniffer.stop()
+    from scapy.error import Scapy_Exception as NoNpcap
+    try:
+        sniffer.stop()
+    except NoNpcap as e:
+        if e.args[0] == "Unsupported (offline or unsupported socket)":
+            print("Npcap / WinPcap aren't installed. Please install either one lol")
+            sys.exit(1)
+        else:
+            raise
     for result in results:
         lookup.add(mac=result[0], ip=result[1])
     return [result[1] for result in results]
