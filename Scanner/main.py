@@ -259,7 +259,7 @@ def get_all_possible_addresses() -> list[str]:
     return [unbitify(base + binary(i)) for i in range(2 ** unique)]
 
 
-def can_connect_ICMP_base(address: str) -> bool:
+def can_connect_ICMP(address: str) -> bool:
     """This function tests whether it's possible to connect to another IPv4 address `address`,
     using an Internet Control Message Protocol (ICMP) ping request.
     If the address given is localhost, `return False`.
@@ -280,8 +280,8 @@ def can_connect_ICMP_base(address: str) -> bool:
             return True
     return False
 
-can_connect_ICMP_silent = threadify(can_connect_ICMP_base, silent=True)
-can_connect_ICMP = threadify(can_connect_ICMP_base)
+can_connect_ICMP_silent = threadify(can_connect_ICMP, silent=True)
+can_connect_ICMP_fast = threadify(can_connect_ICMP)
 
 
 def can_connect_ARP(addresses: list[str]) -> list[str]:
@@ -383,7 +383,7 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, paral
                 for address in all_addresses:
                     if address in table.keys(): continue
                     if address in waiting.queue: continue
-                    if can_connect_ICMP_base(address):
+                    if can_connect_ICMP(address):
                         waiting.put(address)
 
         for i in range(SCANNER_THREADS):
@@ -396,7 +396,7 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, paral
             if address not in addresses:
                 addresses.append(address)
                 print("Adding address", address)
-        for address, online in zip(addresses, can_connect_ICMP(addresses)):
+        for address, online in zip(addresses, can_connect_ICMP_fast(addresses)):
             if address not in table:
                 table[address] = []
             table[address].append(online)
@@ -531,7 +531,7 @@ def main():
 
     conf.warning_threshold = 100000  # Time between warnings of the same source should be infinite (100000 seconds).
     simple_scans = standardise_simple_scans([
-        (can_connect_ICMP, 2),
+        (can_connect_ICMP_fast, 2),
         (can_connect_ARP, 3)
     ])
     actions = [
