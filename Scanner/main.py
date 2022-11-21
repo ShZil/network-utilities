@@ -494,7 +494,7 @@ def do_simple_scan(scan, all_possible_addresses, *, results=True, repeats=3):
 def standardise_simple_scans(scans: list[tuple[Callable, int]]) -> list[Callable]:
     scans = [scan if isinstance(scan, tuple) else (scan, 1) for scan in scans]
     return [
-        lambda all_possible_addresses: do_simple_scan(scan, ipconfig()["All Possible Addresses"], repeats=repeats)
+        lambda: do_simple_scan(scan, ipconfig()["All Possible Addresses"], repeats=repeats)
         for scan, repeats in scans
     ]
 
