@@ -493,13 +493,17 @@ def do_simple_scan(scan, all_possible_addresses, *, results=True, repeats=3):
 
 def standardise_simple_scans(scans: list[tuple[Callable, int]]) -> list[Callable]:
     scans = [scan if isinstance(scan, tuple) else (scan, 1) for scan in scans]
+    [print(scan[0].__name__) for scan in scans]
+    def does_simple_scan(scan):
+        scan, repeats = scan
+        return (lambda: do_simple_scan(scan, ipconfig()["All Possible Addresses"], repeats=repeats))
     lambdas = [
-        lambda: do_simple_scan(scan, ipconfig()["All Possible Addresses"], repeats=repeats)
-        for scan, repeats in scans
+        does_simple_scan(scan)
+        for scan in scans
     ]
-    for scan, method in zip(scans, lambdas):
-        prefix = f"{scan[1]} × " if scan[1] > 1 else ""
-        method.__name__, method.__doc__ = prefix + scan[0].__name__, prefix + scan[0].__doc__
+    # for scan, method in zip(scans, lambdas):
+    #     prefix = f"{scan[1]} × " if scan[1] > 1 else ""
+    #     method.__name__, method.__doc__ = prefix + scan[0].__name__, prefix + scan[0].__doc__
     return lambdas
 
 
@@ -521,9 +525,6 @@ def main():
         (can_connect_ICMP, 2),
         (can_connect_ARP, 3)
     ])
-
-    simple_scans[0]()
-    # **************************************************** This is supposed to be ICMP, not ARP!
 
     def print_lookup():
         with JustifyPrinting():
