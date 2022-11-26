@@ -42,6 +42,42 @@ def shift(seq: list, n: int) -> list:
     n = n % len(seq)
     return seq[n:] + seq[:n]
 
+def barstyle(name: str) -> str:
+    """Selects a style for @threadify's progress bar.
+
+    Available styles:
+        Dot Fill   :  ███████∙∙∙∙∙∙∙
+        Default    : [───────       ]
+        Unstyled   : [-------       ]
+        Hash Fill  : |#######       |
+    
+    Usage:
+    ```
+    def function():
+        # some code
+    
+    function.options = {"format": style("default")}
+    function = threadify(function)
+    ```
+
+    Args:
+        name (str): the name of the style.
+
+    Returns:
+        str: the format.
+    """
+    try:
+        return {
+            "dotfill": " █∙ ",
+            # "squarefill": " ▣▢ ",
+            # "circlefill": " ◉◯ ",
+            "default": "[─ ]",
+            "unstyled": "[- ]",
+            "hashfill": "|# |"
+        }[name.lower().replace(' ', '')]
+    except NameError:
+        return "[─ ]"
+
 
 def threadify(f, silent=False):
     """This function turns methods (tasks) into thread-based on-list execution.
