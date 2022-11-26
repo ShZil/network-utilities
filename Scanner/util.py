@@ -208,6 +208,7 @@ def threadify(f, silent=False):
 
                 print(f"@threadify: {name} {start}{done}{waiting}{end} ({percent}%)   \r", end='', file=real_stdout)
                 sleep(0.1)
+            print(f"@threadify: {name} {start}{fill * width}{end} (100%)   \r", end='', file=real_stdout)
             print("\n")
         
         # Join all threads
