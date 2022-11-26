@@ -516,7 +516,7 @@ def main():
     # print_dict(ipconfig())
 
     ipconfig.cache["All Possible Addresses"] = all_possible_addresses = get_all_possible_addresses()
-    print("There are", len(all_possible_addresses), "possible addresses in this subnet.")
+    print("Subnet Size:", len(all_possible_addresses), "possible addresses.")
 
     conf.warning_threshold = 100000  # Time between warnings of the same source should be infinite (100000 seconds).
     
