@@ -281,6 +281,7 @@ def can_connect_ICMP_base(address: str) -> bool:
     return False
 
 can_connect_ICMP_silent = threadify(can_connect_ICMP_base, silent=True)
+can_connect_ICMP_base.options = {"format": barstyle("Dot Fill")}
 can_connect_ICMP = threadify(can_connect_ICMP_base)
 
 

@@ -148,6 +148,7 @@ def threadify(f, silent=False):
         pass
     
     name = f.__name__
+    name = name.replace("_base", "")
     if silent:
         options["output"] = False
         options["printing"] = False
