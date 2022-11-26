@@ -52,7 +52,7 @@ def valid_subnet_mask():
 
 def threadify_echo_test():
     echo = lambda x: x
-    echo = threadify(echo)
+    echo = threadify(echo, silent=True)
     return echo([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]
 
 
