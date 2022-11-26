@@ -262,3 +262,6 @@ However, balance that. Treat `hostify` as a costy function.
 
 [21:37] I implemented a new system that queues all actions in advance, prints them to the CMD, and then executes them.
 
+
+### 2022-11-26
+[17:14] Instead of a @probabilistic_cache, have a time stamp assigned to each cached datum, and when it gets too old replace it.
