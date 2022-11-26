@@ -196,13 +196,14 @@ def threadify(f, silent=False):
 
         # Print a progress bar if requested
         if options["printing"]:
+            if len(options["format"]) < 4: options["format"] = options["format"].rjust(4)
+            start, fill, nofill, end = tuple(options["format"])
+            width = os.get_terminal_size().columns - len(f"@threadify: {name} {start}{end} (100%)   ")
+            if width < options["min_printing_length"]: width = options["min_printing_length"]
             while any([thread.is_alive() for thread in threads]):
                 ratio = sum([thread.is_alive() for thread in threads]) / len(threads)
-                start, end = options["format"][0], options["format"][3]
-                width = os.get_terminal_size().columns - len(f"@threadify: {name} {start}{end} (100%)   ")
-                if width < options["min_printing_length"]: width = options["min_printing_length"]
-                done = options["format"][1] * ceil(width * (1 - ratio))
-                waiting = options["format"][2] * floor(width * (ratio))
+                done = fill * ceil(width * (1 - ratio))
+                waiting = nofill * floor(width * (ratio))
                 percent = ceil(100 * (1 - ratio))
 
                 print(f"@threadify: {name} {start}{done}{waiting}{end} ({percent}%)   \r", end='', file=real_stdout)
