@@ -420,6 +420,28 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, paral
                     )
             print()
 
+        elif compactness == 1:
+
+            with TablePrinting():
+                for address in sorted_table:
+                    print(
+                        address,
+                        f"({hostify(address)})",
+                        f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
+                    )
+            
+        else:
+
+            with TablePrinting():
+                opacities = [Colors.BLACK, Colors.DARK_GRAY, Colors.LIGHT_GRAY, Colors.LIGHT_WHITE]
+                for address in sorted_table:
+                    opacity = calculate_opacity(table[address]) - 0.01
+                    if opacity < 0: opacity = 0
+                    if opacity < 1 / len(opacities): continue
+                    color = opacities[opacity * len(opacities)]
+                    print(f"{color}{address} ({hostify(address)}){Colors.END}")   
+            
+
 
 def auto_select_interface(ip: str):
     """Automatically selects the interface whose IP matches the given value.
