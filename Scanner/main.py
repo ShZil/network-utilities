@@ -536,8 +536,8 @@ def main():
     conf.warning_threshold = 100000  # Time between warnings of the same source should be infinite (100000 seconds).
     
     simple_scans = standardise_simple_scans([
-        (can_connect_ICMP, 1),
-        (can_connect_ARP, 0)
+        (can_connect_ICMP, 10),
+        (can_connect_ARP, 1)
     ])
 
     def print_lookup():
