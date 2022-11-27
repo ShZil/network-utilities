@@ -487,13 +487,15 @@ class TablePrinting(InstantPrinting):
         'right': lambda s, w: s.rjust(w)
     }
 
-    def __init__(self):
+    def __init__(self, align='center'):
         self.output = _SplitStringIO()
+        self.align = TablePrinting.aligns["center"]
+        if align in TablePrinting.aligns.keys():
+            self.align = TablePrinting.aligns[align]
+
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         _Printing.__exit__(self, exc_type, exc_val, exc_tb)
-
-        align = TablePrinting.aligns["center"]
         output = self.output.getvalue()
         width = int(os.get_terminal_size().columns)
 
@@ -516,7 +518,7 @@ class TablePrinting(InstantPrinting):
         for line in lines:
             for part in line:
                 w = width // n
-                print(align(part, w), end="")
+                print(self.align(part, w), end="")
             print()
 
 
