@@ -506,7 +506,12 @@ class TablePrinting(InstantPrinting):
         
         # Split the blocks into a `chunk list` (e.g. [a, b, c, d, e, f] + n=2 -> [[a, b], [c, d], [e, f]])
         lengths = [len(block) for block in blocks]
-        n = max(width // max(lengths), 3)
+        try:
+            n = max(width // max(lengths), 3)
+        except ZeroDivisionError:
+            # There is no content, only empty strings
+            print()
+            return
         lines = [blocks[i:i + n] for i in range(0, len(blocks), n)]
         for line in lines:
             for part in line:
