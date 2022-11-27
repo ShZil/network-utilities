@@ -7,6 +7,7 @@ with ImportDefence():
     from util import *
     from ip_handler import *
     from NetworkStorage import NetworkStorage
+    from colors import Colors
 
     from scapy.sendrecv import sr1, sendp, AsyncSniffer
     from scapy.layers.inet import IP, ICMP
