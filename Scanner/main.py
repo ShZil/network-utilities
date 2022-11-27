@@ -436,10 +436,10 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, paral
                 opacities = [Colors.BLACK, Colors.DARK_GRAY, Colors.LIGHT_GRAY, Colors.LIGHT_WHITE]
                 for address in sorted_table:
                     opacity = calculate_opacity(table[address])
-                    index = floor(opacity * len(opacities))
+                    index = floor(opacity * (len(opacities) - 1))
                     if index == 0: continue
                     color = opacities[index]
-                    print(f"{color}{address} ({hostify(address)}){Colors.END}")   
+                    print(f"{color}{address} ({hostify(address)}){Colors.END}")
             
 
 
