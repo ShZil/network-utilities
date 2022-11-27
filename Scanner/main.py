@@ -323,9 +323,7 @@ def can_connect_ARP(addresses: list[str]) -> list[str]:
 
 def calculate_opacity(connections: list[bool]) -> float:
     """This function calculates the opacity of a given connection list (a list of booleans indicating some contacting attempts' successes),
-    according to a linear interpolation: if the last attempt succeeded, returns `1.0`; if the last `n`* attempts failed, return `0.0`.
-
-    (*) The amount of attempts needed to register a disconnection is set in `GONE_AFTER: int` inside the function.
+    according to a probabilistic formula derived in an attached TXT file.
 
     Args:
         connections (list[bool]): a list of contact attempts' successes, taking the form of `[...True, True, False, True, False]`
@@ -334,32 +332,29 @@ def calculate_opacity(connections: list[bool]) -> float:
         float: a value between `0.0` (disconnected) and `1.0` (connected) representing certainty that the device is still connected (a.k.a its opacity).
     """
     
-    #   │++                             │+++++++++ 
-    #   │  ++                           │         +++++  
-    #   │    ++                         │              ++
-    #   │      ++                       │                ++ 
-    #   │        ++                =>   │                  + 
-    #   │          ++                   │                   + 
-    #   │            ++                 │                    +
-    #   │              ++               │                    + 
-    #   │                ++             │                     +
-    #   │                  ++           │                     + 
-    # ──┼─────────────────────────    ──┼────────────────────────
-    #   │                               │
+    # #   │++                             │+++++++++ 
+    # #   │  ++                           │         +++++  
+    # #   │    ++                         │              ++
+    # #   │      ++                       │                ++ 
+    # #   │        ++                =>   │                  + 
+    # #   │          ++                   │                   + 
+    # #   │            ++                 │                    +
+    # #   │              ++               │                    + 
+    # #   │                ++             │                     +
+    # #   │                  ++           │                     + 
+    # # ──┼─────────────────────────    ──┼────────────────────────
+    # #   │                               │
 
-    GONE_AFTER: int = 11
+    # GONE_AFTER: int = 11
 
-    if len(connections) == 0: return 0.0
-    if not any(connections): return 0.0
-    distance_to_last = list(reversed(connections)).index(True)
-    # Change this function? (see art above)
-    opacity = 1.0 - distance_to_last / GONE_AFTER
-    if opacity < 0: return 0.0
-    # Maybe calculate the average amount of disconnected time for devices? And not just choose some random numbers?
-    return opacity
-
-
-def calculate_opacity_advanced(connections: list[bool]) -> float:
+    # if len(connections) == 0: return 0.0
+    # if not any(connections): return 0.0
+    # distance_to_last = list(reversed(connections)).index(True)
+    # # Change this function? (see art above)
+    # opacity = 1.0 - distance_to_last / GONE_AFTER
+    # if opacity < 0: return 0.0
+    # # Maybe calculate the average amount of disconnected time for devices? And not just choose some random numbers?
+    # return opacity
     if len(connections) == 0: return 1.0
     if not any(connections): return 0.0
     n = list(reversed(connections)).index(True)
