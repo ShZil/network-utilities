@@ -486,6 +486,7 @@ def do_simple_scan(scan, all_possible_addresses, *, results=True, repeats=3):
 
 def standardise_simple_scans(scans: list[tuple[Callable, int]]) -> list[Callable]:
     scans = [scan if isinstance(scan, tuple) else (scan, 1) for scan in scans]
+    scans = [scan for scan in scans if scan[1] > 0]
     
     def does_simple_scan(scan):
         scan, repeats = scan
@@ -513,8 +514,8 @@ def main():
     conf.warning_threshold = 100000  # Time between warnings of the same source should be infinite (100000 seconds).
     
     simple_scans = standardise_simple_scans([
-        (can_connect_ICMP, 2),
-        (can_connect_ARP, 3)
+        (can_connect_ICMP, 1),
+        (can_connect_ARP, 0)
     ])
 
     def print_lookup():
