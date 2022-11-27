@@ -362,7 +362,10 @@ def calculate_opacity(connections: list[bool]) -> float:
     return a ** n
 
 
-def display_continuous_connections_ICMP(addresses, all_possible_addresses, parallel_device_discovery=True, compact_printing=True):
+def display_continuous_connections_ICMP(addresses, all_possible_addresses, parallel_device_discovery=True, compactness=0):
+    # compact_printing=0 -> "255.255.255.255 (Smartphone-Galaxy-S90-5G) █████ █    ███████ █  ███ ████┅  [█]".
+    # compact_printing=1 -> "255.255.255.255 (Smartphone-Galaxy-S90-5G) [█]".
+    # otherwise -> "255.255.255.255 (Smartphone-Galaxy-S90-5G)" (text colour changes depending on opacity).
     if not isinstance(addresses, list): addresses = list(addresses)
     table = {address: [] for address in addresses}
     waiting = Queue()
@@ -404,15 +407,8 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, paral
         print("Connection testing (ICMP ping) to", subnet_address_range(ipconfig()["Subnet Mask"], ipconfig()["IPv4 Address"]) + "\n")
         
         sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
-        if compact_printing:
-            with TablePrinting():
-                for address in sorted_table:
-                    print(
-                        address,
-                        f"({hostify(address)})",
-                        f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
-                    )
-        else:   
+        if compactness == 0:
+
             with InstantPrinting():
                 example_length = len("255.255.255.255 (Smartphone-Galaxy-S90-5G)")
                 bar_length = os.get_terminal_size().columns - example_length - len(":  ") - len("┅  [ ]")
@@ -420,7 +416,7 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, paral
                     print(
                         f"{address} ({hostify(address)}): ".rjust(example_length),
                         (''.join(['█' if x else ' ' for x in table[address][-bar_length:]]) + "┅ ").rjust(bar_length),
-                        f"[{render_opacity(100 * calculate_opacity_advanced(table[address]))}]"
+                        f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
                     )
             print()
 
@@ -527,7 +523,7 @@ def main():
                 print(entity)
 
     def user_confirmation(): input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
-    def continuous_ICMP(): display_continuous_connections_ICMP(lookup['ip'], ipconfig()["All Possible Addresses"], compact_printing=False)
+    def continuous_ICMP(): display_continuous_connections_ICMP(lookup['ip'], ipconfig()["All Possible Addresses"], compactness=2)
 
     nameof = lambda action: action.__doc__ if action.__doc__ and len(action.__doc__) < 100 else action.__name__
 
