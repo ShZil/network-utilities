@@ -522,6 +522,53 @@ class TablePrinting(InstantPrinting):
             print()
 
 
+class AutoLinebreaks(InstantPrinting):
+    """This context manager delays and stores all outputs via `print`s, and prints everything when closed,
+    wrapping lines only when nessessary to maintain integrity.
+    In short: Applies CSS's `word-wrap: normal;` (whereas the console is usually `word-wrap: break-word;`).
+
+    Note: Messing with `print`'s default values (`sep=' ', end='\\n'`) is not recommended,
+    since this context manager treats space-separated strings as belonging to the same statement,
+    and newline-separated string as belonging to different statements.
+    You may do so after familiarising yourself with the code, in order to not induce annoying bugs.
+
+    Usage:
+    ```py
+    with AutoLinebreaks():
+        # do some stuff here including printing
+    # Here, exiting the context, the printing will all happen immediately and (hopefully) nicely.
+    ```
+    """
+
+    def __init__(self):
+        self.output = _SplitStringIO()
+
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        _Printing.__exit__(self, exc_type, exc_val, exc_tb)
+        output = self.output.getvalue()
+        width = int(os.get_terminal_size().columns)
+
+        # Separate `print statements`.
+        # Every block which is just a newline is (probably) a different print, so I'll treat it as such.
+        blocks = [""]
+        for block in output:
+            if block == '\n': blocks.append("")
+            else: blocks[-1] += block
+        
+        counter = width
+        for block in blocks:
+            if block.strip() == "": continue
+            if counter - len(block) <= 0:
+                counter = width
+                print('\n' + block, end="")
+            else:
+                counter -= len(block)
+                print(block, end="")
+        print()
+
+
+
 
 if __name__ == '__main__':
     print("This is a utility module.")
