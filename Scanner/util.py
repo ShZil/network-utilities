@@ -255,6 +255,7 @@ def memorise(f):
     Returns:
         function: the decorated function with a cache
     """
+    # ********* Add a time limit on each datum
     memory = {}
     def wrapper(*args):
         try:
