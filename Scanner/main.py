@@ -541,9 +541,7 @@ def main():
     ])
 
     def print_lookup():
-        with JustifyPrinting():
-            for entity in lookup:
-                print(entity)
+        lookup.print()
 
     def user_confirmation(): input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
     def continuous_ICMP(): display_continuous_connections_ICMP(lookup['ip'], ipconfig()["All Possible Addresses"], compactness=2)

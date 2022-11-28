@@ -1,5 +1,6 @@
 from queue import Queue
 from import_handler import ImportDefence
+from util import JustifyPrinting
 with ImportDefence():
     import re
     import ipaddress
@@ -209,5 +210,11 @@ class NetworkStorage:
             self._resolve()
             return [entity[key] for entity in self.data if entity[key] != nothing[key]]
         raise TypeError(f"Subscripting in NetworkStorage must be `mac`, `ip`, `ipv6`, or `name`; got `{key}`")
+    
+
+    def print(self):
+        with JustifyPrinting():
+            for entity in self:
+                print(entity)
 
 
