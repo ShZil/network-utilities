@@ -42,6 +42,7 @@ def shift(seq: list, n: int) -> list:
     n = n % len(seq)
     return seq[n:] + seq[:n]
 
+
 def barstyle(name: str) -> str:
     """Selects a style for @threadify's progress bar.
 

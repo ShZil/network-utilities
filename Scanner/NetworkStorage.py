@@ -5,6 +5,7 @@ with ImportDefence():
     import re
     import ipaddress
 
+
 class NetworkEntity:
     def __init__(self, mac, ip, ipv6, name, lock=False):
         self.mac = standard_mac(mac)
