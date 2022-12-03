@@ -1,0 +1,14 @@
+I found a piece of paper, laying deep in my schoolbag, with some stuff written on it during Cyber class.
+
+- ARP scan + Port scan
+- מעקב אחרי מחשבים
+
+Waterfall vs Agile
+
+ייזום - אפיון (רשימת דרישות פונקציונליות) - ניתוח - עיצוב (ארכיטרטורה) - תוכנה - בדיקה
+
+GANTT Charts
+
+*Snort* (?) - ruleset for IDing attacks
+nmap-os-bd.txt - ruleset for IDing operating systems (naively: just TTL)
+ModuleNotFoundError - detect missing PIPs (already implemented)
