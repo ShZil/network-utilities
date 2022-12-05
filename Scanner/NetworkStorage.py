@@ -7,12 +7,11 @@ with ImportDefence():
 
 
 class NetworkEntity:
-    def __init__(self, mac, ip, ipv6, name, lock=False):
+    def __init__(self, mac, ip, ipv6, name):
         self.mac = standard_mac(mac)
         self.ip = check_ip(ip)
         self.ipv6 = extend_ipv6(ipv6)
         self.name = name
-        self.locked = lock
         self._compare = None
     
     
@@ -79,7 +78,6 @@ class NetworkEntity:
     
 
     def __setitem__(self, key, value):
-        if self.locked: raise TypeError(f"Item assignment in NetworkEntity cannot be done on a locked entity.")
         if key == "mac": self.mac = value
         elif key == "ip": self.ip = value
         elif key == "ipv6": self.ipv6 = value
@@ -154,6 +152,10 @@ localhost = NetworkEntity(mac=nothing.mac, ip="127.0.0.1", ipv6="::1", name="loo
 mDNS = NetworkEntity(mac=nothing.mac, ip="224.0.0.251", ipv6="ff02::fb", name="multicast DNS", lock=True)
 multicast = NetworkEntity(mac=nothing.mac, ip="224.0.0.2", ipv6="ff00::", name="multicast", lock=True)  # hostify returns '*.mcast.net' (differs for 224.0.0.*)
 broadcast = NetworkEntity(mac="FF-FF-FF-FF-FF-FF", ip="255.255.255.255", ipv6=nothing.ipv6, name="broadcast", lock=True)
+class LockedNetworkEntity(NetworkEntity):
+    def __setitem__(self, key, value):
+        raise TypeError(f"Item assignment in NetworkEntity cannot be done on a locked entity.")
+
 
 class NetworkStorage:
     data = []
