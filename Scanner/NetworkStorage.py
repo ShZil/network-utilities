@@ -199,6 +199,32 @@ class NetworkStorage:
         return sorted(self.data, key=lambda entity: tuple([entity.compare()[field] for field in keys]))
     
 
+    def organise(self, key="ip"):
+        """Converts the storage into a dictionary, with the key being one of the fields, and the values -- the whole entity.
+        Example:
+        ```
+        data = [networkEntity1, networkEntity2, networkEntity3]
+        organise('ip') = {
+            "1.1.1.1": networkEntity1,
+            "2.2.2.2": networkEntity2,
+            "1.0.0.3": networkEntity3
+        }
+        ```
+
+        Args:
+            key (str, optional): the key for the dictionary. Must be `mac`, `ip`, `ipv6`, or `name`. Defaults to `ip`.
+
+        Returns:
+            dict: the dictionary as described above.
+        
+        Raises:
+            TypeError: if the key is invalid.
+        """
+        if key not in ["mac", "ip", "ipv6", "name"]:
+            raise TypeError(f"NetworkStorage.organise's key must be `mac`, `ip`, `ipv6`, or `name`; got `{key}`")
+        return {entity[key]: entity for entity in self.data if entity[key] != nothing[key]}
+    
+
     def __iter__(self):
         for elem in self.sort():
             yield elem
