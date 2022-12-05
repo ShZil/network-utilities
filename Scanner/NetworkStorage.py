@@ -177,6 +177,9 @@ class NetworkStorage:
                 if entity == other:
                     other.merge(entity)
                     return
+            for special in specials:
+                if entity == special:
+                    entity.merge(special)
             self.data.append(entity)
         
         for entity in self.waiting.queue:
