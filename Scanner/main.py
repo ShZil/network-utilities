@@ -363,8 +363,9 @@ def calculate_opacity(connections: list[bool]) -> float:
 
 
 def display_continuous_connections_ICMP(addresses, all_possible_addresses, parallel_device_discovery=True, compactness=0):
-    # compact_printing=0 -> "255.255.255.255 (Smartphone-Galaxy-S90-5G) █████ █    ███████ █  ███ ████┅  [█]".
-    # compact_printing=1 -> "255.255.255.255 (Smartphone-Galaxy-S90-5G) [█]".
+    # compactness=0 -> "255.255.255.255 (Smartphone-Galaxy-S90-5G) █████ █    ███████ █  ███ ████┅  [█]".
+    # compactness=1 -> "255.255.255.255 (Smartphone-Galaxy-S90-5G) [█]".
+    # compactness=2 -> "<ff:ff:ff:ff:ff:ff | 255.255.255.255 | Smartphone-Galaxy-S90-5G>" (text colour changes depending on opacity).
     # otherwise -> "255.255.255.255 (Smartphone-Galaxy-S90-5G)" (text colour changes depending on opacity).
     if not isinstance(addresses, list): addresses = list(addresses)
     table = {address: [] for address in addresses}
@@ -429,6 +430,20 @@ def display_continuous_connections_ICMP(addresses, all_possible_addresses, paral
                         f"({hostify(address)})",
                         f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
                     )
+        
+        elif compactness == 2:
+            with JustifyPrinting():
+                opacities = [Colors.BLACK, Colors.DARK_GRAY, Colors.LIGHT_GRAY, Colors.LIGHT_WHITE]
+                data = lookup.organise('ip')
+                for address in sorted_table:
+                    opacity = calculate_opacity(table[address])
+                    index = floor(opacity * (len(opacities) - 1))
+                    if index == 0: continue
+                    color = opacities[index]
+                    try:
+                        print(f"{color}{data[address]}{Colors.END}  ")
+                    except KeyError:
+                        print(f"{color}{address} ({hostify(address)}){Colors.END}  ")
             
         else:
 
