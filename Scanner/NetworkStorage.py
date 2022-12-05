@@ -147,15 +147,20 @@ def extend_ipv6(ipv6: str) -> str:
     return ipaddress.ip_address(ipv6).exploded.lower()
 
 
-nothing = NetworkEntity(mac="00:00:00:00:00:00", ip="0.0.0.0", ipv6="::", name="Unknown", lock=True)
-localhost = NetworkEntity(mac=nothing.mac, ip="127.0.0.1", ipv6="::1", name="loopback", lock=True)
-mDNS = NetworkEntity(mac=nothing.mac, ip="224.0.0.251", ipv6="ff02::fb", name="multicast DNS", lock=True)
-multicast = NetworkEntity(mac=nothing.mac, ip="224.0.0.2", ipv6="ff00::", name="multicast", lock=True)  # hostify returns '*.mcast.net' (differs for 224.0.0.*)
-broadcast = NetworkEntity(mac="FF-FF-FF-FF-FF-FF", ip="255.255.255.255", ipv6=nothing.ipv6, name="broadcast", lock=True)
 class LockedNetworkEntity(NetworkEntity):
     def __setitem__(self, key, value):
         raise TypeError(f"Item assignment in NetworkEntity cannot be done on a locked entity.")
 
+
+nothing = LockedNetworkEntity(mac="00:00:00:00:00:00", ip="0.0.0.0", ipv6="::", name="nothing")
+localhost = LockedNetworkEntity(mac=nothing.mac, ip="127.0.0.1", ipv6="::1", name="loopback")
+mDNS = LockedNetworkEntity(mac=nothing.mac, ip="224.0.0.251", ipv6="ff02::fb", name="multicast DNS")
+multicast = LockedNetworkEntity(mac=nothing.mac, ip="224.0.0.2", ipv6="ff00::", name="multicast")  # hostify returns '*.mcast.net' (differs for 224.0.0.*)
+broadcast = LockedNetworkEntity(mac="FF-FF-FF-FF-FF-FF", ip="255.255.255.255", ipv6=nothing.ipv6, name="broadcast")
+# router = LockedNetworkEntity(/* depends on ipconfig() */)
+# local_braodcast = LockedNetworkEntity(/* depends on ipconfig() */)
+
+specials = [localhost, mDNS, multicast, broadcast]
 
 class NetworkStorage:
     data = []
