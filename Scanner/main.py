@@ -192,6 +192,25 @@ def dictify(text: list[str] | str) -> dict:
     return result
 
 
+def get_interface_safe(possible):
+    if hasattr(get_interface_safe, 'cache'):
+        return get_interface_safe.cache
+    
+    while True:
+        try:
+            num = int(input("Select: "))
+        except ValueError:
+            print("Not a number")
+            continue
+        
+        if not 0 <= num < len(possible):
+            print("Not in range")
+            continue
+        
+        get_interface_safe.cache = possible[num]
+        return possible[num]
+
+
 def get_ip_configuration() -> dict:
     """Get information from `>ipconfig /all`,
     select the first interface with a Default Gateway (i.e. online),
@@ -222,16 +241,20 @@ def get_ip_configuration() -> dict:
         return get_ip_configuration.cache
     
     information = dictify(read_ipconfig())
+    possible_interfaces = [interface for interface, info in information.items() if 'Default Gateway' in info.keys()]
 
-    for interface, info in information.items():
-        if 'Default Gateway' in info.keys():
-            selected = interface
-            break
-    else:
+    if len(possible_interfaces) <= 0:
         raise RuntimeError("Computer is not connected to Internet.")
+    elif len(possible_interfaces) == 1:
+        selected = possible_interfaces[0]
+    else:
+        for i, interface in enumerate(possible_interfaces):
+            print(f"    ({i}) {interface}")
+        selected = get_interface_safe(possible_interfaces)
     
+    print(selected)
     auto_selected_interface = auto_select_interface(information[selected]["IPv4 Address"])
-    data = {**information["Windows IP Configuration"], **information[selected], 'Interface': interface, 'Auto-Selected Interface': auto_selected_interface}
+    data = {**information["Windows IP Configuration"], **information[selected], 'Interface': selected, 'Auto-Selected Interface': auto_selected_interface}
     get_ip_configuration.cache = data
     return data
 
@@ -534,7 +557,6 @@ def standardise_simple_scans(scans: list[tuple[Callable, int]]) -> list[Callable
         prefix = f"{scan[1]} × " if scan[1] > 1 else ""
         method.__name__, method.__doc__ = prefix + scan[0].__name__, prefix + scan[0].__doc__
     return lambdas
-
 
 
 def main():
