@@ -182,7 +182,11 @@ class NetworkStorage:
                     entity.merge(special)
             self.data.append(entity)
         
+        from main import hostify_sync, hostify
+        hostify_sync([entity.ip for entity in self.waiting.queue if entity.ip != nothing.ip])
         for entity in self.waiting.queue:
+            if entity.name == nothing.name:
+                entity.name = hostify(entity.ip)
             append(entity)
 
 
