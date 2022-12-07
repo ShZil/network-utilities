@@ -262,6 +262,10 @@ However, balance that. Treat `hostify` as a costy function.
 
 [21:37] I implemented a new system that queues all actions in advance, prints them to the CMD, and then executes them.
 
+### 2022-11-24
+[14:18] I need to add special network entity "local broadcast" that will be like 10.0.0.255 or 192.168.3.255 (set all the Device ID bits to 1, as guided by the subnet mask).
+Currently, however, the special entities are created prior to the `ipconfig()` call, so a rewrite is needed.
+
 
 ### 2022-11-26
 [17:14] Instead of a @probabilistic_cache, have a time stamp assigned to each cached datum, and when it gets too old replace it.
