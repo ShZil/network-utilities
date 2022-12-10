@@ -1,22 +1,15 @@
 from import_handler import ImportDefence
 with ImportDefence():
     import os
-    from subprocess import CalledProcessError, check_output as read_command
     from typing import Callable
 
     from util import *
     from ip_handler import *
     from NetworkStorage import NetworkStorage
-    from colors import Colors
     from ipconfig import ipconfig
+    from hostify import hostify, hostify_sync
 
-    from scapy.sendrecv import sr1
-    from scapy.layers.inet import IP, ICMP
     from scapy.config import conf
-
-    from socket import gethostbyaddr as hostify_base
-    from socket import herror as hostify_error1
-    from socket import gaierror as hostify_error2
 
 
 os.system('cls')
@@ -27,49 +20,6 @@ __author__ = 'Shaked Dan Zilberman'
 # A range for the scanned ports.
 PORT_RANGE = range(0, 1024)
 lookup = None
-
-
-# ************ The subprocess windows open and disturb users (aka me) / Prints the errors into the console which is annoying.
-# Potential fix: https://stackoverflow.com/questions/1813872/running-a-process-in-pythonw-with-popen-without-a-console
-# or https://stackoverflow.com/a/55758810
-@memorise
-def hostify(address: str):
-    """This function turns an IPv4 address to a host name using one of these methods:
-    1. Calling `>nslookup` with that address. If that fails,
-    2. Using `socket.gethostbyaddr` function. If that fails,
-    3. Returns "Unknown" since all the methods failed.
-
-    Args:
-        address (str): the IPv4 address to turn into a host.
-
-    Returns:
-        str: the host name.
-    """
-    host = "Unknown"
-
-    def use_hostify_base(address):
-        try:
-            return hostify_base(address)[0]
-        except (hostify_error1, hostify_error2):
-            return "Unknown"
-
-    # First method -> nslookup
-    # If first method failed, second method -> socket.gethostbyaddr
-    try:
-        with NoPrinting():
-            lines = read_command(['nslookup', address]).decode(encoding='utf-8', errors='ignore').split('\n')
-        for line in lines:
-            if line.strip().startswith('Name:'):
-                host = line[len("Name:"):].strip()
-                break
-        else:
-            host = use_hostify_base(address)
-    except CalledProcessError:
-        host = use_hostify_base(address)
-    return host
-
-
-hostify_sync = threadify(hostify)
 
 
 def get_all_possible_addresses() -> list[str]:
@@ -91,168 +41,6 @@ def get_all_possible_addresses() -> list[str]:
     # All possible addresses in binary look like `[mutual part to all in network][special identifier]`,
     # i.e. base + binary representation of i (where i ranges from (0) to (2 ^ unique))
     return [unbitify(base + binary(i)) for i in range(2 ** unique)]
-
-
-def can_connect_ICMP_base(address: str) -> bool:
-    """This function tests whether it's possible to connect to another IPv4 address `address`,
-    using an Internet Control Message Protocol (ICMP) ping request.
-    If the address given is localhost, `return False`.
-
-    Args:
-        address (str): the IPv4 address to try pinging.
-
-    Returns:
-        bool: a boolean indicating whether the echo ping had been successfully sent, and a response was received.
-    """
-    if (address == ipconfig()["IPv4 Address"]): return False
-    packet = IP(dst=address) / ICMP()
-    response = sr1(packet, verbose=0, timeout=1)
-    if response is not None:
-        # print(response[IP].show())
-        if response[ICMP].type == 0:
-            lookup.add(ip=response[IP].src)
-            return True
-    return False
-
-can_connect_ICMP_silent = threadify(can_connect_ICMP_base, silent=True)
-can_connect_ICMP_base.options = {"format": barstyle("Dot Fill")}
-can_connect_ICMP = threadify(can_connect_ICMP_base)
-
-
-def calculate_opacity(connections: list[bool]) -> float:
-    """This function calculates the opacity of a given connection list (a list of booleans indicating some contacting attempts' successes),
-    according to a probabilistic formula derived in an attached TXT file.
-
-    Args:
-        connections (list[bool]): a list of contact attempts' successes, taking the form of `[...True, True, False, True, False]`
-
-    Returns:
-        float: a value between `0.0` (disconnected) and `1.0` (connected) representing certainty that the device is still connected (a.k.a its opacity).
-    """
-    
-    # #   │++                             │+++++++++ 
-    # #   │  ++                           │         +++++  
-    # #   │    ++                         │              ++
-    # #   │      ++                       │                ++ 
-    # #   │        ++                =>   │                  + 
-    # #   │          ++                   │                   + 
-    # #   │            ++                 │                    +
-    # #   │              ++               │                    + 
-    # #   │                ++             │                     +
-    # #   │                  ++           │                     + 
-    # # ──┼─────────────────────────    ──┼────────────────────────
-    # #   │                               │
-
-    # GONE_AFTER: int = 11
-
-    # if len(connections) == 0: return 0.0
-    # if not any(connections): return 0.0
-    # distance_to_last = list(reversed(connections)).index(True)
-    # # Change this function? (see art above)
-    # opacity = 1.0 - distance_to_last / GONE_AFTER
-    # if opacity < 0: return 0.0
-    # # Maybe calculate the average amount of disconnected time for devices? And not just choose some random numbers?
-    # return opacity
-    if len(connections) == 0: return 1.0
-    if not any(connections): return 0.0
-    n = list(reversed(connections)).index(True)
-    a = connections.count(True) / len(connections)
-    return a ** n
-
-
-def continuous_ICMP_scan(addresses, all_possible_addresses, parallel_device_discovery=True, compactness=0):
-    # compactness=0 -> "255.255.255.255 (Smartphone-Galaxy-S90-5G) █████ █    ███████ █  ███ ████┅  [█]".
-    # compactness=1 -> "255.255.255.255 (Smartphone-Galaxy-S90-5G) [█]".
-    # compactness=2 -> "<ff:ff:ff:ff:ff:ff | 255.255.255.255 | Smartphone-Galaxy-S90-5G>" (text colour changes depending on opacity).
-    # otherwise -> "255.255.255.255 (Smartphone-Galaxy-S90-5G)" (text colour changes depending on opacity).
-    if not isinstance(addresses, list): addresses = list(addresses)
-    table = {address: [] for address in addresses}
-    waiting = Queue()
-
-    if parallel_device_discovery:
-        # How many threads should be dedicated to the detection of new devices?
-        # The iteration shifts in different threads by `shifting = thread_index * 71 mod 255`, to ensure efficiency.
-        # Range of values: 1 to 18 (inclusive).
-        # Optimal values: 18, 6, 3, 2, 1
-        SCANNER_THREADS = 18
-
-        def new_devices(order: int):
-            all_addresses = shift(all_possible_addresses, 71*order)
-            while True:
-                for address in all_addresses:
-                    if address in table.keys(): continue
-                    if address in waiting.queue: continue
-                    if can_connect_ICMP_base(address):
-                        waiting.put(address)
-
-        for i in range(SCANNER_THREADS):
-            Thread(target=new_devices, args=(i, )).start()
-    
-    while True:
-        sleep(1.1)  # Change this to global setting
-        while not waiting.empty():
-            address = waiting.get()
-            if address not in addresses:
-                addresses.append(address)
-                print("Adding address", address)
-        for address, online in zip(addresses, can_connect_ICMP(addresses)):
-            if address not in table:
-                table[address] = []
-            table[address].append(online)
-            if len(table[address]) > 60:
-                table[address] = table[address][-60:]
-        hostify_sync(list(table.keys()))
-        os.system("cls")
-        print("Connection testing (ICMP ping) to", subnet_address_range(ipconfig()["Subnet Mask"], ipconfig()["IPv4 Address"]) + "\n")
-        
-        sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
-        if compactness == 0:
-
-            with InstantPrinting():
-                example_length = len("255.255.255.255 (Smartphone-Galaxy-S90-5G)")
-                bar_length = os.get_terminal_size().columns - example_length - len(":  ") - len("┅  [ ]")
-                for address in sorted_table:
-                    print(
-                        f"{address} ({hostify(address)}): ".rjust(example_length),
-                        (''.join(['█' if x else ' ' for x in table[address][-bar_length:]]) + "┅ ").rjust(bar_length),
-                        f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
-                    )
-            print()
-
-        elif compactness == 1:
-
-            with TablePrinting():
-                for address in sorted_table:
-                    print(
-                        address,
-                        f"({hostify(address)})",
-                        f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
-                    )
-        
-        elif compactness == 2:
-            with JustifyPrinting():
-                opacities = [Colors.BLACK, Colors.DARK_GRAY, Colors.LIGHT_GRAY, Colors.LIGHT_WHITE]
-                data = lookup.organise('ip')
-                for address in sorted_table:
-                    opacity = calculate_opacity(table[address])
-                    index = floor(opacity * (len(opacities) - 1))
-                    if index == 0: continue
-                    color = opacities[index]
-                    try:
-                        print(f"{color}{data[address]}{Colors.END}  ")
-                    except KeyError:
-                        print(f"{color}{address} ({hostify(address)}){Colors.END}  ")
-            
-        else:
-
-            with AutoLinebreaks():
-                opacities = [Colors.BLACK, Colors.DARK_GRAY, Colors.LIGHT_GRAY, Colors.LIGHT_WHITE]
-                for address in sorted_table:
-                    opacity = calculate_opacity(table[address])
-                    index = floor(opacity * (len(opacities) - 1))
-                    if index == 0: continue
-                    color = opacities[index]
-                    print(f"{color}{address} ({hostify(address)}){Colors.END}  ")
 
 
 def do_simple_scan(scan, all_possible_addresses, *, results=True, repeats=3):
@@ -350,8 +138,9 @@ def main():
     conf.warning_threshold = 100000  # Time between warnings of the same source should be infinite (100000 seconds).
     
     from scans.ARP import scan_ARP
+    from scans.ICMP import scan_ICMP
     simple_scans = standardise_simple_scans([
-        (can_connect_ICMP, 0),
+        (scan_ICMP, 0),
         (scan_ARP, 1)
     ])
 
