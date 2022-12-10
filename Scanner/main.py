@@ -7,7 +7,9 @@ with ImportDefence():
     from ip_handler import *
     from NetworkStorage import NetworkStorage
     from ipconfig import ipconfig
-    from hostify import hostify, hostify_sync
+    
+    from scans.ARP import scan_ARP
+    from scans.ICMP import scan_ICMP, scan_ICMP_continuous
 
     from scapy.config import conf
 
@@ -137,17 +139,14 @@ def main():
 
     conf.warning_threshold = 100000  # Time between warnings of the same source should be infinite (100000 seconds).
     
-    from scans.ARP import scan_ARP
-    from scans.ICMP import scan_ICMP
     simple_scans = standardise_simple_scans([
-        (scan_ICMP, 0),
-        (scan_ARP, 1)
+        (scan_ICMP, 4),
+        (scan_ARP, 4)
     ])
 
     lookup.print.__func__.__name__ = "print_lookup"
     def add_broadcast_to_lookup(): lookup.add(ip="255.255.255.255")
     def user_confirmation(): input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
-    from scans.ICMP import scan_ICMP_continuous
     def continuous_ICMP(): scan_ICMP_continuous(lookup['ip'], ipconfig()["All Possible Addresses"], compactness=2)
 
     actions = [
