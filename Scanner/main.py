@@ -252,7 +252,7 @@ def get_ip_configuration() -> dict:
             print(f"    ({i}) {interface}")
         selected = get_interface_safe(possible_interfaces)
     
-    print(selected)
+    print("Interface:", selected)
     auto_selected_interface = auto_select_interface(information[selected]["IPv4 Address"])
     data = {**information["Windows IP Configuration"], **information[selected], 'Interface': selected, 'Auto-Selected Interface': auto_selected_interface}
     get_ip_configuration.cache = data
@@ -594,7 +594,6 @@ def main():
         print("The following actions are queued:")
         for action in actions:
             print("    -", nameof(action))
-
 
     for action in actions:
         # print("\n" + nameof(action))
