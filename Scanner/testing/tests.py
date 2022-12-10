@@ -65,9 +65,10 @@ def shift_list_test():
 def does_winpcap_exist():
     """WinPcap / Npcap aren't installed. It is essential that you install either one. https://npcap.com/#download"""
     try:
-        from scapy.all import sendp
+        from scapy.all import sendp, Ether, IP, ICMP
     except (ImportError, ModuleNotFoundError):
         return False
+    
     try:
         with NoPrinting():
             sendp(Ether() / IP() / ICMP(), verbose=0)  # Sends a default to ICMP packet to localhost (so no network traffic generated).
