@@ -269,3 +269,9 @@ Currently, however, the special entities are created prior to the `ipconfig()` c
 
 ### 2022-11-26
 [17:14] Instead of a @probabilistic_cache, have a time stamp assigned to each cached datum, and when it gets too old replace it.
+
+
+### 2022-12-10
+[23:24] The due sate is getting closer, and I realise my code isn't very well-structured.
+So I shall organise it!
+Plus, one important feature still missing is the TCP port scanner, so I need to add that.
