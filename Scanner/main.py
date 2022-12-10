@@ -352,6 +352,23 @@ def standardise_simple_scans(scans: list[tuple[Callable, int]]) -> list[Callable
     return lambdas
 
 
+def nameof(action):
+    """Returns a short description of a function by the following logic:
+    If a docstring exists, and its length is less than 100 characters, return the docstring.
+    Otherwise, return the function's name.
+
+    Args:
+        action (function): the function to be named. Primarily, functions intended to be used as actions.
+
+    Returns:
+        str: the name chosen for the function.
+    """
+    if action.__doc__ and len(action.__doc__) < 100:
+        return action.__doc__ 
+    else:
+        return action.__name__
+
+
 def main():
     ipconfig()
 
@@ -377,8 +394,6 @@ def main():
     def add_broadcast_to_lookup(): lookup.add(ip="255.255.255.255")
     def user_confirmation(): input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
     def continuous_ICMP(): continuous_ICMP_scan(lookup['ip'], ipconfig()["All Possible Addresses"], compactness=2)
-
-    nameof = lambda action: action.__doc__ if action.__doc__ and len(action.__doc__) < 100 else action.__name__
 
     actions = [
         add_broadcast_to_lookup,
