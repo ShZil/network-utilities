@@ -88,7 +88,7 @@ def calculate_opacity(connections: list[bool]) -> float:
     return a ** n
 
 
-def continuous_ICMP_scan(addresses, all_possible_addresses, parallel_device_discovery=True, compactness=0):
+def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_discovery=True, compactness=0):
     # compactness=0 -> "255.255.255.255 (Smartphone-Galaxy-S90-5G) █████ █    ███████ █  ███ ████┅  [█]".
     # compactness=1 -> "255.255.255.255 (Smartphone-Galaxy-S90-5G) [█]".
     # compactness=2 -> "<ff:ff:ff:ff:ff:ff | 255.255.255.255 | Smartphone-Galaxy-S90-5G>" (text colour changes depending on opacity).
@@ -96,6 +96,7 @@ def continuous_ICMP_scan(addresses, all_possible_addresses, parallel_device_disc
     if not isinstance(addresses, list): addresses = list(addresses)
     table = {address: [] for address in addresses}
     waiting = Queue()
+    network = subnet_address_range(ipconfig()["Subnet Mask"], ipconfig()["IPv4 Address"])
 
     if parallel_device_discovery:
         # How many threads should be dedicated to the detection of new devices?
@@ -124,6 +125,7 @@ def continuous_ICMP_scan(addresses, all_possible_addresses, parallel_device_disc
                 addresses.append(address)
                 print("Adding address", address)
     
+
     def sweep_scan():
         for address, online in zip(addresses, scan_ICMP(addresses)):
             if address not in table:
@@ -132,6 +134,61 @@ def continuous_ICMP_scan(addresses, all_possible_addresses, parallel_device_disc
             if len(table[address]) > save_count:
                 table[address] = table[address][-save_count:]
     
+
+    def print0(sorted_table):
+        print(f"Connection testing (ICMP ping) to {network}\n")
+
+        with InstantPrinting():
+            example_length = len("255.255.255.255 (Smartphone-Galaxy-S90-5G)")
+            bar_length = os.get_terminal_size().columns - example_length - len(":  ") - len("┅  [ ]")
+            for address in sorted_table:
+                print(
+                    f"{address} ({hostify(address)}): ".rjust(example_length),
+                    (''.join(['█' if x else ' ' for x in table[address][-bar_length:]]) + "┅ ").rjust(bar_length),
+                    f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
+                )
+            print()
+    
+
+    def print1(sorted_table):
+        print(f"Connections (ICMP ping) to {network}\n")
+        with TablePrinting():
+            for address in sorted_table:
+                print(
+                    address,
+                    f"({hostify(address)})",
+                    f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
+                )
+    
+
+    def print2(sorted_table):
+        print(f"ICMP ping sweep over {network}\n")
+        with JustifyPrinting():
+            opacities = [Colors.BLACK, Colors.DARK_GRAY, Colors.LIGHT_GRAY, Colors.LIGHT_WHITE]
+            data = NetworkStorage().organise('ip')
+            for address in sorted_table:
+                opacity = calculate_opacity(table[address])
+                index = floor(opacity * (len(opacities) - 1))
+                if index == 0: continue
+                color = opacities[index]
+                try:
+                    print(f"{color}{data[address]}{Colors.END}  ")
+                except KeyError:
+                    print(f"{color}{address} ({hostify(address)}){Colors.END}  ")
+    
+
+    def print3(sorted_table):
+        print(f"ICMP continuous: {network}\n")
+        with AutoLinebreaks():
+            opacities = [Colors.BLACK, Colors.DARK_GRAY, Colors.LIGHT_GRAY, Colors.LIGHT_WHITE]
+            for address in sorted_table:
+                opacity = calculate_opacity(table[address])
+                index = floor(opacity * (len(opacities) - 1))
+                if index == 0: continue
+                color = opacities[index]
+                print(f"{color}{address} ({hostify(address)}){Colors.END}  ")
+
+
     while True:
         sleep(continuous_pause_seconds)
 
@@ -140,53 +197,12 @@ def continuous_ICMP_scan(addresses, all_possible_addresses, parallel_device_disc
         
         hostify_sync(list(table.keys()))
         os.system("cls")
-        print("Connection testing (ICMP ping) to", subnet_address_range(ipconfig()["Subnet Mask"], ipconfig()["IPv4 Address"]) + "\n")
         
         sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
-        if compactness == 0:
 
-            with InstantPrinting():
-                example_length = len("255.255.255.255 (Smartphone-Galaxy-S90-5G)")
-                bar_length = os.get_terminal_size().columns - example_length - len(":  ") - len("┅  [ ]")
-                for address in sorted_table:
-                    print(
-                        f"{address} ({hostify(address)}): ".rjust(example_length),
-                        (''.join(['█' if x else ' ' for x in table[address][-bar_length:]]) + "┅ ").rjust(bar_length),
-                        f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
-                    )
-            print()
+        try:
+            [print0, print1, print2][compactness](sorted_table)
+        except KeyError:
+            print3()
 
-        elif compactness == 1:
 
-            with TablePrinting():
-                for address in sorted_table:
-                    print(
-                        address,
-                        f"({hostify(address)})",
-                        f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
-                    )
-        
-        elif compactness == 2:
-            with JustifyPrinting():
-                opacities = [Colors.BLACK, Colors.DARK_GRAY, Colors.LIGHT_GRAY, Colors.LIGHT_WHITE]
-                data = NetworkStorage().organise('ip')
-                for address in sorted_table:
-                    opacity = calculate_opacity(table[address])
-                    index = floor(opacity * (len(opacities) - 1))
-                    if index == 0: continue
-                    color = opacities[index]
-                    try:
-                        print(f"{color}{data[address]}{Colors.END}  ")
-                    except KeyError:
-                        print(f"{color}{address} ({hostify(address)}){Colors.END}  ")
-            
-        else:
-
-            with AutoLinebreaks():
-                opacities = [Colors.BLACK, Colors.DARK_GRAY, Colors.LIGHT_GRAY, Colors.LIGHT_WHITE]
-                for address in sorted_table:
-                    opacity = calculate_opacity(table[address])
-                    index = floor(opacity * (len(opacities) - 1))
-                    if index == 0: continue
-                    color = opacities[index]
-                    print(f"{color}{address} ({hostify(address)}){Colors.END}  ")
