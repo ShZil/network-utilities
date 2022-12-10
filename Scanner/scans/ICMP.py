@@ -19,6 +19,7 @@ with ImportDefence():
 
 
 continuous_pause_seconds = 1.1
+save_count = 60
 
 def can_connect_ICMP_base(address: str) -> bool:
     """This function tests whether it's possible to connect to another IPv4 address `address`,
@@ -115,19 +116,28 @@ def continuous_ICMP_scan(addresses, all_possible_addresses, parallel_device_disc
         for i in range(SCANNER_THREADS):
             Thread(target=new_devices, args=(i, )).start()
     
-    while True:
-        sleep(continuous_pause_seconds)
+
+    def resolve_queue():
         while not waiting.empty():
             address = waiting.get()
             if address not in addresses:
                 addresses.append(address)
                 print("Adding address", address)
+    
+    def sweep_scan():
         for address, online in zip(addresses, scan_ICMP(addresses)):
             if address not in table:
                 table[address] = []
             table[address].append(online)
-            if len(table[address]) > 60:
-                table[address] = table[address][-60:]
+            if len(table[address]) > save_count:
+                table[address] = table[address][-save_count:]
+    
+    while True:
+        sleep(continuous_pause_seconds)
+
+        resolve_queue()
+        sweep_scan()
+        
         hostify_sync(list(table.keys()))
         os.system("cls")
         print("Connection testing (ICMP ping) to", subnet_address_range(ipconfig()["Subnet Mask"], ipconfig()["IPv4 Address"]) + "\n")
