@@ -595,6 +595,7 @@ def main():
         for action in actions:
             print("    -", nameof(action))
 
+    lookup.add(ip="255.255.255.255")
     for action in actions:
         # print("\n" + nameof(action))
         action()
