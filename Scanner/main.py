@@ -10,9 +10,8 @@ with ImportDefence():
     from colors import Colors
     from ipconfig import ipconfig
 
-    from scapy.sendrecv import sr1, sendp, AsyncSniffer
+    from scapy.sendrecv import sr1
     from scapy.layers.inet import IP, ICMP
-    from scapy.layers.l2 import Ether, ARP
     from scapy.config import conf
 
     from socket import gethostbyaddr as hostify_base
@@ -118,41 +117,6 @@ def can_connect_ICMP_base(address: str) -> bool:
 can_connect_ICMP_silent = threadify(can_connect_ICMP_base, silent=True)
 can_connect_ICMP_base.options = {"format": barstyle("Dot Fill")}
 can_connect_ICMP = threadify(can_connect_ICMP_base)
-
-
-def can_connect_ARP(addresses: list[str]) -> list[str]:
-    """This function tests whether it's possible to connect to other IPv4 addresses `addresses`,
-    using Address Resolution Protocol (ARP) who-has requests.
-
-    Args:
-        addresses (list[str]): the IPv4 addresses to try connecting to.
-
-    Returns:
-        list[str]: the addresses that sent an is-at response.
-    """
-    results = []
-    appender = lambda x: results.append((x[ARP].hwsrc, x[ARP].psrc))
-    filter_is_at_ARP = lambda x: ARP in x and x[ARP].op == 2 and x[ARP].psrc != ipconfig()["IPv4 Address"]
-    sniffer = AsyncSniffer(prn=appender, lfilter=filter_is_at_ARP, store=False)
-    sniffer.start()
-
-    send_ARP = lambda packet: sendp(packet, verbose=0)
-    send_ARP.__name__ = "can_connect_ARP_base"
-    packets = [Ether() / ARP(pdst=address) for address in addresses]
-    threadify(send_ARP)(packets)
-
-    from scapy.error import Scapy_Exception as NoNpcap
-    try:
-        sniffer.stop()
-    except NoNpcap as e:
-        if e.args[0] == "Unsupported (offline or unsupported socket)":
-            print("Npcap / WinPcap aren't installed. Please install either one lol")
-            sys.exit(1)
-        else:
-            raise
-    for result in results:
-        lookup.add(mac=result[0], ip=result[1])
-    return [result[1] for result in results]
 
 
 def calculate_opacity(connections: list[bool]) -> float:
@@ -385,9 +349,10 @@ def main():
 
     conf.warning_threshold = 100000  # Time between warnings of the same source should be infinite (100000 seconds).
     
+    from scans.ARP import scan_ARP
     simple_scans = standardise_simple_scans([
         (can_connect_ICMP, 0),
-        (can_connect_ARP, 1)
+        (scan_ARP, 1)
     ])
 
     lookup.print.__func__.__name__ = "print_lookup"
