@@ -158,7 +158,8 @@ mDNS = LockedNetworkEntity(mac=nothing.mac, ip="224.0.0.251", ipv6="ff02::fb", n
 multicast = LockedNetworkEntity(mac=nothing.mac, ip="224.0.0.2", ipv6="ff00::", name="multicast")  # hostify returns '*.mcast.net' (differs for 224.0.0.*)
 broadcast = LockedNetworkEntity(mac="FF-FF-FF-FF-FF-FF", ip="255.255.255.255", ipv6=nothing.ipv6, name="broadcast")
 # router = LockedNetworkEntity(/* depends on ipconfig() */)
-# local_braodcast = LockedNetworkEntity(/* depends on ipconfig() */)
+# local_broadcast = LockedNetworkEntity(/* depends on ipconfig() */)
+# here = LockedNetworkEntity(/* depends on ipconfig() */)
 
 specials = [localhost, mDNS, multicast, broadcast]
 
