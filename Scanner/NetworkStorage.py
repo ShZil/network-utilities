@@ -1,9 +1,12 @@
-from queue import Queue
 from import_handler import ImportDefence
-from util import JustifyPrinting
 with ImportDefence():
     import re
     import ipaddress
+    from queue import Queue
+
+    from util import JustifyPrinting
+    from ipconfig import ipconfig
+    from ip_handler import get_all_possible_addresses
 
 
 class NetworkEntity:
@@ -134,9 +137,23 @@ def standard_mac(mac: str) -> str:
 
 def check_ip(ip: str) -> str:
     IP_REGEX = r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
+    if not isinstance(ip, str):
+        raise ValueError(f"Invalid IP address type: \"{ip}\"")
     if not re.match(IP_REGEX, ip):
         raise ValueError(f"Invalid IP address: \"{ip}\"")
     return ip
+
+
+def filterIP(l: list[str]) -> list[str]:
+    if isinstance(l, str): return [l]
+
+    def isip(ip: str) -> bool:
+        try:
+            return check_ip(ip) == ip
+        except ValueError:
+            return False
+    
+    return list(filter(isip, l))
 
 
 def extend_ipv6(ipv6: str) -> str:
@@ -152,14 +169,15 @@ class LockedNetworkEntity(NetworkEntity):
         raise TypeError(f"Item assignment in NetworkEntity cannot be done on a locked entity.")
 
 
+# Special Entities: LockedNetworkEntity
 nothing = LockedNetworkEntity(mac="00:00:00:00:00:00", ip="0.0.0.0", ipv6="::", name="nothing")
-localhost = LockedNetworkEntity(mac=nothing.mac, ip="127.0.0.1", ipv6="::1", name="loopback")
-mDNS = LockedNetworkEntity(mac=nothing.mac, ip="224.0.0.251", ipv6="ff02::fb", name="multicast DNS")
-multicast = LockedNetworkEntity(mac=nothing.mac, ip="224.0.0.2", ipv6="ff00::", name="multicast")  # hostify returns '*.mcast.net' (differs for 224.0.0.*)
-broadcast = LockedNetworkEntity(mac="FF-FF-FF-FF-FF-FF", ip="255.255.255.255", ipv6=nothing.ipv6, name="broadcast")
-# router = LockedNetworkEntity(/* depends on ipconfig() */)
-# local_broadcast = LockedNetworkEntity(/* depends on ipconfig() */)
-# here = LockedNetworkEntity(/* depends on ipconfig() */)
+localhost = None
+mDNS = None
+multicast = None
+broadcast = None
+router = None
+local_broadcast = None
+here = None
 
 specials = [localhost, mDNS, multicast, broadcast]
 
@@ -170,6 +188,16 @@ class NetworkStorage:
     def __new__(cls):
         if not hasattr(cls, 'instance'):
             cls.instance = object.__new__(cls)
+            # Initialise special entities
+            global nothing, localhost, mDNS, multicast, broadcast, router, local_broadcast, here
+            localhost = LockedNetworkEntity(mac=nothing.mac, ip="127.0.0.1", ipv6="::1", name="loopback")
+            mDNS = LockedNetworkEntity(mac=nothing.mac, ip="224.0.0.251", ipv6="ff02::fb", name="multicast DNS")
+            multicast = LockedNetworkEntity(mac=nothing.mac, ip="224.0.0.2", ipv6="ff00::", name="multicast")  # hostify returns '*.mcast.net' (differs for 224.0.0.*)
+            broadcast = LockedNetworkEntity(mac="FF-FF-FF-FF-FF-FF", ip="255.255.255.255", ipv6=nothing.ipv6, name="broadcast")
+            router = LockedNetworkEntity(mac=nothing.mac, ip=filterIP(ipconfig()["Default Gateway"])[0], ipv6=nothing.ipv6, name="router")  # You sure you can't know the MAC and IPv6? + improve getting the default gateway's IPv4
+            local_broadcast = LockedNetworkEntity(mac=nothing.mac, ip=get_all_possible_addresses()[-1], ipv6=nothing.ipv6, name="local broadcast")  # You sure you can't know the MAC and IPv6?
+            here = LockedNetworkEntity(mac=ipconfig()["Physical Address"], ip=ipconfig()["IPv4 Address"], ipv6=ipconfig()["IPv6 Address"], name=ipconfig()["Host Name"])
+            print(nothing, localhost, mDNS, multicast, broadcast, router, local_broadcast, here, sep="\n")
         return cls.instance
 
 
