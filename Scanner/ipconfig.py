@@ -132,6 +132,7 @@ def ipconfig() -> dict:
     ```
     "IPv4 Address"
     "Subnet Mask"
+    "Default Gateway"
     ```
 
 
