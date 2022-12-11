@@ -124,6 +124,8 @@ def main():
     ])
 
     lookup.print.__func__.__name__ = "print_lookup"
+
+    # ******* Why does this not get the "broadcast" name???
     def add_broadcast_to_lookup(): lookup.add(ip="255.255.255.255")
     def user_confirmation(): input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
     def continuous_ICMP(): scan_ICMP_continuous(lookup['ip'], ipconfig()["All Possible Addresses"], compactness=2)
