@@ -1,4 +1,5 @@
 from ipconfig import ipconfig
+from util import memorise
 
 __author__ = 'Shaked Dan Zilberman'
 
@@ -169,13 +170,14 @@ def base_subnet_address(subnet_mask: str, *some_addresses: tuple[str]):
     return unbitify(format(base[0], 'b').zfill(32))
 
 
+@memorise
 def get_all_possible_addresses() -> list[str]:
     """This method calculates all the possible IPv4 addresses in the current subnet,
     according to this device's IP address and the Subnet Mask, both from `ipconfig()`.
 
     Returns:
         list[str]: a list of IPv4 addresses, that are all the possible ones in the current network.
-    """    
+    """
     this_device_ip = ipconfig()["IPv4 Address"]
     subnet_mask = ipconfig()["Subnet Mask"]
 
