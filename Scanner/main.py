@@ -10,6 +10,7 @@ with ImportDefence():
     
     from scans.ARP import scan_ARP
     from scans.ICMP import scan_ICMP, scan_ICMP_continuous
+    from scans.TCP import scan_TCP
 
     from scapy.config import conf
 
@@ -19,8 +20,6 @@ print("All imports were successful.")
 
 __author__ = 'Shaked Dan Zilberman'
 
-# A range for the scanned ports.
-PORT_RANGE = range(0, 1024)
 lookup = None
 
 
@@ -108,7 +107,7 @@ def main():
     from testing.tests import test
     test()
 
-    # print_dict(ipconfig())
+    print_dict(ipconfig())
     
     global lookup
     lookup = NetworkStorage()
@@ -119,21 +118,32 @@ def main():
     conf.warning_threshold = 100000  # Time between warnings of the same source should be infinite (100000 seconds).
     
     simple_scans = standardise_simple_scans([
-        (scan_ICMP, 4),
-        (scan_ARP, 4)
+        (scan_ICMP, 0),
+        (scan_ARP, 0)
     ])
 
     lookup.print.__func__.__name__ = "print_lookup"
 
     # ******* Why does this not get the "broadcast" name???
-    def add_broadcast_to_lookup(): lookup.add(ip="255.255.255.255")
-    def user_confirmation(): input("Commencing continuous ICMP scan. Press [Enter] to continue . . .")
+    def add_to_lookup():
+        # lookup.add(ip="255.255.255.255")
+        from NetworkStorage import router
+        lookup.add(ip=router.ip)
+    def do_TCP():
+        for address in lookup['ip']:
+            print(address)
+            with JustifyPrinting():
+                for port, res in scan_TCP(address, repeats=3).items():
+                    if res: print(port)
+    def user_confirmation(): input("Commencing next scan. Press [Enter] to continue . . .")
     def continuous_ICMP(): scan_ICMP_continuous(lookup['ip'], ipconfig()["All Possible Addresses"], compactness=2)
 
     actions = [
-        add_broadcast_to_lookup,
+        add_to_lookup,
         *simple_scans,
         lookup.print,
+        user_confirmation,
+        do_TCP,
         user_confirmation,
         continuous_ICMP
     ]

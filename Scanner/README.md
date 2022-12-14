@@ -275,3 +275,10 @@ Currently, however, the special entities are created prior to the `ipconfig()` c
 [23:24] The due sate is getting closer, and I realise my code isn't very well-structured.
 So I shall organise it!
 Plus, one important feature still missing is the TCP port scanner, so I need to add that.
+
+
+### 2022-12-14
+[12:46] Started doing the TCP scan. Imported base code from TCP_Port_Scanner.py (in this repository), and integrated it with the rest of the code.
+
+[14:07] Integration successful, code is working.
+Additionally, tested on another home network.
