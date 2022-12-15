@@ -128,7 +128,8 @@ def main():
     def add_to_lookup():
         # lookup.add(ip="255.255.255.255")
         from NetworkStorage import router
-        lookup.add(ip=router.ip)
+        lookup.add(router)
+    
     def do_TCP():
         for address in lookup['ip']:
             print(f"Open TCP ports in {address}:")
