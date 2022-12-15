@@ -167,6 +167,11 @@ def extend_ipv6(ipv6: str) -> str:
 class LockedNetworkEntity(NetworkEntity):
     def __setitem__(self, key, value):
         raise TypeError(f"Item assignment in NetworkEntity cannot be done on a locked entity.")
+    
+    
+    def merge(self, other):
+        # Since we know LockedNetworkEntities will have complete information, there's no need to merge additions into them (plus it causes errors).
+        pass
 
 
 # Special Entities: LockedNetworkEntity
@@ -215,9 +220,10 @@ class NetworkStorage:
                 if entity == other:
                     other.merge(entity)
                     return
-            for special in specials:
-                if entity == special:
-                    entity.merge(special)
+            if not isinstance(entity, LockedNetworkEntity):
+                for special in specials:
+                    if entity == special:
+                        entity.merge(special)
             self.data.append(entity)
         
         from hostify import hostify_sync, hostify
