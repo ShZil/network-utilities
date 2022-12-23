@@ -119,10 +119,12 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
     
 
     def resolve_queue():
+        lookup = NetworkStorage()
         while not waiting.empty():
             address = waiting.get()
             if address not in addresses:
                 addresses.append(address)
+                lookup.add(ip=address)
                 print("Adding address", address)
     
 
