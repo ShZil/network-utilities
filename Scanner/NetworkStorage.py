@@ -190,6 +190,7 @@ class NetworkStorage:
     data = []
     waiting = Queue()
 
+    # Use Singleton pattern:
     def __new__(cls):
         if not hasattr(cls, 'instance'):
             cls.instance = object.__new__(cls)
