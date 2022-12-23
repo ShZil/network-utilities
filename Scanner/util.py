@@ -188,12 +188,16 @@ def threadify(f, silent=False):
         # Create Thread objects
         threads = [Thread(target=task, args=(f, x, i), daemon=True) for i, x in enumerate(args)]
         
-        # Activate the threads, waiting for threads to be freed if needed.
-        for thread in threads:
-            thread.start()
-            while active_count() >= MAX_THREADS and MAX_THREADS > 0:
-                print(active_count(), "threads active.", file=real_stdout)
-                sleep(0.01)
+        def start_threads(threads: list):
+            # Activate the threads, waiting for threads to be freed if needed.
+            for thread in threads:
+                thread.start()
+                while active_count() >= MAX_THREADS and MAX_THREADS > 0:
+                    print(active_count(), "threads active.", file=real_stdout)
+                    sleep(0.01)
+        
+        starter = Thread(target=start_threads, args=(threads, ))
+        starter.start()
         
         # BUGFIX ************: Make it so the progress bar starts already during threads.starts()
 
@@ -215,6 +219,7 @@ def threadify(f, silent=False):
             print("\n")
         
         # Join all threads
+        starter.join()  # You have to join `starter` first, because if somehow some thread is still not active, joining it will raise a RuntimeError.
         for thread in threads:
             thread.join()
         
