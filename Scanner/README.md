@@ -287,3 +287,9 @@ Additionally, tested on another home network.
 ### 2022-12-24
 [00:17] Get a little bit of work done on the project.
 Focused on fixing bugs and filling requests (noted by the "*******" in comments).
+
+[01:33] Plan to continue:
+- Add OS-ID
+- Save packets
+- Design user screens
+- Choose GUI library
