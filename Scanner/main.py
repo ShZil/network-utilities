@@ -127,8 +127,8 @@ def main():
     # ******* Why does this not get the "broadcast" name???
     def add_to_lookup():
         # lookup.add(ip="255.255.255.255")
-        from NetworkStorage import router
-        lookup.add(router)
+        from NetworkStorage import router, here
+        lookup.add(router, here)
     
     def do_TCP():
         for address in lookup['ip']:
