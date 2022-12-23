@@ -282,3 +282,8 @@ Plus, one important feature still missing is the TCP port scanner, so I need to 
 
 [14:07] Integration successful, code is working.
 Additionally, tested on another home network.
+
+
+### 2022-12-24
+[00:17] Get a little bit of work done on the project.
+Focused on fixing bugs and filling requests (noted by the "*******" in comments).
