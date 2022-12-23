@@ -208,12 +208,13 @@ class NetworkStorage:
 
 
     def add(self, *args, mac=nothing.mac, ip=nothing.ip, ipv6=nothing.ipv6, name=nothing.name):
-        if len(args) > 0 and isinstance(args[0], NetworkEntity):
-            entity = args[0]
+        if len(args) == 0:
+            self.waiting.put(NetworkEntity(mac, ip, ipv6, name))
         else:
-            entity = NetworkEntity(mac, ip, ipv6, name)
-        self.waiting.put(entity)
-    
+            for entity in args:
+                if isinstance(entity, NetworkEntity):
+                    self.waiting.put(entity)
+
 
     def _resolve(self):
         def append(entity):
