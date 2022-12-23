@@ -203,19 +203,14 @@ def threadify(f, silent=False):
 
         # Print a progress bar if requested
         if options["printing"]:
-            if len(options["format"]) < 4: options["format"] = options["format"].rjust(4)
-            start, fill, nofill, end = tuple(options["format"])
-            width = os.get_terminal_size().columns - len(f"@threadify: {name} {start}{end} (100%)   ")
+            width = os.get_terminal_size().columns - len(f"@threadify: {name}    ")
             if width < options["min_printing_length"]: width = options["min_printing_length"]
             while any([thread.is_alive() for thread in threads]):
                 ratio = sum([thread.is_alive() for thread in threads]) / len(threads)
-                done = fill * ceil(width * (1 - ratio))
-                waiting = nofill * floor(width * (ratio))
-                percent = ceil(100 * (1 - ratio))
 
-                print(f"@threadify: {name} {start}{done}{waiting}{end} ({percent}%)   \r", end='', file=real_stdout)
+                print(f"@threadify: {name} {progress(ratio, options['format'], width)}   \r", end='', file=real_stdout)
                 sleep(0.1)
-            print(f"@threadify: {name} {start}{fill * width}{end} (100%)   \r", end='', file=real_stdout)
+            print(f"@threadify: {name} {progress(0, options['format'], width)}   \r", end='', file=real_stdout)
             print("\n")
         
         # Join all threads
@@ -249,6 +244,17 @@ def threadify(f, silent=False):
     wrapper.__name__ = f.__name__
     wrapper.__doc__ = f.__doc__
     return wrapper
+
+
+def progress(ratio: float, form: str, width: int):
+    if len(form) < 4: form = form.rjust(4)
+    start, fill, nofill, end = tuple(form)
+    width -= len("[] (100%)")
+    done = fill * ceil(width * (1 - ratio))
+    waiting = nofill * floor(width * (ratio))
+    percent = ceil(100 * (1 - ratio))
+
+    return f"{start}{done}{waiting}{end} ({percent}%)"
 
 
 def memorise(f):
