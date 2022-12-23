@@ -29,17 +29,18 @@ def scan_port(ip: str, port: int) -> int:
         else:
             return OPEN
 
-
-scan_ports = threadify(scan_port, silent=True)
-scan_these_ports = lambda ip: scan_ports([(ip, port) for port in PORT_RANGE])
-scan_TCP_once = lambda ip: {PORT_RANGE[i]: result for i, result in enumerate(scan_these_ports(ip))}
+scan_ports = threadify(scan_port, silent=False)
 
 
 def scan_TCP(ip: str, repeats: int) -> dict:
-    results = [scan_TCP_once(ip) for _ in range(repeats)]
-    result = {}
-    
-    for key in results[0].keys():
-        result[key] = any([scan[key] == OPEN for scan in results])
+    ports = [(ip, port) for port in PORT_RANGE]
+    result = {port: False for port in PORT_RANGE}
+
+    for _ in range(repeats):
+        one_scan = scan_ports(ports)
+        for i, port in enumerate(PORT_RANGE):
+            if one_scan[i] == OPEN:
+                result[port] = True
+        
     
     return result
