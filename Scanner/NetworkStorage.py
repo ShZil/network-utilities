@@ -204,6 +204,8 @@ class NetworkStorage:
             local_broadcast = LockedNetworkEntity(mac=nothing.mac, ip=get_all_possible_addresses()[-1], ipv6=nothing.ipv6, name="local broadcast")  # You sure you can't know the MAC and IPv6?
             here = LockedNetworkEntity(mac=ipconfig()["Physical Address"], ip=ipconfig()["IPv4 Address"], ipv6=ipconfig()["IPv6 Address"], name=ipconfig()["Host Name"])
             print(nothing, localhost, mDNS, multicast, broadcast, router, local_broadcast, here, sep="\n")
+
+            cls.instance.print.__func__.__name__ = "NetworkStorage.print"
         return cls.instance
 
 

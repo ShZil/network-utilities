@@ -133,7 +133,6 @@ def main():
         (scan_ARP, 0)
     ])
 
-    lookup.print.__func__.__name__ = "print_lookup"
 
     # ******* Why does this not get the "broadcast" name???
     def add_to_lookup():
