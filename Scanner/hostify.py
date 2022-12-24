@@ -46,4 +46,4 @@ def hostify(address: str):
     return host
 
 
-hostify_sync = threadify(hostify)
+hostify_sync = threadify(hostify, silent=True)
