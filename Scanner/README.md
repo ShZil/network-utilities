@@ -293,3 +293,6 @@ Focused on fixing bugs and filling requests (noted by the "*******" in comments)
 - Save packets
 - Design user screens
 - Choose GUI library
+
+### 2022-12-25
+[01:08] Finally! I found how to mute it!

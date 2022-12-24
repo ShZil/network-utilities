@@ -2,16 +2,13 @@ from import_handler import ImportDefence
 with ImportDefence():
     from util import memorise, NoPrinting, threadify
     
-    from subprocess import CalledProcessError, check_output as read_command
+    from subprocess import CalledProcessError, check_output as read_command, DEVNULL
 
     from socket import gethostbyaddr as hostify_base
     from socket import herror as hostify_error1
     from socket import gaierror as hostify_error2
 
 
-# ************ The subprocess windows open and disturb users (aka me) / Prints the errors into the console which is annoying.
-# Potential fix: https://stackoverflow.com/questions/1813872/running-a-process-in-pythonw-with-popen-without-a-console
-# or https://stackoverflow.com/a/55758810
 @memorise
 def hostify(address: str):
     """This function turns an IPv4 address to a host name using one of these methods:
@@ -37,7 +34,7 @@ def hostify(address: str):
     # If first method failed, second method -> socket.gethostbyaddr
     try:
         with NoPrinting():
-            lines = read_command(['nslookup', address]).decode(encoding='utf-8', errors='ignore').split('\n')
+            lines = read_command(['nslookup', address], stderr=DEVNULL, stdout=DEVNULL).decode(encoding='utf-8', errors='ignore').split('\n')
         for line in lines:
             if line.strip().startswith('Name:'):
                 host = line[len("Name:"):].strip()
