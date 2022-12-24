@@ -2,6 +2,7 @@ from import_handler import ImportDefence
 with ImportDefence():
     import os
     from typing import Callable
+    import requests
 
     from util import *
     from ip_handler import *
@@ -101,6 +102,16 @@ def nameof(action):
         return action.__name__
 
 
+def get_public_ip():
+    from NetworkStorage import nothing, NetworkStorage, LockedNetworkEntity
+    ip = requests.get('https://api.ipify.org').text
+    ipv6 = requests.get('https://api64.ipify.org').text
+    ipv6 = ipv6 if ipv6 != ip else nothing.ipv6
+    outside = LockedNetworkEntity(mac=nothing.mac, ip=ip, ipv6=ipv6, name="Public Address")
+    NetworkStorage().special_add(outside)
+    NetworkStorage().add(outside)
+
+
 def main():
     ipconfig()
 
@@ -143,6 +154,7 @@ def main():
     actions = [
         add_to_lookup,
         *simple_scans,
+        get_public_ip,
         lookup.print,
         user_confirmation,
         do_TCP,
