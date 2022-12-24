@@ -285,12 +285,14 @@ class NetworkStorage:
         Raises:
             TypeError: if the key is invalid.
         """
+        self._resolve()
         if key not in ["mac", "ip", "ipv6", "name"]:
             raise TypeError(f"NetworkStorage.organise's key must be `mac`, `ip`, `ipv6`, or `name`; got `{key}`")
         return {entity[key]: entity for entity in self.data if entity[key] != nothing[key]}
     
 
     def __iter__(self):
+        self._resolve()
         for elem in self.sort():
             yield elem
     
@@ -308,6 +310,7 @@ class NetworkStorage:
         Returns:
             list: a list containing all the requested data.
         """
+        self._resolve()
         if key in ["mac", "ip", "ipv6", "name"]:
             self._resolve()
             return [entity[key] for entity in self.data if entity[key] != nothing[key]]
@@ -315,6 +318,7 @@ class NetworkStorage:
     
 
     def print(self):
+        self._resolve()
         with JustifyPrinting():
             for entity in self:
                 print(entity)
