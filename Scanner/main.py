@@ -147,11 +147,11 @@ def main():
         lookup.add(router, here)
     
     def do_TCP():
-        for address in lookup['ip']:
-            print(f"Open TCP ports in {address}:")
-            with JustifyPrinting():
-                for port, res in scan_TCP(address, repeats=3).items():
-                    if res: print(port)
+        from NetworkStorage import router
+        print(f"Open TCP ports in {router}:")
+        with JustifyPrinting():
+            for port, res in scan_TCP(router.ip, repeats=3).items():
+                if res: print(port)
     
     def user_confirmation(): input("Commencing next scan. Press [Enter] to continue . . .")
     def continuous_ICMP(): scan_ICMP_continuous(lookup['ip'], ipconfig()["All Possible Addresses"], compactness=2)
