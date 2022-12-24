@@ -14,6 +14,8 @@ with ImportDefence():
     from scans.TCP import scan_TCP
 
     from scapy.config import conf
+    from scapy.sendrecv import sr1
+    from scapy.all import IP
 
 
 os.system('cls')
@@ -113,6 +115,12 @@ def get_public_ip():
 
 
 def main():
+
+    # Remove the annoying scapy warnings:
+    conf.warning_threshold = 100000  # Time between warnings of the same source should be infinite (100000 seconds).
+    for _ in range(3):
+        sr1(IP(dst="255.255.255.255"), verbose=0, timeout=0.001)
+
     ipconfig()
 
     from testing.tests import test
@@ -125,8 +133,6 @@ def main():
 
     ipconfig.cache["All Possible Addresses"] = all_possible_addresses = get_all_possible_addresses()
     print("Subnet Size:", len(all_possible_addresses), "possible addresses.")
-
-    conf.warning_threshold = 100000  # Time between warnings of the same source should be infinite (100000 seconds).
     
     simple_scans = standardise_simple_scans([
         (scan_ICMP, 0),
