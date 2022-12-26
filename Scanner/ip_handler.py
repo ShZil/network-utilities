@@ -170,6 +170,12 @@ def base_subnet_address(subnet_mask: str, *some_addresses: tuple[str]) -> str:
     return unbitify(format(base[0], 'b').zfill(32))
 
 
+def subnet_slash_notation(subnet_mask: str, router: str) -> str:
+    subnet_mask = bitify(subnet_mask)
+    count = subnet_mask.count('1')
+    return f"{router}/{count}"
+
+
 @memorise
 def get_all_possible_addresses() -> list[str]:
     """This method calculates all the possible IPv4 addresses in the current subnet,
