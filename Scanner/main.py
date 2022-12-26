@@ -114,12 +114,19 @@ def get_public_ip():
     NetworkStorage().add(outside)
 
 
-def main():
-
-    # Remove the annoying scapy warnings:
-    conf.warning_threshold = 100000  # Time between warnings of the same source should be infinite (100000 seconds).
+def remove_scapy_warnings():
+    """Removes the "MAC address not found, using broadcast" warnings thrown by scapy.
+    These warnings occur when a packet is sent to an IP (layer 3) address, without an Ethernet (layer 2) MAC address,
+    and such an address cannot be found using ARP. Scapy thus uses the broadcast MAC instead.
+    """
+    conf.warning_threshold = 1_000_000  # Time between warnings of the same source should be infinite (many seconds).
     for _ in range(3):
         sr1(IP(dst="255.255.255.255"), verbose=0, timeout=0.001)
+        sleep(0.01)
+
+
+def main():
+    remove_scapy_warnings()
 
     ipconfig()
 
