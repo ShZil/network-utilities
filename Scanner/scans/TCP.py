@@ -4,7 +4,7 @@ with ImportDefence():
     from scapy.all import sr1, TCP, IP
     from random import randint
     
-    from util import threadify, JustifyPrinting
+    from util import threadify, InstantPrinting
 
 
 # A range for the scanned ports.
@@ -48,12 +48,11 @@ def scan_TCP(ip: str, repeats: int) -> dict:
 
 # This is not supposed to be under an `if __name__ == '__main__`. It's called from ./Do TCP Scan.bat.
 # If one did execute it from this context, Python would be unable to import util for example, as that's an outside file.
-def main():
-    from sys import argv
+def main(addr=''):
     import ipaddress
 
-    if len(argv) > 1:
-        address = argv[1]
+    if addr:
+        address = addr
     else:
         address = input("Which IP address? ")
     
@@ -73,10 +72,22 @@ def main():
         repeats = int(input("How many repeats? "))
     except ValueError:
         repeats = 3
+
+    try:
+        minimum = int(input("Choose min port: "))
+        maximum = int(input("Choose max port: "))
+        if maximum < minimum: raise ValueError("Maximum can't be smaller than minimum.")
+        if minimum < 0: minimum = 0
+        if maximum > 65536: maximum = 65536
+        global PORT_RANGE
+        PORT_RANGE = list(range(minimum, maximum))
+    except ValueError:
+        pass
+
     
-    
-    print(f"Open TCP ports in {address}:")
-    with JustifyPrinting():
+    print()
+    print(f"Open TCP ports in {address} in range {PORT_RANGE[0]} → {PORT_RANGE[-1]} ({repeats} repeats):")
+    with InstantPrinting():
         for port, res in scan_TCP(address, repeats).items():
             if res:
                 print(port)
