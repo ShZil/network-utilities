@@ -296,3 +296,11 @@ Focused on fixing bugs and filling requests (noted by the "*******" in comments)
 
 ### 2022-12-25
 [01:08] Finally! I found how to mute it!
+
+
+### 2022-12-26
+[17:30] Storm. The power just went out.
+I was working on the program and since the power went out,
+so did the Internet connection,
+but not the computer (since it's a laptop with its own battery).
+Saw the ICMP continuous display just go black.
