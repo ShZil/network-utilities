@@ -104,6 +104,10 @@ def nameof(action):
         return action.__name__
 
 
+def title(*s, sep=''):
+    os.system(f'title {sep.join(s)}')
+
+
 @one_cache
 def get_public_ip():
     from NetworkStorage import nothing, NetworkStorage, LockedNetworkEntity
@@ -129,6 +133,7 @@ def main():
     remove_scapy_warnings()
 
     ipconfig()
+    title("ShZil Network Scanner - ", ipconfig()["Interface"], " at ", ipconfig()["IPv4 Address"])
 
     from testing.tests import test
     test()
