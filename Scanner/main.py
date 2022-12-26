@@ -168,8 +168,8 @@ def main():
         *simple_scans,
         get_public_ip,
         lookup.print,
-        user_confirmation,
-        do_TCP,
+        # user_confirmation,
+        # do_TCP,
         user_confirmation,
         continuous_ICMP
     ]
