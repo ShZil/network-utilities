@@ -111,7 +111,6 @@ def get_public_ip():
     ipv6 = ipv6 if ipv6 != ip else nothing.ipv6
     outside = LockedNetworkEntity(mac=nothing.mac, ip=ip, ipv6=ipv6, name="Public Address")
     NetworkStorage().special_add(outside)
-    NetworkStorage().add(outside)
 
 
 def remove_scapy_warnings():
@@ -152,6 +151,7 @@ def main():
         from NetworkStorage import router, here
         lookup.add(router, here)
     
+
     def do_TCP():
         from NetworkStorage import router
         print(f"Open TCP ports in {router}:")
@@ -159,6 +159,7 @@ def main():
             for port, res in scan_TCP(router.ip, repeats=3).items():
                 if res: print(port)
     
+
     def user_confirmation(): input("Commencing next scan. Press [Enter] to continue . . .")
     def continuous_ICMP(): scan_ICMP_continuous(lookup['ip'], ipconfig()["All Possible Addresses"], compactness=2)
 
