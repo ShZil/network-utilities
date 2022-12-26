@@ -4,7 +4,7 @@ with ImportDefence():
     from scapy.all import sr1, TCP, IP
     from random import randint
     
-    from util import threadify
+    from util import threadify, JustifyPrinting
 
 
 # A range for the scanned ports.
@@ -44,3 +44,39 @@ def scan_TCP(ip: str, repeats: int) -> dict:
         
     
     return result
+
+
+# This is not supposed to be under an `if __name__ == '__main__`. It's called from ./Do TCP Scan.bat.
+# If one did execute it from this context, Python would be unable to import util for example, as that's an outside file.
+def main():
+    from sys import argv
+    import ipaddress
+
+    if len(argv) > 1:
+        address = argv[1]
+    else:
+        address = input("Which IP address? ")
+    
+
+    def is_ipv4(string):
+        try:
+            ipaddress.IPv4Network(string)
+            return True
+        except ValueError:
+            return False
+    
+    while not is_ipv4(address):
+        print("This does not appear to be a valid IPv4 address.")
+        address = input("Which IP address? ")
+
+    try:    
+        repeats = int(input("How many repeats? "))
+    except ValueError:
+        repeats = 3
+    
+    
+    print(f"Open TCP ports in {address}:")
+    with JustifyPrinting():
+        for port, res in scan_TCP(address, repeats).items():
+            if res:
+                print(port)
