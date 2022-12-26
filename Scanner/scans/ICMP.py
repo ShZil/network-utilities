@@ -6,7 +6,7 @@ with ImportDefence():
     from NetworkStorage import NetworkStorage
     from colors import Colors
     from hostify import hostify, hostify_sync
-    from ip_handler import subnet_address_range
+    from ip_handler import subnet_address_range, subnet_slash_notation
     
     from queue import Queue
     from threading import Thread
@@ -96,7 +96,9 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
     if not isinstance(addresses, list): addresses = list(addresses)
     table = {address: [] for address in addresses}
     waiting = Queue()
-    network = subnet_address_range(ipconfig()["Subnet Mask"], ipconfig()["IPv4 Address"])
+    # network = subnet_address_range(ipconfig()["Subnet Mask"], ipconfig()["IPv4 Address"])
+    from NetworkStorage import router
+    network = subnet_slash_notation(ipconfig()["Subnet Mask"], router.ip)
 
     if parallel_device_discovery:
         # How many threads should be dedicated to the detection of new devices?
