@@ -125,7 +125,7 @@ def subnet_address_range(subnet_mask: str, *some_addresses: tuple[str]):
     return result.strip('.')
 
 
-def base_subnet_address(subnet_mask: str, *some_addresses: tuple[str]):
+def base_subnet_address(subnet_mask: str, *some_addresses: tuple[str]) -> str:
     """This function computes the base address of a network (i.e. the Network ID, with all 0s in the Device ID section)
 
     Code explanation:
