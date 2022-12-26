@@ -96,9 +96,10 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
     if not isinstance(addresses, list): addresses = list(addresses)
     table = {address: [] for address in addresses}
     waiting = Queue()
-    # network = subnet_address_range(ipconfig()["Subnet Mask"], ipconfig()["IPv4 Address"])
-    from NetworkStorage import router
-    network = subnet_slash_notation(ipconfig()["Subnet Mask"], router.ip)
+    
+    network = subnet_address_range(ipconfig()["Subnet Mask"], ipconfig()["IPv4 Address"])
+    # from NetworkStorage import router
+    # network = subnet_slash_notation(ipconfig()["Subnet Mask"], router.ip)
 
     if parallel_device_discovery:
         # How many threads should be dedicated to the detection of new devices?
