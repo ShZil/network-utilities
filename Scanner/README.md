@@ -304,3 +304,13 @@ I was working on the program and since the power went out,
 so did the Internet connection,
 but not the computer (since it's a laptop with its own battery).
 Saw the ICMP continuous display just go black.
+
+[23:38] Bug report:
+```File "...NetworkStorage.py", line 288, in organise
+    self._resolve()
+  File "...NetworkStorage.py", line 248, in _resolve
+    for entity in self.waiting.queue:
+RuntimeError: deque mutated during iteration```
+
+Fix found on https://stackoverflow.com/a/58679808:
+NetworkStorage.py:248 ```for entity in list(self.waiting.queue):```
