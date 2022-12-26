@@ -104,6 +104,7 @@ def nameof(action):
         return action.__name__
 
 
+@one_cache
 def get_public_ip():
     from NetworkStorage import nothing, NetworkStorage, LockedNetworkEntity
     ip = requests.get('https://api.ipify.org').text

@@ -1,4 +1,6 @@
 from import_handler import ImportDefence
+from util import one_cache
+
 with ImportDefence():
     from scapy.interfaces import get_working_ifaces
     from scapy.config import conf
@@ -172,10 +174,8 @@ def ipconfig() -> dict:
     return data
 
 
+@one_cache
 def get_interface_safe(possible):
-    if hasattr(get_interface_safe, 'cache'):
-        return get_interface_safe.cache
-    
     while True:
         try:
             num = int(input("Select: "))
@@ -187,7 +187,6 @@ def get_interface_safe(possible):
             print("Not in range")
             continue
         
-        get_interface_safe.cache = possible[num]
         return possible[num]
 
 

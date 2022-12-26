@@ -288,6 +288,36 @@ def memorise(f):
     return wrapper
 
 
+def one_cache(f):
+    """A decorator that saves the return value of a function to a cache,
+    so that when it's called again,
+    no calculations are made and the result is returned from the cache.
+    This completely ignores arguments, so use it only when:
+    1. There are no arguments; or
+    2. Arguments don't matter; or
+    3. The function is expected to be called with the same arguments.
+
+    Args:
+        f (function): the function to decorate and add a cache to
+
+    Returns:
+        function: the decorated function with a cache
+    """
+    # This is a list for it to be a reference type.
+    memory = [None]
+    def wrapper(*args):
+        if memory[0] is not None:
+            return memory[0]
+        else:
+            memory[0] = f(*args)
+            return memory[0]
+    
+    # Make `wrapper` inherit `f`'s properties.
+    wrapper.__name__ = f.__name__
+    wrapper.__doc__ = f.__doc__
+    return wrapper
+
+
 def render_opacity(percent: int | float):
     """Returns a character to display a given opacity/fillness,
     according to a percent:
