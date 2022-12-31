@@ -202,7 +202,8 @@ class NetworkStorage:
             broadcast = LockedNetworkEntity(mac="FF-FF-FF-FF-FF-FF", ip="255.255.255.255", ipv6=nothing.ipv6, name="broadcast")
             router = LockedNetworkEntity(mac=nothing.mac, ip=filterIP(ipconfig()["Default Gateway"])[0], ipv6=nothing.ipv6, name="router")  # You sure you can't know the MAC and IPv6? + improve getting the default gateway's IPv4
             local_broadcast = LockedNetworkEntity(mac=nothing.mac, ip=get_all_possible_addresses()[-1], ipv6=nothing.ipv6, name="local broadcast")  # You sure you can't know the MAC and IPv6?
-            here = LockedNetworkEntity(mac=ipconfig()["Physical Address"], ip=ipconfig()["IPv4 Address"], ipv6=ipconfig()["IPv6 Address"], name=ipconfig()["Host Name"])
+            here = LockedNetworkEntity(mac=ipconfig()["Physical Address"], ip=ipconfig()["IPv4 Address"], ipv6=ipconfig()["IPv6 Address"] if 'IPv6 Address' in ipconfig() else nothing.ipv6, name=ipconfig()["Host Name"])
+
             cls.instance.special_add(localhost, mDNS, multicast, broadcast, router, local_broadcast, here)
             print(nothing, *specials, sep="\n")
 
