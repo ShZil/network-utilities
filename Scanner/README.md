@@ -318,3 +318,6 @@ NetworkStorage.py:248 ```for entity in list(self.waiting.queue):```
 
 ### 2022-12-31
 [17:20] Uploading changes from Docs>"Cyber Project - Ideas and Concepts". (code I wrote in class)
+
+[20:27] Working on the GUI. `Flexx` proved itself as insufficient (can't run python code).
+Trying to use `Kivy` instead; proved that it can run python from button click.
