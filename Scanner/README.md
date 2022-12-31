@@ -314,3 +314,7 @@ RuntimeError: deque mutated during iteration```
 
 Fix found on https://stackoverflow.com/a/58679808:
 NetworkStorage.py:248 ```for entity in list(self.waiting.queue):```
+
+
+### 2022-12-31
+[17:20] Uploading changes from Docs>"Cyber Project - Ideas and Concepts". (code I wrote in class)
