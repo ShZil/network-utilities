@@ -207,8 +207,17 @@ class NetworkStorage:
             cls.instance.special_add(localhost, mDNS, multicast, broadcast, router, local_broadcast, here)
             print(nothing, *specials, sep="\n")
 
-            cls.instance.print.__func__.__name__ = "NetworkStorage.print"
+            cls.instance._give_names()
         return cls.instance
+    
+
+    def _give_names(self):
+        for method in dir(self):
+            if not method.startswith('_'):
+                try:
+                    getattr(self, method).__func__.__name__ = "NetworkStorage." + method
+                except AttributeError:
+                    continue
 
 
     def add(self, *args, mac=nothing.mac, ip=nothing.ip, ipv6=nothing.ipv6, name=nothing.name):
