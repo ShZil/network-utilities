@@ -60,26 +60,33 @@ class ButtonColumn(GridLayout):
 class MyApp(App):
     def build(self):
         everything = BoxLayout(orientation='vertical')
-        everything.add_widget(Label(text="Local Network Scanner", size=(0, 70), size_hint=(1, None), font_size=30))
-        layout = GridLayout(cols=3)
 
+        # Create the left column
         left_menu = ButtonColumn(width=150)
-        btn = Button(text='print out', font_size=14)
-        btn.bind(on_press=callback)
-        left_menu.add(btn)
+        left_menu.add('print out', callback0)
         for i in range(5):
-            left_menu.add(Button(text='btn' + str(i), font_size=14))
-        layout.add_widget(left_menu)
+            left_menu.add('btn' + str(i))
 
+        # Create the middle diagram
         paint = MyPaintWidget()
         paint.bind(pos=update_rect, size=update_rect)
-        layout.add_widget(paint)
 
+        # Create the right column
         right_menu = ButtonColumn(width=300)
         for i in range(7):
-            right_menu.add(Button(text='scan' + str(i), font_size=14))
+            right_menu.add(f"scan {i}", callback1 if i < 4 else callback2)
+        right_menu.add(f'woo', callback3)
+
+        # Add all widgets to `everything`
+        title = Label(text="Local Network Scanner", size=(0, 70), size_hint=(1, None), font_size=30, underline=True)
+        everything.add_widget(title)
+
+        layout = GridLayout(cols=3)
+        layout.add_widget(left_menu)
+        layout.add_widget(paint)
         layout.add_widget(right_menu)
         everything.add_widget(layout)
+
         return everything
 
 
