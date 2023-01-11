@@ -50,11 +50,23 @@ def update_rect(self, value):
 class ButtonColumn(GridLayout):
     def __init__(self, width: int):
         super().__init__(cols=1, width=width, size_hint=(None, 1))
-        self.buttons = []
+        self.buttons = []  # list of tuples `(button, callback)`
+        self.background_color = [0.1, 1, 0.3, 1]  # rgba values, range 0 to 1, in 4-item list
+        self.font_size = 24
     
-    def add(self, btn: Button):
+
+    def add(self, text: str, callback=None):
+        btn = Button(text=text, font_size=self.font_size, background_color=self.background_color, font_name="Roboto")
+        if callback is not None:
+            btn.bind(on_press=callback)
         super().add_widget(btn)
-        self.buttons.append(btn)
+        self.buttons.append((btn, callback))
+
+
+    def do_all(self):
+        print(self.buttons)
+        for button, action in self.buttons:
+            action(None)
 
 
 class MyApp(App):
