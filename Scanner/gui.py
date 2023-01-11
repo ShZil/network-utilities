@@ -20,6 +20,8 @@ def callback(instance):
 
 
 class MyPaintWidget(Widget):
+    def init(self):
+        update_rect(self, 0)
 
     def on_touch_down(self, touch):
         update_rect(self, 0)
