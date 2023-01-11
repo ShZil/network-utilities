@@ -25,26 +25,34 @@ class MyPaintWidget(Widget):
         update_rect(self, 0)
 
 
-def update_rect(self, value):
-    x, y = self.pos
-    w, h = self.size
-    G = nx.hypercube_graph(5)
-    pos = nx.spiral_layout(G, center=(x + w/2, y + h/2), scale=80)
-    print(pos.values())
-    with self.canvas:
+def update_rect(diagram, value):
+    if hasattr(update_rect, 'cache'):
+        diagram = update_rect.cache
+    else:
+        update_rect.cache = diagram
+    
+    x, y = diagram.pos
+    w, h = diagram.size
+    scale = min(w, h) / 2.3
+    r = 5
+    stroke = 1
+    pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
+    # print(pos.values())
+    with diagram.canvas:
         Color(0, 1, 0)
-        Rectangle(pos=self.pos, size=self.size)
+        Rectangle(pos=diagram.pos, size=diagram.size)
         Color(0, 0, 0)
         
         for node in G:
             x0, y0 = pos[node]
-            Ellipse(pos=(x0 - 5, y0 - 5), size=(10, 10))
+            if diagram.collide_point(x0 - r, y0 - r) and diagram.collide_point(x0 + r, y0 + r):
+                Ellipse(pos=(x0 - r, y0 - r), size=(2 * r, 2 * r))
         
         for edge in G.edges:
             x0, y0 = pos[edge[0]]
             x1, y1 = pos[edge[1]]
-            Line(points=(x0, y0, x1, y1), width=2)
-    
+            if diagram.collide_point(x0, y0) and diagram.collide_point(x1, y1):
+                Line(points=(x0, y0, x1, y1), width=stroke)
 
 
 class ButtonColumn(GridLayout):
