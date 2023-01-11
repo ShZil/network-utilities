@@ -13,10 +13,28 @@ import networkx as nx
 
 __author__ = 'Shaked Dan Zilberman'
 
+hyperness = 1
+G = nx.hypercube_graph(1)
 
-def callback(instance):
+
+def callback0(x):
     print("Hello")
-    print(instance)
+
+
+def callback1(x):
+    print('Hello1')
+
+
+def callback2(x):
+    print('Hello2')
+
+
+def callback3(x):
+    global hyperness, G
+    hyperness += 1
+    if hyperness > 6: hyperness = 6
+    G = nx.hypercube_graph(hyperness)
+    update_rect(0, 0)
 
 
 class MyPaintWidget(Widget):
