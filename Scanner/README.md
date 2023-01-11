@@ -321,3 +321,7 @@ NetworkStorage.py:248 ```for entity in list(self.waiting.queue):```
 
 [20:27] Working on the GUI. `Flexx` proved itself as insufficient (can't run python code).
 Trying to use `Kivy` instead; proved that it can run python from button click.
+
+
+### 2023-01-11
+[22:45] Lots and lots of GUI work, for about an hour.
