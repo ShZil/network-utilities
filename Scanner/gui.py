@@ -59,7 +59,7 @@ def update_rect(diagram, value):
 
 class ButtonColumn(GridLayout):
     def __init__(self, width: int):
-        super().__init__(cols=1, width=width, size_hint=(None, 1))
+        super().__init__(cols=1, width=width, size_hint=(None, 1), spacing=[-3], padding=[-1, -3, -1, -3])
         self.buttons = []  # list of tuples `(button, callback)`
         self.background_color = [0.1, 1, 0.3, 1]  # rgba values, range 0 to 1, in 4-item list
         self.font_size = 24
