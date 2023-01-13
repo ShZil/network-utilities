@@ -21,11 +21,11 @@ __author__ = 'Shaked Dan Zilberman'
 hyperness = 1
 G = nx.hypercube_graph(1)
 diagram = None
+is_kivy_running = True
 
 
 class Diagram:
     def __init__(self):
-        print("Creating Diagram")
         self.root = tk.Tk()
         self.root.title("Network Diagram")
 
@@ -41,8 +41,15 @@ class Diagram:
         self.update()
 
         self.hide()
-        print("Created diagram")
+        self.root.protocol("WM_DELETE_WINDOW", self.try_close)
     
+
+    def try_close(self):
+        if is_kivy_running:
+            self.hide()
+        else:
+            self.root.destroy()
+
     def renew(self, G: nx.Graph):
         if not nx.utils.graphs_equal(G, self.graph):
             self.graph = G.copy()
@@ -210,9 +217,20 @@ class MyApp(App):
         return everything
 
 
-if __name__ == '__main__':
-    runner = Thread(target=lambda: MyApp().run())
-    runner.start()
+def start_kivy():
+    global is_kivy_running, diagram
+    is_kivy_running = True
+    MyApp().run()
+    is_kivy_running = False
+    diagram.show()
+
+def start_tk():
+    global diagram
     diagram = Diagram()
     diagram.root.mainloop()
-    # MyApp().run()
+
+
+if __name__ == '__main__':
+    runner = Thread(target=start_kivy)
+    runner.start()
+    start_tk()
