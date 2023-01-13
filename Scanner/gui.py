@@ -171,6 +171,7 @@ class ButtonColumn(GridLayout):
 
 class MyApp(App):
     def build(self):
+        self.title = 'Local Network Scanner'
         everything = BoxLayout(orientation='vertical')
 
         # Create the left column
