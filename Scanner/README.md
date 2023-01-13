@@ -351,3 +351,11 @@ self.root.mainloop()
 ```
 so initialisation never actually finishes.
 Now, I shall restructure the code, such that this last statement is outside `__init__`.
+
+[21:14] Some thinkning later, I solved it:
+```
+diagram = Diagram()
+diagram.root.mainloop()
+```
+As easy as that.
+Instead of blocking `__init__`, block the main thread instead.
