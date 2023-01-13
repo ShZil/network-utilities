@@ -45,33 +45,33 @@ class MyPaintWidget(Widget):
         update_rect(self, 0)
 
 
-def update_rect(diagram, value):
+def update_rect(painter, value):
     if hasattr(update_rect, 'cache'):
-        diagram = update_rect.cache
+        painter = update_rect.cache
     else:
-        update_rect.cache = diagram
+        update_rect.cache = painter
     
-    x, y = diagram.pos
-    w, h = diagram.size
+    x, y = painter.pos
+    w, h = painter.size
     scale = min(w, h) / 2.3
     r = 5
     stroke = 1
     pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
     # print(pos.values())
-    with diagram.canvas:
+    with painter.canvas:
         Color(0, 1, 0)
-        Rectangle(pos=diagram.pos, size=diagram.size)
+        Rectangle(pos=painter.pos, size=painter.size)
         Color(0, 0, 0)
         
         for node in G:
             x0, y0 = pos[node]
-            if diagram.collide_point(x0 - r, y0 - r) and diagram.collide_point(x0 + r, y0 + r):
+            if painter.collide_point(x0 - r, y0 - r) and painter.collide_point(x0 + r, y0 + r):
                 Ellipse(pos=(x0 - r, y0 - r), size=(2 * r, 2 * r))
         
         for edge in G.edges:
             x0, y0 = pos[edge[0]]
             x1, y1 = pos[edge[1]]
-            if diagram.collide_point(x0, y0) and diagram.collide_point(x1, y1):
+            if painter.collide_point(x0, y0) and painter.collide_point(x1, y1):
                 Line(points=(x0, y0, x1, y1), width=stroke)
 
 
