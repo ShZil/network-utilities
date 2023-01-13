@@ -332,3 +332,22 @@ Trying to use `Kivy` instead; proved that it can run python from button click.
 - Adding TK diagram to view separately
 - Trying to make them (TK & kivy) work in separate threads
 
+[20:43] Uninstalling and reinsatlling all packages solved the `numpy` issue.
+Currently, I'm facing this problem: 
+```
+diagram = None
+...
+if __name__ == '__main__':
+    diagram = Diagram()
+
+
+Output:
+AttributeError: 'NoneType' object has no attribute 'show'
+```
+
+The problem is, inside `Diagram.__init__`, the last call is blocking:
+```
+self.root.mainloop()
+```
+so initialisation never actually finishes.
+Now, I shall restructure the code, such that this last statement is outside `__init__`.

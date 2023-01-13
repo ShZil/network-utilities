@@ -4,6 +4,7 @@ with ImportDefence():
     import networkx as nx
     import tkinter as tk
     from threading import Thread
+    import numpy, scipy  # for networkx
 kivy.require('2.1.0')
 
 from kivy.app import App
@@ -19,10 +20,12 @@ __author__ = 'Shaked Dan Zilberman'
 
 hyperness = 1
 G = nx.hypercube_graph(1)
+diagram = None
 
 
 class Diagram:
-    def __init__(self, ):
+    def __init__(self):
+        print("Creating Diagram")
         self.root = tk.Tk()
         self.root.title("Network Diagram")
 
@@ -38,6 +41,7 @@ class Diagram:
         self.update()
 
         self.hide()
+        print("Created diagram")
         self.root.mainloop()
     
     def renew(self, G: nx.Graph):
@@ -93,7 +97,6 @@ class Diagram:
 
 
 def callback0(x):
-    global diagram
     diagram.show()
 
 
