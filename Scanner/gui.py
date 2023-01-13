@@ -1,4 +1,9 @@
-import kivy
+from import_handler import ImportDefence
+with ImportDefence():
+    import kivy
+    import networkx as nx
+    import tkinter as tk
+    from threading import Thread
 kivy.require('2.1.0')
 
 from kivy.app import App
@@ -9,7 +14,6 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Ellipse, Rectangle, Line
 
-import networkx as nx
 
 __author__ = 'Shaked Dan Zilberman'
 
