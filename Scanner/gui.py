@@ -89,7 +89,8 @@ class Diagram:
 
 
 def callback0(x):
-    print("Hello")
+    global diagram
+    diagram.show()
 
 
 def callback1(x):
@@ -176,7 +177,7 @@ class MyApp(App):
 
         # Create the left column
         left_menu = ButtonColumn(width=150)
-        left_menu.add('print out', callback0)
+        left_menu.add('open diagram', callback0)
         for i in range(5):
             left_menu.add('btn' + str(i))
 
