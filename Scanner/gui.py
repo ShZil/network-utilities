@@ -35,7 +35,7 @@ class Diagram:
         self.width = 300
         self.height = 300
 
-        self.graph = nx.empty_graph()
+        self.graph = G
 
         self.canvas.bind('<Configure>', self.resize)
         self.update()
