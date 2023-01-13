@@ -17,6 +17,77 @@ hyperness = 1
 G = nx.hypercube_graph(1)
 
 
+class Diagram:
+    def __init__(self, ):
+        self.root = tk.Tk()
+        self.root.title("Network Diagram")
+
+        self.canvas = tk.Canvas(self.root, bg="white", height=300, width=300)
+        self.canvas.pack(expand=True, fill='both')
+
+        self.width = 300
+        self.height = 300
+
+        self.graph = nx.empty_graph()
+
+        self.canvas.bind('<Configure>', self.resize)
+        self.update()
+
+        self.hide()
+        self.root.mainloop()
+    
+    def renew(self, G: nx.Graph):
+        if not nx.utils.graphs_equal(G, self.graph):
+            self.graph = G.copy()
+            self.update()
+
+    def hide(self):
+        self.root.withdraw()
+
+    def show(self):
+        self.root.update()
+        self.root.deiconify()
+    
+    def resize(self, event):
+        geometry = self.root.geometry()    
+        self.width  = int(geometry[0:geometry.index("x")])
+        self.height = int(geometry[geometry.index("x")+1:geometry.index("+")])
+        self.update()
+
+    def update(self):
+        self.draw_graph(self.graph)
+        self.changed = False
+    
+    def draw_graph(self, G: nx.Graph):
+        w, h = self.width, self.height
+        x, y = 0, 0
+        scale = min(w, h) / 2.3
+        r = 5
+        stroke = 1
+        pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
+
+        self.canvas.create_rectangle(0, 0, w, h, fill='white')
+            
+        for node in G:
+            x0, y0 = pos[node]
+            self.create_circle(x0, y0, r)
+            
+        for edge in G.edges:
+            x0, y0 = pos[edge[0]]
+            x1, y1 = pos[edge[1]]
+            self.create_line(x0, y0, x1, y1, stroke)
+
+    def create_circle(self, x, y, r):
+        x0 = x - r
+        y0 = y - r
+        x1 = x + r
+        y1 = y + r
+        return self.canvas.create_oval(x0, y0, x1, y1, fill='black')
+    
+    def create_line(self, x0, y0, x1, y1, stroke):
+        self.canvas.create_line(x0, y0, x1, y1, width=stroke)
+
+
 def callback0(x):
     print("Hello")
 
@@ -35,6 +106,7 @@ def callback3(x):
     if hyperness > 6: hyperness = 6
     G = nx.hypercube_graph(hyperness)
     update_rect(0, 0)
+    if diagram is not None: diagram.renew(G)
 
 
 class MyPaintWidget(Widget):
@@ -132,3 +204,4 @@ class MyApp(App):
 
 if __name__ == '__main__':
     MyApp().run()
+    diagram = Diagram()
