@@ -325,3 +325,10 @@ Trying to use `Kivy` instead; proved that it can run python from button click.
 
 ### 2023-01-11
 [22:45] Lots and lots of GUI work, for about an hour.
+
+
+### 2023-01-13
+[15:47] Working on the GUI:
+- Adding TK diagram to view separately
+- Trying to make them (TK & kivy) work in separate threads
+
