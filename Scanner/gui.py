@@ -42,7 +42,6 @@ class Diagram:
 
         self.hide()
         print("Created diagram")
-        self.root.mainloop()
     
     def renew(self, G: nx.Graph):
         if not nx.utils.graphs_equal(G, self.graph):
@@ -215,4 +214,5 @@ if __name__ == '__main__':
     runner = Thread(target=lambda: MyApp().run())
     runner.start()
     diagram = Diagram()
+    diagram.root.mainloop()
     # MyApp().run()
