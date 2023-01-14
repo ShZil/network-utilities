@@ -155,7 +155,8 @@ def get_scan_id():
     physical = here.mac
     physical = int(physical.replace('-', ''), 16).to_bytes(6, 'big')
 
-    return f"{host}@{iface}@{gateway}{mask}{physical}"
+    return base64.b64encode(host + b'\x40' + iface + b'\x40' + gateway + mask + physical).decode()
+
 
 
 def main():
