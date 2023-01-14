@@ -159,6 +159,11 @@ def get_scan_id():
 
 
 
+def parse_scan_id():
+    # Reverse the logic from `get_scan_id`
+    pass
+
+
 def main():
     remove_scapy_warnings()
 
