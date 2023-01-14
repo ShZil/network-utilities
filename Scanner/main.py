@@ -133,6 +133,7 @@ def remove_scapy_warnings():
         sleep(0.01)
 
 
+@one_cache
 def get_scan_id():
     """Generates the current scan's identifier, based on `ipconfig()` info.
     The format:
