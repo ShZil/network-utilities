@@ -63,9 +63,9 @@ class Diagram:
         self.root.deiconify()
     
     def resize(self, event):
-        geometry = self.root.geometry()    
-        self.width  = int(geometry[0:geometry.index("x")])
-        self.height = int(geometry[geometry.index("x")+1:geometry.index("+")])
+        geometry = self.root.geometry().replace('+', 'x')
+        # Uses this property of the `map` function: "Stops when the shortest iterable is exhausted."
+        self.width, self.height = map(int, geometry.split('x'), [10, 10])  # Convert to `int` with base 10, but only twice.
         self.update()
 
     def update(self):
