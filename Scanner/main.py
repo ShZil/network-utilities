@@ -140,9 +140,12 @@ def get_scan_id():
     All in Base64, with integer values whenever possible.
     """
     from NetworkStorage import router, here
-    host = here.name
-    iface = ipconfig()["Interface"]
     import base64
+
+    # '@' == (char)64 == '\x40'
+
+    host = here.name.replace('@', '\x02').encode()
+    iface = ipconfig()["Interface"].replace('@', '\x02').encode()
 
     gateway = int(ipaddress.IPv4Address(router.ip)).to_bytes(4, 'big')
 
