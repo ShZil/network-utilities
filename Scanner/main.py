@@ -3,6 +3,7 @@ with ImportDefence():
     import os
     from typing import Callable
     import requests
+    import ipaddress
 
     from util import *
     from ip_handler import *
@@ -142,6 +143,7 @@ def get_scan_id():
     host = here.name
     iface = ipconfig()["Interface"]
     gateway = router.ip
+    import base64
     mask = ipconfig()["Subnet Mask"]
     physical = here.mac
 
