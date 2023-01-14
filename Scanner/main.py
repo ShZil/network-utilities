@@ -203,9 +203,9 @@ def main():
     actions = [
         add_to_lookup,
         *simple_scans,
+        print_scanID,
         get_public_ip,
         lookup.print,
-        print_scanID,
         # user_confirmation,
         # do_TCP,
         user_confirmation,
