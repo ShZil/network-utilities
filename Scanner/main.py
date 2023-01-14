@@ -142,10 +142,15 @@ def get_scan_id():
     from NetworkStorage import router, here
     host = here.name
     iface = ipconfig()["Interface"]
-    gateway = router.ip
     import base64
+
+    gateway = int(ipaddress.IPv4Address(router.ip)).to_bytes(4, 'big')
+
     mask = ipconfig()["Subnet Mask"]
+    mask = sum(bin(int(x)).count('1') for x in mask.split('.')).to_bytes(1, 'big')
+
     physical = here.mac
+    physical = int(physical.replace('-', ''), 16).to_bytes(6, 'big')
 
     return f"{host}@{iface}@{gateway}{mask}{physical}"
 
