@@ -132,6 +132,22 @@ def remove_scapy_warnings():
         sleep(0.01)
 
 
+def get_scan_id():
+    """Generates the current scan's identifier, based on `ipconfig()` info.
+    The format:
+    [Host Name]@[Interface]@[Gateway IPv4][Subnet Mask][Physical Address]
+    All in Base64, with integer values whenever possible.
+    """
+    from NetworkStorage import router, here
+    host = here.name
+    iface = ipconfig()["Interface"]
+    gateway = router.ip
+    mask = ipconfig()["Subnet Mask"]
+    physical = here.mac
+
+    return f"{host}@{iface}@{gateway}{mask}{physical}"
+
+
 def main():
     remove_scapy_warnings()
 
@@ -171,12 +187,14 @@ def main():
 
     def user_confirmation(): input("Commencing next scan. Press [Enter] to continue . . .")
     def continuous_ICMP(): scan_ICMP_continuous(lookup['ip'], ipconfig()["All Possible Addresses"], compactness=2)
+    def print_scanID(): print("ScanID:", get_scan_id())
 
     actions = [
         add_to_lookup,
         *simple_scans,
         get_public_ip,
         lookup.print,
+        print_scanID,
         # user_confirmation,
         # do_TCP,
         user_confirmation,
