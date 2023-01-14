@@ -114,7 +114,10 @@ def get_public_ip():
     ip = requests.get('https://api.ipify.org').text
     ipv6 = requests.get('https://api64.ipify.org').text
     ipv6 = ipv6 if ipv6 != ip else nothing.ipv6
-    outside = LockedNetworkEntity(mac=nothing.mac, ip=ip, ipv6=ipv6, name="Public Address")
+    try:
+        outside = LockedNetworkEntity(mac=nothing.mac, ip=ip, ipv6=ipv6, name="Public Address")
+    except ValueError:  # api64.ipify.org might not return the IPv6, and instead say "gateway timeout"
+        outside = LockedNetworkEntity(mac=nothing.mac, ip=ip, ipv6=nothing.ipv6, name="Public Address")
     NetworkStorage().special_add(outside)
 
 
