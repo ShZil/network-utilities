@@ -192,7 +192,7 @@ class MyApp(App):
         open_diagram = Button(text='⛶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
         open_diagram.bind(on_press=callback0)
 
-        play_button = Button(text='|>', font_size=30, background_color=[0, 0, 0, 0], font_name="Arial", size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0})
+        play_button = Button(text='▶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
         play_button.bind(on_press=callback2)
 
         paint = MyPaintWidget(size_hint=(1, 1), pos_hint={'center_x': .5, 'center_y': .5})

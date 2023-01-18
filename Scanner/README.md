@@ -369,3 +369,5 @@ Instead of blocking `__init__`, block the main thread instead.
 Segoe UI Symbol font for Windows
 
 Correctly displays the `open_diagram` button!
+
+[21:00] Good for `play_button` too (“▶” (U+25B6) -- Black Right-Pointing Triangle)
