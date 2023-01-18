@@ -28,12 +28,11 @@ class Diagram:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Network Diagram")
-
-        self.canvas = tk.Canvas(self.root, bg="white", height=300, width=300)
-        self.canvas.pack(expand=True, fill='both')
-
         self.width = 300
         self.height = 300
+
+        self.canvas = tk.Canvas(self.root, bg="white", height=self.height, width=self.width)
+        self.canvas.pack(expand=True, fill='both')
 
         self.graph = G
 
