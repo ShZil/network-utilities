@@ -177,12 +177,6 @@ class ButtonColumn(GridLayout):
         self.buttons.append((btn, callback))
 
 
-    def do_all(self):
-        print(self.buttons)
-        for button, action in self.buttons:
-            action(None)
-
-
 class MyApp(App):
     def build(self):
         self.title = 'Local Network Scanner'
