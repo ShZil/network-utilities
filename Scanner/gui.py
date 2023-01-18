@@ -17,6 +17,8 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Ellipse, Rectangle, Line
 from kivy.core.text import LabelBase
+from kivy.utils import escape_markup
+
 from util import nameof
 
 
@@ -187,6 +189,11 @@ class ButtonColumn(GridLayout):
             print(nameof(action))
 
 
+class BlackButton(Button):
+    def __init__(self, text, **kwargs):
+        super().__init__(text='[color=000000]' + escape_markup(text) + '[/color]', markup=True, **kwargs)
+
+
 class MyApp(App):
     def build(self):
         self.title = 'Local Network Scanner'
@@ -195,13 +202,13 @@ class MyApp(App):
         # Create the middle diagram
         layout = RelativeLayout()
 
-        change_page = Button(text='[color=000000]Save.\nScan.\nKnow.[/color]', font_size=20, background_color=[0, 0, 0, 0], font_name="Arial", size_hint=(.15, .15), pos_hint={'x': 0, 'top': 1}, markup=True)
+        change_page = BlackButton(text='Save.\nScan.\nKnow.', font_size=20, background_color=[0, 0, 0, 0], font_name="Arial", size_hint=(.15, .15), pos_hint={'x': 0, 'top': 1})
         change_page.bind(on_press=callback1)
 
-        open_diagram = Button(text='[color=000000]⛶[/color]', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols", markup=True)
+        open_diagram = BlackButton(text='⛶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
         open_diagram.bind(on_press=callback0)
 
-        play_button = Button(text='[color=000000]▶[/color]', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols", markup=True)
+        play_button = BlackButton(text='▶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
         play_button.bind(on_press=callback2)
 
         paint = MyPaintWidget(size_hint=(1, 1), pos_hint={'center_x': .5, 'center_y': .5})
