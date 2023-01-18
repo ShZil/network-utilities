@@ -1,3 +1,4 @@
+import sys
 from import_handler import ImportDefence
 with ImportDefence():
     import kivy
@@ -44,6 +45,7 @@ class Diagram:
         self.hide()
         self.root.protocol("WM_DELETE_WINDOW", self.try_close)
     
+
 
     def try_close(self):
         if is_kivy_running:
@@ -224,7 +226,10 @@ def start_kivy():
     is_kivy_running = True
     MyApp().run()
     is_kivy_running = False
+    
     diagram.show()
+    diagram.root.quit()
+    sys.exit()
 
 
 def start_tk():

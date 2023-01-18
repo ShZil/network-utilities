@@ -371,3 +371,18 @@ Segoe UI Symbol font for Windows
 Correctly displays the `open_diagram` button!
 
 [21:00] Good for `play_button` too (“▶” (U+25B6) -- Black Right-Pointing Triangle)
+
+[21:12] Solved the exiting problem!
+No longer is the Diagram TK window opened every time you quit the program, only to manually close it,
+now it closes automatically too!
+(Note: it does reappear for a split second)
+
+Relevant code:
+```
+diagram.show()
+diagram.root.quit()
+sys.exit()
+```
+
+
+Wow, am I lucky today. That's quite some fine progress.
