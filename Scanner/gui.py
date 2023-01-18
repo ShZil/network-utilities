@@ -17,6 +17,7 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Ellipse, Rectangle, Line
 from kivy.core.text import LabelBase
+from util import nameof
 
 
 __author__ = 'Shaked Dan Zilberman'
@@ -178,6 +179,12 @@ class ButtonColumn(GridLayout):
             btn.bind(on_press=callback)
         super().add_widget(btn)
         self.buttons.append((btn, callback))
+    
+
+    def log_all(self):
+        print(self.buttons)
+        for button, action in self.buttons:
+            print(nameof(action))
 
 
 class MyApp(App):
@@ -210,7 +217,7 @@ class MyApp(App):
 
         # Create the right column
         right_menu = ButtonColumn(width=300)
-        for i in range(7):
+        for i in range(10):
             right_menu.add(f"scan {i}", callback1 if i < 4 else callback2)
         right_menu.add(f'woo', callback3)
 
