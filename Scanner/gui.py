@@ -12,8 +12,10 @@ from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Ellipse, Rectangle, Line
+from kivy.core.text import LabelBase
 
 
 __author__ = 'Shaked Dan Zilberman'
@@ -179,17 +181,30 @@ class ButtonColumn(GridLayout):
 class MyApp(App):
     def build(self):
         self.title = 'Local Network Scanner'
-        everything = BoxLayout(orientation='vertical')
-
-        # Create the left column
-        left_menu = ButtonColumn(width=150)
-        left_menu.add('open diagram', callback0)
-        for i in range(5):
-            left_menu.add('btn' + str(i))
+        everything = BoxLayout(orientation='horizontal')
 
         # Create the middle diagram
-        paint = MyPaintWidget()
+        layout = RelativeLayout()
+
+        change_page = Button(text='Save.\nScan.\nKnow.', font_size=20, background_color=[0, 0, 0, 0], font_name="Arial", size_hint=(.2, .3), pos_hint={'x': 0, 'top': 1})
+        change_page.bind(on_press=callback1)
+
+        open_diagram = Button(text='⛶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
+        open_diagram.bind(on_press=callback0)
+
+        play_button = Button(text='|>', font_size=30, background_color=[0, 0, 0, 0], font_name="Arial", size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0})
+        play_button.bind(on_press=callback2)
+
+        paint = MyPaintWidget(size_hint=(1, 1), pos_hint={'center_x': .5, 'center_y': .5})
         paint.bind(pos=update_rect, size=update_rect)
+        
+        title = Label(text="Local Network Scanner", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1})
+
+        layout.add_widget(paint)
+        layout.add_widget(change_page)
+        layout.add_widget(open_diagram)
+        layout.add_widget(play_button)
+        layout.add_widget(title)
 
         # Create the right column
         right_menu = ButtonColumn(width=300)
@@ -198,14 +213,8 @@ class MyApp(App):
         right_menu.add(f'woo', callback3)
 
         # Add all widgets to `everything`
-        title = Label(text="Local Network Scanner", size=(0, 70), size_hint=(1, None), font_size=30, underline=True)
-        everything.add_widget(title)
-
-        layout = GridLayout(cols=3)
-        layout.add_widget(left_menu)
-        layout.add_widget(paint)
-        layout.add_widget(right_menu)
         everything.add_widget(layout)
+        everything.add_widget(right_menu)
 
         return everything
 
@@ -217,13 +226,18 @@ def start_kivy():
     is_kivy_running = False
     diagram.show()
 
+
 def start_tk():
     global diagram
     diagram = Diagram()
     diagram.root.mainloop()
 
 
+def add_font():
+    LabelBase.register(name='Symbols', fn_regular='Segoe UI Symbol.ttf')
+
 if __name__ == '__main__':
+    add_font()
     runner = Thread(target=start_kivy)
     runner.start()
     start_tk()

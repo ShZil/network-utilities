@@ -359,3 +359,13 @@ diagram.root.mainloop()
 ```
 As easy as that.
 Instead of blocking `__init__`, block the main thread instead.
+
+
+### 2023-01-18
+[19:46] Asked Omer Shaked for a help to intuitivise the GUI desgin; implementing it now.
+
+[20:56] After much fighting and googling with fonts and Unicode, I've finally found a character-font pair that works!
+“⛶” (U+26F6) -- Square Four Corners
+Segoe UI Symbol font for Windows
+
+Correctly displays the `open_diagram` button!
