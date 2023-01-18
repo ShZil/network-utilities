@@ -374,6 +374,23 @@ def render_opacity(percent: int | float):
     return characters[level]
 
 
+def nameof(action):
+    """Returns a short description of a function by the following logic:
+    If a docstring exists, and its length is less than 100 characters, return the docstring.
+    Otherwise, return the function's name.
+
+    Args:
+        action (function): the function to be named. Primarily, functions intended to be used as actions.
+
+    Returns:
+        str: the name chosen for the function.
+    """
+    if action.__doc__ and len(action.__doc__) < 100:
+        return action.__doc__ 
+    else:
+        return action.__name__
+
+
 class _Printing:
     """This context manager delays and stores all outputs via `print`s.
     It is not meant to be used directly, but other classes can inherit it.

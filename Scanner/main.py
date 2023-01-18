@@ -88,23 +88,6 @@ def standardise_simple_scans(scans: list[tuple[Callable, int]]) -> list[Callable
     return lambdas
 
 
-def nameof(action):
-    """Returns a short description of a function by the following logic:
-    If a docstring exists, and its length is less than 100 characters, return the docstring.
-    Otherwise, return the function's name.
-
-    Args:
-        action (function): the function to be named. Primarily, functions intended to be used as actions.
-
-    Returns:
-        str: the name chosen for the function.
-    """
-    if action.__doc__ and len(action.__doc__) < 100:
-        return action.__doc__ 
-    else:
-        return action.__name__
-
-
 def title(*s, sep=''):
     os.system(f'title {sep.join(s)}')
 
@@ -157,7 +140,6 @@ def get_scan_id():
     physical = int(physical.replace('-', ''), 16).to_bytes(6, 'big')
 
     return base64.b64encode(host + b'\x40' + iface + b'\x40' + gateway + mask + physical).decode()
-
 
 
 def parse_scan_id():
