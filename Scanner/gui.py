@@ -188,19 +188,19 @@ class MyApp(App):
         # Create the middle diagram
         layout = RelativeLayout()
 
-        change_page = Button(text='Save.\nScan.\nKnow.', font_size=20, background_color=[0, 0, 0, 0], font_name="Arial", size_hint=(.2, .3), pos_hint={'x': 0, 'top': 1})
+        change_page = Button(text='[color=000000]Save.\nScan.\nKnow.[/color]', font_size=20, background_color=[0, 0, 0, 0], font_name="Arial", size_hint=(.15, .15), pos_hint={'x': 0, 'top': 1}, markup=True)
         change_page.bind(on_press=callback1)
 
-        open_diagram = Button(text='⛶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
+        open_diagram = Button(text='[color=000000]⛶[/color]', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols", markup=True)
         open_diagram.bind(on_press=callback0)
 
-        play_button = Button(text='▶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
+        play_button = Button(text='[color=000000]▶[/color]', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols", markup=True)
         play_button.bind(on_press=callback2)
 
         paint = MyPaintWidget(size_hint=(1, 1), pos_hint={'center_x': .5, 'center_y': .5})
         paint.bind(pos=update_rect, size=update_rect)
         
-        title = Label(text="Local Network Scanner", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1})
+        title = Label(text="[color=000000]Local Network Scanner[/color]", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
 
         layout.add_widget(paint)
         layout.add_widget(change_page)
