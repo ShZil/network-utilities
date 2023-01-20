@@ -189,24 +189,32 @@ class ButtonColumn(GridLayout):
             print(nameof(action))
 
 
+class Hover:
+    items = []
+
+    @staticmethod
+    def add(instance):
+        try:
+            instance.collide_point(0, 0)
+        except AttributeError:
+            raise AttributeError("The instance passed to `Hover.add` doesn't support `.collide_point(int,int)`.")
+        if len(Hover.items) == 0:
+            from kivy.core.window import Window
+            Window.bind(mouse_pos=Hover.update)
+        Hover.items.append(instance)
+    
+
+    def update(window, pos):
+        if any([item.collide_point(*pos) for item in Hover.items]):
+            window.set_system_cursor("hand")
+        else:
+            window.set_system_cursor("arrow")
+
+
 class BlackButton(Button):
     def __init__(self, text, **kwargs):
-        from kivy.core.window import Window
         super().__init__(text='[color=000000]' + escape_markup(text) + '[/color]', markup=True, **kwargs)
-        Window.bind(mouse_pos=self.on_mouseover)
-
-    def on_mouseover(self, window, pos):
-        from kivy.core.window import Window
-        if self.collide_point(*pos):
-            Window.set_system_cursor("hand")
-        else:
-            Window.set_system_cursor("arrow")
-
-# This implementation of a hoverable button (with cursor changes) technically works,
-# but because of order of creation and collision between pieces of code, this only works on one of the buttons.
-# Additionally, it generates a lot of `set_system_cursor` calls, which might be slow.
-# FIX: Have one entity that does `set_system_cursor` and handles a list of Widgets (supporting `collide_point`).
-
+        Hover.add(self)
 
 
 class MyApp(App):

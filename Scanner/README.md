@@ -393,3 +393,7 @@ Wow, am I lucky today. That's quite some fine progress.
 - ASCII art of the GUI (Scans screen).
 - Split `change_page` button to `pages` BoxLayout that contains 3 buttons.
 - Add the `operations` part (#2 and #3): `configure` and `info`.
+
+
+### 2023-01-20
+[13:15] Fixed hovering bug, according to suggestion in my comment, and code-design I made in class yesterday.
