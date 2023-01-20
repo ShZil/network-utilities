@@ -226,22 +226,26 @@ class MyApp(App):
         layout = RelativeLayout()
 
 
-        # Page frippery (top left corner)
+        # Page frippery (top left corner) -- Objects #4, #5, #6
         pages = BoxLayout(orientation='vertical', size_hint=(.15, .15), pos_hint={'x': 0, 'top': 1})
         for label, action in zip(['Save.', 'Scan.', 'Know.'], [lambda _: print("Save"), lambda _: print("Scan"), lambda _: print("Know")]):
             change_page = BlackButton(text=label, font_size=20, background_color=[0, 0, 0, 0], font_name="Arial")
             change_page.bind(on_press=action)
             pages.add_widget(change_page)
 
-        open_diagram = BlackButton(text='⛶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
-        open_diagram.bind(on_press=callback0)
-
+        # Object #15
         play_button = BlackButton(text='▶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
         play_button.bind(on_press=callback2)
 
+        # Object #16
+        open_diagram = BlackButton(text='⛶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
+        open_diagram.bind(on_press=callback0)
+
+        # Object #9
         paint = MyPaintWidget(size_hint=(1, 1), pos_hint={'center_x': .5, 'center_y': .5})
         paint.bind(pos=update_rect, size=update_rect)
         
+        # Object 1
         title = Label(text="[color=000000]Local Network Scanner[/color]", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
 
         layout.add_widget(paint)
@@ -252,18 +256,20 @@ class MyApp(App):
 
 
 
-        # 2 operations on each scan
-        operations = BoxLayout(orientation='horizontal')
-        configure = Button(text='⚙', font_size=30, background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Perhaps use this font instead for this button: https://www.fontspace.com/bainsley-font-f59538
-        info = Button(text='ℹ', font_size=30, background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Consider a '?' instead
-        operations.add_widget(configure)
-        operations.add_widget(info)
-        
-
         # Create the right column
         right_menu = ButtonColumn(width=300)
 
+        # 2 operations on each scan
+        operations = BoxLayout(orientation='horizontal')
+        # Object #2
+        configure = Button(text='⚙', font_size=30, background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Perhaps use this font instead for this button: https://www.fontspace.com/bainsley-font-f59538
+        # Object #3
+        info = Button(text='ℹ', font_size=30, background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Consider a '?' instead
+        operations.add_widget(configure)
+        operations.add_widget(info)
         right_menu.add_widget(operations)
+
+        # Objects #7 - #14
         for i in range(10):
             right_menu.add(f"scan {i}", callback1 if i < 4 else callback2)
         right_menu.add(f'woo!', callback3)
@@ -317,4 +323,3 @@ if __name__ == '__main__':
 # │                          M                 ║                           │
 # │    [#15 Play]            [#16 Fullscreen]  ║                           │
 # └────────────────────────────────────────────╨───────────────────────────┘
-# TODO: Copy the numbers here to the code, to increase readability\\
