@@ -390,5 +390,6 @@ Wow, am I lucky today. That's quite some fine progress.
 
 ### 2023-01-19
 [12:46] Added some stuff to the GUI, in Cyber class, as instructed by the TODO in the document I made yesterday.
-- ASCII art of the GUI (Scans screen)
--
+- ASCII art of the GUI (Scans screen).
+- Split `change_page` button to `pages` BoxLayout that contains 3 buttons.
+- Add the `operations` part (#2 and #3): `configure` and `info`.

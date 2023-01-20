@@ -202,8 +202,13 @@ class MyApp(App):
         # Create the middle diagram
         layout = RelativeLayout()
 
-        change_page = BlackButton(text='Save.\nScan.\nKnow.', font_size=20, background_color=[0, 0, 0, 0], font_name="Arial", size_hint=(.15, .15), pos_hint={'x': 0, 'top': 1})
-        change_page.bind(on_press=callback1)
+
+        # Page frippery (top left corner)
+        pages = BoxLayout(orientation='vertical', size_hint=(.15, .15), pos_hint={'x': 0, 'top': 1})
+        for label, action in zip(['Save.', 'Scan.', 'Know.'], [lambda _: print("Save"), lambda _: print("Scan"), lambda _: print("Know")]):
+            change_page = BlackButton(text=label, font_size=20, background_color=[0, 0, 0, 0], font_name="Arial")
+            change_page.bind(on_press=action)
+            pages.add_widget(change_page)
 
         open_diagram = BlackButton(text='⛶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
         open_diagram.bind(on_press=callback0)
@@ -217,13 +222,25 @@ class MyApp(App):
         title = Label(text="[color=000000]Local Network Scanner[/color]", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
 
         layout.add_widget(paint)
-        layout.add_widget(change_page)
+        layout.add_widget(pages)
         layout.add_widget(open_diagram)
         layout.add_widget(play_button)
         layout.add_widget(title)
 
+
+
+        # 2 operations on each scan
+        operations = BoxLayout(orientation='horizontal')
+        configure = Button(text='⚙', font_size=30, background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Perhaps use this font instead for this button: https://www.fontspace.com/bainsley-font-f59538
+        info = Button(text='ℹ', font_size=30, background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Consider a '?' instead
+        operations.add_widget(configure)
+        operations.add_widget(info)
+        
+
         # Create the right column
         right_menu = ButtonColumn(width=300)
+
+        right_menu.add_widget(operations)
         for i in range(10):
             right_menu.add(f"scan {i}", callback1 if i < 4 else callback2)
         right_menu.add(f'woo!', callback3)
@@ -260,3 +277,21 @@ if __name__ == '__main__':
     runner = Thread(target=start_kivy)
     runner.start()
     start_tk()
+
+
+# The Window (Unicode Box Art):
+# ┌────────────────────────────────────────────╥───────────────────────────┐
+# │                  [#1 Title]                ║   [#2 Conf]   [#3 Info]   │
+# │  #4 Save.                                  ╟───────────────────────────┤
+# │  #5 Scan.                                  ║        [#7 ScanA]         │
+# │  #6 Know.                                  ║        [#8 ScanB]         │
+# │           #9 D                             ║        [#10 ScanC]        │
+# │                I                           ║        [#11 ScanD]        │
+# │                  A                         ║        [#12 ScanE]        │
+# │                    G                       ║        [#13 ScanF]        │
+# │                      R                     ║        [#14 ScanG]        │
+# │                        A                   ║                           │
+# │                          M                 ║                           │
+# │    [#15 Play]            [#16 Fullscreen]  ║                           │
+# └────────────────────────────────────────────╨───────────────────────────┘
+# TODO: Copy the numbers here to the code, to increase readability\\
