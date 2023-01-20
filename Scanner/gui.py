@@ -191,7 +191,20 @@ class ButtonColumn(GridLayout):
 
 class BlackButton(Button):
     def __init__(self, text, **kwargs):
+        from kivy.core.window import Window
         super().__init__(text='[color=000000]' + escape_markup(text) + '[/color]', markup=True, **kwargs)
+        Window.bind(mouse_pos=self.on_mouseover)
+
+    def on_mouseover(self, window, pos):
+        from kivy.core.window import Window
+        if self.collide_point(*pos):
+            Window.set_system_cursor("hand")
+        else:
+            Window.set_system_cursor("arrow")
+
+# This implementation of a hoverable button (with cursor changes) technically works,
+# but because of order of creation and collision between pieces of code, this only works on one of the buttons.
+
 
 
 class MyApp(App):
