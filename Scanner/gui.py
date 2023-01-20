@@ -204,6 +204,8 @@ class BlackButton(Button):
 
 # This implementation of a hoverable button (with cursor changes) technically works,
 # but because of order of creation and collision between pieces of code, this only works on one of the buttons.
+# Additionally, it generates a lot of `set_system_cursor` calls, which might be slow.
+# FIX: Have one entity that does `set_system_cursor` and handles a list of Widgets (supporting `collide_point`).
 
 
 
