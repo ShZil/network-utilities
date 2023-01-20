@@ -226,7 +226,7 @@ class MyApp(App):
         right_menu = ButtonColumn(width=300)
         for i in range(10):
             right_menu.add(f"scan {i}", callback1 if i < 4 else callback2)
-        right_menu.add(f'woo', callback3)
+        right_menu.add(f'woo!', callback3)
 
         # Add all widgets to `everything`
         everything.add_widget(layout)
