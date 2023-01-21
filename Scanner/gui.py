@@ -332,6 +332,7 @@ class MyApp(App):
         right_menu.add(f'woo!', callback3)
 
         # Add all widgets to `everything`
+        AttachedBubble(open_diagram, "Open Diagram")
         everything.add_widget(layout)
         everything.add_widget(right_menu)
 
