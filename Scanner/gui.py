@@ -262,7 +262,8 @@ class AttachedBubble(Bubble):
 
     def show(self):
         self.opacity = 1
-        self.pos = self.widget.pos
+        self.pos = [self.widget.pos[0], 100]
+        print(self.pos)
     
 
     def hide(self):
