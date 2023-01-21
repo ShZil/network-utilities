@@ -397,3 +397,8 @@ Wow, am I lucky today. That's quite some fine progress.
 
 ### 2023-01-20
 [13:15] Fixed hovering bug, according to suggestion in my comment, and code-design I made in class yesterday.
+
+
+### 2023-01-21
+[17:47] Working on a new class, `AttachedBubble` that extends kivy's `Bubble`, and acts like the "title" property in HTML,
+according to the task I wrote yesterday in the temporary file.
