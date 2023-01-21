@@ -321,7 +321,9 @@ class MyApp(App):
         # Object #3
         info = Button(text='ℹ', font_size=30, background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Consider a '?' instead
         operations.add_widget(configure)
+        Hover.add(configure)
         operations.add_widget(info)
+        Hover.add(info)
         right_menu.add_widget(operations)
 
         # Objects #7 - #14
