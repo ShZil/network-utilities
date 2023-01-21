@@ -180,6 +180,7 @@ class ButtonColumn(GridLayout):
         if callback is not None:
             btn.bind(on_press=callback)
         super().add_widget(btn)
+        Hover.add(btn)
         self.buttons.append((btn, callback))
     
 
