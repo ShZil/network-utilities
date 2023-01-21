@@ -267,6 +267,7 @@ class AttachedBubble(Bubble):
 
     def show(self):
         self.opacity = 1
+        # Remove this to have the Bubble always display in the bottom left corner.
         if self.position in AttachedBubble.lefts:
             self.pos = [self.widget.pos[0] + 300, self.widget.pos[1]]
         elif self.position in AttachedBubble.tops:
