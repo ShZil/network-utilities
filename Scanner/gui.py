@@ -194,6 +194,7 @@ class ButtonColumn(GridLayout):
 
 class Hover:
     items = []
+    bubbles = []
 
     @staticmethod
     def add(instance):
@@ -207,11 +208,26 @@ class Hover:
         Hover.items.append(instance)
     
 
+    @staticmethod
+    def add_bubble(bubble):
+        try:
+            bubble.widget.collide_point(0, 0)
+        except AttributeError:
+            raise AttributeError("The bubble passed to `Hover.add_bubble` doesn't support `.widget.collide_point(int,int)`.")
+        Hover.bubbles.append(bubble)
+    
+
     def update(window, pos):
         if any([item.collide_point(*pos) for item in Hover.items]):
             window.set_system_cursor("hand")
         else:
             window.set_system_cursor("arrow")
+        for bubble in Hover.bubbles:
+            if bubble.widget.collide_point(*pos):
+                bubble.show()
+            else:
+                bubble.hide()
+
 
 class AttachedBubble(Bubble):
     positions = ['left_top', 'left_mid', 'left_bottom', 'top_left', 'top_mid', 'top_right', 'right_top', 'right_mid', 'right_bottom', 'bottom_left', 'bottom_mid', 'bottom_right']
@@ -238,6 +254,7 @@ class AttachedBubble(Bubble):
         self.layout.add_widget(self)
         self.widget.add_widget(self.layout)
 
+        Hover.add_bubble(self)
     
 
     def show(self):
