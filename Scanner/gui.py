@@ -236,12 +236,17 @@ class Hover:
 
 
 class AttachedBubble(Bubble):
-    positions = ['left_top', 'left_mid', 'left_bottom', 'top_left', 'top_mid', 'top_right', 'right_top', 'right_mid', 'right_bottom', 'bottom_left', 'bottom_mid', 'bottom_right']
+    lefts = ['left_top', 'left_mid', 'left_bottom']
+    tops = ['top_left', 'top_mid', 'top_right']
+    rights = ['right_top', 'right_mid', 'right_bottom']
+    bottoms = ['bottom_left', 'bottom_mid', 'bottom_right']
+    positions = [*lefts, *tops, *rights, *bottoms]
 
     def __init__(self, widget, text, pos='bottom_mid', **kwargs):
         if pos not in AttachedBubble.positions:
             raise ValueError("`AttachedBubble.pos` has to be one of: " + ', '.join(AttachedBubble.positions) + ".")
         self.widget = widget
+        self.position = pos
         super().__init__(**kwargs, limit_to=widget, arrow_pos=pos, pos_hint={'center_x': .5, 'center_y': -1})
 
         self.label = Label(text=text, font_size=20, pos_hint={'x': 0, 'y': 0})
@@ -262,7 +267,16 @@ class AttachedBubble(Bubble):
 
     def show(self):
         self.opacity = 1
-        self.pos = [self.widget.pos[0], 100]
+        if self.position in AttachedBubble.lefts:
+            self.pos = [self.widget.pos[0] + 300, self.widget.pos[1]]
+        elif self.position in AttachedBubble.tops:
+            self.pos = [self.widget.pos[0], self.widget.pos[1] - 300]
+        elif self.position in AttachedBubble.rights:
+            self.pos = [self.widget.pos[0] - 300, self.widget.pos[1]]
+        elif self.position in AttachedBubble.bottoms:
+            self.pos = [self.widget.pos[0], self.widget.pos[1] + 300]
+        else:
+            self.pos = self.widget.pos
         print(self.pos)
     
 
@@ -337,6 +351,8 @@ class MyApp(App):
 
         # Add all widgets to `everything`
         AttachedBubble(open_diagram, "Open Diagram", 'bottom_right')
+        AttachedBubble(configure, "Configure", 'top_mid')
+        AttachedBubble(info, "Information", 'top_mid')
         everything.add_widget(layout)
         everything.add_widget(right_menu)
 
