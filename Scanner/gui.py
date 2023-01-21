@@ -247,7 +247,7 @@ class AttachedBubble(Bubble):
             raise ValueError("`AttachedBubble.pos` has to be one of: " + ', '.join(AttachedBubble.positions) + ".")
         self.widget = widget
         self.position = pos
-        super().__init__(**kwargs, limit_to=widget, arrow_pos=pos, pos_hint={'center_x': .5, 'center_y': -1})
+        super().__init__(**kwargs, arrow_pos=pos, pos_hint={'center_x': .5, 'center_y': -1})
 
         self.label = Label(text=text, font_size=20, pos_hint={'x': 0, 'y': 0})
         self.label.size = self.label.texture_size
@@ -269,13 +269,13 @@ class AttachedBubble(Bubble):
         self.opacity = 1
         # Remove this to have the Bubble always display in the bottom left corner.
         if self.position in AttachedBubble.lefts:
-            self.pos = [self.widget.pos[0] + 300, self.widget.pos[1]]
+            self.pos = [self.widget.pos[0] + 10, self.widget.pos[1]]
         elif self.position in AttachedBubble.tops:
-            self.pos = [self.widget.pos[0], self.widget.pos[1] - 300]
+            self.pos = [self.widget.pos[0], self.widget.pos[1] - 10]
         elif self.position in AttachedBubble.rights:
-            self.pos = [self.widget.pos[0] - 300, self.widget.pos[1]]
+            self.pos = [self.widget.pos[0] - 10, self.widget.pos[1]]
         elif self.position in AttachedBubble.bottoms:
-            self.pos = [self.widget.pos[0], self.widget.pos[1] + 300]
+            self.pos = [self.widget.pos[0] - self.width / 2, self.widget.pos[1] + 40]
         else:
             self.pos = self.widget.pos
         print(self.pos)
