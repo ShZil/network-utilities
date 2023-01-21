@@ -14,7 +14,9 @@ from kivy.uix.widget import Widget
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.bubble import Bubble
 from kivy.graphics import Color, Ellipse, Rectangle, Line
 from kivy.core.text import LabelBase
 from kivy.utils import escape_markup
@@ -210,6 +212,41 @@ class Hover:
             window.set_system_cursor("hand")
         else:
             window.set_system_cursor("arrow")
+
+class AttachedBubble(Bubble):
+    positions = ['left_top', 'left_mid', 'left_bottom', 'top_left', 'top_mid', 'top_right', 'right_top', 'right_mid', 'right_bottom', 'bottom_left', 'bottom_mid', 'bottom_right']
+
+    def __init__(self, widget, text, pos='bottom_mid', **kwargs):
+        if pos not in AttachedBubble.positions:
+            raise ValueError("`AttachedBubble.pos` has to be one of: " + ', '.join(AttachedBubble.positions) + ".")
+        self.widget = widget
+        super().__init__(**kwargs, limit_to=widget, arrow_pos=pos)
+
+        self.layout = FloatLayout()
+
+        self.label = Label(text=text, font_size=20, pos_hint={'x':0, 'y':0})
+        self.label.size = self.label.texture_size
+
+
+        self.opacity = 0
+        self.height = 50
+        self.width = 15 * len(text)
+
+        # <widget>  <layout>  <bubble self>  <label> Text </label>  </bubble>  </layout>  </widget>
+
+        self.add_widget(self.label)
+        self.layout.add_widget(self)
+        self.widget.add_widget(self.layout)
+
+    
+
+    def show(self):
+        self.opacity = 1
+        self.pos = self.widget.pos
+    
+
+    def hide(self):
+        self.opacity = 0
 
 
 class BlackButton(Button):
