@@ -218,13 +218,19 @@ class Hover:
     
 
     def update(window, pos):
+        import os
+        os.system('cls')
+        for item in Hover.items: 
+            print([*item.pos, item.width, item.height], "<------" if item.collide_point(*pos) else "")
         if any([item.collide_point(*pos) for item in Hover.items]):
             window.set_system_cursor("hand")
         else:
             window.set_system_cursor("arrow")
+        print()
         for bubble in Hover.bubbles:
             if bubble.widget.collide_point(*pos):
                 bubble.show()
+                print([*bubble.widget.pos, bubble.widget.width, bubble.widget.height])
             else:
                 bubble.hide()
 
