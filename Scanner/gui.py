@@ -242,11 +242,9 @@ class AttachedBubble(Bubble):
         if pos not in AttachedBubble.positions:
             raise ValueError("`AttachedBubble.pos` has to be one of: " + ', '.join(AttachedBubble.positions) + ".")
         self.widget = widget
-        super().__init__(**kwargs, limit_to=widget, arrow_pos=pos)
+        super().__init__(**kwargs, limit_to=widget, arrow_pos=pos, pos_hint={'center_x': .5, 'center_y': -1})
 
-        self.layout = FloatLayout()
-
-        self.label = Label(text=text, font_size=20, pos_hint={'x':0, 'y':0})
+        self.label = Label(text=text, font_size=20, pos_hint={'x': 0, 'y': 0})
         self.label.size = self.label.texture_size
 
 
@@ -254,11 +252,10 @@ class AttachedBubble(Bubble):
         self.height = 50
         self.width = 15 * len(text)
 
-        # <widget>  <layout>  <bubble self>  <label> Text </label>  </bubble>  </layout>  </widget>
+        # <widget>  <bubble self>  <label> Text </label>  </bubble>  </widget>
 
         self.add_widget(self.label)
-        self.layout.add_widget(self)
-        self.widget.add_widget(self.layout)
+        self.widget.add_widget(self)
 
         Hover.add_bubble(self)
     
@@ -338,7 +335,7 @@ class MyApp(App):
         right_menu.add(f'woo!', callback3)
 
         # Add all widgets to `everything`
-        AttachedBubble(open_diagram, "Open Diagram")
+        AttachedBubble(open_diagram, "Open Diagram", 'bottom_right')
         everything.add_widget(layout)
         everything.add_widget(right_menu)
 
