@@ -283,8 +283,8 @@ class MyApp(App):
         play_button = BlackButton(text='▶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
         play_button.bind(on_press=callback2)
 
-        # Object #16
-        open_diagram = BlackButton(text='⛶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
+        # Object #16    # Previous icon: ⛶
+        open_diagram = BlackButton(text='🔍', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
         open_diagram.bind(on_press=callback0)
 
         # Object #9

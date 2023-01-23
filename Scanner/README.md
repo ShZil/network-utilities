@@ -409,5 +409,6 @@ according to the task I wrote yesterday in the temporary file.
 
 [13:19] Multiple changes during class:
 - Changed background colour of the `ButtonColumn`.
+- change `open_diagram`'s logo from "Fullscreen" to "Magnifying Glass".
 - add `HoverReplace` instead of `AttachedBubble`.
 - generalise `Hover`'s code to any behaviour. Implement on HoverReplace.
