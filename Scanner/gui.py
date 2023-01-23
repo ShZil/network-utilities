@@ -235,54 +235,13 @@ class Hover:
                 bubble.hide()
 
 
-class AttachedBubble(Bubble):
-    lefts = ['left_top', 'left_mid', 'left_bottom']
-    tops = ['top_left', 'top_mid', 'top_right']
-    rights = ['right_top', 'right_mid', 'right_bottom']
-    bottoms = ['bottom_left', 'bottom_mid', 'bottom_right']
-    positions = [*lefts, *tops, *rights, *bottoms]
-
-    def __init__(self, widget, text, pos='bottom_mid', **kwargs):
-        if pos not in AttachedBubble.positions:
-            raise ValueError("`AttachedBubble.pos` has to be one of: " + ', '.join(AttachedBubble.positions) + ".")
         self.widget = widget
-        self.position = pos
-        super().__init__(**kwargs, arrow_pos=pos, pos_hint={'center_x': .5, 'center_y': -1})
-
-        self.label = Label(text=text, font_size=20, pos_hint={'x': 0, 'y': 0})
-        self.label.size = self.label.texture_size
-
-
-        self.opacity = 0
-        self.height = 50
-        self.width = 15 * len(text)
-
-        # <widget>  <bubble self>  <label> Text </label>  </bubble>  </widget>
-
-        self.add_widget(self.label)
-        self.widget.add_widget(self)
-
-        Hover.add_bubble(self)
     
 
     def show(self):
-        self.opacity = 1
-        # Remove this to have the Bubble always display in the bottom left corner.
-        if self.position in AttachedBubble.lefts:
-            self.pos = [self.widget.pos[0] + 10, self.widget.pos[1]]
-        elif self.position in AttachedBubble.tops:
-            self.pos = [self.widget.pos[0], self.widget.pos[1] - 10]
-        elif self.position in AttachedBubble.rights:
-            self.pos = [self.widget.pos[0] - 10, self.widget.pos[1]]
-        elif self.position in AttachedBubble.bottoms:
-            self.pos = [self.widget.pos[0] - self.width / 2, self.widget.pos[1] + 40]
-        else:
-            self.pos = self.widget.pos
-        print(self.pos)
     
 
     def hide(self):
-        self.opacity = 0
 
 
 class BlackButton(Button):
@@ -351,9 +310,8 @@ class MyApp(App):
         right_menu.add(f'woo!', callback3)
 
         # Add all widgets to `everything`
-        AttachedBubble(open_diagram, "Open Diagram", 'bottom_right')
-        AttachedBubble(configure, "Configure", 'top_mid')
-        AttachedBubble(info, "Information", 'top_mid')
+        # AttachedBubble(configure, "Configure", 'top_mid')
+        # AttachedBubble(info, "Information", 'top_mid')
         everything.add_widget(layout)
         everything.add_widget(right_menu)
 

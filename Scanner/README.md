@@ -402,3 +402,8 @@ Wow, am I lucky today. That's quite some fine progress.
 ### 2023-01-21
 [17:47] Working on a new class, `AttachedBubble` that extends kivy's `Bubble`, and acts like the "title" property in HTML,
 according to the task I wrote yesterday in the temporary file.
+
+
+### 2023-01-23
+[12:47] Omer Shaked advised me to remove the Attached Bubbles, and possibly change the button text upon hover.
+
