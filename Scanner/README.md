@@ -408,5 +408,6 @@ according to the task I wrote yesterday in the temporary file.
 [12:47] Omer Shaked advised me to remove the Attached Bubbles, and possibly change the button text upon hover.
 
 [13:19] Multiple changes during class:
+- Changed background colour of the `ButtonColumn`.
 - add `HoverReplace` instead of `AttachedBubble`.
 - generalise `Hover`'s code to any behaviour. Implement on HoverReplace.

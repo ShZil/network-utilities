@@ -30,6 +30,7 @@ hyperness = 1
 G = nx.hypercube_graph(1)
 diagram = None
 is_kivy_running = True
+bg_color = (0.023, 0.92, 0.125)
 
 
 class Diagram:
@@ -153,7 +154,7 @@ def update_rect(painter, value):
     pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
     # print(pos.values())
     with painter.canvas:
-        Color(0, 1, 0)
+        Color(*bg_color)
         Rectangle(pos=painter.pos, size=painter.size)
         Color(0, 0, 0)
         
