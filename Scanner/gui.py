@@ -306,7 +306,7 @@ class MyApp(App):
         right_menu = ButtonColumn(width=300)
 
         # 2 operations on each scan
-        operations = BoxLayout(orientation='horizontal')
+        operations = BoxLayout(orientation='horizontal', spacing=-3)
         # Object #2
         configure = Button(text='⚙', font_size=30, background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Perhaps use this font instead for this button: https://www.fontspace.com/bainsley-font-f59538
         # Object #3
