@@ -413,3 +413,6 @@ according to the task I wrote yesterday in the temporary file.
 - change `open_diagram`'s logo from "Fullscreen" to "Magnifying Glass".
 - add `HoverReplace` instead of `AttachedBubble`.
 - generalise `Hover`'s code to any behaviour. Implement on HoverReplace.
+    Potential change: use OOP to make this make sense.
+    Think of additional behaviours (e.g. change bg and font colour), and implement them in a way that allows multiple behaviours.
+

@@ -21,7 +21,7 @@ from kivy.graphics import Color, Ellipse, Rectangle, Line
 from kivy.core.text import LabelBase
 from kivy.utils import escape_markup
 
-from util import nameof
+from util import nameof, one_cache
 
 
 __author__ = 'Shaked Dan Zilberman'
@@ -195,45 +195,49 @@ class ButtonColumn(GridLayout):
 
 class Hover:
     items = []
-    bubbles = []
+    behaviors = []
+
 
     @staticmethod
+    @one_cache
+    def _bind():
+        from kivy.core.window import Window
+        Window.bind(mouse_pos=Hover.update)
+
+    
+    @staticmethod
     def add(instance):
+        Hover._bind()
         try:
             instance.collide_point(0, 0)
         except AttributeError:
             raise AttributeError("The instance passed to `Hover.add` doesn't support `.collide_point(int,int)`.")
-        if len(Hover.items) == 0:
-            from kivy.core.window import Window
-            Window.bind(mouse_pos=Hover.update)
         Hover.items.append(instance)
-    
+
 
     @staticmethod
-    def add_bubble(bubble):
+    def add_behavior(behavior):
+        Hover._bind()
         try:
-            bubble.widget.collide_point(0, 0)
+            behavior.collide_point(0, 0)
         except AttributeError:
-            raise AttributeError("The bubble passed to `Hover.add_bubble` doesn't support `.widget.collide_point(int,int)`.")
-        Hover.bubbles.append(bubble)
+            raise AttributeError("The behavior passed to `Hover.add_behavior` doesn't support `.collide_point(int,int)`.")
+        Hover.behaviors.append(behavior)
+        # A behaviour should support 3 methods: `collide_point(int,int)`, `show()`, and `hide()`.
     
 
     def update(window, pos):
-        import os
-        os.system('cls')
-        for item in Hover.items: 
-            print([*item.pos, item.width, item.height], "<------" if item.collide_point(*pos) else "")
-        if any([item.collide_point(*pos) for item in Hover.items]):
-            window.set_system_cursor("hand")
-        else:
-            window.set_system_cursor("arrow")
-        print()
-        for bubble in Hover.bubbles:
-            if bubble.widget.collide_point(*pos):
-                bubble.show()
-                print([*bubble.widget.pos, bubble.widget.width, bubble.widget.height])
+        for item in Hover.items:
+            if any([item.collide_point(*pos) for item in Hover.items]):
+                window.set_system_cursor("hand")
             else:
-                bubble.hide()
+                window.set_system_cursor("arrow")
+
+        for behavior in Hover.behavior:
+            if behavior.collide_point(*pos):
+                behavior.show()
+            else:
+                behavior.hide()
 
 
 class HoverReplace:
@@ -323,8 +327,8 @@ class MyApp(App):
         right_menu.add(f'woo!', callback3)
 
         # Add all widgets to `everything`
-        # AttachedBubble(configure, "Configure", 'top_mid')
-        # AttachedBubble(info, "Information", 'top_mid')
+        HoverReplace(configure, "Configure")
+        HoverReplace(info, "Information")
         everything.add_widget(layout)
         everything.add_widget(right_menu)
 
