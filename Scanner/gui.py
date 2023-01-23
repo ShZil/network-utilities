@@ -235,13 +235,25 @@ class Hover:
                 bubble.hide()
 
 
+class HoverReplace:
+    def __init__(self, widget, text):
         self.widget = widget
+        self.text = text
+        self.save = self.widget.text
+        Hover.add_behavior(self)
     
 
     def show(self):
+        self.widget.text = self.text
     
 
     def hide(self):
+        self.widget.text = self.save
+
+
+    def collide_point(self, x, y):
+        return self.widget.collide_point(x, y)
+
 
 
 class BlackButton(Button):

@@ -407,3 +407,6 @@ according to the task I wrote yesterday in the temporary file.
 ### 2023-01-23
 [12:47] Omer Shaked advised me to remove the Attached Bubbles, and possibly change the button text upon hover.
 
+[13:19] Multiple changes during class:
+- add `HoverReplace` instead of `AttachedBubble`.
+- generalise `Hover`'s code to any behaviour. Implement on HoverReplace.
