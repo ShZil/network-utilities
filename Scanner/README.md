@@ -420,4 +420,5 @@ according to the task I wrote yesterday in the temporary file.
 ### 2023-02-05
 [13:42] Fixed bugs with Hover:
 - Attribute error -- `behaviour` which should've been `behaviours`.
+- Font size is too large in HoverReplace
 - Added Hover.start() right before the users sees the screen, which `.hide`s all behaviours.

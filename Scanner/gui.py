@@ -247,19 +247,24 @@ class Hover:
 
 
 class HoverReplace:
-    def __init__(self, widget, text):
+    FACTOR = 0.75
+
+    def __init__(self, widget, text, font_size):
         self.widget = widget
         self.text = text
         self.save = self.widget.text
+        self.font_size = font_size
         Hover.add_behavior(self)
     
 
     def show(self):
         self.widget.text = self.text
+        self.widget.font_size = self.font_size * HoverReplace.FACTOR
     
 
     def hide(self):
         self.widget.text = self.save
+        self.widget.font_size = self.font_size
 
 
     def collide_point(self, x, y):
