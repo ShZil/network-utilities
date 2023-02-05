@@ -155,7 +155,6 @@ def update_rect(painter, value):
     
     x, y = painter.pos
     w, h = painter.size
-    h -= 50
     scale = min(w, h) / 2.3
     r = 5
     stroke = 1
