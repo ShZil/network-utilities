@@ -323,9 +323,9 @@ class MyApp(App):
         # 2 operations on each scan
         operations = BoxLayout(orientation='horizontal', spacing=-3)
         # Object #2
-        configure = Button(text='⚙', font_size=30, background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Perhaps use this font instead for this button: https://www.fontspace.com/bainsley-font-f59538
+        configure = Button(text='⚙', background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Perhaps use this font instead for this button: https://www.fontspace.com/bainsley-font-f59538
         # Object #3
-        info = Button(text='ℹ', font_size=30, background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Consider a '?' instead
+        info = Button(text='ℹ', background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Consider a '?' instead
         operations.add_widget(configure)
         Hover.add(configure)
         operations.add_widget(info)
@@ -338,8 +338,8 @@ class MyApp(App):
         right_menu.add(f'woo!', callback3)
 
         # Add all widgets to `everything`
-        HoverReplace(configure, "Configure")
-        HoverReplace(info, "Information")
+        HoverReplace(configure, "Configure", 30)
+        HoverReplace(info, "Information", 30)
         everything.add_widget(layout)
         everything.add_widget(right_menu)
 
