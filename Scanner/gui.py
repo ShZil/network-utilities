@@ -52,35 +52,40 @@ class Diagram:
         self.root.protocol("WM_DELETE_WINDOW", self.try_close)
     
 
-
     def try_close(self):
         if is_kivy_running:
             self.hide()
         else:
             self.root.destroy()
 
+
     def renew(self, G: nx.Graph):
         if not nx.utils.graphs_equal(G, self.graph):
             self.graph = G.copy()
             self.update()
 
+
     def hide(self):
         self.root.withdraw()
+
 
     def show(self):
         self.root.update()
         self.root.deiconify()
     
+
     def resize(self, event):
         geometry = self.root.geometry().replace('+', 'x')
         # Uses this property of the `map` function: "Stops when the shortest iterable is exhausted."
         self.width, self.height = map(int, geometry.split('x'), [10, 10])  # Convert to `int` with base 10, but only twice.
         self.update()
 
+
     def update(self):
         self.draw_graph(self.graph)
         self.changed = False
     
+
     def draw_graph(self, G: nx.Graph):
         w, h = self.width, self.height
         x, y = 0, 0
@@ -100,12 +105,14 @@ class Diagram:
             x1, y1 = pos[edge[1]]
             self.create_line(x0, y0, x1, y1, stroke)
 
+
     def create_circle(self, x, y, r):
         x0 = x - r
         y0 = y - r
         x1 = x + r
         y1 = y + r
         return self.canvas.create_oval(x0, y0, x1, y1, fill='black')
+    
     
     def create_line(self, x0, y0, x1, y1, stroke):
         self.canvas.create_line(x0, y0, x1, y1, width=stroke)
