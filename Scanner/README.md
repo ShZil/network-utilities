@@ -424,3 +424,5 @@ according to the task I wrote yesterday in the temporary file.
 - Added Hover.start() right before the users sees the screen, which `.hide`s all behaviours.
 
 [14:14] Silly me just repeats an O(n) task `n` (i.e. O(n²)) times for no reason!
+
+[14:18] Use Python OOP in `HoverBehvaior`.

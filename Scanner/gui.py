@@ -218,10 +218,8 @@ class Hover:
     @staticmethod
     def add_behavior(behavior):
         Hover._bind()
-        try:
-            behavior.collide_point(0, 0)
-        except AttributeError:
-            raise AttributeError("The behavior passed to `Hover.add_behavior` doesn't support `.collide_point(int,int)`.")
+        if not isinstance(behavior, HoverBehavior):
+            raise TypeError("The behavior passed to `Hover.add_behavior` isn't a `HoverBehavior`.")
         Hover.behaviors.append(behavior)
         # A behaviour should support 3 methods: `collide_point(int,int)`, `show()`, and `hide()`.
     
@@ -245,7 +243,20 @@ class Hover:
             behavior.hide()
 
 
-class HoverReplace:
+class HoverBehavior:
+    def show(self):
+        raise NotImplementedError()
+
+
+    def hide(self):
+        raise NotImplementedError()
+
+    
+    def collide_point(self, x, y):
+        raise NotImplementedError()
+
+
+class HoverReplace(HoverBehavior):
     FACTOR = 0.75
 
     def __init__(self, widget, text, font_size):
