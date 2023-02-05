@@ -238,6 +238,12 @@ class Hover:
                 behavior.show()
             else:
                 behavior.hide()
+    
+
+    @staticmethod
+    def start():
+        for behavior in Hover.behaviors:
+            behavior.hide()
 
 
 class HoverReplace:
@@ -331,6 +337,8 @@ class MyApp(App):
         HoverReplace(info, "Information")
         everything.add_widget(layout)
         everything.add_widget(right_menu)
+
+        Hover.start()
 
         return everything
 
