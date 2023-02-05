@@ -227,11 +227,10 @@ class Hover:
     
 
     def update(window, pos):
-        for item in Hover.items:
-            if any([item.collide_point(*pos) for item in Hover.items]):
-                window.set_system_cursor("hand")
-            else:
-                window.set_system_cursor("arrow")
+        if any([item.collide_point(*pos) for item in Hover.items]):
+            window.set_system_cursor("hand")
+        else:
+            window.set_system_cursor("arrow")
 
         for behavior in Hover.behaviors:
             if behavior.collide_point(*pos):

@@ -422,3 +422,5 @@ according to the task I wrote yesterday in the temporary file.
 - Attribute error -- `behaviour` which should've been `behaviours`.
 - Font size is too large in HoverReplace
 - Added Hover.start() right before the users sees the screen, which `.hide`s all behaviours.
+
+[14:14] Silly me just repeats an O(n) task `n` (i.e. O(n²)) times for no reason!
