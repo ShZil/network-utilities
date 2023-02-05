@@ -416,3 +416,7 @@ according to the task I wrote yesterday in the temporary file.
     Potential change: use OOP to make this make sense.
     Think of additional behaviours (e.g. change bg and font colour), and implement them in a way that allows multiple behaviours.
 
+
+### 2023-02-05
+[13:42] Fixed bugs with Hover:
+- Attribute error -- `behaviour` which should've been `behaviours`.

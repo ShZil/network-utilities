@@ -233,7 +233,7 @@ class Hover:
             else:
                 window.set_system_cursor("arrow")
 
-        for behavior in Hover.behavior:
+        for behavior in Hover.behaviors:
             if behavior.collide_point(*pos):
                 behavior.show()
             else:
