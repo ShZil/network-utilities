@@ -34,6 +34,9 @@ bg_color = (0.023, 0.92, 0.125)
 
 
 class Diagram:
+    """This is a class responsible for the hovering diagram, that is created in a separate window when the 'Fullscreen' button is pressed.
+    Uses `tkinter` (not `kivy`, like the other parts). Black diagram on white background. Can be expanded in both directions.
+    """
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Network Diagram")
@@ -75,6 +78,7 @@ class Diagram:
     
 
     def resize(self, event):
+        # `geomery` is of the form "{width}x{height}+{x}+{y}"
         geometry = self.root.geometry().replace('+', 'x')
         # Uses this property of the `map` function: "Stops when the shortest iterable is exhausted."
         self.width, self.height = map(int, geometry.split('x'), [10, 10])  # Convert to `int` with base 10, but only twice.
@@ -87,6 +91,8 @@ class Diagram:
     
 
     def draw_graph(self, G: nx.Graph):
+        # Renders the graph. Quite similar to `update_rect`.
+        # Consider abstracting the algorithm by unifying the interface (of drawing circles and lines).
         w, h = self.width, self.height
         x, y = 0, 0
         scale = min(w, h) / 2.3
@@ -131,6 +137,7 @@ def callback2(x):
 
 
 def callback3(x):
+    # Adds one dimension to the hypercube graph. Temporary -- until real info is fed into this.
     global hyperness, G
     hyperness += 1
     if hyperness > 6: hyperness = 6
@@ -140,6 +147,11 @@ def callback3(x):
 
 
 class MyPaintWidget(Widget):
+    """Responsible for the middle diagram (object #9).
+
+    Args:
+        Widget (tkinter widget): the superclass.
+    """
     def init(self):
         update_rect(self, 0)
 
@@ -148,6 +160,12 @@ class MyPaintWidget(Widget):
 
 
 def update_rect(painter, value):
+    """Renders stuff on the diagram (object #9)
+
+    Args:
+        painter (MyPaintWidget): the diagram to paint on.
+        value (int): just for compatibility.
+    """
     if hasattr(update_rect, 'cache'):
         painter = update_rect.cache
     else:
@@ -179,6 +197,11 @@ def update_rect(painter, value):
 
 
 class ButtonColumn(GridLayout):
+    """Organises buttons in a column
+
+    Args:
+        GridLayout (tk): the superclass.
+    """
     def __init__(self, width: int):
         super().__init__(cols=1, width=width, size_hint=(None, 1), spacing=[-3], padding=[-1, -3, -1, -3])
         self.buttons = []  # list of tuples `(button, callback)`
