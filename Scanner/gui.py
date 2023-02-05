@@ -113,7 +113,7 @@ class Diagram:
         y1 = y + r
         return self.canvas.create_oval(x0, y0, x1, y1, fill='black')
     
-    
+
     def create_line(self, x0, y0, x1, y1, stroke):
         self.canvas.create_line(x0, y0, x1, y1, width=stroke)
 
@@ -155,6 +155,7 @@ def update_rect(painter, value):
     
     x, y = painter.pos
     w, h = painter.size
+    h -= 50
     scale = min(w, h) / 2.3
     r = 5
     stroke = 1
