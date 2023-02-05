@@ -225,6 +225,14 @@ class ButtonColumn(GridLayout):
 
 
 class Hover:
+    """Enables hovering cursor and behaviours. Uses singleton structure (because it accesses a system function of changing cursor).
+    Includes two lists: `items`, where each item can change the cursor to `pointer` if hovered (`item.collide_point(x, y) -> True`);
+    and `behaviors`, where each item is a `HoverBehavior`, and they do more exotic stuff, abstracted by `.show()` and `.hide()`.
+
+    Raises:
+        AttributeError: raised when `.add(item)` receives an `item` that has no method `.collide_point(int,int)`.
+        TypeError: raised when `.add_behavior(behavior)` receives a `behavior` that is not of type `HoverBehavior`.
+    """
     items = []
     behaviors = []
 
@@ -270,11 +278,16 @@ class Hover:
 
     @staticmethod
     def start():
+        # Hide everything when the screen loads. Misleading name -- this function is called last in initalisation -- it marks the start of the UI.
         for behavior in Hover.behaviors:
             behavior.hide()
 
 
 class HoverBehavior:
+    """
+    Inherit from this class to create behaviours,
+    and pass the instances to `Hover.add_behavior(...)`.
+    """
     def show(self):
         raise NotImplementedError()
 
@@ -288,7 +301,11 @@ class HoverBehavior:
 
 
 class HoverReplace(HoverBehavior):
-    FACTOR = 0.75
+    """A `HoverBehavior` that replaces the text shown on a label.
+    When hovered, it displays the string in `text`,
+    otherwise, it displays the initial string.
+    """
+    FACTOR = 0.75  # new_text_size = FACTOR * old_text_size
 
     def __init__(self, widget, text, font_size):
         self.widget = widget
@@ -314,12 +331,40 @@ class HoverReplace(HoverBehavior):
 
 
 class BlackButton(Button):
+    """A button that has black background, and also adds itself to `Hover`. 
+    """
     def __init__(self, text, **kwargs):
         super().__init__(text='[color=000000]' + escape_markup(text) + '[/color]', markup=True, **kwargs)
         Hover.add(self)
 
 
 class MyApp(App):
+    """The main application, using `kivy`.
+    Builds an interface that looks like this:
+    
+    ```md
+    The Window (Unicode Box Art):
+        ┌────────────────────────────────────────────╥───────────────────────────┐
+        │                  [#1 Title]                ║   [#2 Conf]   [#3 Info]   │
+        │  #4 Save.                                  ╟───────────────────────────┤
+        │  #5 Scan.                                  ║        [#7 ScanA]         │
+        │  #6 Know.                                  ║        [#8 ScanB]         │
+        │           #9 D                             ║        [#10 ScanC]        │
+        │                I                           ║        [#11 ScanD]        │
+        │                  A                         ║        [#12 ScanE]        │
+        │                    G                       ║        [#13 ScanF]        │
+        │                      R                     ║        [#14 ScanG]        │
+        │                        A                   ║                           │
+        │                          M                 ║                           │
+        │    [#15 Play]            [#16 Fullscreen]  ║                           │
+        └────────────────────────────────────────────╨───────────────────────────┘
+    ```
+
+    Args:
+        App (tk): the tkinter base app.
+    """
+
+
     def build(self):
         self.title = 'Local Network Scanner'
         everything = BoxLayout(orientation='horizontal')
@@ -390,6 +435,8 @@ class MyApp(App):
 
 
 def start_kivy():
+    """Starts the `kivy` app, and handles the `tkinter` diagram's closing.
+    """
     global is_kivy_running, diagram
     is_kivy_running = True
     MyApp().run()
@@ -401,13 +448,19 @@ def start_kivy():
 
 
 def start_tk():
+    """Starts the `tkinter` diagram in the background.
+    This has to be on the main thread (because `tkinter` said so).
+    """
     global diagram
     diagram = Diagram()
     diagram.root.mainloop()
 
 
 def add_font():
+    """Loads a font (`kivy`'s).
+    """
     LabelBase.register(name='Symbols', fn_regular='Segoe UI Symbol.ttf')
+
 
 if __name__ == '__main__':
     add_font()
@@ -415,19 +468,3 @@ if __name__ == '__main__':
     runner.start()
     start_tk()
 
-
-# The Window (Unicode Box Art):
-# ┌────────────────────────────────────────────╥───────────────────────────┐
-# │                  [#1 Title]                ║   [#2 Conf]   [#3 Info]   │
-# │  #4 Save.                                  ╟───────────────────────────┤
-# │  #5 Scan.                                  ║        [#7 ScanA]         │
-# │  #6 Know.                                  ║        [#8 ScanB]         │
-# │           #9 D                             ║        [#10 ScanC]        │
-# │                I                           ║        [#11 ScanD]        │
-# │                  A                         ║        [#12 ScanE]        │
-# │                    G                       ║        [#13 ScanF]        │
-# │                      R                     ║        [#14 ScanG]        │
-# │                        A                   ║                           │
-# │                          M                 ║                           │
-# │    [#15 Play]            [#16 Fullscreen]  ║                           │
-# └────────────────────────────────────────────╨───────────────────────────┘
