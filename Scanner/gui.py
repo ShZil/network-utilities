@@ -102,18 +102,9 @@ class Diagram:
 
 
     def update(self):
-        self.draw_graph(self.graph)
+        background = (255, 255, 255)
+        render_diagram(TKDiagram(self, 5), 0, 0, self.width, self.height, background)
         self.changed = False
-    
-
-    def draw_graph(self, G: nx.Graph):
-        w, h = self.width, self.height
-        x, y = 0, 0
-        render_diagram(TKDiagram(self, 5), 0, 0, self.width, self.height, (255, 255, 255))
-
-
-def callback0(x):
-    diagram.show()
 
 
 def callback1(x):
