@@ -1,0 +1,106 @@
+# Define a context manager to handle drawing?
+# define a custom collection `allowed` where `point in allowed` calls `.collide_point`.
+
+# merge the `allowed` collection into the context manager!
+
+class TKDiagram:
+    def __init__(self, diagram, radius):
+        self.diagram = diagram
+        self.radius = radius
+        self.color = '#000000'
+
+
+    def __enter__(self):
+        return self
+    
+
+    def __exit__(self, exception_type, exception_value, exception_traceback):
+        pass
+    
+
+    def color(self, r, g, b):
+        x = lambda h: hex(h)[2:4].zfill(2)
+        self.color = f'#{x(r)}{x(g)}{x(b)}'
+    
+
+    def rectangle(self, x, y, w, h, color):
+        self.diagram.canvas.create_rectangle(x, y, w, h, fill=color)
+    
+
+    def circle(self, x, y, r):
+        x0 = x - r
+        y0 = y - r
+        x1 = x + r
+        y1 = y + r
+        return self.diagram.canvas.create_oval(x0, y0, x1, y1, fill=self.color)
+    
+
+    def line(self, x0, y0, x1, y1, stroke):
+        self.diagram.canvas.create_line(x0, y0, x1, y1, width=stroke, fill=self.color)
+
+        
+    def __contains__(self, pos):
+        return True
+
+
+class KivyDiagram:
+    def __init__(self, painter, radius):
+        self.painter = painter
+        self.radius = radius
+
+
+    def __enter__(self):
+        self.painter.__enter__()
+        return self
+    
+
+    def __exit__(self, exception_type, exception_value, exception_traceback):
+        self.painter.__exit__()
+    
+
+    def color(self, r, g, b):
+        Color(r, g, b)
+    
+
+    def rectangle(self, x, y, w, h, color):
+        self.color(*color)
+        Rectangle(pos=(x, y), size=(w, h))
+    
+
+    def circle(self, x, y):
+        r = self.radius
+        Ellipse(pos=(x - r, y - r), size=(2 * r, 2 * r))
+    
+
+    def line(self, x0, y0, x1, y1, stroke):
+        Line(points=(x0, y0, x1, y1), width=stroke)
+    
+    
+    def __contains__(self, pos):
+        x, y = pos
+        r = self.radius
+        collides = lambda (x0, y0): self.widget.collide_point(x0, y0)
+        if r == 0: return collides(x, y)
+        return collides(x + r, y + r) and collides(x - r, y - r)
+    
+
+def render_diagram(draw, x, y, w, h, bg):
+    scale = min(w, h) / 2.3
+    stroke = 1
+
+    pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
+    
+    with draw:
+        draw.rectangle(pos=painter.pos, size=painter.size, bg)
+        draw.color(0, 0, 0)
+        
+        for node in G:
+            x0, y0 = pos[node]
+            if (x0, y0) in draw:
+                draw.circle(x0, y0)
+        
+        for edge in G.edges:
+            x0, y0 = pos[edge[0]]
+            x1, y1 = pos[edge[1]]
+            if (x0, y0) in draw and (x1, y1) in draw:
+                draw.line(x0, y0, x1, y1, stroke)

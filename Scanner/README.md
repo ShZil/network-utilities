@@ -426,3 +426,9 @@ according to the task I wrote yesterday in the temporary file.
 [14:14] Silly me just repeats an O(n) task `n` (i.e. O(n²)) times for no reason!
 
 [14:18] Use Python OOP in `HoverBehvaior`.
+
+
+### 2023-02-07
+[13:50] After some Googling, I found out that I can use kivy's `ScreenManager` to easily handle the Scan/Save/Know/Start screens!
+
+[16:00] Brainstormed an idea for DRYing my code, in rendering the diagram (both TK and Kivy).

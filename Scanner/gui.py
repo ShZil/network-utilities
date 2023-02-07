@@ -160,10 +160,11 @@ class MyPaintWidget(Widget):
 
 
 def update_rect(painter, value):
-    """Renders stuff on the diagram (object #9)
+    """Renders stuff on the diagram (object #9).
+    Caches `painter` on first call.
 
     Args:
-        painter (MyPaintWidget): the diagram to paint on.
+        painter (MyPaintWidget): the diagram to paint on. **This is passed in once**. All next calls will use the object that was given in the first call.
         value (int): just for compatibility.
     """
     if hasattr(update_rect, 'cache'):
@@ -457,8 +458,7 @@ def start_tk():
 
 
 def add_font():
-    """Loads a font (`kivy`'s).
-    """
+    """Loads a font (`kivy`'s)."""
     LabelBase.register(name='Symbols', fn_regular='Segoe UI Symbol.ttf')
 
 
