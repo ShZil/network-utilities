@@ -432,3 +432,6 @@ according to the task I wrote yesterday in the temporary file.
 [13:50] After some Googling, I found out that I can use kivy's `ScreenManager` to easily handle the Scan/Save/Know/Start screens!
 
 [16:00] Brainstormed an idea for DRYing my code, in rendering the diagram (both TK and Kivy).
+
+[17:48] Implemented and bugfixed.
+Note: reverted the change that does `h-=50` to make space for the title. Find a way to add this back.

@@ -91,37 +91,9 @@ class Diagram:
     
 
     def draw_graph(self, G: nx.Graph):
-        # Renders the graph. Quite similar to `update_rect`.
-        # Consider abstracting the algorithm by unifying the interface (of drawing circles and lines).
         w, h = self.width, self.height
         x, y = 0, 0
-        scale = min(w, h) / 2.3
-        r = 5
-        stroke = 1
-        pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
-
-        self.canvas.create_rectangle(0, 0, w, h, fill='white')
-            
-        for node in G:
-            x0, y0 = pos[node]
-            self.create_circle(x0, y0, r)
-            
-        for edge in G.edges:
-            x0, y0 = pos[edge[0]]
-            x1, y1 = pos[edge[1]]
-            self.create_line(x0, y0, x1, y1, stroke)
-
-
-    def create_circle(self, x, y, r):
-        x0 = x - r
-        y0 = y - r
-        x1 = x + r
-        y1 = y + r
-        return self.canvas.create_oval(x0, y0, x1, y1, fill='black')
-    
-
-    def create_line(self, x0, y0, x1, y1, stroke):
-        self.canvas.create_line(x0, y0, x1, y1, width=stroke)
+        render_diagram(TKDiagram(self, 5), 0, 0, self.width, self.height, (255, 255, 255))
 
 
 def callback0(x):
@@ -159,6 +131,88 @@ class MyPaintWidget(Widget):
         update_rect(self, 0)
 
 
+class TKDiagram:
+    def __init__(self, diagram, radius):
+        self.diagram = diagram
+        self.radius = radius
+        self.color_cache = '#000000'
+
+
+    def __enter__(self):
+        return self
+    
+
+    def __exit__(self, exception_type, exception_value, exception_traceback):
+        pass
+    
+
+    def color(self, r=None, g=None, b=None):
+        if r is None: return self.color_cache
+        x = lambda h: hex(h)[2:4].zfill(2)
+        self.color_cache = f'#{x(r)}{x(g)}{x(b)}'
+
+
+    def rectangle(self, x, y, w, h):
+        self.diagram.canvas.create_rectangle(x, y, w, h, fill=self.color())
+    
+
+    def circle(self, x, y):
+        r = self.radius
+        x0 = x - r
+        y0 = y - r
+        x1 = x + r
+        y1 = y + r
+        return self.diagram.canvas.create_oval(x0, y0, x1, y1, fill=self.color())
+    
+
+    def line(self, x0, y0, x1, y1, stroke):
+        self.diagram.canvas.create_line(x0, y0, x1, y1, width=stroke, fill=self.color())
+
+        
+    def __contains__(self, pos):
+        return True
+
+
+class KivyDiagram:
+    def __init__(self, widget, radius):
+        self.widget = widget
+        self.radius = radius
+
+
+    def __enter__(self):
+        self.widget.canvas.__enter__()
+        return self
+    
+
+    def __exit__(self, exception_type, exception_value, exception_traceback):
+        self.widget.canvas.__exit__()
+    
+
+    def color(self, r, g, b):
+        Color(r, g, b)
+    
+
+    def rectangle(self, x, y, w, h):
+        Rectangle(pos=(x, y), size=(w, h))
+    
+
+    def circle(self, x, y):
+        r = self.radius
+        Ellipse(pos=(x - r, y - r), size=(2 * r, 2 * r))
+    
+
+    def line(self, x0, y0, x1, y1, stroke):
+        Line(points=(x0, y0, x1, y1), width=stroke)
+    
+    
+    def __contains__(self, pos):
+        x, y = pos
+        r = self.radius
+        collides = lambda x0, y0: self.widget.collide_point(x0, y0)
+        if r == 0: return collides(x, y)
+        return collides(x + r, y + r) and collides(x - r, y - r)
+
+
 def update_rect(painter, value):
     """Renders stuff on the diagram (object #9).
     Caches `painter` on first call.
@@ -171,30 +225,31 @@ def update_rect(painter, value):
         painter = update_rect.cache
     else:
         update_rect.cache = painter
-    
-    x, y = painter.pos
-    w, h = painter.size
-    h -= 50
+
+    render_diagram(KivyDiagram(painter, 5), *painter.pos, *painter.size, bg_color)
+
+
+def render_diagram(draw, x, y, w, h, bg):
     scale = min(w, h) / 2.3
-    r = 5
     stroke = 1
+
     pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
-    # print(pos.values())
-    with painter.canvas:
-        Color(*bg_color)
-        Rectangle(pos=painter.pos, size=painter.size)
-        Color(0, 0, 0)
+    
+    with draw:
+        draw.color(*bg)
+        draw.rectangle(x, y, w, h)
+        draw.color(0, 0, 0)
         
         for node in G:
             x0, y0 = pos[node]
-            if painter.collide_point(x0 - r, y0 - r) and painter.collide_point(x0 + r, y0 + r):
-                Ellipse(pos=(x0 - r, y0 - r), size=(2 * r, 2 * r))
+            if (x0, y0) in draw:
+                draw.circle(x0, y0)
         
         for edge in G.edges:
             x0, y0 = pos[edge[0]]
             x1, y1 = pos[edge[1]]
-            if painter.collide_point(x0, y0) and painter.collide_point(x1, y1):
-                Line(points=(x0, y0, x1, y1), width=stroke)
+            if (x0, y0) in draw and (x1, y1) in draw:
+                draw.line(x0, y0, x1, y1, stroke)
 
 
 class ButtonColumn(GridLayout):
