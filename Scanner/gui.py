@@ -37,7 +37,16 @@ class Diagram:
     """This is a class responsible for the hovering diagram, that is created in a separate window when the 'Fullscreen' button is pressed.
     Uses `tkinter` (not `kivy`, like the other parts). Black diagram on white background. Can be expanded in both directions.
     """
+
     def __init__(self):
+        """A few parts:
+        - Tk stuff (root, title, width & height)
+        - tk.Canvas initialisation (+ fit window)
+        - a field for `G` (the graph)
+        - bind `self.resize` to the relevant user operation
+        - bind `self.try_close` to the relevant user operation
+        - initial `update` and `hide`.
+        """
         self.root = tk.Tk()
         self.root.title("Network Diagram")
         self.width = 300
@@ -56,6 +65,7 @@ class Diagram:
     
 
     def try_close(self):
+        """To prevent the user from really closing this window if the source (kivy) is still open."""
         if is_kivy_running:
             self.hide()
         else:
@@ -63,6 +73,12 @@ class Diagram:
 
 
     def renew(self, G: nx.Graph):
+        """Update the rendered graph.
+        Saves a `G.copy()` to `self.graph` and calls `self.update()`.
+
+        Args:
+            G (nx.Graph): the new graph.
+        """
         if not nx.utils.graphs_equal(G, self.graph):
             self.graph = G.copy()
             self.update()
@@ -108,8 +124,8 @@ def callback2(x):
     print('Hello2')
 
 
-def callback3(x):
-    # Adds one dimension to the hypercube graph. Temporary -- until real info is fed into this.
+def temp_increase_graph_degree(x):
+    """Adds one dimension to the hypercube graph. Temporary -- until real info is fed into this."""
     global hyperness, G
     hyperness += 1
     if hyperness > 6: hyperness = 6
@@ -442,7 +458,7 @@ class MyApp(App):
 
         # Object #16    # Previous icon: ⛶
         open_diagram = BlackButton(text='🔍', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
-        open_diagram.bind(on_press=callback0)
+        open_diagram.bind(on_press=lambda _: diagram.show())
 
         # Object #9
         paint = MyPaintWidget(size_hint=(1, 1), pos_hint={'center_x': .5, 'center_y': .5})
@@ -477,7 +493,7 @@ class MyApp(App):
         # Objects #7 - #14
         for i in range(10):
             right_menu.add(f"scan {i}", callback1 if i < 4 else callback2)
-        right_menu.add(f'woo!', callback3)
+        right_menu.add(f'woo!', temp_increase_graph_degree)
 
         # Add all widgets to `everything`
         HoverReplace(configure, "Configure", 30)
@@ -493,14 +509,16 @@ class MyApp(App):
 def start_kivy():
     """Starts the `kivy` app, and handles the `tkinter` diagram's closing.
     """
-    global is_kivy_running, diagram
-    is_kivy_running = True
-    MyApp().run()
-    is_kivy_running = False
-    
-    diagram.show()
-    diagram.root.quit()
-    sys.exit()
+    try:
+        global is_kivy_running, diagram
+        is_kivy_running = True
+        MyApp().run()
+        is_kivy_running = False
+        
+        diagram.show()
+        diagram.root.quit()
+    finally:
+        sys.exit()
 
 
 def start_tk():
