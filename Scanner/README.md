@@ -436,3 +436,5 @@ according to the task I wrote yesterday in the temporary file.
 [17:48] Implemented and bugfixed.
 Note: reverted the change that does `h-=50` to make space for the title. Find a way to add this back.
 Also: the TK diagram is rendered from the top-left corner, but the Kivy one is from the bottom-left corner. Flip one pls.
+
+[18:26] Fixed the `h-=50` thingy. Also, docstrings.
