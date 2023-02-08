@@ -438,3 +438,14 @@ Note: reverted the change that does `h-=50` to make space for the title. Find a 
 Also: the TK diagram is rendered from the top-left corner, but the Kivy one is from the bottom-left corner. Flip one pls.
 
 [18:26] Fixed the `h-=50` thingy. Also, docstrings.
+
+
+### 2023-02-08
+[20:01] Screen is stuck on white upon opening. That's problematic.
+
+[21:55] After messing with Git/GithubDesktop, I've decided to revert changes manually,
+to the point where I moved code over to `hover.py`. The issue seems to lie in `from kivy.core.window import Window`,
+but I'm clueless regarding how to fix it. So, revert, and try on school computer too.
+Also I un/re-installed `kivy`.
+
+I added caches for `KivyDiagram` and `TKDiagram`, which will be lost upon reverting, but no biggie.

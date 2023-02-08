@@ -14,116 +14,14 @@ from kivy.uix.widget import Widget
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.bubble import Bubble
 from kivy.graphics import Color, Ellipse, Rectangle, Line
 from kivy.core.text import LabelBase
 from kivy.utils import escape_markup
 
 from util import nameof, one_cache
-
-class Hover:
-    """Enables hovering cursor and behaviours. Uses singleton structure (because it accesses a system function of changing cursor).
-    Includes two lists: `items`, where each item can change the cursor to `pointer` if hovered (`item.collide_point(x, y) -> True`);
-    and `behaviors`, where each item is a `HoverBehavior`, and they do more exotic stuff, abstracted by `.show()` and `.hide()`.
-
-    Raises:
-        AttributeError: raised when `.add(item)` receives an `item` that has no method `.collide_point(int,int)`.
-        TypeError: raised when `.add_behavior(behavior)` receives a `behavior` that is not of type `HoverBehavior`.
-    """
-    items = []
-    behaviors = []
-
-
-    @staticmethod
-    @one_cache
-    def _bind():
-        Window.bind(mouse_pos=Hover.update)
-
-    
-    @staticmethod
-    def add(instance):
-        Hover._bind()
-        try:
-            instance.collide_point(0, 0)
-        except AttributeError:
-            raise AttributeError("The instance passed to `Hover.add` doesn't support `.collide_point(int,int)`.")
-        Hover.items.append(instance)
-
-
-    @staticmethod
-    def add_behavior(behavior):
-        Hover._bind()
-        if not isinstance(behavior, HoverBehavior):
-            raise TypeError("The behavior passed to `Hover.add_behavior` isn't a `HoverBehavior`.")
-        Hover.behaviors.append(behavior)
-        # A behaviour should support 3 methods: `collide_point(int,int)`, `show()`, and `hide()`.
-    
-
-    def update(window, pos):
-        if any([item.collide_point(*pos) for item in Hover.items]):
-            window.set_system_cursor("hand")
-        else:
-            window.set_system_cursor("arrow")
-
-        for behavior in Hover.behaviors:
-            if behavior.collide_point(*pos):
-                behavior.show()
-            else:
-                behavior.hide()
-    
-
-    @staticmethod
-    def hide_all():
-        # Hide everything when the screen loads.
-        for behavior in Hover.behaviors:
-            behavior.hide()
-
-
-class HoverBehavior:
-    """
-    Inherit from this class to create behaviours,
-    and pass the instances to `Hover.add_behavior(...)`.
-    """
-    def show(self):
-        raise NotImplementedError()
-
-
-    def hide(self):
-        raise NotImplementedError()
-
-    
-    def collide_point(self, x, y):
-        raise NotImplementedError()
-
-
-class HoverReplace(HoverBehavior):
-    """A `HoverBehavior` that replaces the text shown on a label.
-    When hovered, it displays the string in `text`,
-    otherwise, it displays the initial string.
-    """
-    FACTOR = 0.75  # new_text_size = FACTOR * old_text_size
-
-    def __init__(self, widget, text, font_size):
-        self.widget = widget
-        self.text = text
-        self.save = self.widget.text
-        self.font_size = font_size
-        Hover.add_behavior(self)
-    
-
-    def show(self):
-        self.widget.text = self.text
-        self.widget.font_size = self.font_size * HoverReplace.FACTOR
-    
-
-    def hide(self):
-        self.widget.text = self.save
-        self.widget.font_size = self.font_size
-
-
-    def collide_point(self, x, y):
-        return self.widget.collide_point(x, y)
-
 
 
 __author__ = 'Shaked Dan Zilberman'
@@ -177,7 +75,6 @@ class Diagram:
     def renew(self, G: nx.Graph):
         """Update the rendered graph.
         Saves a `G.copy()` to `self.graph` and calls `self.update()`.
-
         Args:
             G (nx.Graph): the new graph.
         """
@@ -223,21 +120,20 @@ def temp_increase_graph_degree(x):
     hyperness += 1
     if hyperness > 6: hyperness = 6
     G = nx.hypercube_graph(hyperness)
-    update_rect(0, 0)
+    update_kivy_diagram(0, 0)
     if diagram is not None: diagram.renew(G)
 
 
 class MyPaintWidget(Widget):
     """Responsible for the middle diagram (object #9).
-
     Args:
         Widget (tkinter widget): the superclass.
     """
     def init(self):
-        update_rect(self, 0)
+        update_kivy_diagram(self, 0)
 
     def on_touch_down(self, touch):
-        update_rect(self, 0)
+        update_kivy_diagram(self, 0)
 
 
 class TKDiagram:
@@ -322,26 +218,28 @@ class KivyDiagram:
         return collides(x + r, y + r) and collides(x - r, y - r)
 
 
-def update_rect(painter, value):
+def update_kivy_diagram(painter, _):
     """Renders stuff on the diagram (object #9).
     Caches `painter` on first call.
-
     Args:
         painter (MyPaintWidget): the diagram to paint on. **This is passed in once**. All next calls will use the object that was given in the first call.
         value (int): just for compatibility.
     """
-    if hasattr(update_rect, 'cache'):
-        painter = update_rect.cache
+    if hasattr(update_kivy_diagram, 'cache'):
+        painter = update_kivy_diagram.cache
     else:
         update_kivy_diagram.cache = painter
-        update_kivy_diagram.cache_diagram = KivyDiagram(painter, 5)
+
+    render_diagram(KivyDiagram(painter, 5), *painter.pos, *painter.size, bg_color, -70)
 
 
-    render_diagram(update_kivy_diagram.cache_diagram, *painter.pos, *painter.size, bg_color, -70)
-
-
-def render_diagram(draw, x, y, w, h, bg):
-    scale = min(w, h) / 2.3
+def render_diagram(draw, x, y, w, h, bg, dh=0):
+    """An abstract representation of the algorithm used to render the diagram.
+    To interface with ~reality~ the screen, it uses the `draw` argument,
+    which is a context manager supporting various methods.
+    Currently, there are two implementations: `KivyDiagram` and `TKDiagram`.
+    """
+    scale = min(w, h + dh) / 2.3
     stroke = 1
 
     pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
@@ -365,7 +263,6 @@ def render_diagram(draw, x, y, w, h, bg):
 
 class ButtonColumn(GridLayout):
     """Organises buttons in a column
-
     Args:
         GridLayout (tk): the superclass.
     """
@@ -389,6 +286,111 @@ class ButtonColumn(GridLayout):
         print(self.buttons)
         for button, action in self.buttons:
             print(nameof(action))
+
+
+class Hover:
+    """Enables hovering cursor and behaviours. Uses singleton structure (because it accesses a system function of changing cursor).
+    Includes two lists: `items`, where each item can change the cursor to `pointer` if hovered (`item.collide_point(x, y) -> True`);
+    and `behaviors`, where each item is a `HoverBehavior`, and they do more exotic stuff, abstracted by `.show()` and `.hide()`.
+    Raises:
+        AttributeError: raised when `.add(item)` receives an `item` that has no method `.collide_point(int,int)`.
+        TypeError: raised when `.add_behavior(behavior)` receives a `behavior` that is not of type `HoverBehavior`.
+    """
+    items = []
+    behaviors = []
+
+
+    @staticmethod
+    @one_cache
+    def _bind():
+        from kivy.core.window import Window
+        Window.bind(mouse_pos=Hover.update)
+
+    
+    @staticmethod
+    def add(instance):
+        Hover._bind()
+        try:
+            instance.collide_point(0, 0)
+        except AttributeError:
+            raise AttributeError("The instance passed to `Hover.add` doesn't support `.collide_point(int,int)`.")
+        Hover.items.append(instance)
+
+
+    @staticmethod
+    def add_behavior(behavior):
+        Hover._bind()
+        if not isinstance(behavior, HoverBehavior):
+            raise TypeError("The behavior passed to `Hover.add_behavior` isn't a `HoverBehavior`.")
+        Hover.behaviors.append(behavior)
+        # A behaviour should support 3 methods: `collide_point(int,int)`, `show()`, and `hide()`.
+    
+
+    def update(window, pos):
+        if any([item.collide_point(*pos) for item in Hover.items]):
+            window.set_system_cursor("hand")
+        else:
+            window.set_system_cursor("arrow")
+
+        for behavior in Hover.behaviors:
+            if behavior.collide_point(*pos):
+                behavior.show()
+            else:
+                behavior.hide()
+    
+
+    @staticmethod
+    def start():
+        # Hide everything when the screen loads. Misleading name -- this function is called last in initalisation -- it marks the start of the UI.
+        for behavior in Hover.behaviors:
+            behavior.hide()
+
+
+class HoverBehavior:
+    """
+    Inherit from this class to create behaviours,
+    and pass the instances to `Hover.add_behavior(...)`.
+    """
+    def show(self):
+        raise NotImplementedError()
+
+
+    def hide(self):
+        raise NotImplementedError()
+
+    
+    def collide_point(self, x, y):
+        raise NotImplementedError()
+
+
+class HoverReplace(HoverBehavior):
+    """A `HoverBehavior` that replaces the text shown on a label.
+    When hovered, it displays the string in `text`,
+    otherwise, it displays the initial string.
+    """
+    FACTOR = 0.75  # new_text_size = FACTOR * old_text_size
+
+    def __init__(self, widget, text, font_size):
+        self.widget = widget
+        self.text = text
+        self.save = self.widget.text
+        self.font_size = font_size
+        Hover.add_behavior(self)
+    
+
+    def show(self):
+        self.widget.text = self.text
+        self.widget.font_size = self.font_size * HoverReplace.FACTOR
+    
+
+    def hide(self):
+        self.widget.text = self.save
+        self.widget.font_size = self.font_size
+
+
+    def collide_point(self, x, y):
+        return self.widget.collide_point(x, y)
+
 
 
 class BlackButton(Button):
@@ -420,7 +422,6 @@ class MyApp(App):
         │    [#15 Play]            [#16 Fullscreen]  ║                           │
         └────────────────────────────────────────────╨───────────────────────────┘
     ```
-
     Args:
         App (tk): the tkinter base app.
     """
@@ -451,7 +452,7 @@ class MyApp(App):
 
         # Object #9
         paint = MyPaintWidget(size_hint=(1, 1), pos_hint={'center_x': .5, 'center_y': .5})
-        paint.bind(pos=update_rect, size=update_rect)
+        paint.bind(pos=update_kivy_diagram, size=update_kivy_diagram)
         
         # Object 1
         title = Label(text="[color=000000]Local Network Scanner[/color]", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
@@ -490,7 +491,7 @@ class MyApp(App):
         everything.add_widget(layout)
         everything.add_widget(right_menu)
 
-        Hover.hide_all()
+        Hover.start()
 
         return everything
 
@@ -520,8 +521,7 @@ def start_tk():
 
 
 def add_font():
-    """Loads a font (`kivy`'s).
-    """
+    """Loads a font (`kivy`'s)."""
     LabelBase.register(name='Symbols', fn_regular='Segoe UI Symbol.ttf')
 
 
@@ -530,4 +530,3 @@ if __name__ == '__main__':
     runner = Thread(target=start_kivy)
     runner.start()
     start_tk()
-
