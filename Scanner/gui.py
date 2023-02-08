@@ -42,7 +42,7 @@ class Diagram:
         """A few parts:
         - Tk stuff (root, title, width & height)
         - tk.Canvas initialisation (+ fit window)
-        - a field for `G` (the graph)
+        - fields for `G` (the graph) and `diagram_cache` (see `Diagram.update`)
         - bind `self.resize` to the relevant user operation
         - bind `self.try_close` to the relevant user operation
         - initial `update` and `hide`.
@@ -56,6 +56,7 @@ class Diagram:
         self.canvas.pack(expand=True, fill='both')
 
         self.graph = G
+        self.diagram_cache = None
 
         self.canvas.bind('<Configure>', self.resize)
         self.update()
@@ -101,8 +102,10 @@ class Diagram:
 
 
     def update(self):
+        if self.diagram_cache is None:
+            self.diagram_cache = TKDiagram(self, 5)
         background = (255, 255, 255)
-        render_diagram(TKDiagram(self, 5), 0, 0, self.width, self.height, background)
+        render_diagram(self.diagram_cache, 0, 0, self.width, self.height, background)
         self.changed = False
 
 
@@ -112,6 +115,10 @@ def callback1(x):
 
 def callback2(x):
     print('Hello2')
+
+
+def activate(x):
+    print("Play!")
 
 
 def temp_increase_graph_degree(x):
@@ -229,8 +236,9 @@ def update_kivy_diagram(painter, _):
         painter = update_kivy_diagram.cache
     else:
         update_kivy_diagram.cache = painter
+        update_kivy_diagram.diagram_cache = KivyDiagram(painter, 5)
 
-    render_diagram(KivyDiagram(painter, 5), *painter.pos, *painter.size, bg_color, -70)
+    render_diagram(update_kivy_diagram.diagram_cache, *painter.pos, *painter.size, bg_color, -70)
 
 
 def render_diagram(draw, x, y, w, h, bg, dh=0):
@@ -444,7 +452,7 @@ class MyApp(App):
 
         # Object #15
         play_button = BlackButton(text='▶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
-        play_button.bind(on_press=callback2)
+        play_button.bind(on_press=activate)
 
         # Object #16    # Previous icon: ⛶
         open_diagram = BlackButton(text='🔍', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")

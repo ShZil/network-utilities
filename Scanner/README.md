@@ -449,3 +449,5 @@ but I'm clueless regarding how to fix it. So, revert, and try on school computer
 Also I un/re-installed `kivy`.
 
 I added caches for `KivyDiagram` and `TKDiagram`, which will be lost upon reverting, but no biggie.
+
+[22:00] YES! Reverting worked! Now I'll just add the caches again.
