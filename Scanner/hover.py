@@ -11,7 +11,6 @@ class Hover:
         AttributeError: raised when `.add(item)` receives an `item` that has no method `.collide_point(int,int)`.
         TypeError: raised when `.add_behavior(behavior)` receives a `behavior` that is not of type `HoverBehavior`.
     """
-    print("Hover")
     items = []
     behaviors = []
 
@@ -30,7 +29,6 @@ class Hover:
         except AttributeError:
             raise AttributeError("The instance passed to `Hover.add` doesn't support `.collide_point(int,int)`.")
         Hover.items.append(instance)
-        print("Hover", instance)
 
 
     @staticmethod
@@ -39,7 +37,6 @@ class Hover:
         if not isinstance(behavior, HoverBehavior):
             raise TypeError("The behavior passed to `Hover.add_behavior` isn't a `HoverBehavior`.")
         Hover.behaviors.append(behavior)
-        print("Hover behave", behavior)
         # A behaviour should support 3 methods: `collide_point(int,int)`, `show()`, and `hide()`.
     
 
@@ -68,7 +65,6 @@ class HoverBehavior:
     Inherit from this class to create behaviours,
     and pass the instances to `Hover.add_behavior(...)`.
     """
-    print("HoverBehavior")
     def show(self):
         raise NotImplementedError()
 
@@ -86,7 +82,6 @@ class HoverReplace(HoverBehavior):
     When hovered, it displays the string in `text`,
     otherwise, it displays the initial string.
     """
-    print("HoverReplace")
     FACTOR = 0.75  # new_text_size = FACTOR * old_text_size
 
     def __init__(self, widget, text, font_size):

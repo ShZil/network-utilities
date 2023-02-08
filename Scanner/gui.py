@@ -18,210 +18,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Ellipse, Rectangle, Line
 from kivy.core.text import LabelBase
 from kivy.utils import escape_markup
-from kivy.core.window import Window
 
 from util import nameof, one_cache
-
-
-__author__ = 'Shaked Dan Zilberman'
-
-hyperness = 1
-G = nx.hypercube_graph(1)
-diagram = None
-is_kivy_running = True
-bg_color = (0.023, 0.92, 0.125)
-
-
-class Diagram:
-    """This is a class responsible for the hovering diagram, that is created in a separate window when the 'Fullscreen' button is pressed.
-    Uses `tkinter` (not `kivy`, like the other parts). Black diagram on white background. Can be expanded in both directions.
-    """
-    def __init__(self):
-        self.root = tk.Tk()
-        self.root.title("Network Diagram")
-        self.width = 300
-        self.height = 300
-
-        self.canvas = tk.Canvas(self.root, bg="white", height=self.height, width=self.width)
-        self.canvas.pack(expand=True, fill='both')
-
-        self.graph = G
-
-        self.canvas.bind('<Configure>', self.resize)
-        self.update()
-
-        self.hide()
-        self.root.protocol("WM_DELETE_WINDOW", self.try_close)
-    
-
-    def try_close(self):
-        if is_kivy_running:
-            self.hide()
-        else:
-            self.root.destroy()
-
-
-    def renew(self, G: nx.Graph):
-        if not nx.utils.graphs_equal(G, self.graph):
-            self.graph = G.copy()
-            self.update()
-
-
-    def hide(self):
-        self.root.withdraw()
-
-
-    def show(self):
-        self.root.update()
-        self.root.deiconify()
-    
-
-    def resize(self, event):
-        # `geomery` is of the form "{width}x{height}+{x}+{y}"
-        geometry = self.root.geometry().replace('+', 'x')
-        # Uses this property of the `map` function: "Stops when the shortest iterable is exhausted."
-        self.width, self.height = map(int, geometry.split('x'), [10, 10])  # Convert to `int` with base 10, but only twice.
-        self.update()
-
-
-    def update(self):
-        self.draw_graph(self.graph)
-        self.changed = False
-    
-
-    def draw_graph(self, G: nx.Graph):
-        # Renders the graph. Quite similar to `update_rect`.
-        # Consider abstracting the algorithm by unifying the interface (of drawing circles and lines).
-        w, h = self.width, self.height
-        x, y = 0, 0
-        scale = min(w, h) / 2.3
-        r = 5
-        stroke = 1
-        pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
-
-        self.canvas.create_rectangle(0, 0, w, h, fill='white')
-            
-        for node in G:
-            x0, y0 = pos[node]
-            self.create_circle(x0, y0, r)
-            
-        for edge in G.edges:
-            x0, y0 = pos[edge[0]]
-            x1, y1 = pos[edge[1]]
-            self.create_line(x0, y0, x1, y1, stroke)
-
-
-    def create_circle(self, x, y, r):
-        x0 = x - r
-        y0 = y - r
-        x1 = x + r
-        y1 = y + r
-        return self.canvas.create_oval(x0, y0, x1, y1, fill='black')
-    
-
-    def create_line(self, x0, y0, x1, y1, stroke):
-        self.canvas.create_line(x0, y0, x1, y1, width=stroke)
-
-
-def callback0(x):
-    diagram.show()
-
-
-def callback1(x):
-    print('Hello1')
-
-
-def callback2(x):
-    print('Hello2')
-
-
-def callback3(x):
-    # Adds one dimension to the hypercube graph. Temporary -- until real info is fed into this.
-    global hyperness, G
-    hyperness += 1
-    if hyperness > 6: hyperness = 6
-    G = nx.hypercube_graph(hyperness)
-    update_rect(0, 0)
-    if diagram is not None: diagram.renew(G)
-
-
-class MyPaintWidget(Widget):
-    """Responsible for the middle diagram (object #9).
-
-    Args:
-        Widget (tkinter widget): the superclass.
-    """
-    def init(self):
-        update_rect(self, 0)
-
-    def on_touch_down(self, touch):
-        update_rect(self, 0)
-
-
-def update_rect(painter, value):
-    """Renders stuff on the diagram (object #9)
-
-    Args:
-        painter (MyPaintWidget): the diagram to paint on.
-        value (int): just for compatibility.
-    """
-    if hasattr(update_rect, 'cache'):
-        painter = update_rect.cache
-    else:
-        update_rect.cache = painter
-    
-    x, y = painter.pos
-    w, h = painter.size
-    h -= 50
-    scale = min(w, h) / 2.3
-    r = 5
-    stroke = 1
-    pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
-    # print(pos.values())
-    with painter.canvas:
-        Color(*bg_color)
-        Rectangle(pos=painter.pos, size=painter.size)
-        Color(0, 0, 0)
-        
-        for node in G:
-            x0, y0 = pos[node]
-            if painter.collide_point(x0 - r, y0 - r) and painter.collide_point(x0 + r, y0 + r):
-                Ellipse(pos=(x0 - r, y0 - r), size=(2 * r, 2 * r))
-        
-        for edge in G.edges:
-            x0, y0 = pos[edge[0]]
-            x1, y1 = pos[edge[1]]
-            if painter.collide_point(x0, y0) and painter.collide_point(x1, y1):
-                Line(points=(x0, y0, x1, y1), width=stroke)
-
-
-class ButtonColumn(GridLayout):
-    """Organises buttons in a column
-
-    Args:
-        GridLayout (tk): the superclass.
-    """
-    def __init__(self, width: int):
-        super().__init__(cols=1, width=width, size_hint=(None, 1), spacing=[-3], padding=[-1, -3, -1, -3])
-        self.buttons = []  # list of tuples `(button, callback)`
-        self.background_color = [0.1, 1, 0.3, 1]  # rgba values, range 0 to 1, in 4-item list
-        self.font_size = 24
-    
-
-    def add(self, text: str, callback=None):
-        btn = Button(text=text, font_size=self.font_size, background_color=self.background_color, font_name="Roboto")
-        if callback is not None:
-            btn.bind(on_press=callback)
-        super().add_widget(btn)
-        Hover.add(btn)
-        self.buttons.append((btn, callback))
-    
-
-    def log_all(self):
-        print(self.buttons)
-        for button, action in self.buttons:
-            print(nameof(action))
-
 
 class Hover:
     """Enables hovering cursor and behaviours. Uses singleton structure (because it accesses a system function of changing cursor).
@@ -346,7 +144,7 @@ class Diagram:
         """A few parts:
         - Tk stuff (root, title, width & height)
         - tk.Canvas initialisation (+ fit window)
-        - fields for `G` (the graph) and `diagram_cache` (see `Diagram.update`).
+        - a field for `G` (the graph)
         - bind `self.resize` to the relevant user operation
         - bind `self.try_close` to the relevant user operation
         - initial `update` and `hide`.
@@ -360,14 +158,12 @@ class Diagram:
         self.canvas.pack(expand=True, fill='both')
 
         self.graph = G
-        self.diagram_cache = None
 
         self.canvas.bind('<Configure>', self.resize)
         self.update()
 
         self.hide()
         self.root.protocol("WM_DELETE_WINDOW", self.try_close)
-
     
 
     def try_close(self):
@@ -408,10 +204,8 @@ class Diagram:
 
 
     def update(self):
-        if self.diagram_cache is None:
-            self.diagram_cache = TKDiagram(self, 5)
         background = (255, 255, 255)
-        render_diagram(self.diagram_cache, 0, 0, self.width, self.height, background)
+        render_diagram(TKDiagram(self, 5), 0, 0, self.width, self.height, background)
         self.changed = False
 
 
@@ -539,9 +333,11 @@ def update_rect(painter, value):
     if hasattr(update_rect, 'cache'):
         painter = update_rect.cache
     else:
-        update_rect.cache = painter
+        update_kivy_diagram.cache = painter
+        update_kivy_diagram.cache_diagram = KivyDiagram(painter, 5)
 
-    render_diagram(KivyDiagram(painter, 5), *painter.pos, *painter.size, bg_color)
+
+    render_diagram(update_kivy_diagram.cache_diagram, *painter.pos, *painter.size, bg_color, -70)
 
 
 def render_diagram(draw, x, y, w, h, bg):

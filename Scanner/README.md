@@ -438,7 +438,3 @@ Note: reverted the change that does `h-=50` to make space for the title. Find a 
 Also: the TK diagram is rendered from the top-left corner, but the Kivy one is from the bottom-left corner. Flip one pls.
 
 [18:26] Fixed the `h-=50` thingy. Also, docstrings.
-
-
-### 2023-02-08
-[20:01] Screen is stuck on white upon opening. That's problematic.
