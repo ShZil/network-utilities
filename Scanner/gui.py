@@ -18,9 +18,113 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color, Ellipse, Rectangle, Line
 from kivy.core.text import LabelBase
 from kivy.utils import escape_markup
+from kivy.core.window import Window
 
 from util import nameof, one_cache
-from hover import Hover, HoverReplace
+
+class Hover:
+    """Enables hovering cursor and behaviours. Uses singleton structure (because it accesses a system function of changing cursor).
+    Includes two lists: `items`, where each item can change the cursor to `pointer` if hovered (`item.collide_point(x, y) -> True`);
+    and `behaviors`, where each item is a `HoverBehavior`, and they do more exotic stuff, abstracted by `.show()` and `.hide()`.
+
+    Raises:
+        AttributeError: raised when `.add(item)` receives an `item` that has no method `.collide_point(int,int)`.
+        TypeError: raised when `.add_behavior(behavior)` receives a `behavior` that is not of type `HoverBehavior`.
+    """
+    items = []
+    behaviors = []
+
+
+    @staticmethod
+    @one_cache
+    def _bind():
+        Window.bind(mouse_pos=Hover.update)
+
+    
+    @staticmethod
+    def add(instance):
+        Hover._bind()
+        try:
+            instance.collide_point(0, 0)
+        except AttributeError:
+            raise AttributeError("The instance passed to `Hover.add` doesn't support `.collide_point(int,int)`.")
+        Hover.items.append(instance)
+
+
+    @staticmethod
+    def add_behavior(behavior):
+        Hover._bind()
+        if not isinstance(behavior, HoverBehavior):
+            raise TypeError("The behavior passed to `Hover.add_behavior` isn't a `HoverBehavior`.")
+        Hover.behaviors.append(behavior)
+        # A behaviour should support 3 methods: `collide_point(int,int)`, `show()`, and `hide()`.
+    
+
+    def update(window, pos):
+        if any([item.collide_point(*pos) for item in Hover.items]):
+            window.set_system_cursor("hand")
+        else:
+            window.set_system_cursor("arrow")
+
+        for behavior in Hover.behaviors:
+            if behavior.collide_point(*pos):
+                behavior.show()
+            else:
+                behavior.hide()
+    
+
+    @staticmethod
+    def hide_all():
+        # Hide everything when the screen loads.
+        for behavior in Hover.behaviors:
+            behavior.hide()
+
+
+class HoverBehavior:
+    """
+    Inherit from this class to create behaviours,
+    and pass the instances to `Hover.add_behavior(...)`.
+    """
+    def show(self):
+        raise NotImplementedError()
+
+
+    def hide(self):
+        raise NotImplementedError()
+
+    
+    def collide_point(self, x, y):
+        raise NotImplementedError()
+
+
+class HoverReplace(HoverBehavior):
+    """A `HoverBehavior` that replaces the text shown on a label.
+    When hovered, it displays the string in `text`,
+    otherwise, it displays the initial string.
+    """
+    FACTOR = 0.75  # new_text_size = FACTOR * old_text_size
+
+    def __init__(self, widget, text, font_size):
+        self.widget = widget
+        self.text = text
+        self.save = self.widget.text
+        self.font_size = font_size
+        Hover.add_behavior(self)
+    
+
+    def show(self):
+        self.widget.text = self.text
+        self.widget.font_size = self.font_size * HoverReplace.FACTOR
+    
+
+    def hide(self):
+        self.widget.text = self.save
+        self.widget.font_size = self.font_size
+
+
+    def collide_point(self, x, y):
+        return self.widget.collide_point(x, y)
+
 
 
 __author__ = 'Shaked Dan Zilberman'
@@ -41,7 +145,7 @@ class Diagram:
         """A few parts:
         - Tk stuff (root, title, width & height)
         - tk.Canvas initialisation (+ fit window)
-        - a field for `G` (the graph)
+        - fields for `G` (the graph) and `diagram_cache` (see `Diagram.update`).
         - bind `self.resize` to the relevant user operation
         - bind `self.try_close` to the relevant user operation
         - initial `update` and `hide`.
@@ -55,12 +159,14 @@ class Diagram:
         self.canvas.pack(expand=True, fill='both')
 
         self.graph = G
+        self.diagram_cache = None
 
         self.canvas.bind('<Configure>', self.resize)
         self.update()
 
         self.hide()
         self.root.protocol("WM_DELETE_WINDOW", self.try_close)
+
     
 
     def try_close(self):
@@ -101,8 +207,10 @@ class Diagram:
 
 
     def update(self):
+        if self.diagram_cache is None:
+            self.diagram_cache = TKDiagram(self, 5)
         background = (255, 255, 255)
-        render_diagram(TKDiagram(self, 5), 0, 0, self.width, self.height, background)
+        render_diagram(self.diagram_cache, 0, 0, self.width, self.height, background)
         self.changed = False
 
 
@@ -231,8 +339,9 @@ def update_kivy_diagram(painter, _):
         painter = update_kivy_diagram.cache
     else:
         update_kivy_diagram.cache = painter
+        update_kivy_diagram.cache_diagram = KivyDiagram(painter, 5)
 
-    render_diagram(KivyDiagram(painter, 5), *painter.pos, *painter.size, bg_color, -70)
+    render_diagram(update_kivy_diagram.cache_diagram, *painter.pos, *painter.size, bg_color, -70)
 
 
 def render_diagram(draw, x, y, w, h, bg, dh=0):
