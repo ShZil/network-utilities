@@ -228,7 +228,7 @@ def temp_increase_graph_degree(x):
     hyperness += 1
     if hyperness > 6: hyperness = 6
     G = nx.hypercube_graph(hyperness)
-    update_kivy_diagram(0, 0)
+    update_rect(0, 0)
     if diagram is not None: diagram.renew(G)
 
 
@@ -239,10 +239,10 @@ class MyPaintWidget(Widget):
         Widget (tkinter widget): the superclass.
     """
     def init(self):
-        update_kivy_diagram(self, 0)
+        update_rect(self, 0)
 
     def on_touch_down(self, touch):
-        update_kivy_diagram(self, 0)
+        update_rect(self, 0)
 
 
 class TKDiagram:
@@ -327,7 +327,7 @@ class KivyDiagram:
         return collides(x + r, y + r) and collides(x - r, y - r)
 
 
-def update_kivy_diagram(painter, _):
+def update_rect(painter, value):
     """Renders stuff on the diagram (object #9).
     Caches `painter` on first call.
 
@@ -335,23 +335,16 @@ def update_kivy_diagram(painter, _):
         painter (MyPaintWidget): the diagram to paint on. **This is passed in once**. All next calls will use the object that was given in the first call.
         value (int): just for compatibility.
     """
-    if hasattr(update_kivy_diagram, 'cache'):
-        painter = update_kivy_diagram.cache
+    if hasattr(update_rect, 'cache'):
+        painter = update_rect.cache
     else:
-        update_kivy_diagram.cache = painter
-        update_kivy_diagram.cache_diagram = KivyDiagram(painter, 5)
+        update_rect.cache = painter
 
-    render_diagram(update_kivy_diagram.cache_diagram, *painter.pos, *painter.size, bg_color, -70)
+    render_diagram(KivyDiagram(painter, 5), *painter.pos, *painter.size, bg_color)
 
 
-def render_diagram(draw, x, y, w, h, bg, dh=0):
-    """An abstract representation of the algorithm used to render the diagram.
-
-    To interface with ~~reality~~ the screen, it uses the `draw` argument,
-    which is a context manager supporting various methods.
-    Currently, there are two implementations: `KivyDiagram` and `TKDiagram`.
-    """
-    scale = min(w, h + dh) / 2.3
+def render_diagram(draw, x, y, w, h, bg):
+    scale = min(w, h) / 2.3
     stroke = 1
 
     pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
@@ -461,7 +454,7 @@ class MyApp(App):
 
         # Object #9
         paint = MyPaintWidget(size_hint=(1, 1), pos_hint={'center_x': .5, 'center_y': .5})
-        paint.bind(pos=update_kivy_diagram, size=update_kivy_diagram)
+        paint.bind(pos=update_rect, size=update_rect)
         
         # Object 1
         title = Label(text="[color=000000]Local Network Scanner[/color]", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
