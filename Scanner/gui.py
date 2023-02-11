@@ -26,6 +26,8 @@ from util import nameof, one_cache
 
 __author__ = 'Shaked Dan Zilberman'
 
+
+# --- Global Values ---
 hyperness = 1
 G = nx.hypercube_graph(1)
 diagram = None
@@ -33,8 +35,17 @@ is_kivy_running = True
 bg_color = (0, 0, .01)
 fg_color = (0.023, 0.92, 0.125)
 
+
+# --- Small Utilities ---
 color_hex = lambda rgb: '#%02x%02x%02x' % tuple([int(c * 255) for c in rgb])
 
+
+def add_font():
+    """Loads a font (`kivy`'s)."""
+    LabelBase.register(name='Symbols', fn_regular='Segoe UI Symbol.ttf')
+
+
+# --- Classes ---
 class Diagram:
     """This is a class responsible for the hovering diagram, that is created in a separate window when the 'Fullscreen' button is pressed.
     Uses `tkinter` (not `kivy`, like the other parts). Black diagram on white background. Can be expanded in both directions.
@@ -108,28 +119,6 @@ class Diagram:
             self.diagram_cache = TKDiagram(self, 5)
         render_diagram(self.diagram_cache, 0, 0, self.width, self.height, bg_color, fg_color)
         self.changed = False
-
-
-def callback1(x):
-    print('Hello1')
-
-
-def callback2(x):
-    print('Hello2')
-
-
-def activate(x):
-    print("Play!")
-
-
-def temp_increase_graph_degree(x):
-    """Adds one dimension to the hypercube graph. Temporary -- until real info is fed into this."""
-    global hyperness, G
-    hyperness += 1
-    if hyperness > 6: hyperness = 6
-    G = nx.hypercube_graph(hyperness)
-    update_kivy_diagram(0, 0)
-    if diagram is not None: diagram.renew(G)
 
 
 class MyPaintWidget(Widget):
@@ -223,50 +212,6 @@ class KivyDiagram:
         collides = lambda x0, y0: self.widget.collide_point(x0, y0)
         if r == 0: return collides(x, y)
         return collides(x + r, y + r) and collides(x - r, y - r)
-
-
-def update_kivy_diagram(painter, _):
-    """Renders stuff on the diagram (object #9).
-    Caches `painter` on first call.
-    Args:
-        painter (MyPaintWidget): the diagram to paint on. **This is passed in once**. All next calls will use the object that was given in the first call.
-        value (int): just for compatibility.
-    """
-    if hasattr(update_kivy_diagram, 'cache'):
-        painter = update_kivy_diagram.cache
-    else:
-        update_kivy_diagram.cache = painter
-        update_kivy_diagram.diagram_cache = KivyDiagram(painter, 5)
-    
-    render_diagram(update_kivy_diagram.diagram_cache, *painter.pos, *painter.size, bg_color, fg_color, -70)
-
-
-def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
-    """An abstract representation of the algorithm used to render the diagram.
-    To interface with ~reality~ the screen, it uses the `draw` argument,
-    which is a context manager supporting various methods.
-    Currently, there are two implementations: `KivyDiagram` and `TKDiagram`.
-    """
-    scale = min(w, h + dh) / 2.3
-    stroke = 1
-
-    pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
-    
-    with draw:
-        draw.color(*bg)
-        draw.rectangle(x, y, w, h)
-        draw.color(*fg)
-        
-        for node in G:
-            x0, y0 = pos[node]
-            if (x0, y0) in draw:
-                draw.circle(x0, y0)
-        
-        for edge in G.edges:
-            x0, y0 = pos[edge[0]]
-            x1, y1 = pos[edge[1]]
-            if (x0, y0) in draw and (x1, y1) in draw:
-                draw.line(x0, y0, x1, y1, stroke)
 
 
 class ButtonColumn(GridLayout):
@@ -400,7 +345,6 @@ class HoverReplace(HoverBehavior):
         return self.widget.collide_point(x, y)
 
 
-
 class BlackButton(Button):
     """A button that has black background, and also adds itself to `Hover`."""
     def __init__(self, text, **kwargs):
@@ -415,7 +359,75 @@ class GreenButton(Button):
         Hover.add(self)
 
 
+# --- Temporary --- ******
+def callback1(x):
+    print('Hello1')
 
+
+def callback2(x):
+    print('Hello2')
+
+
+def activate(x):
+    print("Play!")
+
+
+def temp_increase_graph_degree(x):
+    """Adds one dimension to the hypercube graph. Temporary -- until real info is fed into this."""
+    global hyperness, G
+    hyperness += 1
+    if hyperness > 6: hyperness = 6
+    G = nx.hypercube_graph(hyperness)
+    update_kivy_diagram(0, 0)
+    if diagram is not None: diagram.renew(G)
+
+
+# --- Rendering ---
+def update_kivy_diagram(painter, _):
+    """Renders stuff on the diagram (object #9).
+    Caches `painter` on first call.
+    Args:
+        painter (MyPaintWidget): the diagram to paint on. **This is passed in once**. All next calls will use the object that was given in the first call.
+        value (int): just for compatibility.
+    """
+    if hasattr(update_kivy_diagram, 'cache'):
+        painter = update_kivy_diagram.cache
+    else:
+        update_kivy_diagram.cache = painter
+        update_kivy_diagram.diagram_cache = KivyDiagram(painter, 5)
+    
+    render_diagram(update_kivy_diagram.diagram_cache, *painter.pos, *painter.size, bg_color, fg_color, -70)
+
+
+def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
+    """An abstract representation of the algorithm used to render the diagram.
+    To interface with ~reality~ the screen, it uses the `draw` argument,
+    which is a context manager supporting various methods.
+    Currently, there are two implementations: `KivyDiagram` and `TKDiagram`.
+    """
+    scale = min(w, h + dh) / 2.3
+    stroke = 1
+
+    pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
+    
+    with draw:
+        draw.color(*bg)
+        draw.rectangle(x, y, w, h)
+        draw.color(*fg)
+        
+        for node in G:
+            x0, y0 = pos[node]
+            if (x0, y0) in draw:
+                draw.circle(x0, y0)
+        
+        for edge in G.edges:
+            x0, y0 = pos[edge[0]]
+            x1, y1 = pos[edge[1]]
+            if (x0, y0) in draw and (x1, y1) in draw:
+                draw.line(x0, y0, x1, y1, stroke)
+
+
+# --- Basically Main ---
 class MyApp(App):
     """The main application, using `kivy`.
     Builds an interface that looks like this:
@@ -512,8 +524,7 @@ class MyApp(App):
 
 
 def start_kivy():
-    """Starts the `kivy` app, and handles the `tkinter` diagram's closing.
-    """
+    """Starts the `kivy` app, and handles the `tkinter` diagram's closing."""
     try:
         global is_kivy_running, diagram
         is_kivy_running = True
@@ -528,16 +539,10 @@ def start_kivy():
 
 def start_tk():
     """Starts the `tkinter` diagram in the background.
-    This has to be on the main thread (because `tkinter` said so).
-    """
+    This has to be on the main thread (because `tkinter` said so)."""
     global diagram
     diagram = Diagram()
     diagram.root.mainloop()
-
-
-def add_font():
-    """Loads a font (`kivy`'s)."""
-    LabelBase.register(name='Symbols', fn_regular='Segoe UI Symbol.ttf')
 
 
 if __name__ == '__main__':
