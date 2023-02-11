@@ -33,7 +33,7 @@ is_kivy_running = True
 bg_color = (0, 0, .01)
 fg_color = (0.023, 0.92, 0.125)
 
-
+color_hex = lambda rgb: '#%02x%02x%02x' % tuple(int(c * 255) for c in rgb)
 
 class Diagram:
     """This is a class responsible for the hovering diagram, that is created in a separate window when the 'Fullscreen' button is pressed.
@@ -54,7 +54,7 @@ class Diagram:
         self.width = 300
         self.height = 300
 
-        self.canvas = tk.Canvas(self.root, bg="white", height=self.height, width=self.width)
+        self.canvas = tk.Canvas(self.root, bg=color_hex(bg_color), height=self.height, width=self.width, borderwidth=0, highlightthickness=0)
         self.canvas.pack(expand=True, fill='both')
 
         self.graph = G
@@ -106,9 +106,7 @@ class Diagram:
     def update(self):
         if self.diagram_cache is None:
             self.diagram_cache = TKDiagram(self, 5)
-        background = (0, 0, 0)
-        foreground = (0, 255, 0)
-        render_diagram(self.diagram_cache, 0, 0, self.width, self.height, background, foreground)
+        render_diagram(self.diagram_cache, 0, 0, self.width, self.height, bg_color, fg_color)
         self.changed = False
 
 
@@ -163,8 +161,7 @@ class TKDiagram:
 
     def color(self, r=None, g=None, b=None):
         if r is None: return self.color_cache
-        x = lambda h: hex(h)[2:4].zfill(2)
-        self.color_cache = f'#{x(r)}{x(g)}{x(b)}'
+        self.color_cache = color_hex((r, g, b))
 
 
     def rectangle(self, x, y, w, h):

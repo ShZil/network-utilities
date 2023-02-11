@@ -455,3 +455,5 @@ I added caches for `KivyDiagram` and `TKDiagram`, which will be lost upon revert
 
 ### 2023-02-11
 [11:57] Copied colours changes (from Cyber class) from the document.
+
+[12:07] Added `color_hex = lambda...`. Also, found a way to remove the annoying white border on the TK diagram.
