@@ -465,3 +465,9 @@ Gonna eat breakfast and try to integrate!"
 [16:18] Successful step in the right direction: abstracted the scan buttons.
 
 [17:04] Success in changing to Scan objects.
+
+[17:06] A few stupid puns (YMCA, USA) in the printing placeholders.
+Also, added `TypeError` defence in case any `action` actually wants to use the useless argument (`x`) kivy gives.
+
+[17:07] Do: add hoverable entities on the diagram -- show ip.
+Do: give `Configure` and `Information` some usage.

@@ -62,7 +62,10 @@ class Scan:
     
 
     def do(self, x):
-        self.action()
+        try:
+            self.action()
+        except TypeError:
+            self.action(x)
 
 
 class Diagram:
@@ -539,7 +542,7 @@ class MyApp(App):
         scan_actions = [lambda: print("ICMP!!!"), lambda: print("ARP!!!"), lambda: print("ICMP..."), lambda: print("ARP..."), lambda: print("It's fun to stay in the O-S-I-D"), lambda: print("TCP! TCP! TCP!"), lambda: print("Uridine DiPhosphate (UDP) -- glycogen synthesis polymer")]
         for name, action in zip(scan_names, scan_actions):
             Scan(name, action, right_menu)
-        Scan('woo!', lambda: temp_increase_graph_degree(0), right_menu)
+        Scan('woo!', temp_increase_graph_degree, right_menu)
         
         
 
