@@ -33,7 +33,7 @@ is_kivy_running = True
 bg_color = (0, 0, .01)
 fg_color = (0.023, 0.92, 0.125)
 
-color_hex = lambda rgb: '#%02x%02x%02x' % tuple(int(c * 255) for c in rgb)
+color_hex = lambda rgb: '#%02x%02x%02x' % tuple([int(c * 255) for c in rgb])
 
 class Diagram:
     """This is a class responsible for the hovering diagram, that is created in a separate window when the 'Fullscreen' button is pressed.
