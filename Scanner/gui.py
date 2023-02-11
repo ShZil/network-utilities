@@ -34,6 +34,7 @@ diagram = None
 is_kivy_running = True
 bg_color = (0, 0, .01)
 fg_color = (0.023, 0.92, 0.125)
+button_column_background = [0.1, 1, 0.3, 1]  # rgba
 
 
 # --- Small Utilities ---
@@ -46,6 +47,24 @@ def add_font():
 
 
 # --- Classes ---
+class Scan:
+    font_size = 24
+    background_color = button_column_background
+
+    def __init__(self, name, action, parent):
+        self.name = name
+        self.action = action
+
+        self.button = Button(text=name, font_size=Scan.font_size, background_color=Scan.background_color, font_name="Roboto")
+        self.button.bind(on_press=lambda x: self.do(x))
+        parent.add_raw(self.button)
+        Hover.add(self.button)
+    
+
+    def do(self, x):
+        self.action()
+
+
 class Diagram:
     """This is a class responsible for the hovering diagram, that is created in a separate window when the 'Fullscreen' button is pressed.
     Uses `tkinter` (not `kivy`, like the other parts). Black diagram on white background. Can be expanded in both directions.
@@ -310,13 +329,14 @@ class HoverReplace(HoverBehavior):
 #     --- Kivy Extensions ---
 class ButtonColumn(GridLayout):
     """Organises buttons in a column
+    
     Args:
         GridLayout (tk): the superclass.
     """
     def __init__(self, width: int):
         super().__init__(cols=1, width=width, size_hint=(None, 1), spacing=[-3], padding=[-1, -3, -1, -3])
         self.buttons = []  # list of tuples `(button, callback)`
-        self.background_color = [0.1, 1, 0.3, 1]  # rgba values, range 0 to 1, in 4-item list
+        self.background_color = button_column_background
         self.font_size = 24
     
 
@@ -327,6 +347,12 @@ class ButtonColumn(GridLayout):
         super().add_widget(btn)
         Hover.add(btn)
         self.buttons.append((btn, callback))
+        return btn
+    
+
+    def add_raw(self, button):
+        super().add_widget(button)
+        self.buttons.append((button, None))
     
 
     def log_all(self):
@@ -510,9 +536,11 @@ class MyApp(App):
         right_menu.add_widget(operations)
 
         # Objects #7 - #14
-        for i in range(10):
-            right_menu.add(f"scan {i}", callback1 if i < 4 else callback2)
+        for i in range(7):
+            right_menu.add(f"scan {i}", callback1 if i < 3 else callback2)
         right_menu.add(f'woo!', temp_increase_graph_degree)
+        
+        Scan('ICMP sweep', lambda: print("ICMP!!!"), right_menu)
 
         # Add all widgets to `everything`
         HoverReplace(configure, "Configure", 30)

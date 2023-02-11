@@ -461,3 +461,5 @@ I added caches for `KivyDiagram` and `TKDiagram`, which will be lost upon revert
 [12:23] I organised the `gui.py` code a bit. "I think it's ready for integration with the core.
 Gonna eat breakfast and try to integrate!"
     - Possibly my last words.
+
+[16:18] Successful step in the right direction: abstracted the scan buttons.
