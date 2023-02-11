@@ -30,7 +30,9 @@ hyperness = 1
 G = nx.hypercube_graph(1)
 diagram = None
 is_kivy_running = True
-bg_color = (0.023, 0.92, 0.125)
+bg_color = (0, 0, .01)
+fg_color = (0.023, 0.92, 0.125)
+
 
 
 class Diagram:
@@ -104,8 +106,9 @@ class Diagram:
     def update(self):
         if self.diagram_cache is None:
             self.diagram_cache = TKDiagram(self, 5)
-        background = (255, 255, 255)
-        render_diagram(self.diagram_cache, 0, 0, self.width, self.height, background)
+        background = (0, 0, 0)
+        foreground = (0, 255, 0)
+        render_diagram(self.diagram_cache, 0, 0, self.width, self.height, background, foreground)
         self.changed = False
 
 
@@ -237,11 +240,11 @@ def update_kivy_diagram(painter, _):
     else:
         update_kivy_diagram.cache = painter
         update_kivy_diagram.diagram_cache = KivyDiagram(painter, 5)
+    
+    render_diagram(update_kivy_diagram.diagram_cache, *painter.pos, *painter.size, bg_color, fg_color, -70)
 
-    render_diagram(update_kivy_diagram.diagram_cache, *painter.pos, *painter.size, bg_color, -70)
 
-
-def render_diagram(draw, x, y, w, h, bg, dh=0):
+def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
     """An abstract representation of the algorithm used to render the diagram.
     To interface with ~reality~ the screen, it uses the `draw` argument,
     which is a context manager supporting various methods.
@@ -255,7 +258,7 @@ def render_diagram(draw, x, y, w, h, bg, dh=0):
     with draw:
         draw.color(*bg)
         draw.rectangle(x, y, w, h)
-        draw.color(0, 0, 0)
+        draw.color(*fg)
         
         for node in G:
             x0, y0 = pos[node]
@@ -402,11 +405,18 @@ class HoverReplace(HoverBehavior):
 
 
 class BlackButton(Button):
-    """A button that has black background, and also adds itself to `Hover`. 
-    """
+    """A button that has black background, and also adds itself to `Hover`."""
     def __init__(self, text, **kwargs):
         super().__init__(text='[color=000000]' + escape_markup(text) + '[/color]', markup=True, **kwargs)
         Hover.add(self)
+
+
+class GreenButton(Button):
+    """A button that has green background, and also adds itself to `Hover`."""
+    def __init__(self, text, **kwargs):
+        super().__init__(text='[color=00ff00]' + escape_markup(text) + '[/color]', markup=True, **kwargs)
+        Hover.add(self)
+
 
 
 class MyApp(App):
@@ -446,16 +456,16 @@ class MyApp(App):
         # Page frippery (top left corner) -- Objects #4, #5, #6
         pages = BoxLayout(orientation='vertical', size_hint=(.15, .15), pos_hint={'x': 0, 'top': 1})
         for label, action in zip(['Save.', 'Scan.', 'Know.'], [lambda _: print("Save"), lambda _: print("Scan"), lambda _: print("Know")]):
-            change_page = BlackButton(text=label, font_size=20, background_color=[0, 0, 0, 0], font_name="Arial")
+            change_page = GreenButton(text=label, font_size=20, background_color=[0, 0, 0, 0], font_name="Arial")
             change_page.bind(on_press=action)
             pages.add_widget(change_page)
 
         # Object #15
-        play_button = BlackButton(text='▶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
+        play_button = GreenButton(text='▶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
         play_button.bind(on_press=activate)
 
         # Object #16    # Previous icon: ⛶
-        open_diagram = BlackButton(text='🔍', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
+        open_diagram = GreenButton(text='🔍', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
         open_diagram.bind(on_press=lambda _: diagram.show())
 
         # Object #9
@@ -463,7 +473,7 @@ class MyApp(App):
         paint.bind(pos=update_kivy_diagram, size=update_kivy_diagram)
         
         # Object 1
-        title = Label(text="[color=000000]Local Network Scanner[/color]", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
+        title = Label(text="[color=00ff00]Local Network Scanner[/color]", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
 
         layout.add_widget(paint)
         layout.add_widget(pages)

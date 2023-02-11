@@ -451,3 +451,7 @@ Also I un/re-installed `kivy`.
 I added caches for `KivyDiagram` and `TKDiagram`, which will be lost upon reverting, but no biggie.
 
 [22:00] YES! Reverting worked! Now I'll just add the caches again.
+
+
+### 2023-02-11
+[11:57] Copied colours changes (from Cyber class) from the document.
