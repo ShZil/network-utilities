@@ -508,7 +508,6 @@ class MyApp(App):
         # Object #9
         paint = MyPaintWidget(size_hint=(1, 1), pos_hint={'center_x': .5, 'center_y': .5})
         paint.bind(pos=update_kivy_diagram, size=update_kivy_diagram)
-        
         # Object 1
         title = Label(text="[color=00ff00]Local Network Scanner[/color]", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
 
@@ -536,11 +535,13 @@ class MyApp(App):
         right_menu.add_widget(operations)
 
         # Objects #7 - #14
-        for i in range(7):
-            right_menu.add(f"scan {i}", callback1 if i < 3 else callback2)
-        right_menu.add(f'woo!', temp_increase_graph_degree)
+        scan_names = ['ICMP Sweep', 'ARP Sweep', 'Live ICMP', 'Live ARP', 'OS-ID', 'TCP Ports', 'UDP Ports']
+        scan_actions = [lambda: print("ICMP!!!"), lambda: print("ARP!!!"), lambda: print("ICMP..."), lambda: print("ARP..."), lambda: print("It's fun to stay in the O-S-I-D"), lambda: print("TCP! TCP! TCP!"), lambda: print("Uridine DiPhosphate (UDP) -- glycogen synthesis polymer")]
+        for name, action in zip(scan_names, scan_actions):
+            Scan(name, action, right_menu)
+        Scan('woo!', lambda: temp_increase_graph_degree(0), right_menu)
         
-        Scan('ICMP sweep', lambda: print("ICMP!!!"), right_menu)
+        
 
         # Add all widgets to `everything`
         HoverReplace(configure, "Configure", 30)

@@ -463,3 +463,5 @@ Gonna eat breakfast and try to integrate!"
     - Possibly my last words.
 
 [16:18] Successful step in the right direction: abstracted the scan buttons.
+
+[17:04] Success in changing to Scan objects.
