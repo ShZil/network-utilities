@@ -121,18 +121,6 @@ class Diagram:
         self.changed = False
 
 
-class MyPaintWidget(Widget):
-    """Responsible for the middle diagram (object #9).
-    Args:
-        Widget (tkinter widget): the superclass.
-    """
-    def init(self):
-        update_kivy_diagram(self, 0)
-
-    def on_touch_down(self, touch):
-        update_kivy_diagram(self, 0)
-
-
 class TKDiagram:
     def __init__(self, diagram, radius):
         self.diagram = diagram
@@ -214,33 +202,7 @@ class KivyDiagram:
         return collides(x + r, y + r) and collides(x - r, y - r)
 
 
-class ButtonColumn(GridLayout):
-    """Organises buttons in a column
-    Args:
-        GridLayout (tk): the superclass.
-    """
-    def __init__(self, width: int):
-        super().__init__(cols=1, width=width, size_hint=(None, 1), spacing=[-3], padding=[-1, -3, -1, -3])
-        self.buttons = []  # list of tuples `(button, callback)`
-        self.background_color = [0.1, 1, 0.3, 1]  # rgba values, range 0 to 1, in 4-item list
-        self.font_size = 24
-    
-
-    def add(self, text: str, callback=None):
-        btn = Button(text=text, font_size=self.font_size, background_color=self.background_color, font_name="Roboto")
-        if callback is not None:
-            btn.bind(on_press=callback)
-        super().add_widget(btn)
-        Hover.add(btn)
-        self.buttons.append((btn, callback))
-    
-
-    def log_all(self):
-        print(self.buttons)
-        for button, action in self.buttons:
-            print(nameof(action))
-
-
+#     --- Hovering ---
 class Hover:
     """Enables hovering cursor and behaviours. Uses singleton structure (because it accesses a system function of changing cursor).
     Includes two lists: `items`, where each item can change the cursor to `pointer` if hovered (`item.collide_point(x, y) -> True`);
@@ -343,6 +305,46 @@ class HoverReplace(HoverBehavior):
 
     def collide_point(self, x, y):
         return self.widget.collide_point(x, y)
+
+
+#     --- Kivy Extensions ---
+class ButtonColumn(GridLayout):
+    """Organises buttons in a column
+    Args:
+        GridLayout (tk): the superclass.
+    """
+    def __init__(self, width: int):
+        super().__init__(cols=1, width=width, size_hint=(None, 1), spacing=[-3], padding=[-1, -3, -1, -3])
+        self.buttons = []  # list of tuples `(button, callback)`
+        self.background_color = [0.1, 1, 0.3, 1]  # rgba values, range 0 to 1, in 4-item list
+        self.font_size = 24
+    
+
+    def add(self, text: str, callback=None):
+        btn = Button(text=text, font_size=self.font_size, background_color=self.background_color, font_name="Roboto")
+        if callback is not None:
+            btn.bind(on_press=callback)
+        super().add_widget(btn)
+        Hover.add(btn)
+        self.buttons.append((btn, callback))
+    
+
+    def log_all(self):
+        print(self.buttons)
+        for button, action in self.buttons:
+            print(nameof(action))
+
+
+class MyPaintWidget(Widget):
+    """Responsible for the middle diagram (object #9).
+    Args:
+        Widget (tkinter widget): the superclass.
+    """
+    def init(self):
+        update_kivy_diagram(self, 0)
+
+    def on_touch_down(self, touch):
+        update_kivy_diagram(self, 0)
 
 
 class BlackButton(Button):
