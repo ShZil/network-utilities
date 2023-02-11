@@ -457,3 +457,7 @@ I added caches for `KivyDiagram` and `TKDiagram`, which will be lost upon revert
 [11:57] Copied colours changes (from Cyber class) from the document.
 
 [12:07] Added `color_hex = lambda...`. Also, found a way to remove the annoying white border on the TK diagram.
+
+[12:23] I organised the `gui.py` code a bit. "I think it's ready for integration with the core.
+Gonna eat breakfast and try to integrate!"
+    - Possibly my last words.
