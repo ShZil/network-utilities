@@ -527,8 +527,32 @@ class ScanScreenMiddleDiagram(RelativeLayout):
         self.add_widget(title)
 
 
-        # Create the right column
-        right_menu = ButtonColumn(width=300)
+class ScanScreenRightColumn(ButtonColumn):
+    """Builds the right column used in the screen 'Scan'.
+
+    ```md
+        Scan Screen
+        . . . ─╥───────────────────────────┐
+               ║   [#2 Conf]   [#3 Info]   │
+               ╟───────────────────────────┤
+               ║        [#7 ScanA]         │
+               ║                           │
+               ║        [#8 ScanB]         │
+               ║                           │
+               ║        [#9 ScanC]         │
+               ║                           │
+               ║        [#10 ScanD]        │
+               ║                           │
+               ║           . . .           │
+               ║                           │
+        . . . ─╨───────────────────────────┘
+    ```
+
+    Args:
+        ButtonColumn (GridLayout): this inherits from ButtonColumn.
+    """
+    def __init__(self):
+        super().__init__(width=300)
 
         #     Objects #2, #3 -- two operations on each scan
         operations = BoxLayout(orientation='horizontal', spacing=-3)
