@@ -470,6 +470,85 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
                 draw.line(x0, y0, x1, y1, stroke)
 
 # --- Screens ---
+class ScanScreenMiddleDiagram(RelativeLayout):
+    """Builds the middle diagram used in the screen 'Scan'.
+
+    ```md
+        Scan Screen
+        ┌────────────────────────────────────────────╥─ . . .
+        │                  [#1 Title]                ║
+        │  #4 Save.                                  ║
+        │  #5 Scan.                                  ║
+        │  #6 Know.                                  ║
+        │           #9 D                             ║
+        │                I                           ║
+        │                  A                         ║
+        │                    G                       ║
+        │                      R                     ║
+        │                        A                   ║
+        │                          M                 ║
+        │    [#15 Play]            [#16 Fullscreen]  ║
+        └────────────────────────────────────────────╨─ . . .
+    ```
+
+    Args:
+        RelativeLayout (kivy): the diagram is a type of a Relative Layout, since widgets are placed sporadically.
+    """
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
+        #     Object #1
+        title = Label(text="[color=00ff00]Local Network Scanner[/color]", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
+
+        #     Objects #4, #5, #6 -- Page frippery (top left corner)
+        pages = BoxLayout(orientation='vertical', size_hint=(.15, .15), pos_hint={'x': 0, 'top': 1})
+        for label, action in zip(['Save.', 'Scan.', 'Know.'], [lambda _: print("Save"), lambda _: print("Scan"), lambda _: print("Know")]):
+            change_page = GreenButton(text=label, font_size=20, background_color=[0, 0, 0, 0], font_name="Arial")
+            change_page.bind(on_press=action)
+            pages.add_widget(change_page)
+
+        #     Object #15
+        play_button = GreenButton(text='▶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
+        play_button.bind(on_press=activate)
+
+        #     Object #16    # Previous icon: ⛶
+        open_diagram = GreenButton(text='🔍', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
+        open_diagram.bind(on_press=lambda _: diagram.show())
+
+        #     Object #9
+        paint = MyPaintWidget(size_hint=(1, 1), pos_hint={'center_x': .5, 'center_y': .5})
+        paint.bind(pos=update_kivy_diagram, size=update_kivy_diagram)
+        
+        # Unite all widgets of the middle diagram.
+        self.add_widget(paint)
+        self.add_widget(pages)
+        self.add_widget(open_diagram)
+        self.add_widget(play_button)
+        self.add_widget(title)
+
+
+        # Create the right column
+        right_menu = ButtonColumn(width=300)
+
+        #     Objects #2, #3 -- two operations on each scan
+        operations = BoxLayout(orientation='horizontal', spacing=-3)
+        operations.add_widget(OperationButton('⚙', "Configure"))
+        operations.add_widget(OperationButton('ℹ', "Information"))  # Consider a '?' instead
+
+        self.add_widget(operations)
+
+
+        # Objects #7 - #10
+        scan_names = ['ICMP Sweep', 'ARP Sweep', 'Live ICMP', 'Live ARP', 'OS-ID', 'TCP Ports', 'UDP Ports']
+        scan_actions = [lambda: print("ICMP!!!"), lambda: print("ARP!!!"), lambda: print("ICMP..."), lambda: print("ARP..."), lambda: print("It's fun to stay in the O-S-I-D"), lambda: print("TCP! TCP! TCP!"), lambda: print("Uridine DiPhosphate (UDP) -- glycogen synthesis polymer")]
+        for name, action in zip(scan_names, scan_actions):
+            Scan(name, action, self)
+        Scan('woo!', temp_increase_graph_degree, self)
+        
+        
+
+
+
 class ScanScreen(Screen):
     """Builds an interface that looks like this:
     
@@ -498,63 +577,9 @@ class ScanScreen(Screen):
     def __init__(self, **kw):
         super().__init__(name='Scan', **kw)
 
-
-        # Create the middle diagram
-        #     Object #1
-        title = Label(text="[color=00ff00]Local Network Scanner[/color]", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
-
-        #     Objects #4, #5, #6 -- Page frippery (top left corner)
-        pages = BoxLayout(orientation='vertical', size_hint=(.15, .15), pos_hint={'x': 0, 'top': 1})
-        for label, action in zip(['Save.', 'Scan.', 'Know.'], [lambda _: print("Save"), lambda _: print("Scan"), lambda _: print("Know")]):
-            change_page = GreenButton(text=label, font_size=20, background_color=[0, 0, 0, 0], font_name="Arial")
-            change_page.bind(on_press=action)
-            pages.add_widget(change_page)
-
-        #     Object #15
-        play_button = GreenButton(text='▶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
-        play_button.bind(on_press=activate)
-
-        #     Object #16    # Previous icon: ⛶
-        open_diagram = GreenButton(text='🔍', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
-        open_diagram.bind(on_press=lambda _: diagram.show())
-
-        #     Object #9
-        paint = MyPaintWidget(size_hint=(1, 1), pos_hint={'center_x': .5, 'center_y': .5})
-        paint.bind(pos=update_kivy_diagram, size=update_kivy_diagram)
-        
-        # Unite all widgets of the middle diagram.
-        layout = RelativeLayout()
-        layout.add_widget(paint)
-        layout.add_widget(pages)
-        layout.add_widget(open_diagram)
-        layout.add_widget(play_button)
-        layout.add_widget(title)
-
-
-        # Create the right column
-        right_menu = ButtonColumn(width=300)
-
-        #     Objects #2, #3 -- two operations on each scan
-        operations = BoxLayout(orientation='horizontal', spacing=-3)
-        operations.add_widget(OperationButton('⚙', "Configure"))
-        operations.add_widget(OperationButton('ℹ', "Information"))  # Consider a '?' instead
-
-        right_menu.add_widget(operations)
-
-
-        # Objects #7 - #10
-        scan_names = ['ICMP Sweep', 'ARP Sweep', 'Live ICMP', 'Live ARP', 'OS-ID', 'TCP Ports', 'UDP Ports']
-        scan_actions = [lambda: print("ICMP!!!"), lambda: print("ARP!!!"), lambda: print("ICMP..."), lambda: print("ARP..."), lambda: print("It's fun to stay in the O-S-I-D"), lambda: print("TCP! TCP! TCP!"), lambda: print("Uridine DiPhosphate (UDP) -- glycogen synthesis polymer")]
-        for name, action in zip(scan_names, scan_actions):
-            Scan(name, action, right_menu)
-        Scan('woo!', temp_increase_graph_degree, right_menu)
-        
-        
-
-        # Add all widgets to `everything`
         everything = BoxLayout(orientation='horizontal')
-        everything.add_widget(layout)
-        everything.add_widget(right_menu)
+        everything.add_widget(ScanScreenMiddleDiagram())
+        everything.add_widget(ScanScreenRightColumn())
 
         self.add_widget(everything)
 
