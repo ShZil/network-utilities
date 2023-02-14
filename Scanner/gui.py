@@ -391,6 +391,14 @@ class GreenButton(Button):
         Hover.add(self)
 
 
+class OperationButton(Button):
+    """A button that has grey background, adds itself to `Hover`, defines a `HoverReplace` on itself, and uses font `Symbols`."""
+    def __init__(self, text, long_text, **kwargs):
+        super().__init__(text=text, background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols", **kwargs)
+        Hover.add(self)
+        HoverReplace(self, long_text, 30)
+
+
 # --- Temporary --- ******
 def callback1(x):
     print('Hello1')
@@ -479,6 +487,7 @@ class ScanScreen(Screen):
         │    [#15 Play]            [#16 Fullscreen]  ║                           │
         └────────────────────────────────────────────╨───────────────────────────┘
     ```
+
     Args:
         Screen (kivy): the base class for a screen.
     """
@@ -524,14 +533,9 @@ class ScanScreen(Screen):
 
         #     Objects #2, #3 -- two operations on each scan
         operations = BoxLayout(orientation='horizontal', spacing=-3)
-        # Object #2
-        configure = Button(text='⚙', background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Perhaps use this font instead for this button: https://www.fontspace.com/bainsley-font-f59538
-        # Object #3
-        info = Button(text='ℹ', background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Consider a '?' instead
-        operations.add_widget(configure)
-        Hover.add(configure)
-        operations.add_widget(info)
-        Hover.add(info)
+        operations.add_widget(OperationButton('⚙', "Configure"))
+        operations.add_widget(OperationButton('ℹ', "Information"))  # Consider a '?' instead
+
         right_menu.add_widget(operations)
 
 
@@ -545,8 +549,7 @@ class ScanScreen(Screen):
         
 
         # Add all widgets to `everything`
-        HoverReplace(configure, "Configure", 30)
-        HoverReplace(info, "Information", 30)
+        everything = BoxLayout(orientation='horizontal')
         everything.add_widget(layout)
         everything.add_widget(right_menu)
 

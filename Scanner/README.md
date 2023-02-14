@@ -476,3 +476,5 @@ Do: give `Configure` and `Information` some usage.
 ### 2023-02-14
 [15:02] Start working on the screens (using kivy's `ScreenManager`).
 
+[15:16] Use classes to simplify code.
+
