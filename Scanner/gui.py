@@ -20,6 +20,7 @@ from kivy.uix.bubble import Bubble
 from kivy.graphics import Color, Ellipse, Rectangle, Line
 from kivy.core.text import LabelBase
 from kivy.utils import escape_markup
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 from util import nameof, one_cache
 
@@ -457,11 +458,9 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
             if (x0, y0) in draw and (x1, y1) in draw:
                 draw.line(x0, y0, x1, y1, stroke)
 
-
-# --- Basically Main ---
-class MyApp(App):
-    """The main application, using `kivy`.
-    Builds an interface that looks like this:
+# --- Screens ---
+class ScanScreen(Screen):
+    """Builds an interface that looks like this:
     
     ```md
     The Window (Unicode Box Art):
@@ -469,51 +468,50 @@ class MyApp(App):
         │                  [#1 Title]                ║   [#2 Conf]   [#3 Info]   │
         │  #4 Save.                                  ╟───────────────────────────┤
         │  #5 Scan.                                  ║        [#7 ScanA]         │
-        │  #6 Know.                                  ║        [#8 ScanB]         │
-        │           #9 D                             ║        [#10 ScanC]        │
-        │                I                           ║        [#11 ScanD]        │
-        │                  A                         ║        [#12 ScanE]        │
-        │                    G                       ║        [#13 ScanF]        │
-        │                      R                     ║        [#14 ScanG]        │
+        │  #6 Know.                                  ║                           │
+        │           #9 D                             ║        [#8 ScanB]         │
+        │                I                           ║                           │
+        │                  A                         ║        [#9 ScanC]         │
+        │                    G                       ║                           │
+        │                      R                     ║        [#10 ScanD]        │
         │                        A                   ║                           │
-        │                          M                 ║                           │
+        │                          M                 ║           . . .           │
         │    [#15 Play]            [#16 Fullscreen]  ║                           │
         └────────────────────────────────────────────╨───────────────────────────┘
     ```
     Args:
-        App (tk): the tkinter base app.
+        Screen (kivy): the base class for a screen.
     """
+    
+    def __init__(self, **kw):
+        super().__init__(name='Scan', **kw)
 
-
-    def build(self):
-        self.title = 'Local Network Scanner'
-        everything = BoxLayout(orientation='horizontal')
 
         # Create the middle diagram
-        layout = RelativeLayout()
+        #     Object #1
+        title = Label(text="[color=00ff00]Local Network Scanner[/color]", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
 
-
-        # Page frippery (top left corner) -- Objects #4, #5, #6
+        #     Objects #4, #5, #6 -- Page frippery (top left corner)
         pages = BoxLayout(orientation='vertical', size_hint=(.15, .15), pos_hint={'x': 0, 'top': 1})
         for label, action in zip(['Save.', 'Scan.', 'Know.'], [lambda _: print("Save"), lambda _: print("Scan"), lambda _: print("Know")]):
             change_page = GreenButton(text=label, font_size=20, background_color=[0, 0, 0, 0], font_name="Arial")
             change_page.bind(on_press=action)
             pages.add_widget(change_page)
 
-        # Object #15
+        #     Object #15
         play_button = GreenButton(text='▶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
         play_button.bind(on_press=activate)
 
-        # Object #16    # Previous icon: ⛶
+        #     Object #16    # Previous icon: ⛶
         open_diagram = GreenButton(text='🔍', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
         open_diagram.bind(on_press=lambda _: diagram.show())
 
-        # Object #9
+        #     Object #9
         paint = MyPaintWidget(size_hint=(1, 1), pos_hint={'center_x': .5, 'center_y': .5})
         paint.bind(pos=update_kivy_diagram, size=update_kivy_diagram)
-        # Object 1
-        title = Label(text="[color=00ff00]Local Network Scanner[/color]", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
-
+        
+        # Unite all widgets of the middle diagram.
+        layout = RelativeLayout()
         layout.add_widget(paint)
         layout.add_widget(pages)
         layout.add_widget(open_diagram)
@@ -521,11 +519,10 @@ class MyApp(App):
         layout.add_widget(title)
 
 
-
         # Create the right column
         right_menu = ButtonColumn(width=300)
 
-        # 2 operations on each scan
+        #     Objects #2, #3 -- two operations on each scan
         operations = BoxLayout(orientation='horizontal', spacing=-3)
         # Object #2
         configure = Button(text='⚙', background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols")  # Perhaps use this font instead for this button: https://www.fontspace.com/bainsley-font-f59538
@@ -537,7 +534,8 @@ class MyApp(App):
         Hover.add(info)
         right_menu.add_widget(operations)
 
-        # Objects #7 - #14
+
+        # Objects #7 - #10
         scan_names = ['ICMP Sweep', 'ARP Sweep', 'Live ICMP', 'Live ARP', 'OS-ID', 'TCP Ports', 'UDP Ports']
         scan_actions = [lambda: print("ICMP!!!"), lambda: print("ARP!!!"), lambda: print("ICMP..."), lambda: print("ARP..."), lambda: print("It's fun to stay in the O-S-I-D"), lambda: print("TCP! TCP! TCP!"), lambda: print("Uridine DiPhosphate (UDP) -- glycogen synthesis polymer")]
         for name, action in zip(scan_names, scan_actions):
@@ -552,9 +550,34 @@ class MyApp(App):
         everything.add_widget(layout)
         everything.add_widget(right_menu)
 
+        self.add_widget(everything)
+
+
+
+# --- Basically Main ---
+class MyApp(App):
+    """The main application, using `kivy`.
+    Includes four screens:
+    1. ScanScreen
+
+
+    Args:
+        App (tk): the tkinter base app.
+    """
+
+
+    def build(self):
+        self.title = 'Local Network Scanner'
+        screens = ScreenManager()
+
+
+        screens.add_widget(ScanScreen())
+
+        screens.current = 'Scan'
+        
         Hover.start()
 
-        return everything
+        return screens
 
 
 def start_kivy():

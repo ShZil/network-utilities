@@ -471,3 +471,8 @@ Also, added `TypeError` defence in case any `action` actually wants to use the u
 
 [17:07] Do: add hoverable entities on the diagram -- show ip.
 Do: give `Configure` and `Information` some usage.
+
+
+### 2023-02-14
+[15:02] Start working on the screens (using kivy's `ScreenManager`).
+
