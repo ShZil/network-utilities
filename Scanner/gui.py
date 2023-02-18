@@ -50,6 +50,8 @@ def add_font():
         LabelBase.register(name='Symbols', fn_regular='BainsleyBold.ttf')
     except OSError:
         LabelBase.register(name='Symbols', fn_regular='Segoe UI Symbol.ttf')
+    finally:
+        LabelBase.register(name='Symbols+', fn_regular='Segoe UI Symbol.ttf')
 
 
 # --- Classes ---
