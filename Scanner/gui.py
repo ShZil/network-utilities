@@ -620,6 +620,52 @@ class ScanScreen(Screen):
 
         self.add_widget(everything)
 
+class SaveScreenExportButton(GreenButton):
+    def __init__(self, **kwargs):
+        super().__init__('↥', size_hint=(.15, .25), pos_hint={'x': 0.2, 'top': 0.75}, font_name="Symbols+", background_color=(0, 0, 0, 1), **kwargs)
+        HoverReplace(self, 'Export', 50)
+        self.bind(on_press=self.export)
+    
+    def export(self, _):
+        print("Exporting...")
+
+
+class SaveScreen(Screen):
+    """Builds an interface that looks like this:
+    
+    ```md
+    The Window (Unicode Box Art):
+        ┌────────────────────────────────────────────┐
+        │                  [#1 Title]                │
+        │  #4 Save.                                  │
+        │  #5 Scan.                                  │
+        │  #6 Know.                                  │
+        │                                            │
+        │       #2 Export            #3 Import       │
+        │                                            │
+        │                            #7 Recent1      │
+        │                            #8 Recent2      │
+        │                            #9 Recent3      │
+        │                                            │
+        │                                            │
+        └────────────────────────────────────────────┘
+    ```
+
+    Args:
+        Screen (kivy): the base class for a screen.
+    """
+    
+    def __init__(self, **kw):
+        super().__init__(name='Save', **kw)
+
+        everything = RelativeLayout()
+        everything.add_widget(Pages())
+        everything.add_widget(SaveScreenExportButton())
+        # everything.add_widget(SaveScreenImportButton())
+        # everything.add_widget(SaveScreenRecents())
+
+        self.add_widget(everything)
+
 
 
 # --- Basically Main ---
@@ -656,6 +702,7 @@ class MyApp(App):
 
 
         screens.add_widget(ScanScreen())
+        screens.add_widget(SaveScreen())
 
         state.screen('Scan')
         
