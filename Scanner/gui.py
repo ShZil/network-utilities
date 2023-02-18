@@ -622,7 +622,7 @@ class ScanScreen(Screen):
 
 class SaveScreenExportButton(GreenButton):
     def __init__(self, **kwargs):
-        super().__init__('↥', size_hint=(.15, .25), pos_hint={'x': 0.2, 'top': 0.75}, font_name="Symbols+", background_color=(0, 0, 0, 1), **kwargs)
+        super().__init__('↥', size_hint=(.15, .15), pos_hint={'x': 0.2, 'top': 0.75}, font_name="Symbols+", background_color=(0, 0, 0, 1), **kwargs)
         HoverReplace(self, 'Export', 50)
         self.bind(on_press=self.export)
     
@@ -677,7 +677,8 @@ class State:
     def setScreenManager(self, screens):
         self.screenManager = screens
     
-    def screen(self, name):
+    def screen(self, name=None):
+        if name == None: return self.currentScreen
         self.screenManager.current = name
         self.currentScreen = name
 
