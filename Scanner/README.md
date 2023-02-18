@@ -483,3 +483,9 @@ Do: give `Configure` and `Information` some usage.
 
 ### 2023-02-18
 [12:53] Working on the Save Screen.
+Possible character: Envelope with downwards arrow above: 📩
+(No matching opposite)
+Also: Downwards Triangle-Headed Arrow to Bar: ⭳
+Upwards Arrow from Bar: ↥
+
+[13:07] `Hover` requires an upgrade, as I expected: widgets from different screens still demand hovering, even when it's not their screen.
