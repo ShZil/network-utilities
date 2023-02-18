@@ -469,6 +469,7 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
             if (x0, y0) in draw and (x1, y1) in draw:
                 draw.line(x0, y0, x1, y1, stroke)
 
+
 # --- Screens ---
 class ScanScreenMiddleDiagram(RelativeLayout):
     """Builds the middle diagram used in the screen 'Scan'.
@@ -563,10 +564,13 @@ class ScanScreenRightColumn(ButtonColumn):
 
 
         # Objects #7 - #10
-        scan_names = ['ICMP Sweep', 'ARP Sweep', 'Live ICMP', 'Live ARP', 'OS-ID', 'TCP Ports', 'UDP Ports']
-        scan_actions = [lambda: print("ICMP!!!"), lambda: print("ARP!!!"), lambda: print("ICMP..."), lambda: print("ARP..."), lambda: print("It's fun to stay in the O-S-I-D"), lambda: print("TCP! TCP! TCP!"), lambda: print("Uridine DiPhosphate (UDP) -- glycogen synthesis polymer")]
-        for name, action in zip(scan_names, scan_actions):
-            Scan(name, action, self)
+        Scan('ICMP Sweep', lambda: print("ICMP!!!"), self)
+        Scan('ARP Sweep', lambda: print("ARP!!!"), self)
+        Scan('Live ICMP', lambda: print("ICMP..."), self)
+        Scan('Live ARP', lambda: print("ARP..."), self)
+        Scan('OS-ID', lambda: print("It's fun to stay in the O-S-I-D"), self)
+        Scan('TCP Ports', lambda: print("TCP! TCP! TCP!"), self)
+        Scan('UDP Ports', lambda: print("Uridine DiPhosphate (UDP) -- glycogen synthesis polymer"), self)
         Scan('woo!', temp_increase_graph_degree, self)
         
         
