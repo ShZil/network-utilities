@@ -505,10 +505,11 @@ class ScanScreenMiddleDiagram(RelativeLayout):
 
         #     Objects #4, #5, #6 -- Page frippery (top left corner)
         pages = BoxLayout(orientation='vertical', size_hint=(.15, .15), pos_hint={'x': 0, 'top': 1})
-        for label, action in zip(['Save.', 'Scan.', 'Know.'], [lambda _: print("Save"), lambda _: print("Scan"), lambda _: print("Know")]):
-            change_page = GreenButton(text=label, font_size=20, background_color=[0, 0, 0, 0], font_name="Arial")
-            change_page.bind(on_press=action)
-            pages.add_widget(change_page)
+        labels = ['Save.', 'Scan.', 'Know.']
+        actions = [lambda _: state.screen("Save"), lambda _: state.screen("Scan"), lambda _: state.screen("Know")]
+        buttons = [GreenButton(text=label, font_size=20, background_color=[0, 0, 0, 0], font_name="Arial") for label in labels]
+        [button.bind(on_press=action) for button, action in zip(buttons, actions)]
+        [pages.add_widget(button) for button in buttons]
 
         #     Object #15
         play_button = GreenButton(text='▶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
@@ -574,9 +575,6 @@ class ScanScreenRightColumn(ButtonColumn):
         Scan('TCP Ports', lambda: print("TCP! TCP! TCP!"), self)
         Scan('UDP Ports', lambda: print("Uridine DiPhosphate (UDP) -- glycogen synthesis polymer"), self)
         Scan('woo!', temp_increase_graph_degree, self)
-        
-        
-
 
 
 class ScanScreen(Screen):
