@@ -661,11 +661,10 @@ def start_kivy():
         global is_kivy_running, diagram
         is_kivy_running = True
         MyApp().run()
+    finally:
         is_kivy_running = False
-        
         diagram.show()
         diagram.root.quit()
-    finally:
         sys.exit()
 
 
