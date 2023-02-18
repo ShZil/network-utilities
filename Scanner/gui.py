@@ -475,6 +475,18 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
 
 
 # --- Screens ---
+class Pages(BoxLayout):
+    def __init__(self, **kwargs):
+        super().__init__(orientation='vertical', size_hint=(.15, .15), pos_hint={'x': 0, 'top': 1}, **kwargs)
+        
+        labels = ['Save.', 'Scan.', 'Know.']
+        actions = [lambda _: state.screen("Save"), lambda _: state.screen("Scan"), lambda _: state.screen("Know")]
+        buttons = [GreenButton(text=label, font_size=20, background_color=[0, 0, 0, 0], font_name="Arial") for label in labels]
+        for button, action in zip(buttons, actions):
+            button.bind(on_press=action)
+            self.add_widget(button)
+
+
 class ScanScreenMiddleDiagram(RelativeLayout):
     """Builds the middle diagram used in the screen 'Scan'.
 
@@ -506,12 +518,7 @@ class ScanScreenMiddleDiagram(RelativeLayout):
         title = Label(text="[color=00ff00]Local Network Scanner[/color]", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
 
         #     Objects #4, #5, #6 -- Page frippery (top left corner)
-        pages = BoxLayout(orientation='vertical', size_hint=(.15, .15), pos_hint={'x': 0, 'top': 1})
-        labels = ['Save.', 'Scan.', 'Know.']
-        actions = [lambda _: state.screen("Save"), lambda _: state.screen("Scan"), lambda _: state.screen("Know")]
-        buttons = [GreenButton(text=label, font_size=20, background_color=[0, 0, 0, 0], font_name="Arial") for label in labels]
-        [button.bind(on_press=action) for button, action in zip(buttons, actions)]
-        [pages.add_widget(button) for button in buttons]
+        pages = Pages()
 
         #     Object #15
         play_button = GreenButton(text='▶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
