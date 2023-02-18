@@ -37,6 +37,8 @@ bg_color = (0, 0, .01)
 fg_color = (0.023, 0.92, 0.125)
 button_column_background = [0.1, 1, 0.3, 1]  # rgba
 
+state = None
+
 
 # --- Small Utilities ---
 color_hex = lambda rgb: '#%02x%02x%02x' % tuple([int(c * 255) for c in rgb])
@@ -614,6 +616,19 @@ class ScanScreen(Screen):
 
 
 # --- Basically Main ---
+class State:
+    def __init__(self) -> None:
+        self.screenManager = None
+        self.currentScreen = None
+
+    def setScreenManager(self, screens):
+        self.screenManager = screens
+    
+    def screen(self, name):
+        self.screenManager.current = name
+        self.currentScreen = name
+
+
 class MyApp(App):
     """The main application, using `kivy`.
     Includes four screens:
@@ -627,12 +642,15 @@ class MyApp(App):
 
     def build(self):
         self.title = 'Local Network Scanner'
+        global state
+        state = State()
         screens = ScreenManager()
+        state.setScreenManager(screens)
 
 
         screens.add_widget(ScanScreen())
 
-        screens.current = 'Scan'
+        state.screen('Scan')
         
         Hover.start()
 
