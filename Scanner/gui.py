@@ -652,10 +652,11 @@ class ScanScreen(Screen):
 
         self.add_widget(everything)
 
+
 class SaveScreenExportButton(GreenButton):
     def __init__(self, **kwargs):
         super().__init__('↥', size_hint=(.15, .15), pos_hint={'x': 0.2, 'top': 0.75}, font_name="Symbols+", background_color=(0, 0, 0, 1), **kwargs)
-        HoverReplace(self, 'Export', 50)
+        HoverReplaceBackground(self, 'Export', 50, [0, 0, 1, 1])
         self.bind(on_press=self.export)
     
     def export(self, _):
@@ -665,7 +666,7 @@ class SaveScreenExportButton(GreenButton):
 class SaveScreenImportButton(GreenButton):
     def __init__(self, **kwargs):
         super().__init__('⭳', size_hint=(.15, .15), pos_hint={'x': 0.65, 'top': 0.75}, font_name="Symbols++", background_color=(0, 0, 0, 1), **kwargs)
-        HoverReplace(self, 'Import', 50)
+        HoverReplaceBackground(self, 'Import', 50, [0, 0, 1, 1])
         self.bind(on_press=self.do_import)
     
     def do_import(self, _):
