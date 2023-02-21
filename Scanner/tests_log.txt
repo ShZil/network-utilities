@@ -7,5 +7,6 @@ valid_subnet_mask Successful
 threadify_echo_test Successful
 shift_list_test Successful
 does_winpcap_exist Successful
+does_fallback_font_exist Successful
 
 All tests were successful.

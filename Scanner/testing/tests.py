@@ -77,8 +77,14 @@ def does_winpcap_exist():
     return True
 
 
+def does_fallback_font_exist():
+    """A necessary font (Segoe UI Symbol) was not found under `fonts/Segoe UI Symbol.ttf`. Please check your installation of the software."""
+    import os.path
+    return os.path.isfile(r".\fonts\Segoe UI Symbol.ttf")
+
+
 # Each element is a boolean function. False means the test failed.
-tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask, threadify_echo_test, shift_list_test, does_winpcap_exist]
+tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask, threadify_echo_test, shift_list_test, does_winpcap_exist, does_fallback_font_exist]
 def test() -> None:
     os.system("")  # Enables ANSI colouring
     results = [not run() for run in tests]
