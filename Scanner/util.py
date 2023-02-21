@@ -206,7 +206,7 @@ def threadify(f, silent=False):
             width = os.get_terminal_size().columns - len(f"@threadify: {name}    ")
             if width < options["min_printing_length"]: width = options["min_printing_length"]
             while any([thread.is_alive() for thread in threads]):
-                ratio = sum([thread.is_alive() for thread in threads]) / len(threads)
+                ratio = sum([thread.is_alive() for thread in threads]) / len(args)
 
                 print(f"@threadify: {name} {progress(ratio, options['format'], width)}   \r", end='', file=real_stdout)
                 sleep(0.1)

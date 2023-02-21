@@ -503,6 +503,8 @@ To disable add this: https://stackoverflow.com/a/37572966
 [13:39] Add font behaviour in HoverReplace, such that the text (long) will appear in Arial (default; change with argument in `__init__`),
 while the symbol text (short) appears in the font specified in the widget (i.e. `font_name` argument in Widget initialisation).
 
+[13:55] Bugfix: threadify progress bar goes up, then down, then back up. The issue is that more threads are created, so we’re dividing by a bigger number. Instead, divide by a constant value (`len(args)`), that isn’t changed by a different thread.
+
 
 
 ### 2023-02-21
