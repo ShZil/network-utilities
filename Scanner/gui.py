@@ -321,21 +321,25 @@ class HoverReplace(HoverBehavior):
     """
     FACTOR = 0.75  # new_text_size = FACTOR * old_text_size
 
-    def __init__(self, widget, text, font_size):
+    def __init__(self, widget, text, font_size, font="Arial"):
         self.widget = widget
         self.text = text
         self.save = self.widget.text
         self.font_size = font_size
+        self.save_font = self.widget.font_name
+        self.font = font
         Hover.add_behavior(self)
     
 
     def show(self):
         self.widget.text = self.text
+        self.widget.font_name = self.font
         self.widget.font_size = self.font_size * HoverReplace.FACTOR
     
 
     def hide(self):
         self.widget.text = self.save
+        self.widget.font_name = self.save_font
         self.widget.font_size = self.font_size
 
 

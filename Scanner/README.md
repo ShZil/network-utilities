@@ -500,6 +500,8 @@ To disable add this: https://stackoverflow.com/a/37572966
 
 [13:38] Add another font and improve `add_font`.
 
+[13:39] Add font behaviour in HoverReplace, such that the text (long) will appear in Arial (default; change with argument in `__init__`),
+while the symbol text (short) appears in the font specified in the widget (i.e. `font_name` argument in Widget initialisation).
 
 
 
