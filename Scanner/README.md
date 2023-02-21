@@ -489,3 +489,13 @@ Also: Downwards Triangle-Headed Arrow to Bar: ⭳
 Upwards Arrow from Bar: ↥
 
 [13:07] `Hover` requires an upgrade, as I expected: widgets from different screens still demand hovering, even when it's not their screen.
+
+
+
+### 2023-02-20
+[13:16] Ilya tried out my GUI in Cyber class, and it turns out right clicking creates red dots in `kivy` (multi touch emulation).
+To disable add this: https://stackoverflow.com/a/37572966
+
+
+### 2023-02-21
+[17:27] Adding the changes listed in the docs file, made during Cyber class.
