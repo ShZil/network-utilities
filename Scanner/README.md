@@ -505,6 +505,7 @@ while the symbol text (short) appears in the font specified in the widget (i.e. 
 
 [13:55] Bugfix: threadify progress bar goes up, then down, then back up. The issue is that more threads are created, so we’re dividing by a bigger number. Instead, divide by a constant value (`len(args)`), that isn’t changed by a different thread.
 
+[14:16] Choose transition. I chose Fade.
 
 
 ### 2023-02-21

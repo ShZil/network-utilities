@@ -20,7 +20,7 @@ from kivy.uix.bubble import Bubble
 from kivy.graphics import Color, Ellipse, Rectangle, Line
 from kivy.core.text import LabelBase
 from kivy.utils import escape_markup
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.config import Config
 
 from util import nameof, one_cache
@@ -718,7 +718,7 @@ class MyApp(App):
         self.title = 'Local Network Scanner'
         global state
         state = State()
-        screens = ScreenManager()
+        screens = ScreenManager(transition=FadeTransition())
         state.setScreenManager(screens)
 
 
