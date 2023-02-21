@@ -631,6 +631,16 @@ class SaveScreenExportButton(GreenButton):
         print("Exporting...")
 
 
+class SaveScreenImportButton(GreenButton):
+    def __init__(self, **kwargs):
+        super().__init__('⭳', size_hint=(.15, .15), pos_hint={'x': 0.65, 'top': 0.75}, font_name="Symbols++", background_color=(0, 0, 0, 1), **kwargs)
+        HoverReplace(self, 'Import', 50)
+        self.bind(on_press=self.do_import)
+    
+    def do_import(self, _):
+        print("Importing...")
+
+
 class SaveScreen(Screen):
     """Builds an interface that looks like this:
     
@@ -662,7 +672,7 @@ class SaveScreen(Screen):
         everything = RelativeLayout()
         everything.add_widget(Pages())
         everything.add_widget(SaveScreenExportButton())
-        # everything.add_widget(SaveScreenImportButton())
+        everything.add_widget(SaveScreenImportButton())
         # everything.add_widget(SaveScreenRecents())
 
         self.add_widget(everything)
