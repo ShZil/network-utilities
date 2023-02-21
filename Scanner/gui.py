@@ -48,11 +48,11 @@ color_hex = lambda rgb: '#%02x%02x%02x' % tuple([int(c * 255) for c in rgb])
 def add_font():
     """Loads a font (`kivy`'s)."""
     try:
-        LabelBase.register(name='Symbols', fn_regular='BainsleyBold.ttf')
+        LabelBase.register(name='Symbols', fn_regular='fonts/BainsleyBold.ttf')
     except OSError:
-        LabelBase.register(name='Symbols', fn_regular='Segoe UI Symbol.ttf')
+        LabelBase.register(name='Symbols', fn_regular='fonts/Segoe UI Symbol.ttf')
     finally:
-        LabelBase.register(name='Symbols+', fn_regular='Segoe UI Symbol.ttf')
+        LabelBase.register(name='Symbols+', fn_regular='fonts/Segoe UI Symbol.ttf')
 
 
 # --- Classes ---
