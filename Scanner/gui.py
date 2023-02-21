@@ -21,6 +21,7 @@ from kivy.graphics import Color, Ellipse, Rectangle, Line
 from kivy.core.text import LabelBase
 from kivy.utils import escape_markup
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.config import Config
 
 from util import nameof, one_cache
 
@@ -717,6 +718,7 @@ def start_kivy():
     try:
         global is_kivy_running, diagram
         is_kivy_running = True
+        Config.set('input', 'mouse', 'mouse,multitouch_on_demand')  # disable multi-touch emulation
         MyApp().run()
     finally:
         is_kivy_running = False
