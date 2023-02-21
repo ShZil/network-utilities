@@ -347,6 +347,28 @@ class HoverReplace(HoverBehavior):
         return self.widget.collide_point(x, y)
 
 
+class HoverReplaceBackground(HoverReplace):
+    """A `HoverBehavior` that replaces the text shown on a label.
+    When hovered, it displays the string in `text` (AND a different background colour),
+    otherwise, it displays the initial string.
+    """
+
+    def __init__(self, widget, text, font_size, new_bg, font="Arial"):
+        super().__init__(widget, text, font_size, font)
+        self.save_bg = self.widget.background_color
+        self.bg = new_bg
+    
+
+    def show(self):
+        super().show()
+        self.widget.background_color = self.bg
+    
+
+    def hide(self):
+        super().hide()
+        self.widget.background_color = self.save_bg
+
+
 #     --- Kivy Extensions ---
 class ButtonColumn(GridLayout):
     """Organises buttons in a column

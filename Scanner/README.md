@@ -507,6 +507,8 @@ while the symbol text (short) appears in the font specified in the widget (i.e. 
 
 [14:16] Choose transition. I chose Fade.
 
+[14:27] Add HoverReplaceBackground that extends HoverReplace, that changes the background colour upon hovering.
+
 
 ### 2023-02-21
 [17:27] Adding the changes listed in the docs file, made during Cyber class.
