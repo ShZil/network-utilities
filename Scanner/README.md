@@ -512,3 +512,7 @@ while the symbol text (short) appears in the font specified in the widget (i.e. 
 
 ### 2023-02-21
 [17:27] Adding the changes listed in the docs file, made during Cyber class.
+
+[18:01] Consider changing the background colour lol
+this blue doesn't seem right / nice / good.
+(In calls to `HoverReplaceBackground`)
