@@ -247,8 +247,9 @@ class Hover:
         AttributeError: raised when `.add(item)` receives an `item` that has no method `.collide_point(int,int)`.
         TypeError: raised when `.add_behavior(behavior)` receives a `behavior` that is not of type `HoverBehavior`.
     """
-    items = []
-    behaviors = []
+    items = {}
+    behaviors = {}
+    current_screen = ""
 
 
     @staticmethod
@@ -261,40 +262,49 @@ class Hover:
     @staticmethod
     def add(instance):
         Hover._bind()
+        if Hover.current_screen == "": raise KeyError("Hover cannot add without screen")
         try:
             instance.collide_point(0, 0)
         except AttributeError:
             raise AttributeError("The instance passed to `Hover.add` doesn't support `.collide_point(int,int)`.")
-        Hover.items.append(instance)
+        Hover.items[Hover.current_screen].append(instance)
 
 
     @staticmethod
     def add_behavior(behavior):
         Hover._bind()
+        if Hover.current_screen == "": raise KeyError("Hover cannot add without screen")
         if not isinstance(behavior, HoverBehavior):
             raise TypeError("The behavior passed to `Hover.add_behavior` isn't a `HoverBehavior`.")
-        Hover.behaviors.append(behavior)
+        Hover.behaviors[Hover.current_screen].append(behavior)
         # A behaviour should support 3 methods: `collide_point(int,int)`, `show()`, and `hide()`.
     
 
     def update(window, pos):
-        if any([item.collide_point(*pos) for item in Hover.items]):
+        if any([item.collide_point(*pos) for item in Hover.items[Hover.current_screen]]):
             window.set_system_cursor("hand")
         else:
             window.set_system_cursor("arrow")
 
-        for behavior in Hover.behaviors:
+        for behavior in Hover.behaviors[Hover.current_screen]:
             if behavior.collide_point(*pos):
                 behavior.show()
             else:
                 behavior.hide()
     
 
+    def enter(screen: str):
+        Hover.current_screen = screen
+        Hover.items[screen] = []
+        Hover.behaviors[screen] = []
+    
+
     @staticmethod
     def start():
         # Hide everything when the screen loads. Misleading name -- this function is called last in initalisation -- it marks the start of the UI.
-        for behavior in Hover.behaviors:
-            behavior.hide()
+        for screen in Hover.behaviors.keys():
+            for behavior in Hover.behaviors[screen]:
+                behavior.hide()
 
 
 class HoverBehavior:
@@ -644,7 +654,9 @@ class ScanScreen(Screen):
     """
     
     def __init__(self, **kw):
-        super().__init__(name='Scan', **kw)
+        name = 'Scan'
+        super().__init__(name=name, **kw)
+        Hover.enter(name)
 
         everything = BoxLayout(orientation='horizontal')
         everything.add_widget(ScanScreenMiddleDiagram())
@@ -699,7 +711,9 @@ class SaveScreen(Screen):
     """
     
     def __init__(self, **kw):
-        super().__init__(name='Save', **kw)
+        name = 'Save'
+        super().__init__(name=name, **kw)
+        Hover.enter(name)
 
         everything = RelativeLayout()
         everything.add_widget(Pages())
@@ -722,6 +736,7 @@ class State:
     
     def screen(self, name=None):
         if name == None: return self.currentScreen
+        Hover.enter(name)
         self.screenManager.current = name
         self.currentScreen = name
 

@@ -520,3 +520,9 @@ this blue doesn't seem right / nice / good.
 
 ### 2023-02-24
 [22:58] I suppose I should address the multi-screen `Hover` issue.
+
+[23:11] I decided to convert the lists into dictionaries, using the screen names as keys, and having a `current_screen {set;}`.
+I have considered other approaches (such as specifying a screen in each adding call),
+but this one felt the most natural -- and would require the least amount of changes _outside_ `Hover`.
+
+[23:13] Now `Hover` doesn't work at all. Oops. Time to debug.
