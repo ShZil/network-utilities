@@ -526,3 +526,11 @@ I have considered other approaches (such as specifying a screen in each adding c
 but this one felt the most natural -- and would require the least amount of changes _outside_ `Hover`.
 
 [23:13] Now `Hover` doesn't work at all. Oops. Time to debug.
+
+[23:15] The problem was that I'm using `Hover.enter` for two distinct purposes:
+A. Adding widgets and behaviours on a screen. (Initialisation time)
+B. Displaying the screen with hoverable entities. (Runtime)
+I _can_ use it like that, by technically allowing addition of a new entity on the currently displayed screen.
+It would never happen, since entity creation should not be during runtime. This unification allows me to leave this as one method.
+I call the method with both purposes in mind, but I wrote it with only purpose A in mind.
+Oops. Now it basically removes all widgets when you enter a screen in runtime.

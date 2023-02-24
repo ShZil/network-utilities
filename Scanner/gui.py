@@ -295,8 +295,10 @@ class Hover:
 
     def enter(screen: str):
         Hover.current_screen = screen
-        Hover.items[screen] = []
-        Hover.behaviors[screen] = []
+        if screen not in Hover.items:
+            Hover.items[screen] = []
+        if screen not in Hover.behaviors:
+            Hover.behaviors[screen] = []
     
 
     @staticmethod
