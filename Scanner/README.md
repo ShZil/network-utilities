@@ -516,3 +516,7 @@ while the symbol text (short) appears in the font specified in the widget (i.e. 
 [18:01] Consider changing the background colour lol
 this blue doesn't seem right / nice / good.
 (In calls to `HoverReplaceBackground`)
+
+
+### 2023-02-24
+[22:58] I suppose I should address the multi-screen `Hover` issue.
