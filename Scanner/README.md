@@ -534,3 +534,5 @@ I _can_ use it like that, by technically allowing addition of a new entity on th
 It would never happen, since entity creation should not be during runtime. This unification allows me to leave this as one method.
 I call the method with both purposes in mind, but I wrote it with only purpose A in mind.
 Oops. Now it basically removes all widgets when you enter a screen in runtime.
+
+[23:19] Multiscreen-compatible hovering now works.
