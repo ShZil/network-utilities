@@ -4,6 +4,7 @@ with ImportDefence():
     import kivy
     import networkx as nx
     import tkinter as tk
+    import tkinter.filedialog
     from threading import Thread
     import numpy, scipy  # for networkx
 kivy.require('2.1.0')
@@ -674,7 +675,12 @@ class SaveScreenExportButton(GreenButton):
         self.bind(on_press=self.export)
     
     def export(self, _):
-        print("Exporting...")
+        filename = tkinter.filedialog.asksaveasfilename(
+            title="Save As",
+            defaultextension=".txt",
+            filetypes=(("Text files", "*.txt"), ("All files", "*.*")),
+        )
+        print(filename)
 
 
 class SaveScreenImportButton(GreenButton):
@@ -685,6 +691,11 @@ class SaveScreenImportButton(GreenButton):
     
     def do_import(self, _):
         print("Importing...")
+        filename = tkinter.filedialog.askopenfilename(
+            title="Upload",
+            filetypes=(("Text files", "*.txt"), ("All files", "*.*")),
+        )
+        print(filename)
 
 
 class SaveScreen(Screen):
@@ -747,6 +758,7 @@ class MyApp(App):
     """The main application, using `kivy`.
     Includes four screens:
     1. ScanScreen
+    2. SaveScreen
 
 
     Args:

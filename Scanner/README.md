@@ -536,3 +536,6 @@ I call the method with both purposes in mind, but I wrote it with only purpose A
 Oops. Now it basically removes all widgets when you enter a screen in runtime.
 
 [23:19] Multiscreen-compatible hovering now works.
+
+[23:34] I found a way (tkinter is the way; used Google and ChatGPT) to make "Save as" and "Open" popups,
+which will be helpful in the `Save` screen, later on.
