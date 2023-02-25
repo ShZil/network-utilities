@@ -555,3 +555,17 @@ which will be helpful in the `Save` screen, later on.
 [22:23] Added `display_information` and `display_configuration` (currently mostly empty) as actions of '⚙' and 'ℹ' buttons.
 Slight addition to `OperationButton` to enable actions for these buttons.
 Changed `State.scan` to include both a set `state.scan(object) -> None` and a get `state.scan() -> Scan`.
+TODO:
+    1. Separate `gui.py` (that is a mess) into modules.
+    2. Then, create a module that allows SQL access (for the scan's information).
+    3. Use this module in the `Information` button.
+    4. Change `Information`'s default action (i.e. when no scans are selected) to displaying information about the network (e.g. the assigned ID).
+    5. Complete the merge of `main.py` and `gui.py`.
+    6. Add file (`*.scan`) handling module for `Save` screen.
+    7. Finish the `Know` screen.
+    8. Add `Start` screen.
+And then the product is basically structurally complete!
+Within a month? Doable. I think.
+Afterwards, I can add some tweaks to improve it.
+
+[22:39] Wow. What a feeling of completeness. Still a lot of things to do, but it's getting together.
