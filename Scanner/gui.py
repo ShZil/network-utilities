@@ -62,6 +62,17 @@ def add_font():
     _add_font('Consolas.ttf', 'Monospace')
 
 
+# --- GUI-invoked code ---
+def display_information():
+    if state.scan() == None:
+        win32api.MessageBox(0, "Please select a scan first :)", "Information about scans", 0x00000000)
+    else:
+        win32api.MessageBox(0, "Good job!", f"Information about {state.scan().name}", 0x00000000)
+
+
+def display_configuration():
+    win32api.MessageBox(0, "content", "title", 0x00000000)
+
 
 # --- Classes ---
 class Scan:
@@ -457,10 +468,11 @@ class GreenButton(Button):
 
 class OperationButton(Button):
     """A button that has grey background, adds itself to `Hover`, defines a `HoverReplace` on itself, and uses font `Symbols`."""
-    def __init__(self, text, long_text, **kwargs):
+    def __init__(self, text, long_text, onclick, **kwargs):
         super().__init__(text=text, background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols", **kwargs)
         Hover.add(self)
         HoverReplace(self, long_text, 30)
+        self.bind(on_press=onclick)
 
 
 # --- Temporary --- ******
@@ -628,8 +640,8 @@ class ScanScreenRightColumn(ButtonColumn):
 
         #     Objects #2, #3 -- two operations on each scan
         operations = BoxLayout(orientation='horizontal', spacing=-3)
-        operations.add_widget(OperationButton('⚙', "Configure"))
-        operations.add_widget(OperationButton('ℹ', "Information"))  # Consider a '?' instead
+        operations.add_widget(OperationButton('⚙', "Configure", lambda _: display_configuration()))
+        operations.add_widget(OperationButton('ℹ', "Information", lambda _: display_information()))  # Consider a '?' instead
 
         self.add_widget(operations)
 
@@ -821,7 +833,8 @@ class State:
         self.screenManager.current = name
         self.currentScreen = name
     
-    def scan(self, scan: Scan):
+    def scan(self, scan=None):
+        if scan == None: return self.highlighted_scan
         if scan not in self.scans:
             self.scans.append(scan)
         self.highlighted_scan = scan

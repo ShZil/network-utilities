@@ -551,3 +551,7 @@ which will be helpful in the `Save` screen, later on.
     scans: Scan[] = a list of scan buttons represented as Scan objects.
 
 [16:55] After wrestling with kivy's canvas and rendering graphics system, I've finally managed to create a highlight for the current scan.
+
+[22:23] Added `display_information` and `display_configuration` (currently mostly empty) as actions of '⚙' and 'ℹ' buttons.
+Slight addition to `OperationButton` to enable actions for these buttons.
+Changed `State.scan` to include both a set `state.scan(object) -> None` and a get `state.scan() -> Scan`.
