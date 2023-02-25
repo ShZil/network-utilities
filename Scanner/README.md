@@ -542,4 +542,11 @@ which will be helpful in the `Save` screen, later on.
 
 
 ### 2023-02-25
-[15:46] Added `Know Screen`. 
+[15:46] Added `Know Screen`.
+
+[15:55] Add authorisation checkbox.
+`State` has been expanded, and now includes:
+    permission: bool = False (default), True if permission has been given.
+    highlighted_scan: Scan = None (default), a Scan object representing the currently selected scan button.
+    scans: Scan[] = a list of scan buttons represented as Scan objects.
+

@@ -7,6 +7,7 @@ with ImportDefence():
     import tkinter.filedialog as dialogs
     from threading import Thread
     import numpy, scipy  # for networkx
+    import win32api
 kivy.require('2.1.0')
 
 from kivy.app import App
@@ -70,18 +71,21 @@ class Scan:
     def __init__(self, name, action, parent):
         self.name = name
         self.action = action
+        self.x = 0
 
         self.button = Button(text=name, font_size=Scan.font_size, background_color=Scan.background_color, font_name="Roboto")
-        self.button.bind(on_press=lambda x: self.do(x))
+        self.button.bind(on_press=lambda x: self.select(x))
         parent.add_raw(self.button)
         Hover.add(self.button)
     
-
-    def do(self, x):
+    def select(self, x):
+        state.scan(self)
+        self.x = x
+    def act(self):
         try:
             self.action()
         except TypeError:
-            self.action(x)
+            self.action(self.x)
 
 
 class Diagram:
@@ -462,7 +466,9 @@ def callback2(x):
 
 
 def activate(x):
-    print("Play!")
+    if state.ask_for_permission():
+        print(f"Play {state.highlighted_scan.name}!")
+        state.highlighted_scan.act()
 
 
 def temp_increase_graph_degree(x):
@@ -795,6 +801,9 @@ class State:
     def __init__(self) -> None:
         self.screenManager = None
         self.currentScreen = None
+        self.permission = False
+        self.highlighted_scan = None
+        self.scans = []
 
     def setScreenManager(self, screens):
         self.screenManager = screens
@@ -804,6 +813,18 @@ class State:
         Hover.enter(name)
         self.screenManager.current = name
         self.currentScreen = name
+    
+    def scan(self, scan: Scan):
+        if scan not in self.scans:
+            self.scans.append(scan)
+        self.highlighted_scan = scan
+        for scan in self.scans:
+            scan.deselect()
+    
+    def ask_for_permission(self):
+        if not self.permission:
+            self.permission = win32api.MessageBox(0, 'Do you have legal permission to execute scans on this network?', 'Confirm permission', 0x00000004) == 6
+        return self.permission
 
 
 class MyApp(App):
