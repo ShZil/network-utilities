@@ -80,7 +80,14 @@ class Scan:
     
     def select(self, x):
         state.scan(self)
+        with self.button.canvas.after:
+            self.highlight = Color(0, 1, 0, 0.2)
+            self.highlight_rect = Rectangle(pos=(self.button.x, self.button.y), size=(self.button.width, self.button.height))
         self.x = x
+    
+    def deselect(self):
+        self.button.canvas.after.clear()
+    
     def act(self):
         try:
             self.action()

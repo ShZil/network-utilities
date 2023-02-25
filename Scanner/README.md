@@ -550,3 +550,4 @@ which will be helpful in the `Save` screen, later on.
     highlighted_scan: Scan = None (default), a Scan object representing the currently selected scan button.
     scans: Scan[] = a list of scan buttons represented as Scan objects.
 
+[16:55] After wrestling with kivy's canvas and rendering graphics system, I've finally managed to create a highlight for the current scan.
