@@ -37,10 +37,14 @@ Created file util.py
 - Git
 - Document EVERYTHING
 
+
+
 ### 2022-09-26
 [14:48] Adding util.print_dict
 [20:42] Some more changes listed in GitHub commits
 [20:45] Created file ip_handler.py
+
+
 
 ### 2022-09-27
 [16:15] Making a few plans:
@@ -48,6 +52,8 @@ Created file util.py
 - Add method find_device_ARP and find_device_ICMP, both @threadify
 - Apply them to all_possible_IPv4_addresses
 - Add @timing decorator
+
+
 
 ### 2022-09-30
 [00:44] Found a website listing some network-related windows cmd commands,
@@ -69,6 +75,8 @@ https://thepacketgeek.com/scapy/building-network-tools/part-10/
 
 [21:23] Enjoying myself with some data analysis on the threadified task :)
 
+
+
 ### 2022-10-02
 [21:23] Found out about a technique called "TCP/IP Stack Fingerprinting". Each OS has a slightly different implementation of the protocols, and using these differences one can guess whether what the OS of a remote device is.
 
@@ -81,10 +89,14 @@ And larger DB for passive fingerprinting: https://ostechnix.com/identify-operati
 
 [23:49] Nmap is short for Network Mapper. I'm creating an Nmap copy.
 
+
+
 ### 2022-10-14
 Working some more on the project. Updates in GitHub.
 
 [23:54] Do it so new computers are added to the graph, and computers which disconnect are slowly faded away.
+
+
 
 ### 2022-10-15
 [00:05] Add repeats for can_connect_ICMP and can_connect_ICMP
@@ -95,6 +107,8 @@ Working some more on the project. Updates in GitHub.
 
 [23:59] Improving the printing
 
+
+
 ### 2022-10-16
 [01:42] Better printing. The table is now horizontal.
 
@@ -103,6 +117,8 @@ It can see the devices on the network and has a fine-ish graphical interface.
 
 [02:00] Do: make the addresses print in increasing order pls.
 Do: reconsider this decision -- what happens when address 10.0.0.2 joins the network and the last one is 10.0.0.138? Should we shift the entire log of 10.0.0.138?
+
+
 
 ### 2022-10-22
 [01:09] Finished a vc with Almog working on the Project Proposal and discussing ideas.
@@ -116,15 +132,21 @@ have the "Discover New Devices" and "Check Connection to Known Devices" parts ex
 Note, discovering new devices should be slower and silent.
 Additionally, add an "opacity" variable as perperation for the visual GUI integration.
 
+
+
 ### 2022-10-24
 [23:24] Working on it, separated into threads.
 I just got an idea on how to calculate the opacity!
 It should be a weighted average, where the most recent value has the heighest weight (decreasing exponentially).
 
+
+
 ### 2022-10-25
 [00:37] Bug: the continouos display just freezes after a while.
 Theory: there's a thread that keeps being alive.
 A possible way to limit runtime of tasks: https://stackoverflow.com/questions/366682/how-to-limit-execution-time-of-a-function-call
+
+
 
 ### 2022-10-26
 [19:47] Possible additions outlined in this comment: https://serverfault.com/a/30792
@@ -133,8 +155,12 @@ A possible way to limit runtime of tasks: https://stackoverflow.com/questions/36
 
 [22:46] Calculate the opacity based on whatever algorithm you choose and display it next to the continouos ICMP screen
 
+
+
 ### 2022-10-27
 [21:41] I wrote down some ideas in class today. They're in a self-directed mail on the school account.
+
+
 
 ### 2022-10-30
 [18:05] Gonna work on the ideas from the mail.
@@ -161,6 +187,8 @@ Maybe in the future, as a more complex scan which has a low chance of reward.
 [22:19] Maybe add an hostify loop? And have a small chance for `hostify` to not return from cache.
 Make it an `@probabilistic_cache`
 
+
+
 ### 2022-11-03
 [17:13] From class today: I moved the function `util.handle_module_error()` into a context manager `import_handler.ImportDefence()` (for easier syntax).
 
@@ -174,14 +202,20 @@ Therefore, I had to use a `list[tuple[str(MAC), str(IP)]]`. This seems... not ex
 [23:14] Maybe add a Virtual Network option, where you define the ipconfig screen manually,
 and can place some entities with handpicked values -- to test the maths (like numbers of possible IPv4s in subnet).
 
+
+
 ### 2022-11-08
 [22:25] Correction from Cyber class: the indexes should be reversed (negated, in Python) for the sorting to happen correctly.
 
 [23:48] I added the address range subnet something, but on the way I made the base-address solver, so why not add it too?
 It's not used right now, but it might be in the future. Plus, it's more practial than the range thing, because it's an actual IPv4 address.
 
+
+
 ### 2022-11-09
 [16:24] Some changes listed in GitHub.
+
+
 
 ### 2022-11-11
 [12:01] In util.TablePrinting, I added a static dictionary `aligns` with three options (left, center, right),
@@ -203,6 +237,7 @@ and changable through the Windows Control Panel interface (at `Control Panel\Sys
 
 [19:25] Added locked NetworkEntity `mDNS` according to this site:
 https://stevessmarthomeguide.com/multicast-dns/
+
 
 
 ### 2022-11-13
@@ -236,8 +271,12 @@ However, balance that. Treat `hostify` as a costy function.
 
 [22:58] This is the Desmos sketch to continue working on tomorrow: https://www.desmos.com/calculator/8mnk4m9gfw
 
+
+
 ### 2022-11-14
 [16:00] At class today, Ran downloaded the wanted programs (Git; Nmap; VSCode), and I made a Batch file that `git clone`s the repository to a local path.
+
+
 
 ### 2022-11-17
 [00:46] A new approach was divinely revealed to me during a shower. I can solve the problem percisely instead of guessing and tuning parameters.
@@ -248,12 +287,16 @@ However, balance that. Treat `hostify` as a costy function.
 
 [19:30] I went to the local library, sat down with a Statistics & Probability textbook, and did maths. And I got a formula.
 
+
+
 ### 2022-11-18
 [17:50] Finished uploading the papers (manually) into their digital copy.
 
 [18:54] Protocols for possible new scans:
 - Neighbor Discovery Protocol (NDP) over ICMPv6 (Neighbor Solicitation, found via sniffing; Router Solicitation)
 - Reverse Address Resolution Protocol (RARP) over IPv4 (found with the Wikipedia article on NDP).
+
+
 
 ### 2022-11-21
 [20:16] Inserting changes from Cyber class today:
@@ -262,13 +305,17 @@ However, balance that. Treat `hostify` as a costy function.
 
 [21:37] I implemented a new system that queues all actions in advance, prints them to the CMD, and then executes them.
 
+
+
 ### 2022-11-24
 [14:18] I need to add special network entity "local broadcast" that will be like 10.0.0.255 or 192.168.3.255 (set all the Device ID bits to 1, as guided by the subnet mask).
 Currently, however, the special entities are created prior to the `ipconfig()` call, so a rewrite is needed.
 
 
+
 ### 2022-11-26
 [17:14] Instead of a @probabilistic_cache, have a time stamp assigned to each cached datum, and when it gets too old replace it.
+
 
 
 ### 2022-12-10
@@ -277,11 +324,13 @@ So I shall organise it!
 Plus, one important feature still missing is the TCP port scanner, so I need to add that.
 
 
+
 ### 2022-12-14
 [12:46] Started doing the TCP scan. Imported base code from TCP_Port_Scanner.py (in this repository), and integrated it with the rest of the code.
 
 [14:07] Integration successful, code is working.
 Additionally, tested on another home network.
+
 
 
 ### 2022-12-24
@@ -296,6 +345,7 @@ Focused on fixing bugs and filling requests (noted by the "*******" in comments)
 
 ### 2022-12-25
 [01:08] Finally! I found how to mute it!
+
 
 
 ### 2022-12-26
@@ -316,6 +366,7 @@ Fix found on https://stackoverflow.com/a/58679808:
 NetworkStorage.py:248 ```for entity in list(self.waiting.queue):```
 
 
+
 ### 2022-12-31
 [17:20] Uploading changes from Docs>"Cyber Project - Ideas and Concepts". (code I wrote in class)
 
@@ -323,8 +374,10 @@ NetworkStorage.py:248 ```for entity in list(self.waiting.queue):```
 Trying to use `Kivy` instead; proved that it can run python from button click.
 
 
+
 ### 2023-01-11
 [22:45] Lots and lots of GUI work, for about an hour.
+
 
 
 ### 2023-01-13
@@ -361,6 +414,7 @@ As easy as that.
 Instead of blocking `__init__`, block the main thread instead.
 
 
+
 ### 2023-01-18
 [19:46] Asked Omer Shaked for a help to intuitivise the GUI desgin; implementing it now.
 
@@ -384,8 +438,8 @@ diagram.root.quit()
 sys.exit()
 ```
 
-
 Wow, am I lucky today. That's quite some fine progress.
+
 
 
 ### 2023-01-19
@@ -395,13 +449,16 @@ Wow, am I lucky today. That's quite some fine progress.
 - Add the `operations` part (#2 and #3): `configure` and `info`.
 
 
+
 ### 2023-01-20
 [13:15] Fixed hovering bug, according to suggestion in my comment, and code-design I made in class yesterday.
+
 
 
 ### 2023-01-21
 [17:47] Working on a new class, `AttachedBubble` that extends kivy's `Bubble`, and acts like the "title" property in HTML,
 according to the task I wrote yesterday in the temporary file.
+
 
 
 ### 2023-01-23
@@ -417,6 +474,7 @@ according to the task I wrote yesterday in the temporary file.
     Think of additional behaviours (e.g. change bg and font colour), and implement them in a way that allows multiple behaviours.
 
 
+
 ### 2023-02-05
 [13:42] Fixed bugs with Hover:
 - Attribute error -- `behaviour` which should've been `behaviours`.
@@ -426,6 +484,7 @@ according to the task I wrote yesterday in the temporary file.
 [14:14] Silly me just repeats an O(n) task `n` (i.e. O(n²)) times for no reason!
 
 [14:18] Use Python OOP in `HoverBehvaior`.
+
 
 
 ### 2023-02-07
@@ -440,6 +499,7 @@ Also: the TK diagram is rendered from the top-left corner, but the Kivy one is f
 [18:26] Fixed the `h-=50` thingy. Also, docstrings.
 
 
+
 ### 2023-02-08
 [20:01] Screen is stuck on white upon opening. That's problematic.
 
@@ -451,6 +511,7 @@ Also I un/re-installed `kivy`.
 I added caches for `KivyDiagram` and `TKDiagram`, which will be lost upon reverting, but no biggie.
 
 [22:00] YES! Reverting worked! Now I'll just add the caches again.
+
 
 
 ### 2023-02-11
@@ -473,12 +534,14 @@ Also, added `TypeError` defence in case any `action` actually wants to use the u
 Do: give `Configure` and `Information` some usage.
 
 
+
 ### 2023-02-14
 [15:02] Start working on the screens (using kivy's `ScreenManager`).
 
 [15:16] Use classes to simplify code.
 
 [15:24] Add another font and fallback.
+
 
 
 ### 2023-02-18
@@ -510,12 +573,14 @@ while the symbol text (short) appears in the font specified in the widget (i.e. 
 [14:27] Add HoverReplaceBackground that extends HoverReplace, that changes the background colour upon hovering.
 
 
+
 ### 2023-02-21
 [17:27] Adding the changes listed in the docs file, made during Cyber class.
 
 [18:01] Consider changing the background colour lol
 this blue doesn't seem right / nice / good.
 (In calls to `HoverReplaceBackground`)
+
 
 
 ### 2023-02-24
@@ -539,6 +604,7 @@ Oops. Now it basically removes all widgets when you enter a screen in runtime.
 
 [23:34] I found a way (tkinter is the way; used Google and ChatGPT) to make "Save as" and "Open" popups,
 which will be helpful in the `Save` screen, later on.
+
 
 
 ### 2023-02-25
