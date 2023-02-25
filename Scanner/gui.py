@@ -678,8 +678,8 @@ class SaveScreenExportButton(GreenButton):
     def export(self, _):
         filename = dialogs.asksaveasfilename(
             title="Save As",
-            defaultextension=".txt",
-            filetypes=(("Text files", "*.txt"), ("All files", "*.*")),
+            defaultextension=".scan",
+            filetypes=(("Scan files", "*.scan"), ("All files", "*.*")),
         )
         print(filename)
 
@@ -694,7 +694,7 @@ class SaveScreenImportButton(GreenButton):
         print("Importing...")
         filename = dialogs.askopenfilename(
             title="Open",
-            filetypes=(("Text files", "*.txt"), ("All files", "*.*")),
+            filetypes=(("Scan files", "*.scan"), ("All files", "*.*")),
         )
         print(filename)
 
