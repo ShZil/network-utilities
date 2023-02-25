@@ -58,6 +58,7 @@ def add_font():
     _add_font('BainsleyBold.ttf', 'Symbols')
     _add_font('Segoe UI Symbol.ttf', 'Symbols+')
     _add_font('Symbola.ttf', 'Symbols++')
+    _add_font('Consolas.ttf', 'Monospace')
 
 
 
