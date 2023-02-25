@@ -539,3 +539,7 @@ Oops. Now it basically removes all widgets when you enter a screen in runtime.
 
 [23:34] I found a way (tkinter is the way; used Google and ChatGPT) to make "Save as" and "Open" popups,
 which will be helpful in the `Save` screen, later on.
+
+
+### 2023-02-25
+[15:46] Added `Know Screen`. 

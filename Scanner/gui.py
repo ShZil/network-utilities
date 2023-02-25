@@ -733,10 +733,61 @@ class SaveScreen(Screen):
         everything.add_widget(Pages())
         everything.add_widget(SaveScreenExportButton())
         everything.add_widget(SaveScreenImportButton())
+        # *************** add the recents
         # everything.add_widget(SaveScreenRecents())
 
         self.add_widget(everything)
 
+
+class KnowScreenInfoLabel(Label):
+    """Holds the requested data in string format, displayed to the user.
+
+    Args:
+        Label (kivy): the base class from kivy.
+    """
+    def __init__(self, **kwargs):
+        super().__init__(text='No address selectedddddddddddddd\n' * 10, color=(1, 1, 1, 1), font_size=30, font_name="Monospace", **kwargs)
+    
+
+    def data(self, text):
+        self.text = text
+
+
+class KnowScreen(Screen):
+    """Builds an interface that looks like this:
+    
+    ```md
+    The Window (Unicode Box Art):
+        ┌────────────────────────────────────────────┐
+        │                  [#1 Title]                │
+        │  #4 Save.                                  │
+        │  #5 Scan.                                  │
+        │  #6 Know.                                  │
+        │                                            │
+        │                   #2 Data                  │
+        │          [_______________________]         │
+        │          [_______________________]         │
+        │          [_______________________]         │
+        │          [_______________________]         │
+        │                                            │
+        │                                            │
+        └────────────────────────────────────────────┘
+    ```
+
+    Args:
+        Screen (kivy): the base class for a screen.
+    """
+    
+    def __init__(self, **kw):
+        name = 'Know'
+        super().__init__(name=name, **kw)
+        Hover.enter(name)
+
+        everything = BoxLayout(orientation='vertical')
+        everything.add_widget(Pages())
+        everything.add_widget(KnowScreenInfoLabel())
+
+        self.add_widget(everything)
 
 
 # --- Basically Main ---
@@ -760,6 +811,8 @@ class MyApp(App):
     Includes four screens:
     1. ScanScreen
     2. SaveScreen
+    3. KnowScreen
+    4. StartScreen (soon ******************)
 
 
     Args:
@@ -777,6 +830,7 @@ class MyApp(App):
 
         screens.add_widget(ScanScreen())
         screens.add_widget(SaveScreen())
+        screens.add_widget(KnowScreen())
 
         state.screen('Scan')
         
@@ -809,6 +863,5 @@ def start_tk():
 
 if __name__ == '__main__':
     add_font()
-    runner = Thread(target=start_kivy)
-    runner.start()
+    Thread(target=start_kivy).start()
     start_tk()
