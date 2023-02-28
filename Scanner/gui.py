@@ -281,6 +281,7 @@ class Hover:
     def _bind():
         from kivy.core.window import Window
         Window.bind(mouse_pos=Hover.update)
+        Window.bind(size=state.resize_callback)
 
     
     @staticmethod
@@ -832,6 +833,11 @@ class State:
         Hover.enter(name)
         self.screenManager.current = name
         self.currentScreen = name
+    
+    def resize_callback(self, a, b):
+        # Called from Hover's `._bind`.
+        self.scan(self.highlighted_scan)
+        self.highlighted_scan.select(0)
     
     def scan(self, scan=None):
         if scan == None: return self.highlighted_scan

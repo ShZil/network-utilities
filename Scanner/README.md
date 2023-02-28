@@ -635,3 +635,8 @@ Within a month? Doable. I think.
 Afterwards, I can add some tweaks to improve it.
 
 [22:39] Wow. What a feeling of completeness. Still a lot of things to do, but it's getting together.
+
+
+### 2023-02-28
+[17:17] I noticed a bug in Cyber class. Fixed it.
+The bug (from the shared document): "highlight jumps on window resize."
