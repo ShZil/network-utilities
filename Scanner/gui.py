@@ -24,6 +24,7 @@ from kivy.core.text import LabelBase
 from kivy.utils import escape_markup
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.config import Config
+from kivy.clock import Clock
 
 from util import nameof, one_cache
 
@@ -834,10 +835,13 @@ class State:
         self.screenManager.current = name
         self.currentScreen = name
     
-    def resize_callback(self, a, b):
+    def resize_callback(self, *_):
         # Called from Hover's `._bind`.
-        self.scan(self.highlighted_scan)
-        self.highlighted_scan.select(0)
+        def _resize_callback(*_):
+            self.scan(self.highlighted_scan)
+            self.highlighted_scan.select(0)
+        
+        Clock.schedule_once(_resize_callback, 0.15)
     
     def scan(self, scan=None):
         if scan == None: return self.highlighted_scan

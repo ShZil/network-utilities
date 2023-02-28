@@ -640,3 +640,7 @@ Afterwards, I can add some tweaks to improve it.
 ### 2023-02-28
 [17:17] I noticed a bug in Cyber class. Fixed it.
 The bug (from the shared document): "highlight jumps on window resize."
+
+[19:05] Using `kivy.clock.Clock`, add a slight delay before re-rendering highlight.
+This is because a bug was occurring, where if you resized the window _too quickly_, the highlight would forget to update.
+I found that 150ms (0.15s) is a good time delay, to maximise both user experience and reliability.
