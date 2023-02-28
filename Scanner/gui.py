@@ -91,6 +91,9 @@ class Scan:
         Hover.add(self.button)
     
     def select(self, x):
+        if state.highlighted_scan == self:
+            state.scan(DummyScan())
+            return
         state.scan(self)
         with self.button.canvas.after:
             self.highlight = Color(0, 1, 0, 0.2)
@@ -105,6 +108,28 @@ class Scan:
             self.action()
         except TypeError:
             self.action(self.x)
+
+
+class DummyScan(Scan):
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+    def __init__(self):
+        self.name = "Dummy"
+
+    def select(self, x):
+        pass
+
+    def deselect(self):
+        pass
+
+    def act(self):
+        win32api.MessageBox(0, "You must first select a scan to run.", "Running without a scan", 0x00000000)
+        # raise NotImplementedError("A DummyScan cannot be `.act`ed upon.")
 
 
 class Diagram:
@@ -823,8 +848,8 @@ class State:
         self.screenManager = None
         self.currentScreen = None
         self.permission = False
-        self.highlighted_scan = None
-        self.scans = []
+        self.highlighted_scan = DummyScan()
+        self.scans = [DummyScan()]
 
     def setScreenManager(self, screens):
         self.screenManager = screens
@@ -843,8 +868,7 @@ class State:
         
         Clock.schedule_once(_resize_callback, 0.15)
     
-    def scan(self, scan=None):
-        if scan == None: return self.highlighted_scan
+    def scan(self, scan):
         if scan not in self.scans:
             self.scans.append(scan)
         self.highlighted_scan = scan
