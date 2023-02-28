@@ -646,3 +646,7 @@ This is because a bug was occurring, where if you resized the window _too quickl
 I found that 150ms (0.15s) is a good time delay, to maximise both user experience and reliability.
 
 [19:24] Added `DummyScan extends Scan implements Singleton`, and used it to add desired program behaviour: deselecting scans by clicking on them again.
+
+[19:48] Designed and added an icon!
+
+

@@ -897,6 +897,7 @@ class MyApp(App):
 
     def build(self):
         self.title = 'Local Network Scanner'
+        self.icon = 'favicon.png'
         global state
         state = State()
         screens = ScreenManager(transition=FadeTransition())
