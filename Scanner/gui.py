@@ -65,10 +65,10 @@ def add_font():
 
 # --- GUI-invoked code ---
 def display_information():
-    if state.scan() == None:
+    if state.highlighted_scan is DummyScan() or state.highlighted_scan is None:
         win32api.MessageBox(0, "Please select a scan first :)", "Information about scans", 0x00000000)
     else:
-        win32api.MessageBox(0, "Good job!", f"Information about {state.scan().name}", 0x00000000)
+        win32api.MessageBox(0, "Good job!", f"Information about {state.highlighted_scan.name}", 0x00000000)
 
 
 def display_configuration():

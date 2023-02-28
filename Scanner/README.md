@@ -649,4 +649,4 @@ I found that 150ms (0.15s) is a good time delay, to maximise both user experienc
 
 [19:48] Designed and added an icon!
 
-
+[19:49] BUGFIX: `display_information` was using old interface of `state`. Updated to the new interface.
