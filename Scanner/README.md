@@ -664,3 +664,7 @@ I found that 150ms (0.15s) is a good time delay, to maximise both user experienc
     OPERATION_BUTTON_BACKGROUND, TITLE_HEIGHT, DIAGRAM_SCALE, PAGES_BACKGROUND, TITLE_FONT_SIZE,
     GREEN, UNDER_DIAGRAM_FONT_SIZE, RIGHT_COLUMN_WIDTH, SAVE_BUTTONS_HOVER_BACKGROUND, SAVE_BUTTONS_FONT_SIZE.```
 - Also clarified some comments.
+
+[23:12] Excpetions were not displaying, unless `diagram` was still `None` (mutlithreaded), in which case it would say `During handling of the above exception`.
+I realised this is because all kivy exceptions are caught in the `finally` cluase. So I added an `except` clause :).
+Also `assert` statement, maybe my first time writing one in Python.

@@ -926,8 +926,11 @@ def start_kivy():
         is_kivy_running = True
         Config.set('input', 'mouse', 'mouse,multitouch_on_demand')  # disable multi-touch emulation
         MyApp().run()
+    except Exception as e:
+        print(f"{type(e).__name__} at {__file__}:{e.__traceback__.tb_lineno}: {e}", file=sys.stderr)
     finally:
         is_kivy_running = False
+        assert diagram is not None
         diagram.show()
         diagram.root.quit()
         sys.exit()
