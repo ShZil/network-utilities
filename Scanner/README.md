@@ -650,3 +650,17 @@ I found that 150ms (0.15s) is a good time delay, to maximise both user experienc
 [19:48] Designed and added an icon!
 
 [19:49] BUGFIX: `display_information` was using old interface of `state`. Updated to the new interface.
+
+
+
+### 2023-03-01
+[22:33] Cleaning up the code.
+- Removed `class BlackButton` since it's not used anywhere.
+- Removed `ButtonColumn.log_all` for the same reason.
+- Moved `def activate` to a more logical location.
+- Removed most (if not all) magic numbers related to design (colours, sizes, etc.), and moved them to constants:
+    ```bg_color, fg_color, button_column_background, DIAGRAM_DIMENSIONS, HOVER_REPLACE_FACTOR,
+    DIAGRAM_POINT_RADIUS, BUTTON_COLUMN_FONT_SIZE, SCAN_HIGHLIGHT, OPERATION_BUTTON_FONT_SIZE,
+    OPERATION_BUTTON_BACKGROUND, TITLE_HEIGHT, DIAGRAM_SCALE, PAGES_BACKGROUND, TITLE_FONT_SIZE,
+    GREEN, UNDER_DIAGRAM_FONT_SIZE, RIGHT_COLUMN_WIDTH, SAVE_BUTTONS_HOVER_BACKGROUND, SAVE_BUTTONS_FONT_SIZE.```
+

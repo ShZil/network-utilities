@@ -33,15 +33,33 @@ __author__ = 'Shaked Dan Zilberman'
 
 
 # --- Global Values ---
-hyperness = 1
+temp_hyperness = 1
 G = nx.hypercube_graph(1)
 diagram = None
-is_kivy_running = True
-bg_color = (0, 0, .01)
-fg_color = (0.023, 0.92, 0.125)
-button_column_background = [0.1, 1, 0.3, 1]  # rgba
-
 state = None
+is_kivy_running = True
+
+
+# --- Design Settings ---
+bg_color = (0, 0, .01)  # tuple[float]: rgb
+fg_color = (0.023, 0.92, 0.125)  # tuple[float]: rgb
+button_column_background = [0.1, 1, 0.3, 1]  # list[float]: rgba
+DIAGRAM_DIMENSIONS = (300, 300)  # tuple[int]: width, height
+HOVER_REPLACE_FACTOR = 0.75  # float; under `HoverReplace`, `new_text_size = HOVER_REPLACE_FACTOR * old_text_size`, e.g. fontsizeof("Information") = 0.75 * fontsizeof("ℹ").
+DIAGRAM_POINT_RADIUS = 5  # int: px
+BUTTON_COLUMN_FONT_SIZE = 24  # int: px
+SCAN_HIGHLIGHT = (0, 1, 0, 0.2)  # tuple[float]: rgba; used as overlay, do not set alpha=1, because that will hide the text.
+OPERATION_BUTTON_FONT_SIZE = 30  # int: px
+OPERATION_BUTTON_BACKGROUND = [0.8, 0.8, 0.8, 1]  # list[float]: rgba
+TITLE_HEIGHT = 70  # int: px; the padding used by the kivy diagram from the top, to avoid hiding the title.
+DIAGRAM_SCALE = 1 / 2.3  # float
+PAGES_BACKGROUND = [0, 0, 0, 0]  # list[float]: rgba
+TITLE_FONT_SIZE = 30  # int: px
+GREEN = '00ff00'  # str: hex color
+UNDER_DIAGRAM_FONT_SIZE = 30  # int: px
+RIGHT_COLUMN_WIDTH = 300  # int: px; in Scan screen.
+SAVE_BUTTONS_HOVER_BACKGROUND = [0, 0, 1, 1]  # list[tuple]: rgba
+SAVE_BUTTONS_FONT_SIZE = 50  # int: px
 
 
 # --- Small Utilities ---
@@ -74,10 +92,16 @@ def display_information():
 def display_configuration():
     win32api.MessageBox(0, "content", "title", 0x00000000)
 
+    
+def activate(x):
+    if state.ask_for_permission():
+        print(f"Play {state.highlighted_scan.name}!")
+        state.highlighted_scan.act()
+
 
 # --- Classes ---
 class Scan:
-    font_size = 24
+    font_size = BUTTON_COLUMN_FONT_SIZE
     background_color = button_column_background
 
     def __init__(self, name, action, parent):
@@ -96,7 +120,7 @@ class Scan:
             return
         state.scan(self)
         with self.button.canvas.after:
-            self.highlight = Color(0, 1, 0, 0.2)
+            self.highlight = Color(*SCAN_HIGHLIGHT)
             self.highlight_rect = Rectangle(pos=(self.button.x, self.button.y), size=(self.button.width, self.button.height))
         self.x = x
     
@@ -148,8 +172,7 @@ class Diagram:
         """
         self.root = tk.Tk()
         self.root.title("Network Diagram")
-        self.width = 300
-        self.height = 300
+        self.width, self.height = DIAGRAM_DIMENSIONS
 
         self.canvas = tk.Canvas(self.root, bg=color_hex(bg_color), height=self.height, width=self.width, borderwidth=0, highlightthickness=0)
         self.canvas.pack(expand=True, fill='both')
@@ -202,7 +225,7 @@ class Diagram:
 
     def update(self):
         if self.diagram_cache is None:
-            self.diagram_cache = TKDiagram(self, 5)
+            self.diagram_cache = TKDiagram(self, DIAGRAM_POINT_RADIUS)
         render_diagram(self.diagram_cache, 0, 0, self.width, self.height, bg_color, fg_color)
         self.changed = False
 
@@ -293,6 +316,7 @@ class Hover:
     """Enables hovering cursor and behaviours. Uses singleton structure (because it accesses a system function of changing cursor).
     Includes two lists: `items`, where each item can change the cursor to `pointer` if hovered (`item.collide_point(x, y) -> True`);
     and `behaviors`, where each item is a `HoverBehavior`, and they do more exotic stuff, abstracted by `.show()` and `.hide()`.
+
     Raises:
         AttributeError: raised when `.add(item)` receives an `item` that has no method `.collide_point(int,int)`.
         TypeError: raised when `.add_behavior(behavior)` receives a `behavior` that is not of type `HoverBehavior`.
@@ -328,7 +352,7 @@ class Hover:
         if not isinstance(behavior, HoverBehavior):
             raise TypeError("The behavior passed to `Hover.add_behavior` isn't a `HoverBehavior`.")
         Hover.behaviors[Hover.current_screen].append(behavior)
-        # A behaviour should support 3 methods: `collide_point(int,int)`, `show()`, and `hide()`.
+        # A behaviour should support 3 methods: `collide_point(int,int)`, `show()`, and `hide()`, and that's enforced by the HoverBehaviour interface.
     
 
     def update(window, pos):
@@ -354,7 +378,7 @@ class Hover:
 
     @staticmethod
     def start():
-        # Hide everything when the screen loads. Misleading name -- this function is called last in initalisation -- it marks the start of the UI.
+        # Hide everything when the screen loads. Kinda misleading name -- this function is called last in initalisation -- it marks the start of the UI.
         for screen in Hover.behaviors.keys():
             for behavior in Hover.behaviors[screen]:
                 behavior.hide()
@@ -382,7 +406,6 @@ class HoverReplace(HoverBehavior):
     When hovered, it displays the string in `text`,
     otherwise, it displays the initial string.
     """
-    FACTOR = 0.75  # new_text_size = FACTOR * old_text_size
 
     def __init__(self, widget, text, font_size, font="Arial"):
         self.widget = widget
@@ -397,7 +420,7 @@ class HoverReplace(HoverBehavior):
     def show(self):
         self.widget.text = self.text
         self.widget.font_name = self.font
-        self.widget.font_size = self.font_size * HoverReplace.FACTOR
+        self.widget.font_size = self.font_size * HOVER_REPLACE_FACTOR
     
 
     def hide(self):
@@ -443,7 +466,7 @@ class ButtonColumn(GridLayout):
         super().__init__(cols=1, width=width, size_hint=(None, 1), spacing=[-3], padding=[-1, -3, -1, -3])
         self.buttons = []  # list of tuples `(button, callback)`
         self.background_color = button_column_background
-        self.font_size = 24
+        self.font_size = BUTTON_COLUMN_FONT_SIZE
     
 
     def add(self, text: str, callback=None):
@@ -459,12 +482,6 @@ class ButtonColumn(GridLayout):
     def add_raw(self, button):
         super().add_widget(button)
         self.buttons.append((button, None))
-    
-
-    def log_all(self):
-        print(self.buttons)
-        for button, action in self.buttons:
-            print(nameof(action))
 
 
 class MyPaintWidget(Widget):
@@ -479,30 +496,23 @@ class MyPaintWidget(Widget):
         update_kivy_diagram(self, 0)
 
 
-class BlackButton(Button):
-    """A button that has black background, and also adds itself to `Hover`."""
-    def __init__(self, text, **kwargs):
-        super().__init__(text='[color=000000]' + escape_markup(text) + '[/color]', markup=True, **kwargs)
-        Hover.add(self)
-
-
 class GreenButton(Button):
     """A button that has green background, and also adds itself to `Hover`."""
     def __init__(self, text, **kwargs):
-        super().__init__(text='[color=00ff00]' + escape_markup(text) + '[/color]', markup=True, **kwargs)
+        super().__init__(text=f'[color={GREEN}]{escape_markup(text)}[/color]', markup=True, **kwargs)
         Hover.add(self)
 
 
 class OperationButton(Button):
     """A button that has grey background, adds itself to `Hover`, defines a `HoverReplace` on itself, and uses font `Symbols`."""
     def __init__(self, text, long_text, onclick, **kwargs):
-        super().__init__(text=text, background_color=[0.8, 0.8, 0.8, 1], font_name="Symbols", **kwargs)
+        super().__init__(text=text, background_color=OPERATION_BUTTON_BACKGROUND, font_name="Symbols", **kwargs)
         Hover.add(self)
-        HoverReplace(self, long_text, 30)
+        HoverReplace(self, long_text, OPERATION_BUTTON_FONT_SIZE)
         self.bind(on_press=onclick)
 
 
-# --- Temporary --- ******
+# --- Temporary --- ************
 def callback1(x):
     print('Hello1')
 
@@ -511,18 +521,12 @@ def callback2(x):
     print('Hello2')
 
 
-def activate(x):
-    if state.ask_for_permission():
-        print(f"Play {state.highlighted_scan.name}!")
-        state.highlighted_scan.act()
-
-
 def temp_increase_graph_degree(x):
     """Adds one dimension to the hypercube graph. Temporary -- until real info is fed into this."""
-    global hyperness, G
-    hyperness += 1
-    if hyperness > 6: hyperness = 6
-    G = nx.hypercube_graph(hyperness)
+    global temp_hyperness, G
+    temp_hyperness += 1
+    if temp_hyperness > 6: temp_hyperness = 6
+    G = nx.hypercube_graph(temp_hyperness)
     update_kivy_diagram(0, 0)
     if diagram is not None: diagram.renew(G)
 
@@ -539,9 +543,9 @@ def update_kivy_diagram(painter, _):
         painter = update_kivy_diagram.cache
     else:
         update_kivy_diagram.cache = painter
-        update_kivy_diagram.diagram_cache = KivyDiagram(painter, 5)
+        update_kivy_diagram.diagram_cache = KivyDiagram(painter, DIAGRAM_POINT_RADIUS)
     
-    render_diagram(update_kivy_diagram.diagram_cache, *painter.pos, *painter.size, bg_color, fg_color, -70)
+    render_diagram(update_kivy_diagram.diagram_cache, *painter.pos, *painter.size, bg_color, fg_color, -TITLE_HEIGHT)
 
 
 def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
@@ -550,7 +554,7 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
     which is a context manager supporting various methods.
     Currently, there are two implementations: `KivyDiagram` and `TKDiagram`.
     """
-    scale = min(w, h + dh) / 2.3
+    scale = min(w, h + dh) * DIAGRAM_SCALE
     stroke = 1
 
     pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
@@ -579,7 +583,7 @@ class Pages(BoxLayout):
         
         labels = ['Save.', 'Scan.', 'Know.']
         actions = [lambda _: state.screen("Save"), lambda _: state.screen("Scan"), lambda _: state.screen("Know")]
-        buttons = [GreenButton(text=label, font_size=20, background_color=[0, 0, 0, 0], font_name="Arial") for label in labels]
+        buttons = [GreenButton(text=label, font_size=20, background_color=PAGES_BACKGROUND, font_name="Arial") for label in labels]
         for button, action in zip(buttons, actions):
             button.bind(on_press=action)
             self.add_widget(button)
@@ -613,17 +617,17 @@ class ScanScreenMiddleDiagram(RelativeLayout):
         super().__init__(**kw)
 
         #     Object #1
-        title = Label(text="[color=00ff00]Local Network Scanner[/color]", size=(0, 70), size_hint=(1, None), font_size=30, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
+        title = Label(text=f"[color={GREEN}]Local Network Scanner[/color]", size=(0, TITLE_HEIGHT), size_hint=(1, None), font_size=TITLE_FONT_SIZE, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
 
         #     Objects #4, #5, #6 -- Page frippery (top left corner)
         pages = Pages()
 
         #     Object #15
-        play_button = GreenButton(text='▶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
+        play_button = GreenButton(text='▶', font_size=UNDER_DIAGRAM_FONT_SIZE, background_color=PAGES_BACKGROUND, size_hint=(.1, .1), pos_hint={'x': 0, 'y': 0}, font_name="Symbols")
         play_button.bind(on_press=activate)
 
         #     Object #16    # Previous icon: 🔍
-        open_diagram = GreenButton(text='⛶', font_size=30, background_color=[0, 0, 0, 0], size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
+        open_diagram = GreenButton(text='⛶', font_size=UNDER_DIAGRAM_FONT_SIZE, background_color=PAGES_BACKGROUND, size_hint=(.1, .1), pos_hint={'right': 1, 'y': 0}, font_name="Symbols")
         open_diagram.bind(on_press=lambda _: diagram.show())
 
         #     Object #9
@@ -663,7 +667,7 @@ class ScanScreenRightColumn(ButtonColumn):
         ButtonColumn (GridLayout): this inherits from ButtonColumn.
     """
     def __init__(self):
-        super().__init__(width=300)
+        super().__init__(width=RIGHT_COLUMN_WIDTH)
 
         #     Objects #2, #3 -- two operations on each scan
         operations = BoxLayout(orientation='horizontal', spacing=-3)
@@ -724,7 +728,7 @@ class ScanScreen(Screen):
 class SaveScreenExportButton(GreenButton):
     def __init__(self, **kwargs):
         super().__init__('↥', size_hint=(.15, .15), pos_hint={'x': 0.2, 'top': 0.75}, font_name="Symbols+", background_color=(0, 0, 0, 1), **kwargs)
-        HoverReplaceBackground(self, 'Export', 50, [0, 0, 1, 1])
+        HoverReplaceBackground(self, 'Export', SAVE_BUTTONS_FONT_SIZE, SAVE_BUTTONS_HOVER_BACKGROUND)
         self.bind(on_press=self.export)
     
     def export(self, _):
@@ -739,7 +743,7 @@ class SaveScreenExportButton(GreenButton):
 class SaveScreenImportButton(GreenButton):
     def __init__(self, **kwargs):
         super().__init__('⭳', size_hint=(.15, .15), pos_hint={'x': 0.65, 'top': 0.75}, font_name="Symbols++", background_color=(0, 0, 0, 1), **kwargs)
-        HoverReplaceBackground(self, 'Import', 50, [0, 0, 1, 1])
+        HoverReplaceBackground(self, 'Import', SAVE_BUTTONS_FONT_SIZE, SAVE_BUTTONS_HOVER_BACKGROUND)
         self.bind(on_press=self.do_import)
     
     def do_import(self, _):
