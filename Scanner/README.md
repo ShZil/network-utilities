@@ -668,3 +668,70 @@ I found that 150ms (0.15s) is a good time delay, to maximise both user experienc
 [23:12] Excpetions were not displaying, unless `diagram` was still `None` (mutlithreaded), in which case it would say `During handling of the above exception`.
 I realised this is because all kivy exceptions are caught in the `finally` cluase. So I added an `except` clause :).
 Also `assert` statement, maybe my first time writing one in Python.
+
+
+
+### 2023-03-03
+[18:53] I'm working on the databse access module (`db.py`). Going over my notes, trying to find where I wrote the SQL table specifications, I found this:
+```
+hostify
+Util cache invalidation
+    choose _future date_ and compare it w/ current_time in get()
+             -> pair it w/ the value.
+    Run performance tests on different methods.
+
+* Global sniffer
+  
+`CalcStats` button (scan-like?) that calculates statistics (duh).
+Example: [Pie diagram with the following parts:] loopback, to me, from me, broadcasts, not to me & not from me (I wanna see how big this is).
+```
+
+[20:47] Found it!
+```
+Scanner - Cyber
+DB Table: "Scans"
+
+Name (+ protocol),
+Description (long text),
+Time (estimate of exec time per repeat),
+Reward (What info will I get?),
+Certainty (How certain am I that the info is accurate?),
+Safety (passive -> 100% safe, active -> less safe, aggressive (many packets) -> not safe),
+Mode (multiple settings of the same scan),
+Repeat -- boolean (Repeatable: e.g. ICMP Sweep; Not repeatable: e.g. OS-ID)
+
+Examples:
+-> TCP ports, ..., 10s, Open TCP ports, 90%, 10% safe, Mode 1 (ports 0-1024, single SYN), true.
+-> Passive ARP, ..., inf, MAC & IP, 99%, 100% safe, 1 (just one mode), false.
+
+2022-12-16; 23:50
+Feature: ★ Recommended Scan
+e.g. last scan is ICMP sweep => recommend OS-ID.
+```
+
+and a bonus:
+```
+**Scanner - User Actions**
+
+scan-like actions:
+- Do ICMP Sweep
+- Do ARP Sweep
+- Background live ICMP
+- Background live ARP passive
+- Background OS-ID
+- Do TCP scan
+- Do UDP scan
+
+data:
+- Query the DB
+- Look at a specific device
+
+permanent:
+- Save current state
+- Upload past state & compare
+
+outside:
+- Get public address
+- Do traceroute
+```
+
