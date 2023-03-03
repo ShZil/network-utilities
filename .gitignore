@@ -2,3 +2,4 @@ __pycache__/
 *.pyc
 error log.txt
 times.txt
+nmap udp scan on router results.txt
