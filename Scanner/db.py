@@ -53,6 +53,8 @@ def init():
     except sqlite3.OperationalError:
         print("An error occured.")
         raise
+    except sqlite3.IntegrityError:
+        print("Unique constaint failed.")
     connection.commit()
     connection.close()
 
