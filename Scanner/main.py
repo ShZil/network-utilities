@@ -165,8 +165,8 @@ def main():
     print("Subnet Size:", len(all_possible_addresses), "possible addresses.")
     
     simple_scans = standardise_simple_scans([
-        (scan_ICMP, 0),
-        (scan_ARP, 0)
+        (scan_ICMP, 20),
+        (scan_ARP, 20)
     ])
 
 
@@ -180,7 +180,7 @@ def main():
         from NetworkStorage import router
         print(f"Open TCP ports in {router}:")
         with JustifyPrinting():
-            for port, res in scan_TCP(router.ip, repeats=3).items():
+            for port, res in scan_TCP(router.ip, repeats=20).items():
                 if res: print(port)
     
 
@@ -195,9 +195,9 @@ def main():
         get_public_ip,
         lookup.print,
         # user_confirmation,
-        # do_TCP,
+        do_TCP,
         user_confirmation,
-        continuous_ICMP
+        # continuous_ICMP
     ]
 
     with InstantPrinting():
@@ -205,7 +205,6 @@ def main():
         for action in actions:
             print("    -", nameof(action))
 
-    
     for action in actions:
         # print("\n" + nameof(action))
         from time import perf_counter as now
