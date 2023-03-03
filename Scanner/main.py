@@ -208,7 +208,12 @@ def main():
     
     for action in actions:
         # print("\n" + nameof(action))
+        from time import perf_counter as now
+        start = now()
         action()
+        end = now()
+        with open('times.txt', 'a') as f:
+            print(action.__name__, end - start, file=f)
 
 
 if __name__ == '__main__':
