@@ -739,3 +739,18 @@ outside:
 
 ### 2023-03-04
 [01:08] Many changes, mostly related to `db.py`. See github commits.
+
+
+
+### 2023-03-07
+[15:20] Integrating `db.py` and `gui.py` and `main.py` via a new class `Register`. 
+I made a lot of that class' code using ChatGPT.
+It's a powerful tool.
+
+[15:27] The grand union!
+
+[15:39] This is a delicate progress, and I'll take a few precautions:
+- I'll document stuff, a lot, to refer back to.
+- I'll test-run the program after every little change.
+- I'll draw flowcharts :yum:
+
