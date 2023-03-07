@@ -1,5 +1,12 @@
 class Register(dict):
     """This class managers the connection between names (strings)* and python methods (or lambdas; any callables) that execute these scans.
+    Usage (i.e. this is a dictionary):
+    ```
+    Set: Register()["Scan Name"] = lambda: ...
+    Set: Register()["Scan Name"] = execute_scan  # no parentheses
+    Get: x = Register()["Scan Name"]
+    ```
+
     This class implements the singleton pattern.
 
     * formerly GUI Buttons, abstracted by `class Scan`.
