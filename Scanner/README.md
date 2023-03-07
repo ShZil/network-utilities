@@ -770,4 +770,29 @@ I asked ChatGPT to override `__getitem__`, and catch any KeyError(s) that arise.
 This fetches the list of scan names from the database, 
 then creates `Scan` buttons (in the `ScanScreenRightColumn`),
 and binds them to the methods provided by the `Register`.
-Registering the scans under `gui.py`, in `register_scans` (called directly from `if __name__=='__main__'`).
+Registering the scans under `gui.py`, in `register_scans` (called directly from `if __name__=='__main__':`).
+
+[15:55] I noticed there is too much stuff in `if __name__=='__main__':`, so I added `prestart`, which is also called from there.
+It's supposed to group:
+(1) everything under that clause, before `start_tk` and `start_kivy`, e.g. `add_font`, `register_scans`, and possibly `G`'s initialisation; and
+(2) stuff that's currently in `main.py`, that allows for the scans to oparate correctly, i.e. this piece of code (maybe with changes):
+```
+    remove_scapy_warnings()
+
+    ipconfig()
+    title("ShZil Network Scanner - ", ipconfig()["Interface"], " at ", ipconfig()["IPv4 Address"])
+
+    from testing.tests import test
+    test()
+
+    print_dict(ipconfig())
+    
+    global lookup
+    lookup = NetworkStorage()
+
+    ipconfig.cache["All Possible Addresses"] = all_possible_addresses = get_all_possible_addresses()
+    print("Subnet Size:", len(all_possible_addresses), "possible addresses.")
+```
+That's the plan. It obviously might change.
+I'll not do that right now, but rather when I unite everything to a single file.
+That file is the program (executable) itself, and basically just calls stuff from different modules.

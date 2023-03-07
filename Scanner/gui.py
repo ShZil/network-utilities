@@ -94,6 +94,10 @@ def register_scans():
     r["ARP Sweep"] = simple_scan(scan_ARP, 3)
 
 
+def prestart():
+    """Code to execute when the program starts to load, but before the GUI windows start."""
+    pass
+
 # --- GUI-invoked code ---
 def display_information():
     if state.highlighted_scan is DummyScan() or state.highlighted_scan is None:
@@ -963,5 +967,6 @@ def start_tk():
 if __name__ == '__main__':
     add_font()
     register_scans()
+    prestart()
     Thread(target=start_kivy).start()
     start_tk()
