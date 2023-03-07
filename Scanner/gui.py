@@ -678,14 +678,17 @@ class ScanScreenRightColumn(ButtonColumn):
 
 
         # Objects #7 - #10
-        Scan('ICMP Sweep', lambda: print("ICMP!!!"), self)
-        Scan('ARP Sweep', lambda: print("ARP!!!"), self)
-        Scan('Live ICMP', lambda: print("ICMP..."), self)
-        Scan('Live ARP', lambda: print("ARP..."), self)
-        Scan('OS-ID', lambda: print("It's fun to stay in the O-S-I-D"), self)
-        Scan('TCP Ports', lambda: print("TCP! TCP! TCP!"), self)
-        Scan('UDP Ports', lambda: print("Uridine DiPhosphate (UDP) -- glycogen synthesis polymer"), self)
-        Scan('woo!', temp_increase_graph_degree, self)
+        for name in db.get_scans():
+            Scan(name, Register()[name], self)
+            print(name)
+        # Scan('ICMP Sweep', lambda: print("ICMP!!!"), self)
+        # Scan('ARP Sweep', lambda: print("ARP!!!"), self)
+        # Scan('Live ICMP', lambda: print("ICMP..."), self)
+        # Scan('Live ARP', lambda: print("ARP..."), self)
+        # Scan('OS-ID', lambda: print("It's fun to stay in the O-S-I-D"), self)
+        # Scan('TCP Ports', lambda: print("TCP! TCP! TCP!"), self)
+        # Scan('UDP Ports', lambda: print("Uridine DiPhosphate (UDP) -- glycogen synthesis polymer"), self)
+        # Scan('woo!', temp_increase_graph_degree, self)
 
 
 class ScanScreen(Screen):

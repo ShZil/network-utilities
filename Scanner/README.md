@@ -765,3 +765,8 @@ Because I'm the only one who votes on this (lol), I won.
 I asked ChatGPT to generate a class, that extends `dict`, and implements the Singleton pattern. It did. (See `__new__`)
 I asked ChatGPT to override `__setitem__`, to ensure the `key` (str) and `value` (callable) are of a certain type. It did.
 I asked ChatGPT to override `__getitem__`, and catch any KeyError(s) that arise. It did. I added a WinAPI box to show the error (UPON CLICKING on the button, aka calling the method).
+
+[15:51] Using `db.get_scans()`, automate the `Scan`s creation in `gui.py`.
+This fetches the list of scan names from the database, 
+then creates `Scan` buttons (in the `ScanScreenRightColumn`),
+and binds them to the methods provided by the `Register`.
