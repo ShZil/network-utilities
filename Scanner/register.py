@@ -1,3 +1,5 @@
+import win32api
+
 class Register(dict):
     """This class managers the connection between names (strings)* and python methods (or lambdas; any callables) that execute these scans.
     Usage (i.e. this is a dictionary):
@@ -25,3 +27,9 @@ class Register(dict):
             raise TypeError(f"Value must be callable")
         super().__setitem__(key, value)
 
+    def __getitem__(self, key: str):
+        try:
+            return super().__getitem__(key)
+        except KeyError:
+            return lambda: win32api.MessageBox(0, "This scan is not implemented yet.", "Coming Soon", 0x00000000)
+            # raise KeyError(f"Key \"{key}\" not found in register. Try adding it :)")
