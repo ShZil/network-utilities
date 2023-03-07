@@ -29,6 +29,10 @@ from kivy.clock import Clock
 from util import nameof, one_cache
 import db
 from register import Register
+from main import simple_scan
+
+from scans.ICMP import scan_ICMP
+from scans.ARP import scan_ARP
 
 
 __author__ = 'Shaked Dan Zilberman'
@@ -81,6 +85,13 @@ def add_font():
     _add_font('Segoe UI Symbol.ttf', 'Symbols+')
     _add_font('Symbola.ttf', 'Symbols++')
     _add_font('Consolas.ttf', 'Monospace')
+
+
+def register_scans():
+    """Registers the scans into `Register()` dictionary."""
+    r = Register()
+    r["ICMP Sweep"] = simple_scan(scan_ICMP, 3)
+    r["ARP Sweep"] = simple_scan(scan_ARP, 3)
 
 
 # --- GUI-invoked code ---
@@ -951,5 +962,6 @@ def start_tk():
 
 if __name__ == '__main__':
     add_font()
+    register_scans()
     Thread(target=start_kivy).start()
     start_tk()

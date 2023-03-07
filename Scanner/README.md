@@ -770,3 +770,4 @@ I asked ChatGPT to override `__getitem__`, and catch any KeyError(s) that arise.
 This fetches the list of scan names from the database, 
 then creates `Scan` buttons (in the `ScanScreenRightColumn`),
 and binds them to the methods provided by the `Register`.
+Registering the scans under `gui.py`, in `register_scans` (called directly from `if __name__=='__main__'`).
