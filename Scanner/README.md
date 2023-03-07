@@ -754,3 +754,9 @@ It's a powerful tool.
 - I'll test-run the program after every little change.
 - I'll draw flowcharts :yum:
 
+[15:42] Atomise `standardise_simple_scans(scans: list[tuple[Callable, int]]) -> list[Callable]` into `simple_scan(scan: Callable, repeats: int) -> Callable`.
+The methods are independent, but do similar tasks: they both "wrap-up" a `Callable` scan, such that it repeats and has some pretty `__name__` and `__doc__`.
+The first gets a list of such scans, and returns a list; the second gets just one unit (i.e. atom, thus "atomise") and returns one unit.
+
+I have considered adding a `name: str` argument to `simple_scan`, but since the `__name__` will only be viewed in technical circumstances, I voted against that change.
+Because I'm the only one who votes on this (lol), I won.

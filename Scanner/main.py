@@ -88,6 +88,13 @@ def standardise_simple_scans(scans: list[tuple[Callable, int]]) -> list[Callable
     return lambdas
 
 
+def simple_scan(scan: Callable, repeats: int) -> Callable:
+    result = lambda: do_simple_scan(scan, ipconfig()["All Possible Addresses"], repeats=repeats)
+    prefix = f"{repeats} × " if repeats > 1 else ""
+    result.__name__, result.__doc__ = prefix + scan.__name__, prefix + scan.__doc__
+    return result
+
+
 def title(*s, sep=''):
     os.system(f'title {sep.join(s)}')
 
