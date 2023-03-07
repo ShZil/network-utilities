@@ -27,6 +27,8 @@ from kivy.config import Config
 from kivy.clock import Clock
 
 from util import nameof, one_cache
+import db
+from register import Register
 
 
 __author__ = 'Shaked Dan Zilberman'
