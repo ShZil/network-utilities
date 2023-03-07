@@ -760,3 +760,6 @@ The first gets a list of such scans, and returns a list; the second gets just on
 
 I have considered adding a `name: str` argument to `simple_scan`, but since the `__name__` will only be viewed in technical circumstances, I voted against that change.
 Because I'm the only one who votes on this (lol), I won.
+
+[15:46] Create `class Register(dict)`:
+I asked ChatGPT to generate a class, that extends `dict`, and implements the Singleton pattern. It did. (See `__new__`)
