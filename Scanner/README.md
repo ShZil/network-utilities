@@ -763,3 +763,4 @@ Because I'm the only one who votes on this (lol), I won.
 
 [15:46] Create `class Register(dict)`:
 I asked ChatGPT to generate a class, that extends `dict`, and implements the Singleton pattern. It did. (See `__new__`)
+I asked ChatGPT to override `__setitem__`, to ensure the `key` (str) and `value` (callable) are of a certain type. It did.
