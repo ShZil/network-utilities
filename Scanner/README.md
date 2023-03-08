@@ -796,3 +796,25 @@ It's supposed to group:
 That's the plan. It obviously might change.
 I'll not do that right now, but rather when I unite everything to a single file.
 That file is the program (executable) itself, and basically just calls stuff from different modules.
+
+
+
+### 2023-03-08
+[20:56] Working with ChatGPT, I've improved the information popup, so that it:
+(A) Supports markdown (with the help of ChatGPT); and
+(B) Displays the information from the database (trivial with the way I've structured the code).
+
+Using a new library recommended by the AI, we've created the `markdown_popup` function, that handles all the mess:
+1. Creating a QApplication
+2. Parsing the Markdown into HTML
+3. Creating the message box and its elements
+4. Displaying
+
+I also made `information_about`, under `gui.py`, that calls `db.py`'s `get_information_about_scan`, and formats it neatly to Markdown.
+
+[21:23] Formatting into Markdown is composed of multiple steps:
+1. Create phrases based on conditions, e.g. `hasrepeats = "Repeatable" if repeats else "Not repeatable"`
+2. Escape "packet models" in the description, like `<IP dst=addresses_in_network> <ICMP type=8 (echo-request)>`, into newline-separated code blocks. Uses regex.
+3. Insert everything (raw and generated data) into a predefined structure.
+
+[21:35] Added text descriptors for `certainty` and `safety`. 

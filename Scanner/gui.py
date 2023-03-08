@@ -8,6 +8,9 @@ with ImportDefence():
     from threading import Thread
     import numpy, scipy  # for networkx
     import win32api
+    import PyQt5
+    import markdown
+    import re
 kivy.require('2.1.0')
 
 from kivy.app import App
@@ -25,6 +28,9 @@ from kivy.utils import escape_markup
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.config import Config
 from kivy.clock import Clock
+
+from PyQt5.QtWidgets import QApplication, QMessageBox, QWidget, QVBoxLayout, QTextEdit, QScrollArea
+from PyQt5.QtCore import Qt
 
 from util import nameof, one_cache
 import db
@@ -101,9 +107,65 @@ def prestart():
 # --- GUI-invoked code ---
 def display_information():
     if state.highlighted_scan is DummyScan() or state.highlighted_scan is None:
-        win32api.MessageBox(0, "Please select a scan first :)", "Information about scans", 0x00000000)
+        # win32api.MessageBox(0, "Please select a scan first :)", "Information about scans", 0x00000000)
+        markdown_popup("Information about scans", "Please select a scan first :)")
     else:
-        win32api.MessageBox(0, "Good job!", f"Information about {state.highlighted_scan.name}", 0x00000000)
+        # win32api.MessageBox(0, information_about(state.highlighted_scan.name), f"Information about {state.highlighted_scan.name}", 0x00000000)
+        markdown_popup(f"Information about {state.highlighted_scan.name}", information_about(state.highlighted_scan.name))
+
+
+def markdown_popup(title, message, error=False):
+    with QApplication([]):
+        md_text = markdown.markdown(message)
+        html_text = f"<html><body>{md_text}</body></html>"
+
+        popup = QMessageBox()
+        popup.setWindowTitle(title)
+        popup.setTextFormat(Qt.RichText)
+        popup.setStandardButtons(QMessageBox.Ok)
+        popup.setEscapeButton(QMessageBox.Ok)
+        popup.setDefaultButton(QMessageBox.Ok)
+        popup.setIcon(QMessageBox.Critical if error else QMessageBox.Information)
+        popup.setText(html_text)
+        popup.exec_()
+
+
+def information_about(name: str) -> str:
+    # Get the entry about the scan and destructure it
+    entry = db.get_information_about_scan(name)
+    name0, description, time, reward, certainty, safety, mode, repeats = entry
+    if name != name0:
+        raise ValueError(f"Weird name problem: key is `{name}`, database says `{name0}`.")
+    
+    # Generate phrases
+    perrepeat = " per repeat" if repeats else ""
+    hasrepeats = "Repeatable" if repeats else "Not repeatable"
+    certainty_prompt = "That's pretty uncertain" if certainty <= 50 else "That's mildly certain" if certainty <= 80 else "That's pretty certain" if certainty <= 100 else "???"
+    safety_prompt = "That's really unsafe" if safety <= 30 else "That's pretty unsafe" if safety <= 70 else "That's pretty safe" if safety < 100 else "That's perfectly safe -- completely undetectable"
+
+    # If the description includes a packet model, escape it into a code block.
+    if not description.endswith(('.', '. ', '>')): description += '.'
+    description = re.sub("<[^<>]+>", "<br>```\\g<0>```", description, flags=re.DOTALL)
+
+    # Return everything in markdown format.
+    return '\n'.join([f"# {name}",
+        f"## Description",
+        f"{description}",
+        f"## Time estimate",
+        f"{time}s{perrepeat}",
+        f"## Risk and Reward",
+        f"### What you get",
+        f"{reward}",
+        f"### How reliable is that?",
+        f"{certainty}% certain that the data are correct.",
+        f"{certainty_prompt}.",
+        f"### Safety",
+        f"Running this is {safety}% safe.",
+        f"{safety_prompt}.",
+        f"## Others",
+        f"- {hasrepeats}",
+        f"- Mode: {mode}"
+    ])
 
 
 def display_configuration():
