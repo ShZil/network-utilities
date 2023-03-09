@@ -29,7 +29,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.config import Config
 from kivy.clock import Clock
 
-from PyQt5.QtWidgets import QApplication, QMessageBox, QWidget, QVBoxLayout, QTextEdit, QScrollArea
+from PyQt5.QtWidgets import QApplication, QMessageBox, QLabel
 from PyQt5.QtCore import Qt
 
 from util import nameof, one_cache
