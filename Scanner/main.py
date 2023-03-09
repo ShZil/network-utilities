@@ -5,19 +5,19 @@ with ImportDefence():
     import requests
     import ipaddress
 
-    from util import *
-    from ip_handler import *
-    from NetworkStorage import NetworkStorage
-    from ipconfig import ipconfig
-    
-    from scans.ARP import scan_ARP
-    from scans.ICMP import scan_ICMP, scan_ICMP_continuous
-    from scans.TCP import scan_TCP
-
     from scapy.config import conf
     from scapy.sendrecv import sr1
     from scapy.all import IP
 
+
+from util import *
+from ip_handler import *
+from NetworkStorage import NetworkStorage
+from ipconfig import ipconfig
+    
+from scans.ARP import scan_ARP
+from scans.ICMP import scan_ICMP, scan_ICMP_continuous
+from scans.TCP import scan_TCP
 
 os.system('cls')
 print("All imports were successful.")
