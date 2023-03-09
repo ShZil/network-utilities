@@ -1027,8 +1027,11 @@ def start_tk():
 
 
 if __name__ == '__main__':
+    print("Adding the fonts...")
     add_font()
+    print("Registering the scans...")
     register_scans()
     prestart()
+    print("Starting kivy...")
     Thread(target=start_kivy).start()
     start_tk()
