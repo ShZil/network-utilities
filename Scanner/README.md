@@ -818,3 +818,27 @@ I also made `information_about`, under `gui.py`, that calls `db.py`'s `get_infor
 3. Insert everything (raw and generated data) into a predefined structure.
 
 [21:35] Added text descriptors for `certainty` and `safety`. 
+
+
+### 2023-03-09
+[14:15] Talked to Zvika, he demands I implement a username-password part in the software.
+This is plainly ridiculous, as my software is client side completely;
+One can simply skip that part of the code.
+Nonetheless, it is required by the ministry of education's requirements.
+
+After a discussion with Moti, I can do the following:
+Save the information as files encrypted with a password to open them. Use asymmetric encryption here (public-private pair), with the keys generated from a human password. 
+After further discussion:
+Moti wants on-disk live encryption.
+I want to do encryption with a password upon saving a scan to a file, and it'll obviously be required when opening it.
+Zvika says my apporach will suffice.
+
+[21:56] I drew a diagram of the flow of `gui.py`'s code in Cyber class today. Now, I shall commence merging!
+Big thing. Better plan it out here in text (general overview):
+-> do all the network stages up to determining ID. (including tests) [from `main.py`]
+-> register the scans. [from `gui.py:register_scans`]
+-> then, intialise the gui stuff. [from `gui.py`]
+-> bind the actions to the buttons. [from `main.py` and `gui.py`]
+-> then, display the relevant windows. [from `gui.py`]
+
+
