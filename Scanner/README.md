@@ -841,4 +841,6 @@ Big thing. Better plan it out here in text (general overview):
 -> bind the actions to the buttons. [from `main.py` and `gui.py`]
 -> then, display the relevant windows. [from `gui.py`]
 
-
+[22:49] I thought I might make a loading screen, with informative messages and maybe inspiring sentences, while the software loads.
+I wasted an hour trying to get ChatGPT to write me some code for that, in whatever GUI python library.
+It doesn't work. So, I decided that this isn't important enough for me to waste that much time.
