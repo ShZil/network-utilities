@@ -22,6 +22,11 @@ lookup = None
 G = networkx.empty_graph()
 
 
+def update_diagrams():
+    update_kivy_diagram(0, 0)
+    if diagram is not None: diagram.renew(G)
+
+
 def main():
     print("Loading...")
     with NoPrinting():
