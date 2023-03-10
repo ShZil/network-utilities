@@ -894,4 +894,6 @@ but I think it'll be alright if I separate `.compare` and `.__eq__`.
 
 [19:23] In exe.py, move the ImportDefence to be executed first, before the other imports.
 Also, add some graphics libraries there.
+Additionally, catch PermissionError's around remove_scapy_warnings().
+
 [19:25] in NetworkEntity.__eq__, add a check for 'other==None'.

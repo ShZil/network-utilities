@@ -125,7 +125,10 @@ def remove_scapy_warnings():
     """
     conf.warning_threshold = 1_000_000  # Time between warnings of the same source should be infinite (many seconds).
     for _ in range(3):
-        sr1(IP(dst="255.255.255.255"), verbose=0, timeout=0.001)
+        try:
+            sr1(IP(dst="255.255.255.255"), verbose=0, timeout=0.001)
+        except PermissionError:
+            input("Failure to send packets <IP dst=broadcast>.\nIf you're sure you've got everything correct, press any key to continue. . .")
         sleep(0.01)
 
 
