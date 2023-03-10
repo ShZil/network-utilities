@@ -220,6 +220,7 @@ class DummyScan(Scan):
 
     def __init__(self):
         self.name = "Dummy"
+        self.is_running = False
 
     def select(self, x):
         pass
