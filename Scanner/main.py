@@ -96,7 +96,7 @@ def simple_scan(scan: Callable, repeats: int) -> Callable:
     return result
 
 
-def title(*s, sep=''):
+def cmdtitle(*s, sep=''):
     os.system(f'title {sep.join(s)}')
 
 
@@ -159,7 +159,7 @@ def main():
     remove_scapy_warnings()
 
     ipconfig()
-    title("ShZil Network Scanner - ", ipconfig()["Interface"], " at ", ipconfig()["IPv4 Address"])
+    cmdtitle("ShZil Network Scanner - ", ipconfig()["Interface"], " at ", ipconfig()["IPv4 Address"])
 
     from testing.tests import test
     test()
