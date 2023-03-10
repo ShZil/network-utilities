@@ -36,10 +36,6 @@ import tkinter.filedialog as dialogs
 from util import nameof, one_cache
 import db
 
-from scans.ICMP import scan_ICMP
-from scans.ARP import scan_ARP
-
-
 __author__ = 'Shaked Dan Zilberman'
 
 
