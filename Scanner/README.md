@@ -849,3 +849,7 @@ It doesn't work. So, I decided that this isn't important enough for me to waste 
 
 ### 2023-03-10
 [17:21] Created file `exe.py`, which will be the new main.
+
+[17:23] Use ImportDefence to import everything necessary.
+Note, `import pywin32` will always try to install,
+but doing the actual `import win32api` under `ImportDefence()` will not know which module to install if missing.

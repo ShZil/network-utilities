@@ -13,7 +13,7 @@ with ImportDefence():
     import tkinter
     from threading import Thread
     import numpy, scipy
-    import win32api
+    import pywin32
     import PyQt5
     import markdown
 
