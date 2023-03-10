@@ -12,7 +12,7 @@ with ImportDefence():
     import kivy
     import networkx
     import tkinter
-    from threading import Thread
+    from threading import Thread, Timer
     import numpy, scipy
     import pywin32
     import PyQt5
@@ -25,6 +25,11 @@ G = networkx.empty_graph()
 def update_diagrams():
     update_kivy_diagram(0, 0)
     if diagram is not None: diagram.renew(G)
+
+
+def keep_resolving_storage():
+    NetworkStorage()._resolve()
+    Timer(5.0, keep_resolving_storage).start()
 
 
 def main():
@@ -50,7 +55,8 @@ def main():
     register_scans()
     prestart()
 
-    # Start tk (on main thread) and kivy (on different thread)
+    # Start tk (on main thread) and kivy (on different thread) and `NetworkStorage()._resolve` (on a third thread)
+    keep_resolving_storage()
     Thread(target=start_kivy).start()
     start_tk()
 
