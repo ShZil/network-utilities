@@ -132,6 +132,7 @@ class NetworkEntity:
 
     def __eq__(self, other):
         # Use `.compare` for usual comparisons!
+        if other is None: return False
         return self.mac == other.mac and self.ip == other.ip and self.ipv6 == other.ipv6 and self.name == other.name
 
 
