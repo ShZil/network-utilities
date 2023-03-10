@@ -853,3 +853,5 @@ It doesn't work. So, I decided that this isn't important enough for me to waste 
 [17:23] Use ImportDefence to import everything necessary.
 Note, `import pywin32` will always try to install,
 but doing the actual `import win32api` under `ImportDefence()` will not know which module to install if missing.
+
+[17:26] Add a main function to `exe.py`. Should combine the required initalisations of `gui.py` and `main.py`, and do some `test`s, then call the GUI starter.
