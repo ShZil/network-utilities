@@ -923,3 +923,5 @@ I shall think about this first, and then implement.
 I think the 5 second interval updating is good enough, and will work for both finite and infinite scans.
 
 [00:32] I tried to investigate how to disable the popup's sound effects. No working results.
+
+[00:35] Some small changes are listed in GitHub.
