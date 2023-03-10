@@ -38,6 +38,7 @@ def register_scans():
     r = Register()
     r["ICMP Sweep"] = simple_scan(scan_ICMP, 3)
     r["ARP Sweep"] = simple_scan(scan_ARP, 3)
+    r["Live ICMP"] = lambda: scan_ICMP_continuous(lookup['ip'], ipconfig()["All Possible Addresses"], compactness=2)
 
 
 def main():
