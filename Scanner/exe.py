@@ -39,6 +39,15 @@ def main():
     lookup.add(ip="255.255.255.255")
     lookup.add(router, here)
 
+    # GUI initialisation
+    add_font()
+    register_scans()
+    prestart()
+
+    # Start tk (on main thread) and kivy (on different thread)
+    Thread(target=start_kivy).start()
+    start_tk()
+
 
 if __name__ == '__main__':
     try:
