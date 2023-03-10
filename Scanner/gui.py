@@ -4,7 +4,6 @@ with ImportDefence():
     import kivy
     import networkx as nx
     import tkinter as tk
-    import tkinter.filedialog as dialogs
     from threading import Thread
     import numpy, scipy  # for networkx
     import win32api
@@ -31,6 +30,8 @@ from kivy.clock import Clock
 
 from PyQt5.QtWidgets import QApplication, QMessageBox, QLabel
 from PyQt5.QtCore import Qt
+
+import tkinter.filedialog as dialogs
 
 from util import nameof, one_cache
 import db

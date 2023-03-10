@@ -1,6 +1,5 @@
 from import_handler import ImportDefence
 with ImportDefence():
-    import os
     from typing import Callable
     import requests
     import ipaddress
@@ -18,6 +17,8 @@ from ipconfig import ipconfig
 from scans.ARP import scan_ARP
 from scans.ICMP import scan_ICMP, scan_ICMP_continuous
 from scans.TCP import scan_TCP
+
+import os
 
 os.system('cls')
 print("All imports were successful.")
