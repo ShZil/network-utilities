@@ -897,3 +897,5 @@ Also, add some graphics libraries there.
 Additionally, catch PermissionError's around remove_scapy_warnings().
 
 [19:25] in NetworkEntity.__eq__, add a check for 'other==None'.
+Add test: openGL version must be 2.0 at least, by kivy requirements.
+Actually, nevermind, because `kivy` already displays a fine error message for that.
