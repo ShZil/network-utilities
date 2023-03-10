@@ -131,7 +131,7 @@ def information_about(name: str) -> str:
     perrepeat = " per repeat" if repeats else ""
     hasrepeats = "Repeatable" if repeats else "Not repeatable"
     certainty_prompt = "That's pretty uncertain" if certainty <= 50 else "That's mildly certain" if certainty <= 80 else "That's pretty certain" if certainty <= 100 else "???"
-    safety_prompt = "That's really unsafe" if safety <= 30 else "That's pretty unsafe" if safety <= 70 else "That's pretty safe" if safety < 100 else "That's perfectly safe -- completely undetectable"
+    safety_prompt = "That's really unsafe" if safety <= 30 else "That's pretty unsafe" if safety <= 70 else "That's quite safe" if safety < 100 else "That's perfectly safe -- completely undetectable"
 
     # If the description includes a packet model, escape it into a code block.
     if not description.endswith(('.', '. ', '>')): description += '.'
