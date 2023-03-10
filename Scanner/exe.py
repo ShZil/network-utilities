@@ -17,6 +17,8 @@ with ImportDefence():
     import PyQt5
     import markdown
 
+lookup = None
+
 
 def main():
     print("Loading...")
@@ -27,6 +29,8 @@ def main():
     cmdtitle("ShZil Network Scanner - ", ipconfig()["Interface"], " at ", ipconfig()["IPv4 Address"])
     cmdcolor(0)
     
+    global lookup
+    lookup = NetworkStorage()
 
 
 if __name__ == '__main__':
