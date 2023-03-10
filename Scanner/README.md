@@ -874,3 +874,15 @@ Obviously, I do not expect it to work first-try.
 Let's separate.
 
 [17:58] Introduced `globalstuff.py` to solve circular import, for globals `G` and `lookup`.
+
+[18:00] Flashback:
+
+```
+[17:23] Use ImportDefence to import everything necessary.
+Note, `import pywin32` will always try to install,
+but doing the actual `import win32api` under `ImportDefence()` will not know which module to install if missing.
+```
+
+Now this causes an infinite loop.
+Not the best way to solve this (probably), but it's enough:
+I added a test that checks whether the module is installed, and if not, tries to install it.

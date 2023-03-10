@@ -83,8 +83,22 @@ def does_fallback_font_exist():
     return os.path.isfile(r".\fonts\Segoe UI Symbol.ttf")
 
 
+def is_win32_pip_installed():
+    """`pywin32` is a module necessary for the GUI. It was not installed. Installing it failed."""
+    try:
+        import win32api
+        return True
+    except ModuleNotFoundError:
+        from subprocess import check_call as do_command, CalledProcessError
+        try:
+            do_command([sys.executable, "-m", "pip", "install", "pywin32"])
+            return True
+        except CalledProcessError:
+            return False
+
+
 # Each element is a boolean function. False means the test failed.
-tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask, threadify_echo_test, shift_list_test, does_winpcap_exist, does_fallback_font_exist]
+tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask, threadify_echo_test, shift_list_test, does_winpcap_exist, does_fallback_font_exist, is_win32_pip_installed]
 def test() -> None:
     os.system("")  # Enables ANSI colouring
     results = [not run() for run in tests]

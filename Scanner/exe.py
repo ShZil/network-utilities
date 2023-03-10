@@ -16,7 +16,6 @@ with ImportDefence():
     import tkinter
     from threading import Thread, Timer
     import numpy, scipy
-    import pywin32
     import PyQt5
     import markdown
 
