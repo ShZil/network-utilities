@@ -102,7 +102,7 @@ def display_information():
         markdown_popup(f"Information about {state.highlighted_scan.name}", information_about(state.highlighted_scan.name))
 
 
-def markdown_popup(title, message, error=False, warning=False):
+def markdown_popup(title, message, error=False, warning=False, question=False):
     with QApplication([]):
         md_text = markdown.markdown(message)
         html_text = f"<html><body>{md_text}</body></html>"
@@ -113,8 +113,10 @@ def markdown_popup(title, message, error=False, warning=False):
         popup.setStandardButtons(QMessageBox.Ok)
         popup.setEscapeButton(QMessageBox.Ok)
         popup.setDefaultButton(QMessageBox.Ok)
-        popup.setIcon(QMessageBox.Critical if error else QMessageBox.Warning if warning else QMessageBox.Information)
+        icon = QMessageBox.Critical if error else QMessageBox.Warning if warning else QMessageBox.Question if question else QMessageBox.Information
+        popup.setIcon(icon)
         popup.setText(html_text)
+
         popup.exec_()
 
 
