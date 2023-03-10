@@ -168,7 +168,10 @@ def activate(x):
         if Register().is_running(s.name) or s.is_running:
             markdown_popup("Cannot run scan", f"**This scan is already running!**\n\n{s.name}", error=True)
             return
-        print(f"Play {s.name}!")
+        
+        # print(f"Play {s.name}!")
+        markdown_popup("Start scan", f"Starting the scan: {s.name}")
+        
         Register().start(s.name, s.act, s.finished)
 
 
