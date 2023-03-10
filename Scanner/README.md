@@ -857,3 +857,11 @@ but doing the actual `import win32api` under `ImportDefence()` will not know whi
 [17:26] Add a main function to `exe.py`. Should combine the required initalisations of `gui.py` and `main.py`, and do some `test`s, then call the GUI starter.
 
 [17:34] Changes listed in GitHub.
+
+[17:47] Merging changes are done. I haven't tested anything.
+If it all works, my next steps are:
+(1) Add docstrings and comments (a lot!)
+(2) Improve GUI
+(3) `File` module and Import/Export scans
+(4) `Know.` Screen
+(5) `Start` Screen
