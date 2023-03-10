@@ -861,7 +861,7 @@ but doing the actual `import win32api` under `ImportDefence()` will not know whi
 [17:47] Merging changes are done. I haven't tested anything.
 If it all works, my next steps are:
 (0) Remove all `from ___ import *` -- only use sepcific imports. Maybe use an IDE (e.g. PyCharm) to do this.
-(1) Add docstrings and comments (a lot!)
+(1) Add docstrings and comments and type hints (a lot!)
 (2) Improve GUI
 (3) `File` module and Import/Export scans
 (4) `Know.` Screen
