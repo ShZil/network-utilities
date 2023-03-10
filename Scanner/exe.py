@@ -42,10 +42,11 @@ def main():
     print("Loading...")
     with NoPrinting():
         remove_scapy_warnings()
+    os.system('cls')
+    cmdcolor("0A")
     print("Attempting to connect to an network-card interface...")
     ipconfig()
     cmdtitle("ShZil Network Scanner - ", ipconfig()["Interface"], " at ", ipconfig()["IPv4 Address"])
-    cmdcolor("0A")
     from testing.tests import test
     test()
     cmdcolor("00")
