@@ -5,12 +5,9 @@ with ImportDefence():
     import requests
     import ipaddress
     import scapy
-    import kivy
-    import networkx
-    import tkinter
     from threading import Thread, Timer
-    import numpy, scipy
-    import PyQt5
+    import networkx, numpy, scipy
+    import PyQt5, kivy, tkinter
     import markdown
 
 from main import *
