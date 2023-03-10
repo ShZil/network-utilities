@@ -33,8 +33,9 @@ from PyQt5.QtCore import Qt
 
 import tkinter.filedialog as dialogs
 
-from util import nameof, one_cache
+from util import one_cache
 import db
+from register import Register
 
 __author__ = 'Shaked Dan Zilberman'
 
@@ -997,8 +998,6 @@ if __name__ == '__main__':
     raise NotImplementedError("Use `exe.py` instead.")
     print("Adding the fonts...")
     add_font()
-    print("Registering the scans...")
-    register_scans()
     prestart()
     print("Starting kivy...")
     Thread(target=start_kivy).start()
