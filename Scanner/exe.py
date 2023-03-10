@@ -5,6 +5,7 @@ from main import *
 from util import *
 from gui import *
 from NetworkStorage import *
+from register import Register
 with ImportDefence():
     import requests
     import ipaddress
@@ -32,6 +33,13 @@ def keep_resolving_storage():
     Timer(5.0, keep_resolving_storage).start()
 
 
+def register_scans():
+    """Registers the scans into `Register()` dictionary."""
+    r = Register()
+    r["ICMP Sweep"] = simple_scan(scan_ICMP, 3)
+    r["ARP Sweep"] = simple_scan(scan_ARP, 3)
+
+
 def main():
     print("Loading...")
     with NoPrinting():
@@ -50,9 +58,10 @@ def main():
     lookup.add(ip="255.255.255.255")
     lookup.add(router, here)
 
+    register_scans()
+
     # GUI initialisation
     add_font()
-    register_scans()
     prestart()
 
     # Start tk (on main thread) and kivy (on different thread) and `NetworkStorage()._resolve` (on a third thread)

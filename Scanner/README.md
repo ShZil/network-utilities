@@ -869,3 +869,6 @@ If it all works, my next steps are:
 Obviously, I do not expect it to work first-try.
 
 [17:49] "circular import". That's what I was afraid of.
+
+[17:51] The problem is that `gui` is importing stuff from `main`, which hurts module separation, and ultimately leads to circular imports.
+Let's separate.

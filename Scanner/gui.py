@@ -35,8 +35,6 @@ import tkinter.filedialog as dialogs
 
 from util import nameof, one_cache
 import db
-from register import Register
-from main import simple_scan
 
 from scans.ICMP import scan_ICMP
 from scans.ARP import scan_ARP
@@ -91,14 +89,6 @@ def add_font():
     _add_font('Segoe UI Symbol.ttf', 'Symbols+')
     _add_font('Symbola.ttf', 'Symbols++')
     _add_font('Consolas.ttf', 'Monospace')
-
-
-def register_scans():
-    """Registers the scans into `Register()` dictionary."""
-    r = Register()
-    r["ICMP Sweep"] = simple_scan(scan_ICMP, 3)
-    r["ARP Sweep"] = simple_scan(scan_ARP, 3)
-
 
 def prestart():
     """Code to execute when the program starts to load, but before the GUI windows start."""
