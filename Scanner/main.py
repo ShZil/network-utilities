@@ -101,7 +101,7 @@ def cmdtitle(*s, sep=''):
 
 
 def cmdcolor(c):
-    os.system(f'color {c.zfill(2)}')
+    os.system(f'color {str(c).zfill(2)}')
 
 
 @one_cache
