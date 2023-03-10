@@ -913,3 +913,13 @@ def _add_callback(action, callback):
 ```
 It's the `Scan`'s responsibility to manage a property called `is_running: bool`,
 although `Register().is_running(name: str) -> bool` is also available.
+
+
+
+### 2023-03-11
+[00:04] I tried to write a solution for displaying opacities and updating the graph and lookup,
+and I did it too hastely. So, since I'm not staisfied with it, I deleted all the changes (Except unrelated ones).
+I shall think about this first, and then implement.
+I think the 5 second interval updating is good enough, and will work for both finite and infinite scans.
+
+[00:32] I tried to investigate how to disable the popup's sound effects. No working results.
