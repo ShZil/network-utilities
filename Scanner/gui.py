@@ -591,25 +591,6 @@ class OperationButton(Button):
         self.bind(on_press=onclick)
 
 
-# --- Temporary --- ************
-def callback1(x):
-    print('Hello1')
-
-
-def callback2(x):
-    print('Hello2')
-
-
-def temp_increase_graph_degree(x):
-    """Adds one dimension to the hypercube graph. Temporary -- until real info is fed into this."""
-    global temp_hyperness, G
-    temp_hyperness += 1
-    if temp_hyperness > 6: temp_hyperness = 6
-    G = nx.hypercube_graph(temp_hyperness)
-    update_kivy_diagram(0, 0)
-    if diagram is not None: diagram.renew(G)
-
-
 # --- Rendering ---
 def update_kivy_diagram(painter, _):
     """Renders stuff on the diagram (object #9).
