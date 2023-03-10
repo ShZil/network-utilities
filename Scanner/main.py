@@ -26,7 +26,7 @@ import os
 __author__ = 'Shaked Dan Zilberman'
 
 # lookup = None
-from exe import lookup
+from globalstuff import lookup
 
 
 def do_simple_scan(scan, all_possible_addresses, *, results=True, repeats=3):
