@@ -6,6 +6,7 @@ from util import *
 from gui import *
 from NetworkStorage import *
 from register import Register
+from globalstuff import *
 with ImportDefence():
     import requests
     import ipaddress
@@ -18,9 +19,6 @@ with ImportDefence():
     import pywin32
     import PyQt5
     import markdown
-
-lookup = None
-G = networkx.empty_graph()
 
 
 def update_diagrams():
@@ -41,6 +39,7 @@ def register_scans():
 
 
 def main():
+    global lookup
     print("Loading...")
     with NoPrinting():
         remove_scapy_warnings()
@@ -52,7 +51,6 @@ def main():
     test()
     cmdcolor("00")
     
-    global lookup
     lookup = NetworkStorage()
     ipconfig.cache["All Possible Addresses"] = get_all_possible_addresses()
     lookup.add(ip="255.255.255.255")

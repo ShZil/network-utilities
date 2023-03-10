@@ -7,7 +7,7 @@ with ImportDefence():
 from util import JustifyPrinting
 from ipconfig import ipconfig
 from ip_handler import get_all_possible_addresses
-from exe import G
+from globalstuff import G
 
 class NetworkEntity:
     def __init__(self, mac, ip, ipv6, name):

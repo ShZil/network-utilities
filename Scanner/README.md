@@ -872,3 +872,5 @@ Obviously, I do not expect it to work first-try.
 
 [17:51] The problem is that `gui` is importing stuff from `main`, which hurts module separation, and ultimately leads to circular imports.
 Let's separate.
+
+[17:58] Introduced `globalstuff.py` to solve circular import, for globals `G` and `lookup`.

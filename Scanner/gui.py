@@ -41,7 +41,7 @@ __author__ = 'Shaked Dan Zilberman'
 
 
 # --- Global Values ---
-from exe import G
+from globalstuff import G
 diagram = None
 state = None
 is_kivy_running = True
