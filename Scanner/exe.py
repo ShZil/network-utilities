@@ -27,7 +27,10 @@ def main():
     print("Attempting to connect to an network-card interface...")
     ipconfig()
     cmdtitle("ShZil Network Scanner - ", ipconfig()["Interface"], " at ", ipconfig()["IPv4 Address"])
-    cmdcolor(0)
+    cmdcolor("0A")
+    from testing.tests import test
+    test()
+    cmdcolor("00")
     
     global lookup
     lookup = NetworkStorage()
