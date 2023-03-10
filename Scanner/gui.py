@@ -161,8 +161,12 @@ def display_configuration():
     
 def activate(x):
     if state.ask_for_permission():
-        print(f"Play {state.highlighted_scan.name}!")
-        state.highlighted_scan.act()
+        s = state.highlighted_scan
+        if Register().is_running(s.name) or s.is_running:
+            markdown_popup("Cannot run scan", f"**This scan is already running!**\n\n{s.name}", error=True)
+            return
+        print(f"Play {s.name}!")
+        Register().start(s.name, s.act, s.finished)
 
 
 # --- Classes ---
@@ -174,6 +178,7 @@ class Scan:
         self.name = name
         self.action = action
         self.x = 0
+        self.is_running = False
 
         self.button = Button(text=name, font_size=Scan.font_size, background_color=Scan.background_color, font_name="Roboto")
         self.button.bind(on_press=lambda x: self.select(x))
@@ -194,10 +199,14 @@ class Scan:
         self.button.canvas.after.clear()
     
     def act(self):
+        self.is_running = True
         try:
             self.action()
         except TypeError:
             self.action(self.x)
+    
+    def finished(self):
+        self.is_running = False
 
 
 class DummyScan(Scan):
@@ -220,6 +229,9 @@ class DummyScan(Scan):
     def act(self):
         win32api.MessageBox(0, "You must first select a scan to run.", "Running without a scan", 0x00000000)
         # raise NotImplementedError("A DummyScan cannot be `.act`ed upon.")
+    
+    def finished(self):
+        pass
 
 
 class Diagram:

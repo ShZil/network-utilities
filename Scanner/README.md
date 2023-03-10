@@ -899,3 +899,17 @@ Additionally, catch PermissionError's around remove_scapy_warnings().
 [19:25] in NetworkEntity.__eq__, add a check for 'other==None'.
 Add test: openGL version must be 2.0 at least, by kivy requirements.
 Actually, nevermind, because `kivy` already displays a fine error message for that.
+
+[23:12] The scans do execute, but on the same thread as the `kivy` gui, so it gets frozen.
+Instead, I'm going to let `Register` handle the threads for the scans.
+
+[23:21] Register now handles the scans in the following fashion:
+`Register().start(s.name, s.act, s.finished)` -- starts a new thread.
+The thread contains:
+```
+def _add_callback(action, callback):
+    action()  # s.act()
+    callback()  # s.finished()
+```
+It's the `Scan`'s responsibility to manage a property called `is_running: bool`,
+although `Register().is_running(name: str) -> bool` is also available.
