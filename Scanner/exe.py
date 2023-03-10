@@ -1,12 +1,6 @@
 __author__ = 'Shaked Dan Zilberman'
 
 from import_handler import ImportDefence
-from main import *
-from util import *
-from gui import *
-from NetworkStorage import *
-from register import Register
-from globalstuff import *
 with ImportDefence():
     import requests
     import ipaddress
@@ -18,6 +12,13 @@ with ImportDefence():
     import numpy, scipy
     import PyQt5
     import markdown
+
+from main import *
+from util import *
+from gui import *
+from NetworkStorage import *
+from register import Register
+from globalstuff import *
 
 
 def update_diagrams():

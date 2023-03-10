@@ -890,5 +890,7 @@ I added a test that checks whether the module is installed, and if not, tries to
 
 [18:10] "TypeError: unhashable type: 'NetworkEntity'", so I'll make it hashable!
 I vaugely recall having had some trouble with this in the past, when creating `NetworkStorage.py`,
-but I think it'll be alright if I separate `.compare` and `.__eq__`. 
+but I think it'll be alright if I separate `.compare` and `.__eq__`.
+
+[19:23] In exe.py, move the ImportDefence to be executed first, before the other imports.
 [19:25] in NetworkEntity.__eq__, add a check for 'other==None'.
