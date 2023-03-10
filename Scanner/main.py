@@ -161,6 +161,7 @@ def parse_scan_id():
 
 
 def main():
+    raise NotImplementedError("Use `exe.py` instead.")
     remove_scapy_warnings()
 
     ipconfig()
