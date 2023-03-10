@@ -46,8 +46,7 @@ __author__ = 'Shaked Dan Zilberman'
 
 
 # --- Global Values ---
-temp_hyperness = 1
-G = nx.hypercube_graph(1)
+from exe import G
 diagram = None
 state = None
 is_kivy_running = True

@@ -19,6 +19,7 @@ with ImportDefence():
     import markdown
 
 lookup = None
+G = networkx.empty_graph()
 
 
 def main():
