@@ -124,6 +124,15 @@ class NetworkEntity:
             if other[field] != nothing[field]:
                 self[field] = other[field]
         self._compare = None
+    
+
+    def __hash__(self):
+        return hash((self.mac, self.ip, self.ipv6, self.name))
+
+
+    def __eq__(self, other):
+        # Use `.compare` for usual comparisons!
+        return self.mac == other.mac and self.ip == other.ip and self.ipv6 == other.ipv6 and self.name == other.name
 
 
 def standard_mac(mac: str) -> str:

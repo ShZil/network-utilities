@@ -886,3 +886,8 @@ but doing the actual `import win32api` under `ImportDefence()` will not know whi
 Now this causes an infinite loop.
 Not the best way to solve this (probably), but it's enough:
 I added a test that checks whether the module is installed, and if not, tries to install it.
+
+
+[18:10] "TypeError: unhashable type: 'NetworkEntity'", so I'll make it hashable!
+I vaugely recall having had some trouble with this in the past, when creating `NetworkStorage.py`,
+but I think it'll be alright if I separate `.compare` and `.__eq__`. 
