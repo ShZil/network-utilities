@@ -46,6 +46,7 @@ class Register(dict):
         t.start()
     
     def is_running(self, name: str) -> bool:
+        if name not in self.threads: return False
         if self.threads[name].is_alive():
             return True
         self.threads.pop(name)
