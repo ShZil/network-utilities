@@ -20,8 +20,8 @@ from scans.TCP import scan_TCP
 
 import os
 
-os.system('cls')
-print("All imports were successful.")
+# os.system('cls')
+# print("All imports were successful.")
 
 __author__ = 'Shaked Dan Zilberman'
 
