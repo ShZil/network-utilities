@@ -4,6 +4,7 @@ from import_handler import ImportDefence
 from main import *
 from util import *
 from gui import *
+from NetworkStorage import *
 with ImportDefence():
     import requests
     import ipaddress
@@ -34,6 +35,8 @@ def main():
     
     global lookup
     lookup = NetworkStorage()
+    lookup.add(ip="255.255.255.255")
+    lookup.add(router, here)
 
 
 if __name__ == '__main__':
