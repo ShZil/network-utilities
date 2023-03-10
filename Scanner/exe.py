@@ -35,6 +35,7 @@ def main():
     
     global lookup
     lookup = NetworkStorage()
+    ipconfig.cache["All Possible Addresses"] = get_all_possible_addresses()
     lookup.add(ip="255.255.255.255")
     lookup.add(router, here)
 
