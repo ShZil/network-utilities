@@ -24,7 +24,12 @@ def update_diagrams():
 
 
 def keep_resolving_storage():
+    sleep(10)
     NetworkStorage()._resolve()
+    from gui import diagram
+    if diagram is not None:
+        if diagram.renew(G):
+            update_kivy_diagram()
     Timer(5.0, keep_resolving_storage).start()
 
 

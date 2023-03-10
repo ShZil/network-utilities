@@ -289,6 +289,8 @@ class Diagram:
         if not nx.utils.graphs_equal(G, self.graph):
             self.graph = G.copy()
             self.update()
+            return True
+        return False
 
 
     def hide(self):
