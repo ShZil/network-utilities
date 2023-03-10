@@ -4,10 +4,10 @@ with ImportDefence():
     import ipaddress
     from queue import Queue
 
-    from util import JustifyPrinting
-    from ipconfig import ipconfig
-    from ip_handler import get_all_possible_addresses
-
+from util import JustifyPrinting
+from ipconfig import ipconfig
+from ip_handler import get_all_possible_addresses
+from exe import G
 
 class NetworkEntity:
     def __init__(self, mac, ip, ipv6, name):
@@ -252,6 +252,7 @@ class NetworkStorage:
                     if entity == special:
                         entity.merge(special)
             self.data.append(entity)
+            G.add_node(entity)
         
         from hostify import hostify_sync, hostify
         hostify_sync([entity.ip for entity in self.waiting.queue if entity.ip != nothing.ip])
