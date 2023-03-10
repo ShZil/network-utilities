@@ -1,4 +1,5 @@
 import sys
+import traceback
 from import_handler import ImportDefence
 with ImportDefence():
     import kivy
@@ -989,6 +990,7 @@ def start_kivy():
         Config.set('input', 'mouse', 'mouse,multitouch_on_demand')  # disable multi-touch emulation
         MyApp().run()
     except Exception as e:
+        traceback.print_exc()
         print(f"{type(e).__name__} at {__file__}:{e.__traceback__.tb_lineno}: {e}", file=sys.stderr)
     finally:
         is_kivy_running = False
