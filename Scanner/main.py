@@ -100,6 +100,10 @@ def cmdtitle(*s, sep=''):
     os.system(f'title {sep.join(s)}')
 
 
+def cmdcolor(c):
+    os.system(f'color {c.zfill(2)}')
+
+
 @one_cache
 def get_public_ip():
     from NetworkStorage import nothing, NetworkStorage, LockedNetworkEntity
