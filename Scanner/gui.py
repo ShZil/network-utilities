@@ -994,6 +994,7 @@ def start_tk():
 
 
 if __name__ == '__main__':
+    raise NotImplementedError("Use `exe.py` instead.")
     print("Adding the fonts...")
     add_font()
     print("Registering the scans...")
