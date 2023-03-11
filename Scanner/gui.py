@@ -606,7 +606,7 @@ class OperationButton(Button):
 
 
 # --- Rendering ---
-def update_kivy_diagram(painter, _):
+def update_kivy_diagram(painter, _=0):
     """Renders stuff on the diagram (object #9).
     Caches `painter` on first call.
     Args:
@@ -638,8 +638,7 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
         draw.rectangle(x, y, w, h)
         draw.color(*fg)
         
-        for node in G:
-            x0, y0 = pos[node]
+        for node, (x0, y0) in pos.items():
             if (x0, y0) in draw:
                 draw.circle(x0, y0)
         
@@ -707,6 +706,7 @@ class ScanScreenMiddleDiagram(RelativeLayout):
         #     Object #9
         paint = MyPaintWidget(size_hint=(1, 1), pos_hint={'center_x': .5, 'center_y': .5})
         paint.bind(pos=update_kivy_diagram, size=update_kivy_diagram)
+        Clock.schedule_interval(update_kivy_diagram, 5)
         
         # Unite all widgets of the middle diagram.
         self.add_widget(paint)

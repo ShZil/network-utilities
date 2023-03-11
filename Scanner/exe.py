@@ -18,8 +18,8 @@ from globalstuff import *
 from threading import Thread
 
 
-def update_diagrams():
-    update_kivy_diagram(0, 0)
+def update_diagram():
+    # Kivy's diagram handles its updates on its own.
     if diagram is not None: diagram.renew(G)
 
 
@@ -30,10 +30,8 @@ def keep_resolving_storage():
         while not terminator.is_set():
             sleep(5)
             NetworkStorage()._resolve()
-            from gui import diagram
-            if diagram is not None:
-                if diagram.renew(G):
-                    update_kivy_diagram()
+            update_diagram()
+            print(len(NetworkStorage()), G)
     
     Thread(target=_resolver).start()
 

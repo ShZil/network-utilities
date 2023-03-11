@@ -964,3 +964,5 @@ if all kwargs are false, display a `win32 Message Box`!
 Else, display a `QMessageBox` with the wanted icon.
 
 [15:35] `os.system("color 00")` doesn't work, because the `color` command does not allow for the foreground to be the same as the background.
+
+[16:51] Have the diagrams update on regular intervals (5 seconds). Might globalise the delay later.

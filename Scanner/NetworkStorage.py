@@ -317,6 +317,10 @@ class NetworkStorage:
         for elem in self.sort():
             yield elem
     
+    
+    def __len__(self):
+        return len(self.data)
+    
 
     def __getitem__(self, key):
         """Gets a single "column" (key, property, field) as a list from all the NetworkEntity-ies stored.
