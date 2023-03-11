@@ -5,7 +5,6 @@ with ImportDefence():
     import requests
     import ipaddress
     import scapy
-    from threading import Thread, Timer
     import networkx, numpy, scipy
     import PyQt5, kivy, tkinter
     import markdown
@@ -16,6 +15,7 @@ from gui import *
 from NetworkStorage import *
 from register import Register
 from globalstuff import *
+from threading import Thread
 
 
 def update_diagrams():
@@ -24,13 +24,18 @@ def update_diagrams():
 
 
 def keep_resolving_storage():
-    sleep(10)
-    NetworkStorage()._resolve()
-    from gui import diagram
-    if diagram is not None:
-        if diagram.renew(G):
-            update_kivy_diagram()
-    Timer(5.0, keep_resolving_storage).start()
+    from gui import terminator
+    def _resolver():
+        sleep(7)
+        while not terminator.is_set():
+            sleep(5)
+            NetworkStorage()._resolve()
+            from gui import diagram
+            if diagram is not None:
+                if diagram.renew(G):
+                    update_kivy_diagram()
+    
+    Thread(target=_resolver).start()
 
 
 def register_scans():

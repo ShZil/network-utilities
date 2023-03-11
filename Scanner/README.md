@@ -925,6 +925,37 @@ I think the 5 second interval updating is good enough, and will work for both fi
 [00:32] I tried to investigate how to disable the popup's sound effects. No working results.
 
 [00:35] Some small changes are listed in GitHub.
+
+[12:27] Debugging the closing of the appilcation.
+I managed to get TK to close after Kivy, by replacing `diagram.root.quit()` with `diagram.root.after(0, diagram.root.destroy)`,
+but the console is still running and occasionally prints a newline.
+
+[12:30] I found this thread: `<Timer(Thread-22, started 10764)>`, which is probably running this code:
+```
+# exe.py
+def keep_resolving_storage():
+    sleep(10)
+    NetworkStorage()._resolve()
+    from gui import diagram
+    if diagram is not None:
+        if diagram.renew(G):
+            update_kivy_diagram()
+    Timer(5.0, keep_resolving_storage).start()
+```
+
+So I added a check: `if is_kivy_running:`, so that it stops renewing the diagrams and lookup when the application is closed.
+This also explains the newlines at regular intervals, of probably around 5 seconds.
+
+[12:50] I restructured the method above to use a `Thread+while` instead of `Timer`.
+Now, I can clearly see what's going on. And, for some reason, it's convinced that `is_kivy_running` is `True`.
+
+[12:53] My guess: booleans are passed by value between modules, and not updated.
+
+[13:05] I asked ChatGPT. Turns out, the variable `is_kivy_running` is not shared well between threads.
+So, I need to use `threading.Event` instead.
+
+[14:01] YES! It works! The lovely message I've longed for has appeared: `Press any key to continue . . .`.
+
 [14:06] Rename markdown_popup -> popup, and extend its range of responsibilities:
 It now takes in:
 - title: str, message: str

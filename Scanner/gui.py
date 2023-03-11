@@ -5,7 +5,7 @@ with ImportDefence():
     import kivy
     import networkx as nx
     import tkinter as tk
-    from threading import Thread
+    from threading import Thread, Event
     import numpy, scipy  # for networkx
     import win32api
     import PyQt5
@@ -46,6 +46,7 @@ from globalstuff import G
 diagram = None
 state = None
 is_kivy_running = True
+terminator = Event()
 
 
 # --- Design Settings ---
@@ -997,8 +998,8 @@ class MyApp(App):
 
 def start_kivy():
     """Starts the `kivy` app, and handles the `tkinter` diagram's closing."""
+    global is_kivy_running, diagram
     try:
-        global is_kivy_running, diagram
         is_kivy_running = True
         Config.set('input', 'mouse', 'mouse,multitouch_on_demand')  # disable multi-touch emulation
         MyApp().run()
@@ -1009,8 +1010,9 @@ def start_kivy():
         is_kivy_running = False
         assert diagram is not None
         diagram.show()
-        diagram.root.quit()
-        sys.exit()
+        diagram.root.after(1, diagram.root.destroy)
+        terminator.set()
+        # sys.exit()
 
 
 def start_tk():
@@ -1019,7 +1021,6 @@ def start_tk():
     global diagram
     diagram = Diagram()
     diagram.root.mainloop()
-
 
 if __name__ == '__main__':
     raise NotImplementedError("Use `exe.py` instead.")
