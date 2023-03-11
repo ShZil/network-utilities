@@ -925,3 +925,9 @@ I think the 5 second interval updating is good enough, and will work for both fi
 [00:32] I tried to investigate how to disable the popup's sound effects. No working results.
 
 [00:35] Some small changes are listed in GitHub.
+[14:06] Rename markdown_popup -> popup, and extend its range of responsibilities:
+It now takes in:
+- title: str, message: str
+- kwargs: error=False, warning=False, question=False, info=False
+if all kwargs are false, display a `win32 Message Box`!
+Else, display a `QMessageBox` with the wanted icon.

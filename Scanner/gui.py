@@ -96,28 +96,31 @@ def prestart():
 def display_information():
     if state.highlighted_scan is DummyScan() or state.highlighted_scan is None:
         # win32api.MessageBox(0, "Please select a scan first :)", "Information about scans", 0x00000000)
-        markdown_popup("Information about scans", "Please select a scan first :)")
+        popup("Information about scans", "Please select a scan first :)", warning=True)
     else:
         # win32api.MessageBox(0, information_about(state.highlighted_scan.name), f"Information about {state.highlighted_scan.name}", 0x00000000)
-        markdown_popup(f"Information about {state.highlighted_scan.name}", information_about(state.highlighted_scan.name))
+        popup(f"Information about {state.highlighted_scan.name}", information_about(state.highlighted_scan.name), info=True)
 
 
-def markdown_popup(title, message, error=False, warning=False, question=False):
-    with QApplication([]):
-        md_text = markdown.markdown(message)
-        html_text = f"<html><body>{md_text}</body></html>"
+def popup(title, message, *, error=False, warning=False, question=False, info=False):
+    if error or warning or question or info:
+        with QApplication([]):
+            md_text = markdown.markdown(message)
+            html_text = f"<html><body>{md_text}</body></html>"
 
-        popup = QMessageBox()
-        popup.setWindowTitle(title)
-        popup.setTextFormat(Qt.RichText)
-        popup.setStandardButtons(QMessageBox.Ok)
-        popup.setEscapeButton(QMessageBox.Ok)
-        popup.setDefaultButton(QMessageBox.Ok)
-        icon = QMessageBox.Critical if error else QMessageBox.Warning if warning else QMessageBox.Question if question else QMessageBox.Information
-        popup.setIcon(icon)
-        popup.setText(html_text)
+            popup = QMessageBox()
+            popup.setWindowTitle(title)
+            popup.setTextFormat(Qt.RichText)
+            popup.setStandardButtons(QMessageBox.Ok)
+            popup.setEscapeButton(QMessageBox.Ok)
+            popup.setDefaultButton(QMessageBox.Ok)
+            icon = QMessageBox.Critical if error else QMessageBox.Warning if warning else QMessageBox.Question if question else QMessageBox.Information
+            popup.setIcon(icon)
+            popup.setText(html_text)
 
-        popup.exec_()
+            popup.exec_()
+    else:
+        win32api.MessageBox(0, message, title, 0x00000000)
 
 
 def information_about(name: str) -> str:
@@ -159,18 +162,19 @@ def information_about(name: str) -> str:
 
 
 def display_configuration():
-    win32api.MessageBox(0, "content", "title", 0x00000000)
+    popup("title", "content")
+    # win32api.MessageBox(0, "content", "title", 0x00000000)
 
     
 def activate(x):
     if state.ask_for_permission():
         s = state.highlighted_scan
         if Register().is_running(s.name) or s.is_running:
-            markdown_popup("Cannot run scan", f"**This scan is already running!**\n\n{s.name}", error=True)
+            popup("Cannot run scan", f"**This scan is already running!**\n\n{s.name}", error=True)
             return
         
         # print(f"Play {s.name}!")
-        markdown_popup("Start scan", f"Starting the scan: {s.name}")
+        popup("Start scan", f"Starting the scan: {s.name}")
         
         Register().start(s.name, s.act, s.finished)
 
@@ -234,7 +238,8 @@ class DummyScan(Scan):
         pass
 
     def act(self):
-        win32api.MessageBox(0, "You must first select a scan to run.", "Running without a scan", 0x00000000)
+        # win32api.MessageBox(0, "You must first select a scan to run.", "Running without a scan", 0x00000000)
+        popup("Running without a scan", "You must first select a scan to run.")
         # raise NotImplementedError("A DummyScan cannot be `.act`ed upon.")
     
     def finished(self):
