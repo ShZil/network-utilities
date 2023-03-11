@@ -706,7 +706,11 @@ class ScanScreenMiddleDiagram(RelativeLayout):
         #     Object #9
         paint = MyPaintWidget(size_hint=(1, 1), pos_hint={'center_x': .5, 'center_y': .5})
         paint.bind(pos=update_kivy_diagram, size=update_kivy_diagram)
-        Clock.schedule_interval(update_kivy_diagram, 5)
+        def update_diagrams(*_):
+            update_kivy_diagram(paint)
+            if diagram is not None:
+                diagram.renew(G)
+        Clock.schedule_interval(update_diagrams, 5)
         
         # Unite all widgets of the middle diagram.
         self.add_widget(paint)
