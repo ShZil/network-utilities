@@ -58,7 +58,6 @@ def main():
     cmdtitle("ShZil Network Scanner - ", ipconfig()["Interface"], " at ", ipconfig()["IPv4 Address"])
     from testing.tests import test
     test()
-    cmdcolor("00")
     
     lookup = NetworkStorage()
     ipconfig.cache["All Possible Addresses"] = get_all_possible_addresses()

@@ -962,3 +962,5 @@ It now takes in:
 - kwargs: error=False, warning=False, question=False, info=False
 if all kwargs are false, display a `win32 Message Box`!
 Else, display a `QMessageBox` with the wanted icon.
+
+[15:35] `os.system("color 00")` doesn't work, because the `color` command does not allow for the foreground to be the same as the background.
