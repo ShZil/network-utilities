@@ -966,3 +966,7 @@ Else, display a `QMessageBox` with the wanted icon.
 [15:35] `os.system("color 00")` doesn't work, because the `color` command does not allow for the foreground to be the same as the background.
 
 [16:51] Have the diagrams update on regular intervals (5 seconds). Might globalise the delay later.
+
+[16:56] Because I'm using the Singleton pattern in `NetworkStorage`, I do not need a global `lookup`!
+Just replaced all its occurences with `NetworkStorage()` and it'll work fine.
+Performance shouldn't change too much.

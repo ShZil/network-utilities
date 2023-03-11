@@ -41,11 +41,10 @@ def register_scans():
     r = Register()
     r["ICMP Sweep"] = simple_scan(scan_ICMP, 3)
     r["ARP Sweep"] = simple_scan(scan_ARP, 3)
-    r["Live ICMP"] = lambda: scan_ICMP_continuous(lookup['ip'], ipconfig()["All Possible Addresses"], compactness=2)
+    r["Live ICMP"] = lambda: scan_ICMP_continuous(NetworkStorage()['ip'], ipconfig()["All Possible Addresses"], compactness=2)
 
 
 def main():
-    global lookup
     print("Loading...")
     remove_scapy_warnings()
     os.system('cls')
@@ -56,10 +55,10 @@ def main():
     from testing.tests import test
     test()
     
-    lookup = NetworkStorage()
+    NetworkStorage()
     ipconfig.cache["All Possible Addresses"] = get_all_possible_addresses()
-    lookup.add(ip="255.255.255.255")
-    lookup.add(router, here)
+    NetworkStorage().add(ip="255.255.255.255")
+    NetworkStorage().add(router, here)
 
     register_scans()
 

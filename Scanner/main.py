@@ -25,9 +25,6 @@ import os
 
 __author__ = 'Shaked Dan Zilberman'
 
-# lookup = None
-from globalstuff import lookup
-
 
 def do_simple_scan(scan, all_possible_addresses, *, results=True, repeats=3):
     """This is a wrapper for simple* scans, like ARP or ICMP.
@@ -175,8 +172,8 @@ def main():
 
     print_dict(ipconfig())
     
-    global lookup
-    lookup = NetworkStorage()
+    # global lookup
+    NetworkStorage()
 
     ipconfig.cache["All Possible Addresses"] = all_possible_addresses = get_all_possible_addresses()
     print("Subnet Size:", len(all_possible_addresses), "possible addresses.")
@@ -188,9 +185,9 @@ def main():
 
 
     def add_to_lookup():
-        lookup.add(ip="255.255.255.255")
+        NetworkStorage().add(ip="255.255.255.255")
         from NetworkStorage import router, here
-        lookup.add(router, here)
+        NetworkStorage().add(router, here)
     
 
     def do_TCP():
@@ -202,7 +199,7 @@ def main():
     
 
     def user_confirmation(): input("Commencing next scan. Press [Enter] to continue . . .")
-    def continuous_ICMP(): scan_ICMP_continuous(lookup['ip'], ipconfig()["All Possible Addresses"], compactness=2)
+    def continuous_ICMP(): scan_ICMP_continuous(NetworkStorage()['ip'], ipconfig()["All Possible Addresses"], compactness=2)
     def print_scanID(): print("ScanID:", get_scan_id())
 
     actions = [
@@ -210,7 +207,7 @@ def main():
         *simple_scans,
         print_scanID,
         get_public_ip,
-        lookup.print,
+        NetworkStorage().print,
         # user_confirmation,
         do_TCP,
         user_confirmation,
