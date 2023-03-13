@@ -974,6 +974,15 @@ Performance shouldn't change too much.
 
 
 # 2023-03013
+[18:50] Adding Know-Screen functionality.
+During Cyber class today, I noticed that I can't view the addresses, just a basically-useless circle of dots.
+This is frustrating, because although the programme works, it isn't useful to the user.
+This will soon be solved by introducing clickable or hoverable dots, that display addresses.
+But until that (comparatively complex) code is finished, let's do something simpler, that I'll have to do sooner or later:
+add the know screen. So, currently, it just displays the `lookup: NetworkStorage` itself (using `Iterator` and `ToString` functionalities).
+
+[19:07] Consider displaying the text in a table format, which is more natural here. Also, add scrolling mechanism.
+
 [19:09] Decreased `util.MAX_THREADS` from 300 to 100, because the programme was lagging a lot during scans, and this might be one of the reasons.
 Probably a thread mistake tho, like "the GUI thread is running a scan".
 Also remove `active_count()` warnings, and delay more: 0.02s instead of 0.01s.

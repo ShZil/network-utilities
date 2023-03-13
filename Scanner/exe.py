@@ -27,6 +27,8 @@ def keep_resolving_storage():
             sleep(5)
             NetworkStorage()._resolve()
             print(len(NetworkStorage()), G)
+            from gui import update_know_screen
+            update_know_screen(NetworkStorage())
     
     Thread(target=_resolver).start()
 

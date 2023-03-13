@@ -44,6 +44,7 @@ diagram = None
 state = None
 is_kivy_running = True
 terminator = Event()
+update_know_screen = lambda text: print(text)
 
 
 # --- Design Settings ---
@@ -880,11 +881,17 @@ class KnowScreenInfoLabel(Label):
         Label (kivy): the base class from kivy.
     """
     def __init__(self, **kwargs):
-        super().__init__(text='No address selectedddddddddddddd\n' * 10, color=(1, 1, 1, 1), font_size=30, font_name="Monospace", **kwargs)
+        super().__init__(text='No data', color=(1, 1, 1, 1), font_size=20, font_name="Monospace", **kwargs)
+        global update_know_screen
+        update_know_screen = self.data
     
 
     def data(self, text):
-        self.text = text
+        if isinstance(text, str):
+            self.text = text
+        else:
+            items = [str(x) for x in text]
+            self.text = '\n'.join(items)
 
 
 class KnowScreen(Screen):
