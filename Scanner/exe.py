@@ -20,8 +20,8 @@ from threading import Thread
 
 
 def keep_resolving_storage():
-    from gui import terminator
     def _resolver():
+        from gui import terminator
         sleep(7)
         while not terminator.is_set():
             sleep(5)
