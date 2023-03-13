@@ -970,3 +970,10 @@ Else, display a `QMessageBox` with the wanted icon.
 [16:56] Because I'm using the Singleton pattern in `NetworkStorage`, I do not need a global `lookup`!
 Just replaced all its occurences with `NetworkStorage()` and it'll work fine.
 Performance shouldn't change too much.
+
+
+
+# 2023-03013
+[19:09] Decreased `util.MAX_THREADS` from 300 to 100, because the programme was lagging a lot during scans, and this might be one of the reasons.
+Probably a thread mistake tho, like "the GUI thread is running a scan".
+Also remove `active_count()` warnings, and delay more: 0.02s instead of 0.01s.

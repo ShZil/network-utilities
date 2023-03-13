@@ -13,7 +13,7 @@ with ImportDefence():
 
 
 __author__ = 'Shaked Dan Zilberman'
-MAX_THREADS: int = 300
+MAX_THREADS: int = 100
 
 
 def print_dict(x: dict) -> None:
@@ -193,8 +193,8 @@ def threadify(f, silent=False):
             for thread in threads:
                 thread.start()
                 while active_count() >= MAX_THREADS and MAX_THREADS > 0:
-                    print(active_count(), "threads active.", file=real_stdout)
-                    sleep(0.01)
+                    # print(active_count(), "threads active.", file=real_stdout)
+                    sleep(0.02)
         
         starter = Thread(target=start_threads, args=(threads, ))
         starter.start()
