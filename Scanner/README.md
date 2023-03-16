@@ -991,3 +991,8 @@ Also remove `active_count()` warnings, and delay more: 0.02s instead of 0.01s.
 
 ### 2023-03-16
 [15:30] Implemented the Export button.
+Related things to add soon:
+- The file should be encrypted with a password.
+- Import button functionality.
+- Save more data than just the `NetworkStorage`, e.g. the network ID, the scans and their timesteps.
+- Compress the data: I know a lot of information about how the data is structured and what it contains, and saving it as ASCII characters (or worse -- UTF-8 or Unicode) is just wasteful and somewhat disrespectful.
