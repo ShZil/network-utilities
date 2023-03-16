@@ -817,6 +817,15 @@ class SaveScreenExportButton(GreenButton):
             filetypes=(("Scan files", "*.scan"), ("All files", "*.*")),
         )
         print(filename)
+        from NetworkStorage import NetworkStorage
+        data = [str(x) for x in NetworkStorage()]
+        # TODO *********** Encrypt the data with a password.
+        try:
+            with open(filename, 'x') as f:
+                f.write('\n'.join(data))
+        except FileExistsError:
+            popup("File Exists Error", "A file already exists in that path.", error=True)
+
 
 
 class SaveScreenImportButton(GreenButton):

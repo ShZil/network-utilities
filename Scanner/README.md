@@ -986,3 +986,8 @@ add the know screen. So, currently, it just displays the `lookup: NetworkStorage
 [19:09] Decreased `util.MAX_THREADS` from 300 to 100, because the programme was lagging a lot during scans, and this might be one of the reasons.
 Probably a thread mistake tho, like "the GUI thread is running a scan".
 Also remove `active_count()` warnings, and delay more: 0.02s instead of 0.01s.
+
+
+
+### 2023-03-16
+[15:30] Implemented the Export button.
