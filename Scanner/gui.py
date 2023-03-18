@@ -15,6 +15,7 @@ kivy.require('2.1.0')
 
 from kivy.app import App
 from kivy.uix.label import Label
+from kivy.uix.scrollview import ScrollView
 from kivy.uix.widget import Widget
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
@@ -890,14 +891,18 @@ class SaveScreen(Screen):
         self.add_widget(everything)
 
 
-class KnowScreenInfoLabel(Label):
+class KnowScreenInfoLabel(ScrollView):
     """Holds the requested data in string format, displayed to the user.
+    Has a scrolling mechanic.
 
     Args:
         Label (kivy): the base class from kivy.
     """
     def __init__(self, **kwargs):
-        super().__init__(text='No data', color=(1, 1, 1, 1), font_size=20, font_name="Monospace", **kwargs)
+        super().__init__(width=1100, **kwargs)
+        self.label = Label(text='No data', color=(1, 1, 1, 1), font_size=20, font_name="Monospace", size_hint_y=None, text_size=(self.width, None), halign='center')
+        self.label.bind(texture_size=self.label.setter('size'))
+        self.add_widget(self.label)
         global update_know_screen
         update_know_screen = self.data
     

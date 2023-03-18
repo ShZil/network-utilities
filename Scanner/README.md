@@ -1007,6 +1007,9 @@ and now the NetworkStorage resolves improperly (has duplicates).
 Thus, I renamed one to `.equals`.
 
 ### 2023-03-18
+[16:55] Added Scrolling mechanism to Know screen.
+With assistance of ChatGPT. It's really useful for small snippets like these.
+
 [16:57] Yesterday I added the ability to cancel scans.
 It's not wise for the GUI and UX, since now more clicks (choices) are required,
 but it's honestly a useful functionality, preventing misclicks.
