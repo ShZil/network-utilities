@@ -1017,6 +1017,8 @@ class MyApp(App):
     def build(self):
         self.title = 'Local Network Scanner'
         self.icon = 'favicon.png'
+        from kivy.core.window import Window
+        Window.size = (1300, 800)
         global state
         state = State()
         screens = ScreenManager(transition=FadeTransition())

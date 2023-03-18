@@ -1033,3 +1033,12 @@ which is both a neat feature for UX, and **very** easy to implement with the way
 [17:07] I haven't reproduced the bug relating to the `KeyError`.
 I believe the issue was related to `G`'s (nonexistant) thread safety.
 Now, when it's used, a `.copy()` is applied.
+
+[17:08] Set window size.
+To tidy up the code (future steps):
+- Docstrings.
+- Remove magic numbers.
+- Comments?
+- PEP8.
+- Find repeating strings.
+- Remove magic strings.
