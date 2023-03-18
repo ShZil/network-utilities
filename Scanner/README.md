@@ -996,3 +996,10 @@ Related things to add soon:
 - Import button functionality.
 - Save more data than just the `NetworkStorage`, e.g. the network ID, the scans and their timesteps.
 - Compress the data: I know a lot of information about how the data is structured and what it contains, and saving it as ASCII characters (or worse -- UTF-8 or Unicode) is just wasteful and somewhat disrespectful.
+
+
+
+### 2023-03-18
+[16:57] Yesterday I added the ability to cancel scans.
+It's not wise for the GUI and UX, since now more clicks (choices) are required,
+but it's honestly a useful functionality, preventing misclicks.

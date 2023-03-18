@@ -101,7 +101,7 @@ def display_information():
         popup(f"Information about {state.highlighted_scan.name}", information_about(state.highlighted_scan.name), info=True)
 
 
-def popup(title, message, *, error=False, warning=False, question=False, info=False):
+def popup(title, message, *, error=False, warning=False, question=False, info=False, cancel=False):
     if error or warning or question or info:
         with QApplication([]):
             md_text = markdown.markdown(message)
@@ -118,6 +118,9 @@ def popup(title, message, *, error=False, warning=False, question=False, info=Fa
             popup.setText(html_text)
 
             popup.exec_()
+            return -1
+    elif cancel:
+        return win32api.MessageBox(0, message, title, 0x00000001) != 2
     else:
         win32api.MessageBox(0, message, title, 0x00000000)
 
@@ -173,9 +176,10 @@ def activate(x):
             return
         
         # print(f"Play {s.name}!")
-        popup("Start scan", f"Starting the scan: {s.name}")
-        
-        Register().start(s.name, s.act, s.finished)
+        if popup("Start scan", f"Starting the scan: {s.name}", cancel=True):
+            Register().start(s.name, s.act, s.finished)
+        else:
+            popup("Canceled scan", "The scan has been cancelled.\n\n\n<sub><sup>Cancel culture, I'm telling ya.</sup></sub>", warning=True)
 
 
 # --- Classes ---
