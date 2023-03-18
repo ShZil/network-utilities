@@ -54,7 +54,7 @@ def main():
     
     NetworkStorage()
     ipconfig.cache["All Possible Addresses"] = get_all_possible_addresses()
-    NetworkStorage().add(ip="255.255.255.255")
+    from NetworkStorage import router, here
     NetworkStorage().add(router, here)
 
     register_scans()

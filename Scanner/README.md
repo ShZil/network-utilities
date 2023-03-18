@@ -1008,3 +1008,7 @@ Thus, I renamed one to `.equals`.
 [16:57] Yesterday I added the ability to cancel scans.
 It's not wise for the GUI and UX, since now more clicks (choices) are required,
 but it's honestly a useful functionality, preventing misclicks.
+
+[17:01] Yesterday, I fixed a bug in `exe.py`.
+The `router` and `here` entities, which I alledgedly added, weren't displayed.
+Turns out I forgot to import them post-initialisation, so they were `None`s.
