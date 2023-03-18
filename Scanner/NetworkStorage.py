@@ -245,7 +245,7 @@ class NetworkStorage:
             self.waiting.put(NetworkEntity(mac, ip, ipv6, name))
         else:
             for entity in args:
-                if isinstance(entity, NetworkEntity):
+                if isinstance(entity, NetworkEntity) or isinstance(entity, LockedNetworkEntity):
                     self.waiting.put(entity)
 
     
