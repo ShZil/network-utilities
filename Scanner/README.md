@@ -1010,6 +1010,9 @@ Thus, I renamed one to `.equals`.
 [16:55] Added Scrolling mechanism to Know screen.
 With assistance of ChatGPT. It's really useful for small snippets like these.
 
+[16:56] Changed `pause` to `REM pause` in `run.bat`, so that the console window closes automatically when the application is closed.
+This is getting ever-closer to an actual application. Now just find a way to hide the console entirely.
+
 [16:57] Yesterday I added the ability to cancel scans.
 It's not wise for the GUI and UX, since now more clicks (choices) are required,
 but it's honestly a useful functionality, preventing misclicks.
