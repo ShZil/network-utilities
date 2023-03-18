@@ -13,7 +13,7 @@ with ImportDefence():
 
 
 __author__ = 'Shaked Dan Zilberman'
-MAX_THREADS: int = 100
+MAX_THREADS: int = 50
 
 
 def print_dict(x: dict) -> None:
