@@ -26,7 +26,7 @@ def keep_resolving_storage():
         while not terminator.is_set():
             sleep(5)
             NetworkStorage()._resolve()
-            print(len(NetworkStorage()), G)
+            print(len(NetworkStorage()), G.copy())
             from gui import update_know_screen
             update_know_screen(NetworkStorage())
     

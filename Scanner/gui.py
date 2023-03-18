@@ -298,10 +298,14 @@ class Diagram:
         Args:
             G (nx.Graph): the new graph.
         """
-        if not nx.utils.graphs_equal(G, self.graph):
-            self.graph = G.copy()
-            self.update()
-            return True
+        renewed = G.copy()
+        try:
+            if not nx.utils.graphs_equal(renewed, self.graph):
+                self.graph = renewed
+                self.update()
+                return True
+        except KeyError as e:
+            print(e)
         return False
 
 
@@ -636,8 +640,9 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
     """
     scale = min(w, h + dh) * DIAGRAM_SCALE
     stroke = 1
-
-    pos = nx.kamada_kawai_layout(G, center=(x + w/2, y + h/2), scale=scale)
+    H = G.copy()
+    
+    pos = nx.kamada_kawai_layout(H, center=(x + w/2, y + h/2), scale=scale)
     
     with draw:
         draw.color(*bg)
@@ -648,7 +653,7 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
             if (x0, y0) in draw:
                 draw.circle(x0, y0)
         
-        for edge in G.edges:
+        for edge in H.edges:
             x0, y0 = pos[edge[0]]
             x1, y1 = pos[edge[1]]
             if (x0, y0) in draw and (x1, y1) in draw:

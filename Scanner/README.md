@@ -1006,6 +1006,12 @@ Related things to add soon:
 and now the NetworkStorage resolves improperly (has duplicates).
 Thus, I renamed one to `.equals`.
 
+[23:21] I'm fighting a bothersome error `KeyError` in the comparison of graphs (`nx.utils.graphs_equal(renewed, self.graph)`).
+I'm not sure what's causing it, so I've just been printing, reading docs and logs, catching exceptions, resturcturing code snippets from my code.
+ChatGPT's assistence has proved useless here lol
+
+
+
 ### 2023-03-18
 [16:55] Added Scrolling mechanism to Know screen.
 With assistance of ChatGPT. It's really useful for small snippets like these.
@@ -1023,3 +1029,7 @@ Turns out I forgot to import them post-initialisation, so they were `None`s.
 
 [17:03] Yesterday I added `...` when a scan runs,
 which is both a neat feature for UX, and **very** easy to implement with the way my code is structured.
+
+[17:07] I haven't reproduced the bug relating to the `KeyError`.
+I believe the issue was related to `G`'s (nonexistant) thread safety.
+Now, when it's used, a `.copy()` is applied.
