@@ -18,14 +18,8 @@ class NetworkEntity:
         self._compare = None
     
     
-    def __eq__(self, other: object) -> bool:
+    def equals(self, other: object) -> bool:
         """This method checks equality between `self` and `other`.
-        This is a magic method in Python, so you should call it using:
-        ```py
-        A = NetworkEntity(...)
-        B = NetworkEntity(...)
-        A == B
-        ```
 
         Note: Transitive Property of Equality (A=B and B=C => A=C) doesn't necessarily apply here.
         There can be cases where A = B and B = C but A != C.
@@ -119,7 +113,7 @@ class NetworkEntity:
         Args:
             other (NetworkEntity): the entity to be merged with.
         """
-        if self != other: raise ValueError("In NetworkEntity.merge(self,other), the entities must be equal.")
+        if not self.equals(other): raise ValueError("In NetworkEntity.merge(self,other), the entities must be equal.")
         for field in ["mac", "ip", "ipv6", "name"]:
             if other[field] != nothing[field]:
                 self[field] = other[field]
@@ -131,7 +125,7 @@ class NetworkEntity:
 
 
     def __eq__(self, other):
-        # Use `.compare` for usual comparisons!
+        # Use `.equals` for usual comparisons!
         if other is None: return False
         return self.mac == other.mac and self.ip == other.ip and self.ipv6 == other.ipv6 and self.name == other.name
 
@@ -254,12 +248,14 @@ class NetworkStorage:
     def _resolve(self):
         def append(entity):
             for other in self.data:
-                if entity == other:
+                if entity is other:
+                    return
+                if other.equals(entity):
                     other.merge(entity)
                     return
             if not isinstance(entity, LockedNetworkEntity):
                 for special in specials:
-                    if entity == special:
+                    if entity.equals(special):
                         entity.merge(special)
             self.data.append(entity)
             G.add_node(entity)

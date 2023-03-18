@@ -999,6 +999,11 @@ Related things to add soon:
 
 
 
+# 2023-03-17
+[15:56] I twice defined `NetworkEntity.__eq__`, which is a mistake,
+and now the NetworkStorage resolves improperly (has duplicates).
+Thus, I renamed one to `.equals`.
+
 ### 2023-03-18
 [16:57] Yesterday I added the ability to cancel scans.
 It's not wise for the GUI and UX, since now more clicks (choices) are required,
