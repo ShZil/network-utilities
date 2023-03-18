@@ -1000,6 +1000,8 @@ Related things to add soon:
 
 
 # 2023-03-17
+[15:16] Working on turning the Know screen to a table.
+
 [15:56] I twice defined `NetworkEntity.__eq__`, which is a mistake,
 and now the NetworkStorage resolves improperly (has duplicates).
 Thus, I renamed one to `.equals`.

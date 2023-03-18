@@ -904,10 +904,14 @@ class KnowScreenInfoLabel(Label):
 
     def data(self, text):
         if isinstance(text, str):
-            self.text = text
+            self.label.text = text
         else:
-            items = [str(x) for x in text]
-            self.text = '\n'.join(items)
+            try:
+                items = text.tablestring()
+                print('\n'.join(items))
+            except AttributeError:
+                items = [str(x) for x in text]
+            self.label.text = '\n'.join(items)
 
 
 class KnowScreen(Screen):
