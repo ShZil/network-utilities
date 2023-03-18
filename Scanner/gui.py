@@ -213,6 +213,7 @@ class Scan:
     
     def act(self):
         self.is_running = True
+        self.button.text += '...'
         try:
             self.action()
         except TypeError:
@@ -220,6 +221,8 @@ class Scan:
     
     def finished(self):
         self.is_running = False
+        if self.button.text.endswith('...'):
+            self.button.text = self.button.text[:-3]
 
 
 class DummyScan(Scan):

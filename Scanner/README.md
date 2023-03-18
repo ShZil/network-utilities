@@ -1012,3 +1012,6 @@ but it's honestly a useful functionality, preventing misclicks.
 [17:01] Yesterday, I fixed a bug in `exe.py`.
 The `router` and `here` entities, which I alledgedly added, weren't displayed.
 Turns out I forgot to import them post-initialisation, so they were `None`s.
+
+[17:03] Yesterday I added `...` when a scan runs,
+which is both a neat feature for UX, and **very** easy to implement with the way my code is structured.
