@@ -130,6 +130,22 @@ class NetworkEntity:
         return self.mac == other.mac and self.ip == other.ip and self.ipv6 == other.ipv6 and self.name == other.name
 
 
+    def tablestring(self, lengths):
+        padded = []
+        fields = [self.mac, self.ip, ipaddress.ip_address(self.ipv6).compressed, self.name]
+        titles = ["mac", "ip", "ipv6", "name"]
+        # longests = ["FF-FF-FF-FF-FF-FF", "255.255.255.255", "0000:0000:0000::0000:000", "NamesShouldntBeThisLong"]
+        for title, field, length in zip(titles, fields, lengths):
+            if field == nothing[title]:
+                padded.append(" " * length)
+            else:
+                if len(str(field)) > length:
+                    padded.append(str(field)[:length - 3] + '...')
+                else:
+                    padded.append(str(field).ljust(length))
+        return ' | '.join(padded)
+
+
 def standard_mac(mac: str) -> str:
     MAC_REGEX = r'^([0-9A-F]{2}-){5}([0-9A-F]{2})$'
     # using the IEEE Std 802-2014 definition.
@@ -343,5 +359,17 @@ class NetworkStorage:
         with JustifyPrinting():
             for entity in self:
                 print(entity)
+
+
+    def tablestring(self):
+        lengths = [max(map(lambda x: len(str(x)), self[field]), default=4) for field in ["mac", "ip", "ipv6", "name"]]
+        titles = ["MAC", "IPv4", "IPv6", "Name"]
+        titles = "| " + ' | '.join([title.center(length) for title, length in zip(titles, lengths)]) + " |"
+
+        width = sum(lengths) + 11
+        top = "/" + ("-" * width) + "\\"
+        subtitles = "|" + ('-' * width) + "|"
+        bottom = "\\" + ("-" * width) + "/"
+        return [top, titles, subtitles, *["| " + x.tablestring(lengths) + " |" for x in self.sort()], bottom]
 
 
