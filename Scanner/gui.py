@@ -30,11 +30,11 @@ from kivy.clock import Clock
 from PyQt5.QtWidgets import QApplication, QMessageBox
 from PyQt5.QtCore import Qt
 
-import tkinter.filedialog as dialogs
 
 from util import one_cache
 import db
 from register import Register
+from files import importer, exporter
 
 __author__ = 'Shaked Dan Zilberman'
 
@@ -824,21 +824,10 @@ class SaveScreenExportButton(GreenButton):
         self.bind(on_press=self.export)
     
     def export(self, _):
-        filename = dialogs.asksaveasfilename(
-            title="Save As",
-            defaultextension=".scan",
-            filetypes=(("Scan files", "*.scan"), ("All files", "*.*")),
-        )
-        print(filename)
-        from NetworkStorage import NetworkStorage
-        data = [str(x) for x in NetworkStorage()]
-        # TODO *********** Encrypt the data with a password.
         try:
-            with open(filename, 'x') as f:
-                f.write('\n'.join(data))
+            exporter()
         except FileExistsError:
             popup("File Exists Error", "A file already exists in that path.", error=True)
-
 
 
 class SaveScreenImportButton(GreenButton):
@@ -848,12 +837,8 @@ class SaveScreenImportButton(GreenButton):
         self.bind(on_press=self.do_import)
     
     def do_import(self, _):
-        print("Importing...")
-        filename = dialogs.askopenfilename(
-            title="Open",
-            filetypes=(("Scan files", "*.scan"), ("All files", "*.*")),
-        )
-        print(filename)
+        importer()
+        
 
 
 class SaveScreen(Screen):

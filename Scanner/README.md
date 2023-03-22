@@ -1047,4 +1047,26 @@ To tidy up the code (future steps):
 
 ### 2023-03-22
 [15:04] Removed continuous ICMP printing.
+
+[16:35] Created `ScanFileBuilder` with the help of ChatGPT.
+I wrote the actual logic, it just made a simple class with a list.
+Admittedly, getting ChatGPT to write what I want, and tackling its errors,
+all took more time than just writing the class on my own. 
+
+Prompt (before all the corrections):
+```
+I'd like to create a file factory class for saving information about LAN scans. Python.
+I have a file `files.py`, which contains two methods: importer and exporter, called by their GUI buttons from another module. After I ask the user for the path (whether for saving or loading), I want to construct an instance of said class.
+The file should contain (separate lines in the actual file, and python fields in the instance) the following data:
+- The scan ID via `main.py`'s `get_scan_id()`
+- The discovered network entities via ```from NetworkStorage import NetworkStorage; data = [str(x) for x in NetworkStorage()]```
+- The scans that were executed and their timestamps
+- A string in the beginning of the file that says "SHZILSCAN" (for confirmation that this is a correct file)
+- Possibly more parts
+
+Could you please generate an overview of the class, using Python (and many comments and sections for me to complete, by knowing the architeture of the entire project), with a good programming pattern to use here (use the Builder pattern), for me to put into `files.py` (it should only be used inside that module)?
+
+The file should be binary. The extension is `.scan`.
+```
+
 [17:08] I already encountered this error: `RuntimeError: deque mutated during iteration`. Just wrap the queue with `list(...)` method.
