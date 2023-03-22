@@ -7,6 +7,7 @@ def exporter():
         filetypes=(("Scan files", "*.scan"), ("All files", "*.*")),
     )
     print("Exporting to", filename)
+    if filename == "": return
     builder = ScanFileBuilder()
 
     from main import get_scan_id
@@ -18,7 +19,6 @@ def exporter():
     builder.add_many(data)
 
     # TODO: add scans history
-
     builder.write_to(filename)
     return filename
     
@@ -62,6 +62,7 @@ class ScanFileBuilder:
             f.write(content)
 
     def parse(self, path: str):
+        self.parts = [b""] * 3
         with open(path, "rb") as f:
             content = f.read()
             # TODO: decode content with password **********
