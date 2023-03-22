@@ -1087,3 +1087,5 @@ If it isn't, it means the password is wrong (or the file is corrupted).
 
 [18:51] I don't want to clutter the main GUI thread(s) with code, because that would make them not respond.
 So, I shifted the importing and exporting code to separate threads.
+[19:24] Print the running threads, not only at regular intervals (`exe.py: keep_resolving_storage`),
+but also upon termination of the application.

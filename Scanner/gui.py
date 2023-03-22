@@ -1117,6 +1117,8 @@ def start_kivy():
         diagram.show()
         diagram.root.after(1, diagram.root.destroy)
         terminator.set()
+        import threading
+        print(threading.enumerate())
         # sys.exit()
 
 
