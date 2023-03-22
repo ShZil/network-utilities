@@ -155,9 +155,26 @@ def get_scan_id():
     return base64.b64encode(host + b'\x40' + iface + b'\x40' + gateway + mask + physical).decode()
 
 
-def parse_scan_id():
+def parse_scan_id(scan_id):
     # Reverse the logic from `get_scan_id`
-    pass
+    import base64
+    decoded = base64.b64decode(scan_id)
+    host, iface, others = decoded.split(b'\x40')
+
+    host = host.decode().replace('\x02', '@')
+    iface = iface.decode().replace('\x02', '@')
+
+    gateway, mask, physical = others[:4], others[4:5], others[5:]
+    gateway = int.from_bytes(gateway, 'big')
+    gateway = str(ipaddress.ip_address(gateway))
+    mask = int.from_bytes(mask, 'big')
+    physical = hex(int.from_bytes(physical, 'big'))[2:].upper()
+    physical = '-'.join(a + b for a, b in zip(physical[::2], physical[1::2]))
+
+    router = f"{gateway}/{mask}"
+
+    return f"Here: {host}, {physical}, via {iface}\nRouter: {router}"
+
 
 
 def main():
