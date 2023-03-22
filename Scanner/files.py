@@ -9,17 +9,18 @@ def exporter():
     print("Exporting to", filename)
     builder = ScanFileBuilder()
 
-    from NetworkStorage import NetworkStorage
-    data = [str(x).encode() for x in NetworkStorage()]
-    builder.add_parts(data)
-
     from main import get_scan_id
     scan_id = get_scan_id().encode()
-    builder.add_part(scan_id)
+    builder.add(scan_id)
+
+    from NetworkStorage import NetworkStorage
+    data = [str(x).encode() for x in NetworkStorage()]
+    builder.add_many(data)
 
     # TODO: add scans history
 
     builder.write_to(filename)
+    return filename
         
 
 def importer():
