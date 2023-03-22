@@ -203,7 +203,7 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
         hostify_sync(list(table.keys()))
         # os.system("cls")
         
-        sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
+        # sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
 
         # try:
         #     [print0, print1, print2][compactness](sorted_table)
