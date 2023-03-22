@@ -1115,3 +1115,5 @@ It doesn't work.
 ```set "KIVY_NO_CONSOLELOG=true"```
 
 Also, removed the call to remove_scapy_warnings, because idc about them when there's no console.
+
+[23:14] I'm gonna do something big: remove all references to stdout in the code. Everywhere. I have a GitHub backup in case things go wrong.
