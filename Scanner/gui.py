@@ -46,6 +46,7 @@ state = None
 is_kivy_running = True
 terminator = Event()
 update_know_screen = lambda text: print(text)
+update_view_screen = lambda text: print(text)
 
 
 # --- Design Settings ---
@@ -911,6 +912,29 @@ class KnowScreenInfoLabel(ScrollView):
             self.label.text = '\n'.join(items)
 
 
+class ViewScreenInfo(ScrollView):
+    """Holds the requested data in string format, displayed to the user.
+    Has a scrolling mechanic.
+
+    Args:
+        Label (kivy): the base class from kivy.
+    """
+    def __init__(self, **kwargs):
+        super().__init__(width=1100, **kwargs)
+        self.label = Label(text='How did you get here?', color=(1, 1, 1, 1), font_size=20, font_name="Monospace", size_hint_y=None, text_size=(self.width, None), halign='center')
+        self.label.bind(texture_size=self.label.setter('size'))
+        self.add_widget(self.label)
+        global update_view_screen
+        update_view_screen = self.data
+    
+
+    def data(self, text):
+        if isinstance(text, str):
+            self.label.text = text
+        else:
+            raise TypeError()
+
+
 class KnowScreen(Screen):
     """Builds an interface that looks like this:
     
@@ -942,8 +966,49 @@ class KnowScreen(Screen):
         Hover.enter(name)
 
         everything = BoxLayout(orientation='vertical')
+        title = title = Label(text=f"[color={GREEN}]Knowledge about Network[/color]", size=(0, TITLE_HEIGHT), size_hint=(1, None), font_size=TITLE_FONT_SIZE, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
+        everything.add_widget(title)
         everything.add_widget(Pages())
         everything.add_widget(KnowScreenInfoLabel())
+
+        self.add_widget(everything)
+
+
+class ViewScreen(Screen):
+    """Builds an interface that looks like this:
+    
+    ```md
+    The Window (Unicode Box Art):
+        ┌────────────────────────────────────────────┐
+        │                  [#1 Title]                │
+        │  #3 Know.                                  │
+        │  #4 Scan.                                  │
+        │  #5 Know.                                  │
+        │                                            │
+        │                   #2 Data                  │
+        │          [_______________________]         │
+        │          [_______________________]         │
+        │          [_______________________]         │
+        │          [_______________________]         │
+        │                                            │
+        │                                            │
+        └────────────────────────────────────────────┘
+    ```
+
+    Args:
+        Screen (kivy): the base class for a screen.
+    """
+    
+    def __init__(self, **kw):
+        name = 'View'
+        super().__init__(name=name, **kw)
+        Hover.enter(name)
+
+        everything = BoxLayout(orientation='vertical')
+        title = title = Label(text=f"[color={GREEN}]View Past Scan[/color]", size=(0, TITLE_HEIGHT), size_hint=(1, None), font_size=TITLE_FONT_SIZE, underline=True, pos_hint={'center_x': .5, 'top': 1}, markup=True)
+        everything.add_widget(title)
+        everything.add_widget(Pages())
+        everything.add_widget(ViewScreenInfo())
 
         self.add_widget(everything)
 
@@ -989,11 +1054,12 @@ class State:
 
 class MyApp(App):
     """The main application, using `kivy`.
-    Includes four screens:
+    Includes five screens:
     1. ScanScreen
     2. SaveScreen
     3. KnowScreen
     4. StartScreen (soon ******************)
+    5. ViewScreen (only accessible through `KnowScreen.ImportButton`)
 
 
     Args:
@@ -1015,6 +1081,7 @@ class MyApp(App):
         screens.add_widget(ScanScreen())
         screens.add_widget(SaveScreen())
         screens.add_widget(KnowScreen())
+        screens.add_widget(ViewScreen())
 
         state.screen('Scan')
         
