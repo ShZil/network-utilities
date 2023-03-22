@@ -1104,6 +1104,14 @@ In `run.bat`, changed `python` to `pythonw`, by the advice of ChatGPT.
 
 [20:25] NVM it doesn't work. Also tried adding `start /B` at the start of that line.
 
-[20:41] I've created a dummy python tkinter file to test whether `pythonw` works.
+[20:41] I've created a dummy python tkinter file to test whether `pythonw` works. 
+It does work.
+I tried adding `starter.py` that starts the `exe.py` with `subprocess.Popen`...
+It doesn't work.
 
 [21:08] I'm struggling with this so much, that ChatGPT suggested: "you may need to seek assistance from a technical support specialist who can help you diagnose the issue further". 
+
+[21:40] ONE issue solved: https://github.com/kivy/kivy/issues/7004
+```set "KIVY_NO_CONSOLELOG=true"```
+
+Also, removed the call to remove_scapy_warnings, because idc about them when there's no console.
