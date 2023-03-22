@@ -1117,3 +1117,17 @@ It doesn't work.
 Also, removed the call to remove_scapy_warnings, because idc about them when there's no console.
 
 [23:14] I'm gonna do something big: remove all references to stdout in the code. Everywhere. I have a GitHub backup in case things go wrong.
+
+[23:49] This is too difficult. I'm going to need Moti's help, probably, unless I can solve it myself.
+Such a simple problem -- making the console window disappear -- such a difficult way to solve it.
+Note to self: use WakaTime's reports in the project's report.
+
+This is currently a stable build.
+I just need to add primitive symmetric file encryption, and it's ready to be presented.
+
+Later, I can improve:
+- Optimise file saving (content length)
+- GUI inconsistency in position of `Pages()`
+- Searching for an address in `Know.` Screen
+- Add a start screen
+- Ctrl+F any "*****"s (indicator of TODOs I've placed)

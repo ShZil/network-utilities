@@ -72,6 +72,7 @@ def main():
 
 
 if __name__ == '__main__':
+    # sys.stdout = sys.stderr = open(os.devnull, "w")
     try:
         main()
     except Exception as err:
