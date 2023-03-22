@@ -30,7 +30,8 @@ def importer():
     print("Importing from", filename)
 
     builder = ScanFileBuilder()
-    builder.parse(filename)
+    result = builder.parse(filename)
+    print(result)
 
 
 def ask_for_password():
