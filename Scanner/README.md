@@ -1098,3 +1098,12 @@ I decided:
 
 [19:24] Print the running threads, not only at regular intervals (`exe.py: keep_resolving_storage`),
 but also upon termination of the application.
+
+[20:23] Just adding a tiny 'w' will hide the console window?! No way.
+In `run.bat`, changed `python` to `pythonw`, by the advice of ChatGPT.
+
+[20:25] NVM it doesn't work. Also tried adding `start /B` at the start of that line.
+
+[20:41] I've created a dummy python tkinter file to test whether `pythonw` works.
+
+[21:08] I'm struggling with this so much, that ChatGPT suggested: "you may need to seek assistance from a technical support specialist who can help you diagnose the issue further". 
