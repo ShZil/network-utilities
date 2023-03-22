@@ -1047,3 +1047,4 @@ To tidy up the code (future steps):
 
 ### 2023-03-22
 [15:04] Removed continuous ICMP printing.
+[17:08] I already encountered this error: `RuntimeError: deque mutated during iteration`. Just wrap the queue with `list(...)` method.

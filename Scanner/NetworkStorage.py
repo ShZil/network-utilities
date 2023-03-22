@@ -277,7 +277,7 @@ class NetworkStorage:
             G.add_node(entity)
         
         from hostify import hostify_sync, hostify
-        hostify_sync([entity.ip for entity in self.waiting.queue if entity.ip != nothing.ip])
+        hostify_sync([entity.ip for entity in list(self.waiting.queue) if entity.ip != nothing.ip])
         for entity in list(self.waiting.queue):
             if entity.name == nothing.name:
                 entity.name = hostify(entity.ip)
