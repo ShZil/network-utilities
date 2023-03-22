@@ -201,13 +201,13 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
         sweep_scan()
         
         hostify_sync(list(table.keys()))
-        os.system("cls")
+        # os.system("cls")
         
         sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
 
-        try:
-            [print0, print1, print2][compactness](sorted_table)
-        except KeyError:
-            print3()
+        # try:
+        #     [print0, print1, print2][compactness](sorted_table)
+        # except KeyError:
+        #     print3()
 
 

@@ -1042,3 +1042,8 @@ To tidy up the code (future steps):
 - PEP8.
 - Find repeating strings.
 - Remove magic strings.
+
+
+
+### 2023-03-22
+[15:04] Removed continuous ICMP printing.
