@@ -1064,7 +1064,7 @@ The file should contain (separate lines in the actual file, and python fields in
 - A string in the beginning of the file that says "SHZILSCAN" (for confirmation that this is a correct file)
 - Possibly more parts
 
-Could you please generate an overview of the class, using Python (and many comments and sections for me to complete, by knowing the architeture of the entire project), with a good programming pattern to use here (use the Builder pattern), for me to put into `files.py` (it should only be used inside that module)?
+Could you please generate an overview of the class, using Python (and many comments and sections for me to complete, by knowing the architecture of the entire project), with a good programming pattern to use here (use the Builder pattern), for me to put into `files.py` (it should only be used inside that module)?
 
 The file should be binary. The extension is `.scan`.
 ```
@@ -1074,3 +1074,13 @@ The file should be binary. The extension is `.scan`.
 [17:41] Added ViewScreen and some kivy titles.
 
 [17:45] See the importing results as plaintext in ViewScreen.
+
+[17:47] I wanted to write a bit about the motivation behind the `HEADER = "SHZILSCAN"`.
+The actual string doesn't really matter, but it doesn't serve the same purpose as `PNG` in images.
+Technically, currently it does -- it helps recognise the file.
+In the future, when I encode with a password,
+instead of saving the password and checking equality (which would be beyond ridiculous),
+I have a constant header to the file.
+Then, upon decoding, I can check to see whether that header is present.
+if it is, great.
+If it isn't, it means the password is wrong (or the file is corrupted).
