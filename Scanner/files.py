@@ -70,7 +70,7 @@ class ScanFileBuilder:
             if content[0] != self.HEADER:
                 if not path.endswith('.scan'):
                     raise ValueError("Invalid file format. The extension is also wrong.")
-                raise ValueError("Invalid file format")   # or wrong password
+                raise ValueError("Invalid file format, or wrong password.")   # or wrong password
 
             self.parts = content[1:]
 

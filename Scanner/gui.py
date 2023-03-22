@@ -832,6 +832,8 @@ class SaveScreenExportButton(GreenButton):
                 popup("Exported", f"Saved the scan to {path}")
             except FileExistsError:
                 popup("File Exists Error", "A file already exists in that path.", error=True)
+            except FileNotFoundError:
+                popup("File Error", "A file cannot be written in that location.", error=True)
         Thread(target=_exporting).start()
 
 
@@ -845,6 +847,10 @@ class SaveScreenImportButton(GreenButton):
         def _importing():
             update_view_screen(importer())
             state.screen("View")
+            except FileNotFoundError:
+                popup("File Not Found", "The file you selected was not found.", error=True)
+            except ValueError as e:
+                popup("Error in parsing Scan File", e.args[0], error=True)
         Thread(target=_importing).start()
         
 
