@@ -826,11 +826,13 @@ class SaveScreenExportButton(GreenButton):
         self.bind(on_press=self.export)
     
     def export(self, _):
-        try:
-            path = exporter()
-            popup("Exported", f"Saved the scan to {path}")
-        except FileExistsError:
-            popup("File Exists Error", "A file already exists in that path.", error=True)
+        def _exporting():
+            try:
+                path = exporter()
+                popup("Exported", f"Saved the scan to {path}")
+            except FileExistsError:
+                popup("File Exists Error", "A file already exists in that path.", error=True)
+        Thread(target=_exporting).start()
 
 
 class SaveScreenImportButton(GreenButton):
@@ -840,8 +842,10 @@ class SaveScreenImportButton(GreenButton):
         self.bind(on_press=self.do_import)
     
     def do_import(self, _):
-        update_view_screen(importer())
-        state.screen("View")
+        def _importing():
+            update_view_screen(importer())
+            state.screen("View")
+        Thread(target=_importing).start()
         
 
 
