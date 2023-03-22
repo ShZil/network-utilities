@@ -1087,5 +1087,14 @@ If it isn't, it means the password is wrong (or the file is corrupted).
 
 [18:51] I don't want to clutter the main GUI thread(s) with code, because that would make them not respond.
 So, I shifted the importing and exporting code to separate threads.
+
+[19:22] Cannot change screens from outside the main kivy thread.
+I tried to figure out a simple solution to this:
+- Remove ViewScreen and put the info on KnowScreen?
+- Print the information as a popup?
+- Creating a loop in the main kivy threads that waits for an event?
+I decided:
+- Just move the `state.screen("View")` outside of the thread.
+
 [19:24] Print the running threads, not only at regular intervals (`exe.py: keep_resolving_storage`),
 but also upon termination of the application.

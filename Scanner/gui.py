@@ -845,13 +845,14 @@ class SaveScreenImportButton(GreenButton):
     
     def do_import(self, _):
         def _importing():
-            update_view_screen(importer())
-            state.screen("View")
+            try:
+                update_view_screen(importer())
             except FileNotFoundError:
                 popup("File Not Found", "The file you selected was not found.", error=True)
             except ValueError as e:
                 popup("Error in parsing Scan File", e.args[0], error=True)
         Thread(target=_importing).start()
+        state.screen("View")
         
 
 
@@ -934,7 +935,7 @@ class ViewScreenInfo(ScrollView):
     """
     def __init__(self, **kwargs):
         super().__init__(width=1100, **kwargs)
-        self.label = Label(text='How did you get here?', color=(1, 1, 1, 1), font_size=20, font_name="Monospace", size_hint_y=None, text_size=(self.width, None), halign='center')
+        self.label = Label(text='Loading...', color=(1, 1, 1, 1), font_size=20, font_name="Monospace", size_hint_y=None, text_size=(self.width, None), halign='center')
         self.label.bind(texture_size=self.label.setter('size'))
         self.add_widget(self.label)
         global update_view_screen
