@@ -21,7 +21,7 @@ def exporter():
 
     builder.write_to(filename)
     return filename
-        
+    
 
 def importer():
     filename = dialogs.askopenfilename(
@@ -33,6 +33,8 @@ def importer():
     builder = ScanFileBuilder()
     result = builder.parse(filename)
     print(result)
+    result = [f"{key}: {value}" for key, value in result.items()]
+    return '\n'.join(result) 
 
 
 def ask_for_password():

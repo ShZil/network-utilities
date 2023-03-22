@@ -840,7 +840,8 @@ class SaveScreenImportButton(GreenButton):
         self.bind(on_press=self.do_import)
     
     def do_import(self, _):
-        importer()
+        update_view_screen(importer())
+        state.screen("View")
         
 
 

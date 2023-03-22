@@ -1072,3 +1072,5 @@ The file should be binary. The extension is `.scan`.
 [17:08] I already encountered this error: `RuntimeError: deque mutated during iteration`. Just wrap the queue with `list(...)` method.
 
 [17:41] Added ViewScreen and some kivy titles.
+
+[17:45] See the importing results as plaintext in ViewScreen.
