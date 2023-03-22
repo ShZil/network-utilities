@@ -15,7 +15,7 @@ from gui import *
 from NetworkStorage import *
 from register import Register
 from globalstuff import *
-from threading import Thread
+from threading import Thread, enumerate as enumerate_threads
 
 
 
@@ -27,6 +27,8 @@ def keep_resolving_storage():
             sleep(5)
             NetworkStorage()._resolve()
             print(len(NetworkStorage()), G.copy())
+            for thread in enumerate_threads():
+                print(thread.name)
             from gui import update_know_screen
             update_know_screen(NetworkStorage())
     
