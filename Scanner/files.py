@@ -6,7 +6,7 @@ def exporter():
         defaultextension=".scan",
         filetypes=(("Scan files", "*.scan"), ("All files", "*.*")),
     )
-    print(filename)
+    print("Exporting to", filename)
     builder = ScanFileBuilder()
 
     from NetworkStorage import NetworkStorage
@@ -27,7 +27,7 @@ def importer():
         title="Open",
         filetypes=(("Scan files", "*.scan"), ("All files", "*.*")),
     )
-    print(filename)
+    print("Importing from", filename)
 
     builder = ScanFileBuilder()
     builder.parse(filename)
