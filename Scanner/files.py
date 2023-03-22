@@ -33,8 +33,14 @@ def importer():
     builder = ScanFileBuilder()
     result = builder.parse(filename)
     print(result)
-    result = [f"{key}: {value}" for key, value in result.items()]
-    return '\n'.join(result) 
+    scan_id = result["scan_id"]
+    entities = result["network_entities"]
+    from main import parse_scan_id, get_scan_id
+    same_network = scan_id == get_scan_id()
+    same_network_message = "\nYou're currently in the same connection (computer, interface, network) as the scan file!" if same_network else "\n"
+    scan_id = parse_scan_id(scan_id)
+    entities = '\n'.join(entities)
+    return f"""{scan_id}{same_network_message}\n\n{entities}"""
 
 
 def ask_for_password():
@@ -70,13 +76,13 @@ class ScanFileBuilder:
             if content[0] != self.HEADER:
                 if not path.endswith('.scan'):
                     raise ValueError("Invalid file format. The extension is also wrong.")
-                raise ValueError("Invalid file format, or wrong password.")   # or wrong password
+                raise ValueError("Invalid file format, or wrong password.")  # or wrong password
 
             self.parts = content[1:]
 
         return {
             "scan_id": self.parts[0].decode(),
-            "network_entities": [x.decode() for x in self.parts[1:]]
+            "network_entities": [x.decode() for x in self.parts[1].split(self.COMMA)]
         }
 
 if __name__ == '__main__':
