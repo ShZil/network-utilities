@@ -165,7 +165,8 @@ def information_about(name: str) -> str:
 
 
 def display_configuration():
-    popup("title", "content")
+    name = "scans" if state.highlighted_scan is DummyScan() or state.highlighted_scan is None else state.highlighted_scan.name
+    popup(f"Configuration of {name}", "Coming soon.")
     # win32api.MessageBox(0, "content", "title", 0x00000000)
 
     
