@@ -65,6 +65,8 @@ class ScanFileBuilder:
             # TODO: decode content with password **********
             content = content.split(self.SEP)
             if content[0] != self.HEADER:
+                if not path.endswith('.scan'):
+                    raise ValueError("Invalid file format. The extension is also wrong.")
                 raise ValueError("Invalid file format")   # or wrong password
 
             self.parts = content[1:]
