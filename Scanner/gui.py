@@ -200,6 +200,8 @@ def activate(x):
             return
         
         # print(f"Play {s.name}!")
+        if s is DummyScan():
+            popup("Cannot start scan", f"Select a scan first!", warning=True)
         if popup("Start scan", f"Starting the scan: {s.name}", cancel=True):
             Register().start(s.name, s.act, s.finished)
         else:
