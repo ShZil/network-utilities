@@ -1136,3 +1136,7 @@ Later, I can improve:
 
 ### 2023-03024
 [13:41] Some small changes in GitHub.
+
+[13:42] Trying to implement a password system in `files.py`,
+using `tkinter.simpledialog.askstring`,
+and a `password` property in `ScanFileBuilder`.

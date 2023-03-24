@@ -1,4 +1,6 @@
 import tkinter.filedialog as dialogs
+from tkinter.simpledialog import askstring
+
 
 def exporter():
     filename = dialogs.asksaveasfilename(
@@ -19,6 +21,10 @@ def exporter():
     builder.add_many(data)
 
     # TODO: add scans history
+    
+    password = askstring("Encrypt file with a password", "Insert password:")
+    print(f"The password is \"{password}\"")  # check this. What happens when you click on Cancel? What about empty passwords? ************
+    builder.set_password(password)
     builder.write_to(filename)
     return filename
     
@@ -31,6 +37,8 @@ def importer():
     print("Importing from", filename)
 
     builder = ScanFileBuilder()
+    password = askstring("Decrypt file with a password", "Insert password:")
+    builder.set_password(password)
     result = builder.parse(filename)
     print(result)
     scan_id = result["scan_id"]
@@ -54,6 +62,7 @@ class ScanFileBuilder:
 
     def __init__(self):
         self.parts = [self.HEADER]
+        self.set_password = None
 
     def add(self, part: bytes):
         self.parts.append(part)
@@ -62,12 +71,17 @@ class ScanFileBuilder:
         self.parts.append(self.COMMA.join(parts))
 
     def write_to(self, path: str):
+        assert self.password is not None
         with open(path, "xb") as f:
             content = self.SEP.join(self.parts)
             # TODO: encode content with password **********
             f.write(content)
+    
+    def set_password(self, password: str):
+        self.set_password = password
 
     def parse(self, path: str):
+        assert self.password is not None
         self.parts = [b""] * 3
         with open(path, "rb") as f:
             content = f.read()
