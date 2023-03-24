@@ -1,5 +1,6 @@
 import sys
 import traceback
+from ipconfig import ipconfig
 from import_handler import ImportDefence
 with ImportDefence():
     import kivy
@@ -96,8 +97,7 @@ def prestart():
 # --- GUI-invoked code ---
 def display_information():
     if state.highlighted_scan is DummyScan() or state.highlighted_scan is None:
-        # win32api.MessageBox(0, "Please select a scan first :)", "Information about scans", 0x00000000)
-        popup("Information about scans", "Please select a scan first :)", warning=True)
+        popup(f"General Information", general_information(), info=True)
     else:
         # win32api.MessageBox(0, information_about(state.highlighted_scan.name), f"Information about {state.highlighted_scan.name}", 0x00000000)
         popup(f"Information about {state.highlighted_scan.name}", information_about(state.highlighted_scan.name), info=True)
@@ -145,7 +145,8 @@ def information_about(name: str) -> str:
     description = re.sub("<[^<>]+>", "<br>```\\g<0>```", description, flags=re.DOTALL)
 
     # Return everything in markdown format.
-    return '\n'.join([f"# {name}",
+    return '\n'.join([
+        f"# {name}",
         f"## Description",
         f"{description}",
         f"## Time estimate",
@@ -162,6 +163,26 @@ def information_about(name: str) -> str:
         f"## Others",
         f"- {hasrepeats}",
         f"- Mode: {mode}"
+    ])
+
+
+def general_information() -> str:
+    computers_in_network = len(ipconfig()["All Possible Addresses"])
+    interface = ipconfig()["Interface"]
+    mask = ipconfig()["Subnet Mask"]
+    from NetworkStorage import here, router
+    return '\n\n'.join([
+        f"# General Information",
+        f"## This device",
+        f"IPv4 Address: {here.ip}",
+        f"Network Interface: {interface}",
+        f"## Router (Gateway)",
+        f"IPv4 Address: {router.ip}",
+        f"## Local Network",
+        f"Subnet mask: {mask}",
+        f"Possible IPv4 addresses: {computers_in_network} addresses",
+        f"## Others",
+        f"Premission to scan: {state.permission}"
     ])
 
 
@@ -920,7 +941,7 @@ class KnowScreenInfoLabel(ScrollView):
         else:
             try:
                 items = text.tablestring()
-                print('\n'.join(items))
+                # print('\n'.join(items))
             except AttributeError:
                 items = [str(x) for x in text]
             self.label.text = '\n'.join(items)
