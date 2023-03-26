@@ -1145,3 +1145,10 @@ and a `password` property in `ScanFileBuilder`.
 
 ### 2023-03-26
 [16:56] Added `_get_readable_threads` under `gui.py:general_information`
+
+[17:24] TODO: refactor the names, add docstrings, and comments, and PEP8; pay close attentions to the threads' names that appear on General Information.
+
+[17:54] Even ChatGPT has limitations:
+I tried to ask if for modules that won't work with `ImportDefence` (I explained the criteria exactly),
+but it kept giving wrong answers.
+Hopefully, the new capabilities of GPT-4 will succeed in this.

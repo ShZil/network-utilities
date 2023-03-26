@@ -73,11 +73,18 @@ class ImportDefence:
             import sys
             from subprocess import check_call as do_command, CalledProcessError
 
-            print(f"Module `{err.name}` was not found. Attempting `pip install {err.name}`...\n")
+            to_install = err.name
+            # Some modules have `pip install X` and `import Y`, where `X != Y`.
+            # These have to be added manually.
+            if 'win32' in to_install: to_install = 'pywin32'
+            if to_install == 'cv2': to_install = 'opencv-python'
+
+            print(f"Module `{err.name}` was not found. Attempting `pip install {to_install}`...\n")
             try:
-                do_command([sys.executable, "-m", "pip", "install", err.name])
+                do_command([sys.executable, "-m", "pip", "install", to_install])
             except CalledProcessError:
-                print(f"\nModule `{err.name}` could not be pip-installed. Please install manually.")
+                if_different = f"" if to_install == err.name else f" (from `{err.name}`)"
+                print(f"\nModule `{to_install}`{if_different} could not be pip-installed. Please install manually.")
                 sys.exit(1)
             argv = ['\"' + sys.argv[0] + '\"'] + sys.argv[1:]
             os.execv(sys.executable, ['python'] + argv)
