@@ -1152,3 +1152,7 @@ and a `password` property in `ScanFileBuilder`.
 I tried to ask if for modules that won't work with `ImportDefence` (I explained the criteria exactly),
 but it kept giving wrong answers.
 Hopefully, the new capabilities of GPT-4 will succeed in this.
+
+[19:54] I just had a shower, and it (as usual) sparked an idea: 
+In `@threading`, rename the `task` based on `f`. That way, one can see how many `"task" threads` are dedicated to each call.
+This shall be a part of a bigger trend: renaming threads to have a user-friendly name (because they are displayed to the user under General Information).
