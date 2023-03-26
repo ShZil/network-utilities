@@ -6,7 +6,7 @@ with ImportDefence():
     import kivy
     import networkx as nx
     import tkinter as tk
-    from threading import Thread, Event
+    from threading import Thread, Event, enumerate as enumerate_threads
     import numpy, scipy  # for networkx
     import win32api
     import PyQt5
@@ -170,6 +170,19 @@ def general_information() -> str:
     computers_in_network = len(ipconfig()["All Possible Addresses"])
     interface = ipconfig()["Interface"]
     mask = ipconfig()["Subnet Mask"]
+    
+    def _get_readable_threads():
+        find_between = lambda s, brackets: (s.split(brackets[0]))[1].split(brackets[1])[0]
+
+        threads = enumerate_threads()
+        threads = [thread.name for thread in threads]
+        threads = [name if '(' not in name else find_between(name, '()') for name in threads]
+        uniques = set(threads)
+        counts = [threads.count(name) for name in uniques]
+        threads = [f"{count} × {name}" if count > 1 else name for name, count in zip(uniques, counts)]
+        threads = ['* ' + name for name in threads]
+        return threads
+    
     from NetworkStorage import here, router
     return '\n\n'.join([
         f"# General Information",
@@ -182,7 +195,9 @@ def general_information() -> str:
         f"Subnet mask: {mask}",
         f"Possible IPv4 addresses: {computers_in_network} addresses",
         f"## Others",
-        f"Premission to scan: {state.permission}"
+        f"Premission to scan: {state.permission}",
+        f"## Current Threads",
+        *_get_readable_threads()
     ])
 
 

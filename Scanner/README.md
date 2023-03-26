@@ -1134,9 +1134,14 @@ Later, I can improve:
 
 
 
-### 2023-03024
+### 2023-03-24
 [13:41] Some small changes in GitHub.
 
 [13:42] Trying to implement a password system in `files.py`,
 using `tkinter.simpledialog.askstring`,
 and a `password` property in `ScanFileBuilder`.
+
+
+
+### 2023-03-26
+[16:56] Added `_get_readable_threads` under `gui.py:general_information`
