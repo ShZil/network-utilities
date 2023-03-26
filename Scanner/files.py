@@ -62,7 +62,7 @@ class ScanFileBuilder:
 
     def __init__(self):
         self.parts = [self.HEADER]
-        self.set_password = None
+        self.password = None
 
     def add(self, part: bytes):
         self.parts.append(part)
@@ -78,7 +78,7 @@ class ScanFileBuilder:
             f.write(content)
     
     def set_password(self, password: str):
-        self.set_password = password
+        self.password = password
 
     def parse(self, path: str):
         assert self.password is not None
