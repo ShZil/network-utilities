@@ -14,7 +14,7 @@ from ip_handler import *
 from NetworkStorage import NetworkStorage
 from ipconfig import ipconfig
     
-from scans.ARP import scan_ARP
+from scans.ARP import scan_ARP, scan_ARP_continuous
 from scans.ICMP import scan_ICMP, scan_ICMP_continuous
 from scans.TCP import scan_TCP
 

@@ -41,6 +41,7 @@ def register_scans():
     r["ICMP Sweep"] = simple_scan(scan_ICMP, 3)
     r["ARP Sweep"] = simple_scan(scan_ARP, 3)
     r["Live ICMP"] = lambda: scan_ICMP_continuous(NetworkStorage()['ip'], ipconfig()["All Possible Addresses"], compactness=2)
+    r["Live ARP"] = scan_ARP_continuous
 
 
 def main():
