@@ -48,3 +48,23 @@ def scan_ARP(addresses: list[str]) -> list[str]:
         lookup.add(mac=result[0], ip=result[1])
     
     return [result[1] for result in results]
+
+
+def scan_ARP_continuous():
+    """Starts a passive ARP scan.
+    Detects and extracts information from both `ARP who-has` and `ARP is-at` packets.
+    NetworkStorage handles duplicates.
+    
+    Terminates quickly, since `scapy`'s `AsyncSniffer` opens its own thread.
+    """
+    filter_ARP = lambda x: ARP in x
+    def save_to_storage(packet):
+        # print(packet.summary())
+        if packet[ARP].op == 2:
+            NetworkStorage().add(mac=packet[ARP].hwsrc, ip=packet[ARP].psrc)
+            NetworkStorage().add(mac=packet[ARP].hwdst, ip=packet[ARP].pdst)
+        elif packet[ARP.op] == 1:
+            NetworkStorage().add(mac=packet[ARP].hwsrc, ip=packet[ARP].psrc)
+    
+    sniffer = AsyncSniffer(prn=save_to_storage, lfilter=filter_ARP, store=False)
+    sniffer.start()
