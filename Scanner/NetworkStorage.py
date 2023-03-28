@@ -275,6 +275,8 @@ class NetworkStorage:
                         entity.merge(special)
             self.data.append(entity)
             G.add_node(entity)
+            if entity in LAN:
+                G.add_edge(router, entity)
         
         from hostify import hostify_sync, hostify
         hostify_sync([entity.ip for entity in list(self.waiting.queue) if entity.ip != nothing.ip])
@@ -373,3 +375,8 @@ class NetworkStorage:
         return [top, titles, subtitles, *["| " + x.tablestring(lengths) + " |" for x in self.sort()], bottom]
 
 
+class LAN:
+    def __contains__(self, entity):
+        return entity.ip in get_all_possible_addresses()
+
+LAN = LAN()
