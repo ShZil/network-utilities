@@ -92,7 +92,9 @@ def add_font():
 
 def prestart():
     """Code to execute when the program starts to load, but before the GUI windows start."""
-    pass
+    from NetworkStorage import router
+    from globalstuff import G
+    G.add_node(router)
 
 # --- GUI-invoked code ---
 def display_information():
