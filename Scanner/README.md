@@ -1167,3 +1167,23 @@ It's really easy to implement a new scan.
 [18:54] I decided that `Live ARP` is really slow.
 So, when it starts, I'm gonna run `arp -a` in a terminal,
 and read the output.
+
+[19:05] Wrote a regex using `regexr.com` to detect useful lines in `arp -a`.
+
+
+
+### 2023-03-28
+[11:39] Implemented the regex for `Live ARP`.
+Now, the need has become clear for more special network entities.
+
+[12:08] Implemented a `LAN` variable in `NetworkStorage`, that allows for the clear syntax of:
+```
+if entity in LAN:
+    G.add_edge(router, entity)
+```
+Which offers a logical visual distinction between entities in the LAN and outside it.
+
+[12:12] TODO: fix the flipping difference between the kivy and tk diagrams.
+You know what the problem is (kivy starts from bottom left, tk from top left).
+You know how to solve that (coordinate transformation in `KivyDiagram` and `TKDiagram`).
+Just do it.
