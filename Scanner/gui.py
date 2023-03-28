@@ -946,7 +946,7 @@ class KnowScreenInfoLabel(ScrollView):
         Label (kivy): the base class from kivy.
     """
     def __init__(self, **kwargs):
-        super().__init__(width=1100, **kwargs)
+        super().__init__(width=1200, **kwargs)
         self.label = Label(text='No data', color=(1, 1, 1, 1), font_size=20, font_name="Monospace", size_hint_y=None, text_size=(self.width, None), halign='center')
         self.label.bind(texture_size=self.label.setter('size'))
         self.add_widget(self.label)
