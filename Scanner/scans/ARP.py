@@ -1,3 +1,4 @@
+import re
 from import_handler import ImportDefence
 import sys
 
@@ -57,6 +58,17 @@ def scan_ARP_continuous():
     
     Terminates quickly, since `scapy`'s `AsyncSniffer` opens its own thread.
     """
+    # Stage 1
+    from subprocess import CalledProcessError, check_output as read_command, DEVNULL
+    try:
+        lines = read_command(['arp', '-a'], stderr=DEVNULL).decode(encoding='utf-8', errors='ignore').split('\n')
+        for line in lines:
+            if re.match(r'^ *[0-9.]* *[0-9A-Fa-f-]* *(dynamic|static)', line):
+                parts = [x for x in line.split(' ') if x not in ("", '\r')]
+                NetworkStorage().add(mac=parts[1], ip=parts[0])
+    except CalledProcessError:
+        pass
+    # Stage 2
     filter_ARP = lambda x: ARP in x
     def save_to_storage(packet):
         # print(packet.summary())
