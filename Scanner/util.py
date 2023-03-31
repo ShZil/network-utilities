@@ -179,6 +179,9 @@ def threadify(f, silent=False):
                 fails.put(e)
                 return
         
+        # Rename `task` to user-friendly name
+        task.__name__ = f.__name__ + '_task'
+        
         real_stdout = sys.stdout
         output = StringIO()
         if options["output"]:

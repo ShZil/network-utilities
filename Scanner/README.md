@@ -1197,3 +1197,6 @@ Added the "Public Address" semi-scan button's functionality.
 [22:37] I struggled with such a silly bug: I forgot `()` next to `NetworkStorage`.
 Half an hour went up in flames for that.
 Anyways, `Public Address` is now functional.
+
+[22:49] Started renaming threads' functions to be more user-friendly.
+- threadify's `task`.
