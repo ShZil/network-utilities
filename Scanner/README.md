@@ -1202,3 +1202,4 @@ Anyways, `Public Address` is now functional.
 - threadify's `task`.
 - `Register.start._add_callback` hides the name of the scan action.
 - `_resolver`
+- `start_kivy`

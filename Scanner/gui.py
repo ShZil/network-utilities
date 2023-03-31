@@ -97,6 +97,8 @@ def prestart():
     from globalstuff import G
     G.add_node(router)
 
+    start_kivy.__name__ = 'Main GUI Thread'
+
 
 # --- GUI-invoked code ---
 def display_information():
