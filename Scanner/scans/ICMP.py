@@ -108,7 +108,7 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
         # Optimal values: 18, 6, 3, 2, 1
         SCANNER_THREADS = 18
 
-        def new_devices(order: int):
+        def ICMP_live_device_discovery(order: int):
             all_addresses = shift(all_possible_addresses, 71*order)
             while True:
                 for address in all_addresses:
@@ -118,7 +118,7 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
                         waiting.put(address)
 
         for i in range(SCANNER_THREADS):
-            Thread(target=new_devices, args=(i, )).start()
+            Thread(target=ICMP_live_device_discovery, args=(i, )).start()
     
 
     def resolve_queue():
