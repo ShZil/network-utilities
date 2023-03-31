@@ -41,6 +41,7 @@ class Register(dict):
             action()
             callback()
         
+        _add_callback.__name__ = action.__name__ + "_with_callback"
         t = Thread(target=_add_callback, args=(action, callback))
         self.threads[name] = t
         t.start()

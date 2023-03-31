@@ -1200,3 +1200,4 @@ Anyways, `Public Address` is now functional.
 
 [22:49] Started renaming threads' functions to be more user-friendly.
 - threadify's `task`.
+- `Register.start._add_callback` hides the name of the scan action.
