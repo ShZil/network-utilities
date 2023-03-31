@@ -1187,3 +1187,13 @@ Which offers a logical visual distinction between entities in the LAN and outsid
 You know what the problem is (kivy starts from bottom left, tk from top left).
 You know how to solve that (coordinate transformation in `KivyDiagram` and `TKDiagram`).
 Just do it.
+
+
+
+### 2023-03-31
+[22:07] Testing the software on a new LAN.
+Added the "Public Address" semi-scan button's functionality.
+
+[22:37] I struggled with such a silly bug: I forgot `()` next to `NetworkStorage`.
+Half an hour went up in flames for that.
+Anyways, `Public Address` is now functional.

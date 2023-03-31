@@ -102,6 +102,10 @@ def cmdcolor(c):
     os.system(f'color {str(c).zfill(2)}')
 
 
+def public_address_action():
+    NetworkStorage().add(get_public_ip())
+
+
 @one_cache
 def get_public_ip():
     from NetworkStorage import nothing, NetworkStorage, LockedNetworkEntity
@@ -113,6 +117,7 @@ def get_public_ip():
     except ValueError:  # api64.ipify.org might not return the IPv6, and instead say "gateway timeout"
         outside = LockedNetworkEntity(mac=nothing.mac, ip=ip, ipv6=nothing.ipv6, name="Public Address")
     NetworkStorage().special_add(outside)
+    return outside
 
 
 def remove_scapy_warnings():

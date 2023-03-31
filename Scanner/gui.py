@@ -90,11 +90,13 @@ def add_font():
     _add_font('Symbola.ttf', 'Symbols++')
     _add_font('Consolas.ttf', 'Monospace')
 
+
 def prestart():
     """Code to execute when the program starts to load, but before the GUI windows start."""
     from NetworkStorage import router
     from globalstuff import G
     G.add_node(router)
+
 
 # --- GUI-invoked code ---
 def display_information():
