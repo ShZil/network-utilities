@@ -32,6 +32,7 @@ def keep_resolving_storage():
             from gui import update_know_screen
             update_know_screen(NetworkStorage())
     
+    _resolver.__name__ = '5-second interval repeat'
     Thread(target=_resolver).start()
 
 
