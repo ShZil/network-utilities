@@ -181,7 +181,7 @@ def threadify(f, silent=False):
         
         # Rename `task` to user-friendly name
         task.__name__ = f.__name__ + '_task'
-        
+
         real_stdout = sys.stdout
         output = StringIO()
         if options["output"]:
@@ -191,7 +191,7 @@ def threadify(f, silent=False):
         # Create Thread objects
         threads = [Thread(target=task, args=(f, x, i), daemon=True) for i, x in enumerate(args)]
         
-        def start_threads(threads: list):
+        def threadify_start_threads(threads: list):
             # Activate the threads, waiting for threads to be freed if needed.
             for thread in threads:
                 thread.start()
@@ -199,7 +199,7 @@ def threadify(f, silent=False):
                     # print(active_count(), "threads active.", file=real_stdout)
                     sleep(0.02)
         
-        starter = Thread(target=start_threads, args=(threads, ))
+        starter = Thread(target=threadify_start_threads, args=(threads, ))
         starter.start()
         
         # BUGFIX ************: Make it so the progress bar starts already during threads.starts()
