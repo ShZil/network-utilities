@@ -78,6 +78,8 @@ if __name__ == '__main__':
     try:
         main()
     except Exception as err:
+        from datetime import datetime
         with open('error log.txt', 'w') as f:
             f.write(f'An exception occurred - {err}')
+            f.write(datetime.now())
         raise
