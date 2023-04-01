@@ -27,10 +27,9 @@ def keep_resolving_storage():
             sleep(5)
             NetworkStorage()._resolve()
             print(len(NetworkStorage()), G.copy())
-            for thread in enumerate_threads():
-                print(thread.name)
             from gui import update_know_screen
             update_know_screen(NetworkStorage())
+            diagram.renew(G)
     
     _resolver.__name__ = '5-second interval repeat'
     Thread(target=_resolver).start()

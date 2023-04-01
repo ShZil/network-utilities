@@ -1203,3 +1203,16 @@ Anyways, `Public Address` is now functional.
 - `Register.start._add_callback` hides the name of the scan action.
 - `_resolver`
 - `start_kivy`
+
+
+
+### 2023-04-01
+[23:41] Yeah, April's Fools.
+I'm trying to add a textual representation of the nodes on the diagrams.
+
+
+
+### 2023-04-02
+[00:28] I've tried to add a special (tight and bold) edge between the routers' internal and external entities,
+but it caused a crash I couldn't trace, so that ain't happening.
+Many, many browser tabs.

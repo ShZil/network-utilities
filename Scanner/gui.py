@@ -403,12 +403,13 @@ class TKDiagram:
         self.diagram.canvas.create_rectangle(x, y, w, h, fill=self.color())
     
 
-    def circle(self, x, y):
+    def circle(self, x, y, node):
         r = self.radius
         x0 = x - r
         y0 = y - r
         x1 = x + r
         y1 = y + r
+        self.diagram.canvas.create_text(x0, y0 - 28, text=node.to_string('\n'), fill=self.color(), font=("Consolas", 11), justify=tk.CENTER)
         return self.diagram.canvas.create_oval(x0, y0, x1, y1, fill=self.color())
     
 
@@ -443,7 +444,7 @@ class KivyDiagram:
         Rectangle(pos=(x, y), size=(w, h))
     
 
-    def circle(self, x, y):
+    def circle(self, x, y, node):
         r = self.radius
         Ellipse(pos=(x - r, y - r), size=(2 * r, 2 * r))
     
@@ -697,7 +698,7 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
         
         for node, (x0, y0) in pos.items():
             if (x0, y0) in draw:
-                draw.circle(x0, y0)
+                draw.circle(x0, y0, node)
         
         for edge in H.edges:
             x0, y0 = pos[edge[0]]
