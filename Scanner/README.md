@@ -1244,3 +1244,11 @@ so I added a timeout check.
 [22:20] Cleaning up the printing:
 - Don't print special entities in `NetworkStorage` initialisation.
 - Don't print the scans' names in `gui.py:ScanScreenRightColumn` initialisation.
+
+[22:23] Next up: implement more scans
+Supporting infrastructure:
+- OS column for `OS-ID`
+- Configure popup for `TCP Ports`
+- Packet memory for `OS-ID`
+Also,
+- Scan history for the files.
