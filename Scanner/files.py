@@ -1,5 +1,9 @@
-import tkinter.filedialog as dialogs
-from tkinter.simpledialog import askstring
+from import_handler import ImportDefence
+with ImportDefence():
+    import tkinter.filedialog as dialogs
+    from tkinter.simpledialog import askstring
+
+import files_cryptography
 
 
 def exporter():
@@ -51,8 +55,12 @@ def importer():
     return f"""{scan_id}{same_network_message}\n\n{entities}"""
 
 
-def ask_for_password():
-    pass
+def encrypt(message: bytes, password: str) -> bytes:
+    return files_cryptography.password_encrypt(message, password)
+
+
+def decrypt(token: bytes, password: str) -> bytes:
+    return files_cryptography.password_decrypt(token, password)
 
 
 class ScanFileBuilder:
@@ -74,7 +82,7 @@ class ScanFileBuilder:
         assert self.password is not None
         with open(path, "xb") as f:
             content = self.SEP.join(self.parts)
-            # TODO: encode content with password **********
+            content = encrypt(content, self.password)
             f.write(content)
     
     def set_password(self, password: str):
@@ -85,7 +93,7 @@ class ScanFileBuilder:
         self.parts = [b""] * 3
         with open(path, "rb") as f:
             content = f.read()
-            # TODO: decode content with password **********
+            content = decrypt(content, self.password)
             content = content.split(self.SEP)
             if content[0] != self.HEADER:
                 if not path.endswith('.scan'):
