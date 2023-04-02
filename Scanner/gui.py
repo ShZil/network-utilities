@@ -409,7 +409,7 @@ class TKDiagram:
         y0 = y - r
         x1 = x + r
         y1 = y + r
-        self.diagram.canvas.create_text(x0, y0 - 28, text=node.to_string('\n'), fill=self.color(), font=("Consolas", 11), justify=tk.CENTER)
+        self.diagram.canvas.create_text(x0, y0 - 30, text=node.to_string('\n'), fill=self.color(), font=("Consolas", 10), justify=tk.CENTER)
         return self.diagram.canvas.create_oval(x0, y0, x1, y1, fill=self.color())
     
 
