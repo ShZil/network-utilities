@@ -138,7 +138,7 @@ class NetworkEntity:
         padded = []
         fields = [self.mac, self.ip, ipaddress.ip_address(self.ipv6).compressed, self.name]
         titles = ["mac", "ip", "ipv6", "name"]
-        # longests = ["FF-FF-FF-FF-FF-FF", "255.255.255.255", "0000:0000:0000::0000:000", "NamesShouldntBeThisLong"]
+        # longests = ["FF-FF-FF-FF-FF-FF", "255.255.255.255", "0000:0000:0000::0000:0000", "NamesShouldntBeThisLong"]
         for title, field, length in zip(titles, fields, lengths):
             if field == nothing[title]:
                 padded.append(" " * length)

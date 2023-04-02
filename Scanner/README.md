@@ -1220,3 +1220,5 @@ Many, many browser tabs.
 [18:00] Create `files.py:encrypt` and `files.py:decrypt`, using `cryptography.fernet.Fernet`.
 
 [18:10] Separate code to module `files_cryptography.py`.
+
+[18:25] BUG: Running just `ARP Sweep` once doesn't update `Know Table` nor the `Diagram`.
