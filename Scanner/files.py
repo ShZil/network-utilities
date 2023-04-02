@@ -1,6 +1,7 @@
 from import_handler import ImportDefence
 with ImportDefence():
     import tkinter.filedialog as dialogs
+    from call_function_with_timeout import SetTimeout
 
 import files_cryptography
 
@@ -56,7 +57,9 @@ def encrypt(message: bytes, password: str) -> bytes:
 
 
 def decrypt(token: bytes, password: str) -> bytes:
-    return files_cryptography.password_decrypt(token, password)
+    decrypter_with_timeout = SetTimeout(files_cryptography.password_decrypt, timeout=5)
+    is_done, is_timeout, erro_message, results = decrypter_with_timeout(token, password)
+    return results if is_done else ""
 
 
 class ScanFileBuilder:
@@ -91,6 +94,8 @@ class ScanFileBuilder:
             content = f.read()
             print("Read the file")
             content = decrypt(content, self.password)
+            if content == '':
+                raise ValueError("Couldn't decrypt the file. The password is wrong")
             print("Decrypted the file")
             content = content.split(self.SEP)
             print("Checking the file")
