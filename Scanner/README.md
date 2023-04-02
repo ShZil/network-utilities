@@ -1216,3 +1216,7 @@ I'm trying to add a textual representation of the nodes on the diagrams.
 [00:28] I've tried to add a special (tight and bold) edge between the routers' internal and external entities,
 but it caused a crash I couldn't trace, so that ain't happening.
 Many, many browser tabs.
+
+[18:00] Create `files.py:encrypt` and `files.py:decrypt`, using `cryptography.fernet.Fernet`.
+
+[18:10] Separate code to module `files_cryptography.py`.
