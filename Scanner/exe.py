@@ -27,7 +27,7 @@ def keep_resolving_storage():
             sleep(5)
             NetworkStorage()._resolve()
             print(len(NetworkStorage()), G.copy())
-            from gui import update_know_screen
+            from gui import update_know_screen, diagram
             update_know_screen(NetworkStorage())
             diagram.renew(G)
     

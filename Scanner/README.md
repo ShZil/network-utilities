@@ -1222,3 +1222,5 @@ Many, many browser tabs.
 [18:10] Separate code to module `files_cryptography.py`.
 
 [18:25] BUG: Running just `ARP Sweep` once doesn't update `Know Table` nor the `Diagram`.
+
+[19:27] BUGFIX: quite simple honestly, just add a dynamic import for `gui.py:diagram` under `exe.py:keep_resolving_storage`.
