@@ -1234,3 +1234,5 @@ I finally decided to use the simplest solution - python's built-in `input()`.
 [21:20] It crashes immediately. Change to dynamic import.
 
 [21:24] Correct password -- works. Wrong password -- shows nothing.
+
+[21:36] The problem is that current encryption/decryption doesn't halt when the password is wrong.
