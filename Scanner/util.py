@@ -236,7 +236,7 @@ def threadify(f, silent=False):
         if options["output"] and output.strip() != "":
             print("\n\nTasks' output:\n", output, sep='')
             print("\n\n")
-        print()
+        # print()
 
         # Returning logic.
         if options["give"] == "output": return output

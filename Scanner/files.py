@@ -40,7 +40,7 @@ def importer():
     builder = ScanFileBuilder()
     builder.set_password(input("Password: "))
     result = builder.parse(filename)
-    print(result)
+    # print(result)
     scan_id = result["scan_id"]
     entities = result["network_entities"]
     from main import parse_scan_id, get_scan_id
@@ -89,13 +89,18 @@ class ScanFileBuilder:
         self.parts = [b""] * 3
         with open(path, "rb") as f:
             content = f.read()
+            print("Read the file")
             content = decrypt(content, self.password)
+            print("Decrypted the file")
             content = content.split(self.SEP)
+            print("Checking the file")
             if content[0] != self.HEADER:
+                print("Bad file", content[0], self.HEADER)
                 if not path.endswith('.scan'):
                     raise ValueError("Invalid file format. The extension is also wrong.")
                 raise ValueError("Invalid file format, or wrong password.")  # or wrong password
 
+            print("Good file", content[1:])
             self.parts = content[1:]
 
         return {
