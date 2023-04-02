@@ -1240,3 +1240,7 @@ I finally decided to use the simplest solution - python's built-in `input()`.
 [22:18] Finally, an encryption-decryption file that works!
 If the decryption is too slow, it means the password is wrong,
 so I added a timeout check.
+
+[22:20] Cleaning up the printing:
+- Don't print special entities in `NetworkStorage` initialisation.
+- Don't print the scans' names in `gui.py:ScanScreenRightColumn` initialisation.

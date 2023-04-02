@@ -229,7 +229,7 @@ class NetworkStorage:
             here = LockedNetworkEntity(mac=ipconfig()["Physical Address"], ip=ipconfig()["IPv4 Address"], ipv6=ipconfig()["IPv6 Address"] if 'IPv6 Address' in ipconfig() else nothing.ipv6, name=ipconfig()["Host Name"])
 
             cls.instance.special_add(localhost, mDNS, multicast, broadcast, router, local_broadcast, here)
-            print(nothing, *specials, sep="\n")
+            # print(nothing, *specials, sep="\n")
 
             cls.instance._give_names()
         return cls.instance

@@ -817,7 +817,7 @@ class ScanScreenRightColumn(ButtonColumn):
         # Objects #7 - #10
         for name in db.get_scans():
             Scan(name, Register()[name], self)
-            print(name)
+            # print(name)
         # Scan('ICMP Sweep', lambda: print("ICMP!!!"), self)
         # Scan('ARP Sweep', lambda: print("ARP!!!"), self)
         # Scan('Live ICMP', lambda: print("ICMP..."), self)
