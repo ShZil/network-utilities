@@ -1230,3 +1230,5 @@ Tkinter - it just refused to continue running code after `simpledialog.askstring
 PySimpleGUI - I tried it too, it just froze.
 Kivy - I tried adding a `TextInput` to the `SaveScreen`, but Kivy won't even start the window when importing `TextInput`.
 I finally decided to use the simplest solution - python's built-in `input()`.
+
+[21:20] It crashes immediately. Change to dynamic import.
