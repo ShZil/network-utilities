@@ -1232,3 +1232,5 @@ Kivy - I tried adding a `TextInput` to the `SaveScreen`, but Kivy won't even sta
 I finally decided to use the simplest solution - python's built-in `input()`.
 
 [21:20] It crashes immediately. Change to dynamic import.
+
+[21:24] Correct password -- works. Wrong password -- shows nothing.
