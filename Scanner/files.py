@@ -4,6 +4,7 @@ with ImportDefence():
     from tkinter.simpledialog import askstring
 
 import files_cryptography
+from gui import popup
 
 
 def exporter():
@@ -26,9 +27,8 @@ def exporter():
 
     # TODO: add scans history
     
-    password = askstring("Encrypt file with a password", "Insert password:")
-    print(f"The password is \"{password}\"")  # check this. What happens when you click on Cancel? What about empty passwords? ************
-    builder.set_password(password)
+    popup("Password", "Head over to the console window and insert the password there.", info=True)
+    builder.set_password(input("Password: "))
     builder.write_to(filename)
     return filename
     
@@ -41,8 +41,8 @@ def importer():
     print("Importing from", filename)
 
     builder = ScanFileBuilder()
-    password = askstring("Decrypt file with a password", "Insert password:")
-    builder.set_password(password)
+    popup("Password", "Head over to the console window and insert the password there.", info=True)
+    builder.set_password(input("Password: "))
     result = builder.parse(filename)
     print(result)
     scan_id = result["scan_id"]

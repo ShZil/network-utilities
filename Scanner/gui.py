@@ -28,6 +28,7 @@ from kivy.utils import escape_markup
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.config import Config
 from kivy.clock import Clock
+
 from PyQt5.QtWidgets import QApplication, QMessageBox
 from PyQt5.QtCore import Qt
 

@@ -1224,3 +1224,9 @@ Many, many browser tabs.
 [18:25] BUG: Running just `ARP Sweep` once doesn't update `Know Table` nor the `Diagram`.
 
 [19:27] BUGFIX: quite simple honestly, just add a dynamic import for `gui.py:diagram` under `exe.py:keep_resolving_storage`.
+
+[21:16] I fought the password input for a long time.
+Tkinter - it just refused to continue running code after `simpledialog.askstring`, including returning the string value.
+PySimpleGUI - I tried it too, it just froze.
+Kivy - I tried adding a `TextInput` to the `SaveScreen`, but Kivy won't even start the window when importing `TextInput`.
+I finally decided to use the simplest solution - python's built-in `input()`.
