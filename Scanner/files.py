@@ -92,20 +92,15 @@ class ScanFileBuilder:
         self.parts = [b""] * 3
         with open(path, "rb") as f:
             content = f.read()
-            print("Read the file")
             content = decrypt(content, self.password)
             if content == '':
                 raise ValueError("Couldn't decrypt the file. The password is wrong")
-            print("Decrypted the file")
             content = content.split(self.SEP)
-            print("Checking the file")
             if content[0] != self.HEADER:
-                print("Bad file", content[0], self.HEADER)
                 if not path.endswith('.scan'):
                     raise ValueError("Invalid file format. The extension is also wrong.")
                 raise ValueError("Invalid file format, or wrong password.")  # or wrong password
 
-            print("Good file", content[1:])
             self.parts = content[1:]
 
         return {

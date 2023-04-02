@@ -899,7 +899,6 @@ class SaveScreenImportButton(GreenButton):
                 popup("Error in parsing Scan File", e.args[0], error=True)
         Thread(target=_importing).start()
         state.screen("View")
-        
 
 
 class SaveScreen(Screen):
