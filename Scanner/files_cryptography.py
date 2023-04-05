@@ -1,42 +1,58 @@
 from import_handler import ImportDefence
 with ImportDefence():
-    import secrets
-    import cryptography
-    from base64 import urlsafe_b64encode as b64e, urlsafe_b64decode as b64d
-
-from cryptography.fernet import Fernet
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-
-# Adapted from https://stackoverflow.com/a/55147077
-
-backend = default_backend()
-iterations = 100_000
-
-def _derive_key(password: bytes, salt: bytes, iterations: int = iterations) -> bytes:
-    """Derive a secret key from a given password and salt"""
-    kdf = PBKDF2HMAC(
-        algorithm=hashes.SHA256(), length=32, salt=salt,
-        iterations=iterations, backend=backend)
-    return b64e(kdf.derive(password))
+    from Crypto.Cipher import AES
+    from Crypto.Hash import SHA256
+    from Crypto.Random import get_random_bytes
 
 
-def password_encrypt(message: bytes, password: str, iterations: int = iterations) -> bytes:
-    salt = secrets.token_bytes(16)
-    key = _derive_key(password.encode(), salt, iterations)
-    return b64e(
-        b'%b%b%b' % (
-            salt,
-            iterations.to_bytes(4, 'big'),
-            b64d(Fernet(key).encrypt(message)),
-        )
-    )
+def password_encrypt(message: bytes, password: str) -> bytes:
+    return Cipher_EAX(password=password).encrypt(message)
 
 
 def password_decrypt(token: bytes, password: str) -> bytes:
-    decoded = b64d(token)
-    salt, iter, token = decoded[:16], decoded[16:20], b64e(decoded[20:])
-    iterations = int.from_bytes(iter, 'big')
-    key = _derive_key(password.encode(), salt, iterations)
-    return Fernet(key).decrypt(token)
+    return Cipher_EAX(password=password).decrypt(token)
+
+
+class Cipher_EAX:
+    def __init__(self, key=None, bytes=32, password=None):
+        """This function initializes the encryptor.
+
+        Args:
+            key (bytes): The key used to encrypt and decrypt the data.
+        """
+        if key == None:
+            if password != None:
+                key = SHA256.new(password.encode()).digest()
+            else:
+                key = get_random_bytes(bytes)
+        
+        self.__key = key
+        self._encryptor = AES.new(self._key, AES.MODE_EAX)
+    
+    def encrypt(self, msg):
+        """This function encrypts the message.
+
+        Args:
+            msg (bytes): The message to encrypt.
+
+        Returns:
+            bytes: The encrypted message.
+        """
+        self._encryptor = AES.new(self._key, AES.MODE_EAX)
+        ciphertext, tag = self.__encryptor.encrypt_and_digest(msg)
+        return ciphertext, tag, self.__encryptor.nonce
+    
+    def decrypt(self, ciphertext, tag, nonce):
+        """This function decrypts the message.
+
+        Args:
+            ciphertext (bytes): The ciphertext to decrypt.
+            tag (bytes): The tag used to verify the ciphertext.
+            nonce (bytes): The nonce used to decrypt the ciphertext.
+
+        Returns:
+            bytes: The decrypted message.
+        """
+        self._decryptor = AES.new(self._key, AES.MODE_EAX, nonce)
+        plaintext = self.__decryptor.decrypt_and_verify(ciphertext, tag)
+        return plaintext

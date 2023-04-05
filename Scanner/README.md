@@ -1252,3 +1252,9 @@ Supporting infrastructure:
 - Packet memory for `OS-ID`
 Also,
 - Scan history for the files.
+
+
+
+### 2023-04-06
+[00:51] Asked a friend for help with the Cryptography, because he is well-versed in the ways of the Python.
+So he asked Copilot to write a class for that, and this is the result.
