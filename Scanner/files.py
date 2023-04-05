@@ -21,7 +21,8 @@ def get_password():
     def submit():
         password = text_box.text()
         widget.close()
-        app.exit(password)
+        app.quit()
+        return password
 
     button.clicked.connect(submit)
     layout.addWidget(label)
@@ -32,9 +33,8 @@ def get_password():
     widget.show()
     app.exec_()
 
-    password = app.exit()
+    password = submit()
     return password
-
 
 
 def exporter():
@@ -88,7 +88,7 @@ def encrypt(message: bytes, password: str) -> bytes:
 
 
 def decrypt(token: bytes, password: str) -> bytes:
-    decrypter_with_timeout = SetTimeout(files_cryptography.password_decrypt, timeout=5)
+    decrypter_with_timeout = SetTimeout(files_cryptography.password_decrypt, timeout=10)
     is_done, is_timeout, erro_message, results = decrypter_with_timeout(token, password)
     return results if is_done else ""
 
@@ -109,9 +109,13 @@ class ScanFileBuilder:
         self.parts.append(self.COMMA.join(parts))
 
     def write_to(self, path: str):
+        print("Writing to", path)
         assert self.password is not None
+        print("past the assertion")
         with open(path, "xb") as f:
+            print("Opened the file")
             content = self.SEP.join(self.parts)
+            print("Generating content")
             content = encrypt(content, self.password)
             print("Writing content to file:")
             print(content)

@@ -1279,3 +1279,5 @@ Let's try testing.
 [01:53] Asked ChatGPT for a user string input in win32api, and it gave a fine answer.
 
 [01:57] With ChatGPT, made a new version of `get_password` with PyQt5.
+
+[02:17] Alright, it just keeps crashing. I'm gonna postpone fixing this to tomorrow, because it's getting late.
