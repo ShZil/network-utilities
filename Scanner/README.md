@@ -1269,3 +1269,5 @@ The password supplied is hashed and split in two (128 bytes each): `key` and `iv
 I also changed `self.key` to a local variable `key` that's gone after the constructor,
 which is better, because we needn't save it for all that long.
 Let's try testing.
+
+[01:26] Abstracted `get_password` in `files.py`.

@@ -6,6 +6,11 @@ with ImportDefence():
 import files_cryptography
 
 
+
+def get_password():
+    return input("Password: ")
+
+
 def exporter():
     filename = dialogs.asksaveasfilename(
         title="Save As",
@@ -26,7 +31,7 @@ def exporter():
 
     # TODO: add scans history
     
-    builder.set_password(input("Password: "))
+    builder.set_password(get_password())
     builder.write_to(filename)
     return filename
     
@@ -39,7 +44,7 @@ def importer():
     print("Importing from", filename)
 
     builder = ScanFileBuilder()
-    builder.set_password(input("Password: "))
+    builder.set_password(get_password())
     result = builder.parse(filename)
     # print(result)
     scan_id = result["scan_id"]
@@ -82,6 +87,8 @@ class ScanFileBuilder:
         with open(path, "xb") as f:
             content = self.SEP.join(self.parts)
             content = encrypt(content, self.password)
+            print("Writing content to file:")
+            print(content)
             f.write(content)
     
     def set_password(self, password: str):
