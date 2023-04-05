@@ -2,34 +2,33 @@ from import_handler import ImportDefence
 with ImportDefence():
     from Crypto.Cipher import AES
     from Crypto.Hash import SHA256
-    from Crypto.Random import get_random_bytes
+    from Crypto.Util.Padding import pad, unpad
+
 
 
 def password_encrypt(message: bytes, password: str) -> bytes:
-    return Cipher_EAX(password=password).encrypt(message)
+    return Cipher_CBC(password=password).encrypt(message)
 
 
 def password_decrypt(token: bytes, password: str) -> bytes:
-    return Cipher_EAX(password=password).decrypt(token)
+    return Cipher_CBC(password=password).decrypt(token)
 
 
-class Cipher_EAX:
-    def __init__(self, key=None, bytes=32, password=None):
+class Cipher_CBC:
+    def _init_(self, password: str):
         """This function initializes the encryptor.
 
         Args:
-            key (bytes): The key used to encrypt and decrypt the data.
+            password (str): The password used to encrypt and decrypt the data.
         """
-        if key == None:
-            if password != None:
-                key = SHA256.new(password.encode()).digest()
-            else:
-                key = get_random_bytes(bytes)
-        
-        self.__key = key
-        self._encryptor = AES.new(self._key, AES.MODE_EAX)
+        password = SHA256.new(password.encode()).digest()
+        key, iv = password[:128], password[128:]
+
+        self._encryptor = AES.new(key, AES.MODE_CBC, iv)
+        self._decryptor = AES.new(key, AES.MODE_CBC, iv)
     
-    def encrypt(self, msg):
+
+    def encrypt(self, msg: bytes) -> bytes:
         """This function encrypts the message.
 
         Args:
@@ -38,21 +37,16 @@ class Cipher_EAX:
         Returns:
             bytes: The encrypted message.
         """
-        self._encryptor = AES.new(self._key, AES.MODE_EAX)
-        ciphertext, tag = self.__encryptor.encrypt_and_digest(msg)
-        return ciphertext, tag, self.__encryptor.nonce
+        return self._encryptor.encrypt(pad(msg, AES.block_size))
     
-    def decrypt(self, ciphertext, tag, nonce):
+
+    def decrypt(self, ciphertext: bytes) -> bytes:
         """This function decrypts the message.
 
         Args:
             ciphertext (bytes): The ciphertext to decrypt.
-            tag (bytes): The tag used to verify the ciphertext.
-            nonce (bytes): The nonce used to decrypt the ciphertext.
 
         Returns:
             bytes: The decrypted message.
         """
-        self._decryptor = AES.new(self._key, AES.MODE_EAX, nonce)
-        plaintext = self.__decryptor.decrypt_and_verify(ciphertext, tag)
-        return plaintext
+        return unpad(self._decryptor.decrypt(ciphertext), AES.block_size)

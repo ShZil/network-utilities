@@ -1258,3 +1258,14 @@ Also,
 ### 2023-04-06
 [00:51] Asked a friend for help with the Cryptography, because he is well-versed in the ways of the Python.
 So he asked Copilot to write a class for that, and this is the result.
+
+[00:52] Integrating `tag` and `nonce` into the class.
+
+[01:02] Change to CBC (still with Copilot), because there is no `tag` and `nonce` there,
+it's just simply encrypting the file itself with a password and IV.
+The password supplied is hashed and split in two (128 bytes each): `key` and `iv`.
+
+[01:08] I had to correct Copilot's code.
+I also changed `self.key` to a local variable `key` that's gone after the constructor,
+which is better, because we needn't save it for all that long.
+Let's try testing.
