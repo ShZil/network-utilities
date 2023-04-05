@@ -34,6 +34,7 @@ def get_password():
     app.exec_()
 
     password = submit()
+    print(password)
     return password
 
 
@@ -59,6 +60,7 @@ def exporter():
     
     builder.set_password(get_password())
     builder.write_to(filename)
+    print("Done writing")
     return filename
     
 

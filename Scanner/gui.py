@@ -875,6 +875,7 @@ class SaveScreenExportButton(GreenButton):
         def _exporting():
             try:
                 path = exporter()
+                print("Showing popup")
                 popup("Exported", f"Saved the scan to {path}")
             except FileExistsError:
                 popup("File Exists Error", "A file already exists in that path.", error=True)
