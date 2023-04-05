@@ -7,16 +7,34 @@ with ImportDefence():
 import files_cryptography
 
 
-
 def get_password():
-    print("getting password")
-    import win32api
-    hwnd = win32api.GetForegroundWindow()
+    from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
 
-    password = win32api.GetWindowText(hwnd)
-    password = askstring("Save/Open file with password", "Insert password:")
-    print(f"Password: {password}")
+    app = QApplication([])
+    widget = QWidget()
+    layout = QVBoxLayout()
+
+    label = QLabel("Enter password:")
+    text_box = QLineEdit()
+    button = QPushButton("Submit")
+
+    def submit():
+        password = text_box.text()
+        widget.close()
+        app.exit(password)
+
+    button.clicked.connect(submit)
+    layout.addWidget(label)
+    layout.addWidget(text_box)
+    layout.addWidget(button)
+    widget.setLayout(layout)
+
+    widget.show()
+    app.exec_()
+
+    password = app.exit()
     return password
+
 
 
 def exporter():
