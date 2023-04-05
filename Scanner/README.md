@@ -1271,3 +1271,5 @@ which is better, because we needn't save it for all that long.
 Let's try testing.
 
 [01:26] Abstracted `get_password` in `files.py`.
+
+[01:35] Printing changes: changed `main.py:do_simple_scan`'s default value to `results=False`.

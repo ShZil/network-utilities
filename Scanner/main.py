@@ -26,7 +26,7 @@ import os
 __author__ = 'Shaked Dan Zilberman'
 
 
-def do_simple_scan(scan, all_possible_addresses, *, results=True, repeats=3):
+def do_simple_scan(scan, all_possible_addresses, *, results=False, repeats=3):
     """This is a wrapper for simple* scans, like ARP or ICMP.
 
     (*) Simple means they are standardised:
