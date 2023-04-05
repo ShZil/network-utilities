@@ -1273,3 +1273,7 @@ Let's try testing.
 [01:26] Abstracted `get_password` in `files.py`.
 
 [01:35] Printing changes: changed `main.py:do_simple_scan`'s default value to `results=False`.
+
+[01:52] Revered to `tkinter:askstring`.
+
+[01:53] Asked ChatGPT for a user string input in win32api, and it gave a fine answer.

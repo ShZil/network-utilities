@@ -2,13 +2,21 @@ from import_handler import ImportDefence
 with ImportDefence():
     import tkinter.filedialog as dialogs
     from call_function_with_timeout import SetTimeout
+    from tkinter.simpledialog import askstring
 
 import files_cryptography
 
 
 
 def get_password():
-    return input("Password: ")
+    print("getting password")
+    import win32api
+    hwnd = win32api.GetForegroundWindow()
+
+    password = win32api.GetWindowText(hwnd)
+    password = askstring("Save/Open file with password", "Insert password:")
+    print(f"Password: {password}")
+    return password
 
 
 def exporter():
