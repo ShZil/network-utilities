@@ -5,7 +5,6 @@ with ImportDefence():
     from Crypto.Util.Padding import pad, unpad
 
 
-
 def password_encrypt(message: bytes, password: str) -> bytes:
     return Cipher_CBC(password=password).encrypt(message)
 
@@ -20,7 +19,7 @@ def password_decrypt(token: bytes, password: str) -> bytes:
 
 class Cipher_CBC:
     def __init__(self, password: str):
-        """This function initializes the encryptor.
+        """This function initializes the cipherer.
 
         Args:
             password (str): The password used to encrypt and decrypt the data.
