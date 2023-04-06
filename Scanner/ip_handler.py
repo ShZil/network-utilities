@@ -7,7 +7,7 @@ __author__ = 'Shaked Dan Zilberman'
 def bitify(address: str) -> str:
     """This method turns an IPv4 address (0.0.0.0 to 255.255.255.255) to a string of 0s and 1s.
     Each part in the address turns to 8 binary digits, thus the result must always be 32 characters long.
-    
+
     Examples:
         0.0.0.0 -> '00000000000000000000000000000000' (32 0s)
         255.255.255.255 -> '11111111111111111111111111111111' (32 1s)
@@ -21,12 +21,16 @@ def bitify(address: str) -> str:
     """
     result = ''
     if len(address.split('.')) != 4:
-        raise TypeError(f"Given address ({address}) is not IPv4 - not composed of 4 dot-separated parts.")
+        raise TypeError(
+            f"Given address ({address}) is not IPv4 - not composed of 4 dot-separated parts."
+        )
     for part in address.split('.'):
         try:
             result += "{0:08b}".format(int(part, base=10))
         except ValueError:
-            raise TypeError(f"Given address ({address}) is not IPv4 -- part \"{part}\" is not a valid integer.")
+            raise TypeError(
+                f"Given address ({address}) is not IPv4 -- part \"{part}\" is not a valid integer."
+            )
     return result
 
 
@@ -34,7 +38,7 @@ def unbitify(binary: str) -> str:
     """This method turns an IPv4 address represented as a string of binary digits to the regular representation.
     Each part in the address turns from 8 binary digits to 1-3 decimal digits.
     Acts as the inverse of `bitify`.
-    
+
     Examples:
         '00000000000000000000000000000000' (32 0s) -> 0.0.0.0
         '11111111111111111111111111111111' (32 1s) -> 255.255.255.255
@@ -47,7 +51,7 @@ def unbitify(binary: str) -> str:
         str: an IPv4 address.
     """
     result = ''
-    for byte in [binary[i:i+8] for i in range(0, len(binary), 8)]:
+    for byte in [binary[i:i + 8] for i in range(0, len(binary), 8)]:
         result += str(int(byte, base=2))
         result += '.'
     return result.strip('.')
@@ -104,7 +108,7 @@ def subnet_address_range(subnet_mask: str, *some_addresses: tuple[str]):
     Returns:
         str: the address range. Note: this is not a valid IPv4 address, it uses (*)s and (-)s in the Device ID portion.
     """
-    bits = lambda address: int(bitify(address), base=2)
+    def bits(address): return int(bitify(address), base=2)
     mask = bits(subnet_mask)
     base = [bits(address) & mask for address in some_addresses]
     base = list(set(base))
@@ -118,9 +122,12 @@ def subnet_address_range(subnet_mask: str, *some_addresses: tuple[str]):
     highest = unbitify(network + ('1' * mask.count('0')))
     result = ''
     for low, high in zip(lowest.split('.'), highest.split('.')):
-        if low == high: result += low
-        elif low == '0' and high == '255': result += '*'
-        else: result += f"{low}-{high}"
+        if low == high:
+            result += low
+        elif low == '0' and high == '255':
+            result += '*'
+        else:
+            result += f"{low}-{high}"
         result += '.'
     return result.strip('.')
 
@@ -159,7 +166,7 @@ def base_subnet_address(subnet_mask: str, *some_addresses: tuple[str]) -> str:
     Returns:
         str: the base address. Note: this is a valid IPv4 address, the lowest in the network.
     """
-    bits = lambda address: int(bitify(address), base=2)
+    def bits(address): return int(bitify(address), base=2)
     mask = bits(subnet_mask)
     base = [bits(address) & mask for address in some_addresses]
     base = list(set(base))
@@ -191,7 +198,7 @@ def get_all_possible_addresses() -> list[str]:
     unique, mutual = subnet_mask.count('0'), subnet_mask.count('1')
 
     base = this_device_ip[:mutual]
-    binary = lambda number: bin(number)[2:].zfill(unique)
+    def binary(number): return bin(number)[2:].zfill(unique)
 
     # All possible addresses in binary look like `[mutual part to all in network][special identifier]`,
     # i.e. base + binary representation of i (where i ranges from (0) to (2 ^ unique))
