@@ -23,7 +23,11 @@ def print_dict(x: dict) -> None:
         x (dict): the dictionary to print.
     """
     formatted_json = dumps(x, sort_keys=False, indent=4)
-    colorful_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
+    colorful_json = highlight(
+        formatted_json,
+        lexers.JsonLexer(),
+        formatters.TerminalFormatter()
+    )
     print(colorful_json)
 
 
@@ -37,9 +41,12 @@ def shift(seq: list, n: int) -> list:
     Returns:
         list: the shifted list.
     """
-    if len(seq) == 0: return []
-    if len(seq) == 1: return seq
-    if n == 0: return seq
+    if len(seq) == 0:
+        return []
+    if len(seq) == 1:
+        return seq
+    if n == 0:
+        return seq
     n = n % len(seq)
     return seq[n:] + seq[:n]
 
@@ -52,12 +59,12 @@ def barstyle(name: str) -> str:
         Default    : [───────       ]
         Unstyled   : [-------       ]
         Hash Fill  : |#######       |
-    
+
     Usage:
     ```
     def function():
         # some code
-    
+
     function.options = {"format": style("default")}
     function = threadify(function)
     ```
@@ -85,7 +92,7 @@ def threadify(f, silent=False):
     """This function turns methods (tasks) into thread-based on-list execution.
     Therefore, the execution will be faster.
     Returns the same result as `[f() for _ in input]`, but faster.
-    
+
     Return values from the task are saved in an array, which is the return value of the decorated function.
     The values are not messy (which is what normally happens with threading), but organised according to the `args`.
     Meaning, `returned[0] = f(args[0]); returned[1] = f(args(1))...`.
@@ -106,7 +113,7 @@ def threadify(f, silent=False):
     ```
     Doesn't support keyword-arguments.
     The amount of threads per decorated function call is limited by `MAX_THREADS`.
-    
+
     The function can have an `f.options` dict as an attribute, overriding any of these:
     ```
         options={
@@ -117,7 +124,7 @@ def threadify(f, silent=False):
             "printing": True,
             # min_printing_length: int -- the minimal size of the progress bar (in characters). The actual length can be larger, if the terminal is wide enough.
             "min_printing_length": 10,
-            # format: str -- the format of the progress bar. 
+            # format: str -- the format of the progress bar.
             # For printing_length=6 and this format, after half the execution, the bar would look like "[---   ]  (50%)".
             "format": "[- ]",
             # output: bool -- should the output (via print()s) of the tasks be logged?
@@ -136,7 +143,7 @@ def threadify(f, silent=False):
         list: a list of values returned from the multiple calls to the function, sorted by the call order (i.e. not disorganised by the threads).
     """
     # Set up the options dictionary with default values.
-    options={
+    options = {
         "daemon": True,
         "printing": True,
         "min_printing_length": 10,
@@ -149,7 +156,7 @@ def threadify(f, silent=False):
         options = {**options, **f.options}
     except AttributeError:
         pass
-    
+
     name = f.__name__
     name = name.replace("_base", "")
     if silent:
@@ -158,16 +165,19 @@ def threadify(f, silent=False):
 
     def wrapper(args: list[tuple] | list) -> list | str | tuple[list, str]:
         if not isinstance(args, list):
-            raise TypeError("Threadify-ied functions must receive a single argument of type list.")
-        
+            raise TypeError(
+                "Threadify-ied functions must receive a single argument of type list."
+            )
+
         # The return values from the function calls.
         values = [None] * len(args)
         # The exceptions raised during tasks thread-safe queue.
         fails = Queue(maxsize=len(args))
-        
+
         # Define a task inner wrapper for `f`
         def task(func, arg, index):
-            # Convert arg to tuple if needed ("If the function receives a single not-tuple argument,..." in docstring)
+            # Convert arg to tuple if needed ("If the function receives a
+            # single not-tuple argument,..." in docstring)
             args = arg if isinstance(arg, tuple) else (arg, )
             try:
                 # Execute the function & save to `values` list.
@@ -178,7 +188,7 @@ def threadify(f, silent=False):
                 # Catch any exception and add it to the `fails` queue
                 fails.put(e)
                 return
-        
+
         # Rename `task` to user-friendly name
         task.__name__ = f.__name__ + '_task'
 
@@ -187,10 +197,11 @@ def threadify(f, silent=False):
         if options["output"]:
             # Redirect printing
             sys.stdout = output
-        
+
         # Create Thread objects
-        threads = [Thread(target=task, args=(f, x, i), daemon=True) for i, x in enumerate(args)]
-        
+        threads = [Thread(target=task, args=(f, x, i), daemon=True)
+                   for i, x in enumerate(args)]
+
         def threadify_start_threads(threads: list):
             # Activate the threads, waiting for threads to be freed if needed.
             for thread in threads:
@@ -198,29 +209,43 @@ def threadify(f, silent=False):
                 while active_count() >= MAX_THREADS and MAX_THREADS > 0:
                     # print(active_count(), "threads active.", file=real_stdout)
                     sleep(0.02)
-        
+
         starter = Thread(target=threadify_start_threads, args=(threads, ))
         starter.start()
-        
-        # BUGFIX ************: Make it so the progress bar starts already during threads.starts()
+
+        # BUGFIX ************: Make it so the progress bar starts already
+        # during threads.starts()
 
         # Print a progress bar if requested
         if options["printing"]:
-            width = os.get_terminal_size().columns - len(f"@threadify: {name}    ")
-            if width < options["min_printing_length"]: width = options["min_printing_length"]
+            width = os.get_terminal_size().columns - \
+                len(f"@threadify: {name}    ")
+            if width < options["min_printing_length"]:
+                width = options["min_printing_length"]
             while any([thread.is_alive() for thread in threads]):
-                ratio = sum([thread.is_alive() for thread in threads]) / len(args)
+                ratio = sum([thread.is_alive()
+                            for thread in threads]) / len(args)
 
-                print(f"@threadify: {name} {progress(ratio, options['format'], width)}   \r", end='', file=real_stdout)
+                print(
+                    f"@threadify: {name} {progress(ratio, options['format'], width)}   \r",
+                    end='',
+                    file=real_stdout
+                )
                 sleep(0.1)
-            print(f"@threadify: {name} {progress(0, options['format'], width)}   \r", end='', file=real_stdout)
+            print(
+                f"@threadify: {name} {progress(0, options['format'], width)}   \r",
+                end='',
+                file=real_stdout
+            )
             print("\n")
-        
+
         # Join all threads
-        starter.join()  # You have to join `starter` first, because if somehow some thread is still not active, joining it will raise a RuntimeError.
+        # You have to join `starter` first, because if somehow some thread is
+        # still not active, joining it will raise a RuntimeError.
+        starter.join()
         for thread in threads:
             thread.join()
-        
+
         # Restore printing
         sys.stdout = real_stdout
 
@@ -229,7 +254,9 @@ def threadify(f, silent=False):
             while not fails.empty:
                 err = fails.get()
                 print(type(err), err, sep="\n")
-            raise Exception("@threadify-ied function has raised some exceptions.")
+            raise Exception(
+                "@threadify-ied function has raised some exceptions."
+            )
 
         # Handle the output from the tasks
         output = output.getvalue()
@@ -239,10 +266,12 @@ def threadify(f, silent=False):
         # print()
 
         # Returning logic.
-        if options["give"] == "output": return output
-        if options["give"] == "both": return values, output
+        if options["give"] == "output":
+            return output
+        if options["give"] == "both":
+            return values, output
         return values
-        
+
     # Make `wrapper` inherit `f`'s properties.
     wrapper.__name__ = f.__name__
     wrapper.__doc__ = f.__doc__
@@ -250,7 +279,8 @@ def threadify(f, silent=False):
 
 
 def progress(ratio: float, form: str, width: int):
-    if len(form) < 4: form = form.rjust(4)
+    if len(form) < 4:
+        form = form.rjust(4)
     start, fill, nofill, end = tuple(form)
     width -= len("[] (100%)")
     done = fill * ceil(width * (1 - ratio))
@@ -273,6 +303,7 @@ def memorise(f):
     """
     # ********* Add a time limit on each datum
     memory = {}
+
     def wrapper(*args):
         try:
             if args in memory:
@@ -284,7 +315,7 @@ def memorise(f):
         except TypeError:
             print("@memorise function cannot receive unhashable types! (e.g. lists, sets)")
             raise
-    
+
     # Make `wrapper` inherit `f`'s properties.
     wrapper.__name__ = f.__name__
     wrapper.__doc__ = f.__doc__
@@ -308,13 +339,14 @@ def one_cache(f):
     """
     # This is a list for it to be a reference type.
     memory = [None]
+
     def wrapper(*args):
         if memory[0] is not None:
             return memory[0]
         else:
             memory[0] = f(*args)
             return memory[0]
-    
+
     # Make `wrapper` inherit `f`'s properties.
     wrapper.__name__ = f.__name__
     wrapper.__doc__ = f.__doc__
@@ -335,11 +367,11 @@ def render_opacity(percent: int | float):
     ```
         -10%  X
          -5%  X
-         0%   
-         5%   
-         10%   
-         15%   
-         20%   
+         0%
+         5%
+         10%
+         15%
+         20%
          25%  ░
          30%  ░
          35%  ░
@@ -368,7 +400,8 @@ def render_opacity(percent: int | float):
     Returns:
         str: a single character representing that percent of fillness.
     """
-    if not (0 <= percent <= 100): return "X"
+    if not (0 <= percent <= 100):
+        return "X"
 
     characters = " ░▒▓█"
     # characters = " -─=≡▄█"
@@ -389,7 +422,7 @@ def nameof(action):
         str: the name chosen for the function.
     """
     if action.__doc__ and len(action.__doc__) < 100:
-        return action.__doc__ 
+        return action.__doc__
     else:
         return action.__name__
 
@@ -398,6 +431,7 @@ class _Printing:
     """This context manager delays and stores all outputs via `print`s.
     It is not meant to be used directly, but other classes can inherit it.
     """
+
     def __init__(self):
         pass
 
@@ -409,7 +443,6 @@ class _Printing:
         sys.stdout = self.real_stdout
 
 
-
 class InstantPrinting(_Printing):
     """This context manager delays and stores all outputs via `print`s, and prints everything when closed.
     Usage:
@@ -419,9 +452,10 @@ class InstantPrinting(_Printing):
     # Here, exiting the context, the printing will all happen immediately.
     ```
     """
+
     def __init__(self):
         self.output = StringIO()
-    
+
     def __enter__(self):
         super().__enter__()
         sys.stdout = self.output
@@ -446,28 +480,24 @@ class NoPrinting(_Printing):
     pass
 
 
-
 class _SplitStringIO:
     """This class is like the io.StringIO, but it splits different `write` statements.
     Internally, this is a `list` of `StringIO`s.
     Not meant for use outside the `util` module.
     """
+
     def __init__(self):
         self.content = []
-
 
     def write(self, data):
         self.content.append(StringIO())
         self.content[-1].write(data)
-        
-    
+
     def getvalue(self):
         return [string.getvalue() for string in self.content]
-    
 
     def flush():
         pass
-
 
 
 class JustifyPrinting(InstantPrinting):
@@ -504,7 +534,6 @@ class JustifyPrinting(InstantPrinting):
             else:
                 statements[-1] += block
         blocks = statements
-        
 
         lines = [[]]
         for block in blocks:
@@ -512,7 +541,8 @@ class JustifyPrinting(InstantPrinting):
             # + Length of current block
             # + assuming `MIN_SEP` spaces in-between (thus, #spaces = #blocks * MIN_SEP)
             # > width of console in characters
-            if sum(map(len, lines[-1])) + len(block) + len(lines[-1]) * MIN_SEP > width:
+            if sum(map(len, lines[-1])) + len(block) + \
+                    len(lines[-1]) * MIN_SEP > width:
                 lines.append([])
             lines[-1].append(block)
 
@@ -526,7 +556,8 @@ class JustifyPrinting(InstantPrinting):
                 continue
             total_length = sum([len(block) for block in line])
             sep = (width - total_length) // (len(line) - 1)
-            if sep > MAX_SEP: sep = MAX_SEP
+            if sep > MAX_SEP:
+                sep = MAX_SEP
             sep *= ' '
             print(sep.join(line).center(width))
 
@@ -558,20 +589,23 @@ class TablePrinting(InstantPrinting):
         if align in TablePrinting.aligns.keys():
             self.align = TablePrinting.aligns[align]
 
-
     def __exit__(self, exc_type, exc_val, exc_tb):
         _Printing.__exit__(self, exc_type, exc_val, exc_tb)
         output = self.output.getvalue()
         width = int(os.get_terminal_size().columns)
 
         # Separate `print statements`.
-        # Every block which is just a newline is (probably) a different print, so I'll treat it as such.
+        # Every block which is just a newline is (probably) a different print,
+        # so I'll treat it as such.
         blocks = [""]
         for block in output:
-            if block == '\n': blocks.append("")
-            else: blocks[-1] += block
-        
-        # Split the blocks into a `chunk list` (e.g. [a, b, c, d, e, f] + n=2 -> [[a, b], [c, d], [e, f]])
+            if block == '\n':
+                blocks.append("")
+            else:
+                blocks[-1] += block
+
+        # Split the blocks into a `chunk list` (e.g. [a, b, c, d, e, f] + n=2
+        # -> [[a, b], [c, d], [e, f]])
         lengths = [len(block) for block in blocks]
         try:
             n = max(width // max(lengths), 3)
@@ -608,22 +642,25 @@ class AutoLinebreaks(InstantPrinting):
     def __init__(self):
         self.output = _SplitStringIO()
 
-
     def __exit__(self, exc_type, exc_val, exc_tb):
         _Printing.__exit__(self, exc_type, exc_val, exc_tb)
         output = self.output.getvalue()
         width = int(os.get_terminal_size().columns)
 
         # Separate `print statements`.
-        # Every block which is just a newline is (probably) a different print, so I'll treat it as such.
+        # Every block which is just a newline is (probably) a different print,
+        # so I'll treat it as such.
         blocks = [""]
         for block in output:
-            if block == '\n': blocks.append("")
-            else: blocks[-1] += block
-        
+            if block == '\n':
+                blocks.append("")
+            else:
+                blocks[-1] += block
+
         counter = width
         for block in blocks:
-            if block.strip() == "": continue
+            if block.strip() == "":
+                continue
             if counter - len(block) <= 0:
                 counter = width
                 print('\n' + block, end="")
@@ -631,8 +668,6 @@ class AutoLinebreaks(InstantPrinting):
                 counter -= len(block)
                 print(block, end="")
         print()
-
-
 
 
 if __name__ == '__main__':
