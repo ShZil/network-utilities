@@ -1300,3 +1300,5 @@ Use this dictionary in Know Screen.
 
 [20:38] Why create two instances of the same object? This makes no sense given the current usage.
 Plus, fixing it looks super Pythonic, which is good.
+
+[20:57] BUG: `Import`ing twice crashes the software. Also, `Import`ing with a wrong password crashes the software too.
