@@ -1307,3 +1307,6 @@ Plus, fixing it looks super Pythonic, which is good.
 and has a popup for the error (!) but then immediately crashes.
 This narrows down the places in my code where the error might be.
 It's probably because of mishandling exceptions that are under `gui.py`'s responsibility.
+
+[21:27] Changed the code in `gui.py:_importing` to hopefully catch more exceptions and edge cases,
+like the one currently crashing my application.
