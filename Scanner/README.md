@@ -1286,3 +1286,9 @@ Let's try testing.
 `_init_` instead of `__init__`. This is because WhatsApp sends code using the formatting,
 where `_STRING_` -> _STRING_ becomes italics. And copying doesn't include the hidden underscores.
 Also added a `if __name__ == '__main__'` clause.
+
+[20:23] `ValueError: Incorrect IV length (it must be 16 bytes long)`. Oof. Let's fix that.
+
+[20:27] Rename `password` to `hashed`, for there not to be dynamic type changing, which is allowed in Python, but confusing.
+
+[20:28] Fix the bug: the `hashed` is 32 bytes long, so take 16 to IV and 16 to the key (not 128).

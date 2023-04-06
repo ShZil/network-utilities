@@ -21,8 +21,8 @@ class Cipher_CBC:
         Args:
             password (str): The password used to encrypt and decrypt the data.
         """
-        password = SHA256.new(password.encode()).digest()
-        key, iv = password[:128], password[128:]
+        hashed = SHA256.new(password.encode()).digest()
+        key, iv = hashed[:16], hashed[16:]
 
         self._encryptor = AES.new(key, AES.MODE_CBC, iv)
         self._decryptor = AES.new(key, AES.MODE_CBC, iv)
@@ -60,6 +60,6 @@ if __name__ == '__main__':
     message = "Hello, world!"
     password = "A123"
     encrypted = password_encrypt(message.encode(), password)
-    print("Encrypted:", encrypted)
+    print("Encrypted (HEX):", ' '.join(format(x, '02x').upper() for x in encrypted))
     decrypted = password_decrypt(encrypted, password)
     print("Decrypted:", decrypted)
