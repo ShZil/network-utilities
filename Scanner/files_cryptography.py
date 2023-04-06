@@ -62,3 +62,10 @@ if __name__ == '__main__':
     print("Encrypted (HEX):", ' '.join(format(x, '02x').upper() for x in encrypted))
     decrypted = password_decrypt(encrypted, password)
     print("Decrypted:", decrypted)
+    print("Example: enter file path:")
+    try:
+        with open(input(), 'rb') as f:
+            print("Decrypted:", password_decrypt(f.read(), input("Password: ")))
+    except Exception as e:
+        print(e)
+    input()
