@@ -52,8 +52,11 @@ def get_scans():
         cursor.execute(GET_ALL_SCANS)
     except sqlite3.OperationalError:
         raise FileNotFoundError("SQL table 'information' was not found.")
-    result = cursor.fetchall()  # a list of tuples is returned, where each tuple has only a string within (at index 0).
-    result = [item[0] for item in result]  # Convert it to a list of strings. list[tuple[single str]] -> list[str]
+    # a list of tuples is returned, where each tuple has only a string within
+    # (at index 0).
+    result = cursor.fetchall()
+    # Convert it to a list of strings. list[tuple[single str]] -> list[str]
+    result = [item[0] for item in result]
     connection.close()
     return result
 
