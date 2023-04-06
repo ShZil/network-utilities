@@ -11,7 +11,11 @@ def password_encrypt(message: bytes, password: str) -> bytes:
 
 
 def password_decrypt(token: bytes, password: str) -> bytes:
-    return Cipher_CBC(password=password).decrypt(token)
+    try:
+        return Cipher_CBC(password=password).decrypt(token)
+    except ValueError as e:
+        print(e)
+        return b''
 
 
 class Cipher_CBC:

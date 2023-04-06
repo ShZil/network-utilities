@@ -131,8 +131,12 @@ class ScanFileBuilder:
         self.parts = [b""] * 3
         with open(path, "rb") as f:
             content = f.read()
-            content = decrypt(content, self.password)
-            if content == '':
+            try:
+                content = decrypt(content, self.password)
+            except Exception as e:
+                print(e.__class__.__name__, e)
+                input()
+            if content == b'':
                 raise ValueError("Couldn't decrypt the file. The password is wrong")
             content = content.split(self.SEP)
             if content[0] != self.HEADER:
