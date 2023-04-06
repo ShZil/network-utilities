@@ -1302,3 +1302,8 @@ Use this dictionary in Know Screen.
 Plus, fixing it looks super Pythonic, which is good.
 
 [20:57] BUG: `Import`ing twice crashes the software. Also, `Import`ing with a wrong password crashes the software too.
+
+[21:19] It gets to `files.py:137: raise ValueError("Couldn't decrypt the file. The password is wrong")`,
+and has a popup for the error (!) but then immediately crashes.
+This narrows down the places in my code where the error might be.
+It's probably because of mishandling exceptions that are under `gui.py`'s responsibility.
