@@ -9,6 +9,7 @@ from ipconfig import ipconfig
 from ip_handler import get_all_possible_addresses
 from globalstuff import G
 
+
 class NetworkEntity:
     def __init__(self, mac, ip, ipv6, name):
         self.mac = standard_mac(mac)
@@ -16,8 +17,7 @@ class NetworkEntity:
         self.ipv6 = extend_ipv6(ipv6)
         self.name = name
         self._compare = None
-    
-    
+
     def equals(self, other: object) -> bool:
         """This method checks equality between `self` and `other`.
 
@@ -57,38 +57,49 @@ class NetworkEntity:
             if self[address] != nothing[address] and other[address] != nothing[address]:
                 intersection.append(address)
 
-        if len(intersection) == 0: return False
-        
+        if len(intersection) == 0:
+            return False
+
         for address in intersection:
             if self[address] != other[address]:
                 return False
-        
+
         return True
-    
 
     def __getitem__(self, key):
-        if key == "mac": return self.mac
-        if key == "ip": return self.ip
-        if key == "ipv6": return self.ipv6
-        if key == "name": return self.name
-        raise TypeError(f"Subscripting in NetworkEntity must be `mac`, `ip`, `ipv6`, or `name`; got `{key}`")
-    
+        if key == "mac":
+            return self.mac
+        if key == "ip":
+            return self.ip
+        if key == "ipv6":
+            return self.ipv6
+        if key == "name":
+            return self.name
+        raise TypeError(
+            f"Subscripting in NetworkEntity must be `mac`, `ip`, `ipv6`, or `name`; got `{key}`"
+        )
 
     def __setitem__(self, key, value):
-        if key == "mac": self.mac = value
-        elif key == "ip": self.ip = value
-        elif key == "ipv6": self.ipv6 = value
-        elif key == "name": self.name = value
-        else: raise TypeError(f"Item assignment in NetworkEntity must be `mac`, `ip`, `ipv6`, or `name`; got `{key}`")
-    
+        if key == "mac":
+            self.mac = value
+        elif key == "ip":
+            self.ip = value
+        elif key == "ipv6":
+            self.ipv6 = value
+        elif key == "name":
+            self.name = value
+        else:
+            raise TypeError(
+                f"Item assignment in NetworkEntity must be `mac`, `ip`, `ipv6`, or `name`; got `{key}`"
+            )
 
     def __str__(self):
-        return "< " + ' | '.join([self[field] for field in ["mac", "ip", "ipv6", "name"] if self[field] != nothing[field]]) + " >"
-    
+        return "< " + ' | '.join([self[field] for field in ["mac", "ip",
+                                 "ipv6", "name"] if self[field] != nothing[field]]) + " >"
 
     def to_string(self, sep=' '):
-        return sep.join([self[field] for field in ["mac", "ip", "ipv6", "name"] if self[field] != nothing[field]])
-    
+        return sep.join([self[field] for field in ["mac", "ip",
+                        "ipv6", "name"] if self[field] != nothing[field]])
 
     def compare(self):
         """Turns the values of the Entity's fields into integers to be used in a comparison.
@@ -100,13 +111,16 @@ class NetworkEntity:
             result = {}
             result["ip"] = [int(part, base=10) for part in self.ip.split('.')]
             result["ip"] = sum([result["ip"][-i] * (256**i) for i in range(4)])
-            result["mac"] = [int(part, base=16) for part in self.mac.split('-')]
-            result["mac"] = sum([result["mac"][-i] * (256**i) for i in range(6)])
-            result["ipv6"] = [int(part, base=16) for part in self.ipv6.split(':')]
-            result["ipv6"] = sum([result["ipv6"][-i] * (65536**i) for i in range(8)])
+            result["mac"] = [int(part, base=16)
+                             for part in self.mac.split('-')]
+            result["mac"] = sum([result["mac"][-i] * (256**i)
+                                for i in range(6)])
+            result["ipv6"] = [int(part, base=16)
+                              for part in self.ipv6.split(':')]
+            result["ipv6"] = sum([result["ipv6"][-i] * (65536**i)
+                                 for i in range(8)])
             self._compare = result
         return self._compare
-    
 
     def merge(self, other):
         """Merges the information from two equal NetworkEntity-ies.
@@ -117,26 +131,32 @@ class NetworkEntity:
         Args:
             other (NetworkEntity): the entity to be merged with.
         """
-        if not self.equals(other): raise ValueError("In NetworkEntity.merge(self,other), the entities must be equal.")
+        if not self.equals(other):
+            raise ValueError(
+                "In NetworkEntity.merge(self,other), the entities must be equal."
+            )
         for field in ["mac", "ip", "ipv6", "name"]:
             if other[field] != nothing[field]:
                 self[field] = other[field]
         self._compare = None
-    
 
     def __hash__(self):
         return hash((self.mac, self.ip, self.ipv6, self.name))
 
-
     def __eq__(self, other):
         # Use `.equals` for usual comparisons!
-        if other is None: return False
+        if other is None:
+            return False
         return self.mac == other.mac and self.ip == other.ip and self.ipv6 == other.ipv6 and self.name == other.name
-
 
     def tablestring(self, lengths):
         padded = []
-        fields = [self.mac, self.ip, ipaddress.ip_address(self.ipv6).compressed, self.name]
+        fields = [
+            self.mac,
+            self.ip,
+            ipaddress.ip_address(self.ipv6).compressed,
+            self.name
+        ]
         titles = ["mac", "ip", "ipv6", "name"]
         # longests = ["FF-FF-FF-FF-FF-FF", "255.255.255.255", "0000:0000:0000::0000:0000", "NamesShouldntBeThisLong"]
         for title, field, length in zip(titles, fields, lengths):
@@ -169,14 +189,15 @@ def check_ip(ip: str) -> str:
 
 
 def filterIP(l: list[str]) -> list[str]:
-    if isinstance(l, str): return [l]
+    if isinstance(l, str):
+        return [l]
 
     def isip(ip: str) -> bool:
         try:
             return check_ip(ip) == ip
         except ValueError:
             return False
-    
+
     return list(filter(isip, l))
 
 
@@ -190,16 +211,22 @@ def extend_ipv6(ipv6: str) -> str:
 
 class LockedNetworkEntity(NetworkEntity):
     def __setitem__(self, key, value):
-        raise TypeError(f"Item assignment in NetworkEntity cannot be done on a locked entity.")
-    
-    
+        raise TypeError(
+            f"Item assignment in NetworkEntity cannot be done on a locked entity.")
+
     def merge(self, other):
-        # Since we know LockedNetworkEntities will have complete information, there's no need to merge additions into them (plus it causes errors).
+        # Since we know LockedNetworkEntities will have complete information,
+        # there's no need to merge additions into them (plus it causes errors).
         pass
 
 
 # Special Entities: LockedNetworkEntity
-nothing = LockedNetworkEntity(mac="00:00:00:00:00:00", ip="0.0.0.0", ipv6="::", name="nothing")
+nothing = LockedNetworkEntity(
+    mac="00:00:00:00:00:00",
+    ip="0.0.0.0",
+    ipv6="::",
+    name="nothing"
+)
 localhost = None
 mDNS = None
 multicast = None
@@ -209,6 +236,7 @@ local_broadcast = None
 here = None
 
 specials = []
+
 
 class NetworkStorage:
     data = []
@@ -220,20 +248,66 @@ class NetworkStorage:
             cls.instance = object.__new__(cls)
             # Initialise special entities
             global nothing, localhost, mDNS, multicast, broadcast, router, local_broadcast, here
-            localhost = LockedNetworkEntity(mac=nothing.mac, ip="127.0.0.1", ipv6="::1", name="loopback")
-            mDNS = LockedNetworkEntity(mac=nothing.mac, ip="224.0.0.251", ipv6="ff02::fb", name="multicast DNS")
-            multicast = LockedNetworkEntity(mac=nothing.mac, ip="224.0.0.2", ipv6="ff00::", name="multicast")  # hostify returns '*.mcast.net' (differs for 224.0.0.*)
-            broadcast = LockedNetworkEntity(mac="FF-FF-FF-FF-FF-FF", ip="255.255.255.255", ipv6=nothing.ipv6, name="broadcast")
-            router = LockedNetworkEntity(mac=nothing.mac, ip=filterIP(ipconfig()["Default Gateway"])[0], ipv6=nothing.ipv6, name="router")  # You sure you can't know the MAC and IPv6? + improve getting the default gateway's IPv4
-            local_broadcast = LockedNetworkEntity(mac=nothing.mac, ip=get_all_possible_addresses()[-1], ipv6=nothing.ipv6, name="local broadcast")  # You sure you can't know the MAC and IPv6?
-            here = LockedNetworkEntity(mac=ipconfig()["Physical Address"], ip=ipconfig()["IPv4 Address"], ipv6=ipconfig()["IPv6 Address"] if 'IPv6 Address' in ipconfig() else nothing.ipv6, name=ipconfig()["Host Name"])
+            localhost = LockedNetworkEntity(
+                mac=nothing.mac, ip="127.0.0.1", ipv6="::1", name="loopback"
+            )
 
-            cls.instance.special_add(localhost, mDNS, multicast, broadcast, router, local_broadcast, here)
+            mDNS = LockedNetworkEntity(
+                mac=nothing.mac,
+                ip="224.0.0.251",
+                ipv6="ff02::fb",
+                name="multicast DNS"
+            )
+
+            multicast = LockedNetworkEntity(
+                mac=nothing.mac,
+                ip="224.0.0.2",
+                ipv6="ff00::",
+                name="multicast"
+            )  # hostify returns '*.mcast.net' (differs for 224.0.0.*)
+
+            broadcast = LockedNetworkEntity(
+                mac="FF-FF-FF-FF-FF-FF",
+                ip="255.255.255.255",
+                ipv6=nothing.ipv6,
+                name="broadcast"
+            )
+            
+            router = LockedNetworkEntity(
+                mac=nothing.mac,
+                ip=filterIP(
+                    ipconfig()["Default Gateway"])[0],
+                ipv6=nothing.ipv6,
+                name="router"
+            )  # You sure you can't know the MAC and IPv6? + improve getting the default gateway's IPv4
+
+            local_broadcast = LockedNetworkEntity(
+                mac=nothing.mac,
+                ip=get_all_possible_addresses()[-1],
+                ipv6=nothing.ipv6,
+                name="local broadcast"
+            )  # You sure you can't know the MAC and IPv6?
+            
+            here = LockedNetworkEntity(
+                mac=ipconfig()["Physical Address"],
+                ip=ipconfig()["IPv4 Address"],
+                ipv6=ipconfig()["IPv6 Address"] if 'IPv6 Address' in ipconfig() else nothing.ipv6,
+                name=ipconfig()["Host Name"]
+            )
+
+            cls.instance.special_add(
+                localhost,
+                mDNS,
+                multicast,
+                broadcast,
+                router,
+                local_broadcast,
+                here
+            )
             # print(nothing, *specials, sep="\n")
 
             cls.instance._give_names()
         return cls.instance
-    
 
     def _give_names(self):
         for method in dir(self):
@@ -243,16 +317,20 @@ class NetworkStorage:
                 except AttributeError:
                     continue
 
-
-    def add(self, *args, mac=nothing.mac, ip=nothing.ip, ipv6=nothing.ipv6, name=nothing.name):
+    def add(self,
+            *args,
+            mac=nothing.mac,
+            ip=nothing.ip,
+            ipv6=nothing.ipv6,
+            name=nothing.name):
         if len(args) == 0:
             self.waiting.put(NetworkEntity(mac, ip, ipv6, name))
         else:
             for entity in args:
-                if isinstance(entity, NetworkEntity) or isinstance(entity, LockedNetworkEntity):
+                if isinstance(entity, NetworkEntity) \
+                    or isinstance(entity, LockedNetworkEntity):
                     self.waiting.put(entity)
 
-    
     def special_add(self, *entities):
         """Adds a special LockedNetworkEntity to the `specials` list.
         NOT THREAD-SAFE. Only use in non-parellel code.
@@ -263,7 +341,6 @@ class NetworkStorage:
         for entity in entities:
             if isinstance(entity, LockedNetworkEntity):
                 specials.append(entity)
-
 
     def _resolve(self):
         def append(entity):
@@ -281,14 +358,17 @@ class NetworkStorage:
             G.add_node(entity)
             if entity in LAN:
                 G.add_edge(router, entity)
-        
+
         from hostify import hostify_sync, hostify
-        hostify_sync([entity.ip for entity in list(self.waiting.queue) if entity.ip != nothing.ip])
+        hostify_sync([
+            entity.ip
+            for entity in list(self.waiting.queue)
+            if entity.ip != nothing.ip
+        ])
         for entity in list(self.waiting.queue):
             if entity.name == nothing.name:
                 entity.name = hostify(entity.ip)
             append(entity)
-
 
     def sort(self, key="ip"):
         self._resolve()
@@ -296,12 +376,16 @@ class NetworkStorage:
             others = ['ip', 'mac', 'ipv6']
             others.remove(key)
         except ValueError:
-            raise ValueError('Sorting key must be either `mac`, `ip`, or `ipv6`.')
+            raise ValueError(
+                'Sorting key must be either `mac`, `ip`, or `ipv6`.'
+            )
         keys = [key] + others
 
-        if len(self.data) == 0: return [nothing]
-        return sorted(self.data, key=lambda entity: tuple([entity.compare()[field] for field in keys]))
-    
+        if len(self.data) == 0:
+            return [nothing]
+        return sorted(self.data,
+                      key=lambda entity: tuple(entity.compare()[field]
+                                               for field in keys))
 
     def organise(self, key="ip"):
         """Converts the storage into a dictionary, with the key being one of the fields, and the values -- the whole entity.
@@ -320,25 +404,26 @@ class NetworkStorage:
 
         Returns:
             dict: the dictionary as described above.
-        
+
         Raises:
             TypeError: if the key is invalid.
         """
         self._resolve()
         if key not in ["mac", "ip", "ipv6", "name"]:
-            raise TypeError(f"NetworkStorage.organise's key must be `mac`, `ip`, `ipv6`, or `name`; got `{key}`")
-        return {entity[key]: entity for entity in self.data if entity[key] != nothing[key]}
-    
+            raise TypeError(
+                f"NetworkStorage.organise's key must be `mac`, `ip`, `ipv6`, or `name`; got `{key}`"
+            )
+        return {entity[key]: entity
+                for entity in self.data
+                if entity[key] != nothing[key]}
 
     def __iter__(self):
         self._resolve()
         for elem in self.sort():
             yield elem
-    
-    
+
     def __len__(self):
         return len(self.data)
-    
 
     def __getitem__(self, key):
         """Gets a single "column" (key, property, field) as a list from all the NetworkEntity-ies stored.
@@ -356,9 +441,10 @@ class NetworkStorage:
         self._resolve()
         if key in ["mac", "ip", "ipv6", "name"]:
             self._resolve()
-            return [entity[key] for entity in self.data if entity[key] != nothing[key]]
+            return [entity[key]
+                    for entity in self.data
+                    if entity[key] != nothing[key]]
         raise TypeError(f"Subscripting in NetworkStorage must be `mac`, `ip`, `ipv6`, or `name`; got `{key}`")
-    
 
     def print(self):
         self._resolve()
@@ -366,21 +452,24 @@ class NetworkStorage:
             for entity in self:
                 print(entity)
 
-
     def tablestring(self):
-        lengths = [max(map(lambda x: len(str(x)), self[field]), default=4) for field in ["mac", "ip", "ipv6", "name"]]
+        lengths = [max(map(lambda x: len(str(x)), self[field]), default=4)
+                   for field in ["mac", "ip", "ipv6", "name"]]
         titles = ["MAC", "IPv4", "IPv6", "Name"]
-        titles = "| " + ' | '.join([title.center(length) for title, length in zip(titles, lengths)]) + " |"
+        titles = "| " + ' | '.join([title.center(length)
+                                   for title, length in zip(titles, lengths)]) + " |"
 
         width = sum(lengths) + 11
         top = "/" + ("-" * width) + "\\"
         subtitles = "|" + ('-' * width) + "|"
         bottom = "\\" + ("-" * width) + "/"
-        return [top, titles, subtitles, *["| " + x.tablestring(lengths) + " |" for x in self.sort()], bottom]
+        return [top, titles, subtitles,
+                *["| " + x.tablestring(lengths) + " |" for x in self.sort()], bottom]
 
 
 class LAN:
     def __contains__(self, entity):
         return entity.ip in get_all_possible_addresses()
+
 
 LAN = LAN()
