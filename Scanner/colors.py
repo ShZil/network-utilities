@@ -1,6 +1,7 @@
 # SGR color constants
 # rene-d 2018
-# from https://gist.githubusercontent.com/rene-d/9e584a7dd2935d0f461904b9f2950007/raw/e2e58ccf955475d8066338a4e538c52debc06a06/colors.py
+# from
+# https://gist.githubusercontent.com/rene-d/9e584a7dd2935d0f461904b9f2950007/raw/e2e58ccf955475d8066338a4e538c52debc06a06/colors.py
 
 class Colors:
     """ ANSI color codes """
