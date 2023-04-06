@@ -13,7 +13,7 @@ from util import *
 from ip_handler import *
 from NetworkStorage import NetworkStorage
 from ipconfig import ipconfig
-    
+
 from scans.ARP import scan_ARP, scan_ARP_continuous
 from scans.ICMP import scan_ICMP, scan_ICMP_continuous
 from scans.TCP import scan_TCP
@@ -47,14 +47,20 @@ def do_simple_scan(scan, all_possible_addresses, *, results=False, repeats=3):
     Returns:
         list[str]: the addresses which replied, at least once, to the scan.
     """
-    if repeats < 1: return []
+    if repeats < 1:
+        return []
 
     # Parsing the title & protocol.
     title = scan.__name__
     protocol = "".join(char for char in title if char.isupper())
 
     # Define a <lambda> that returns a list[str] of connectable addresses.
-    get_new = lambda: [address for address, online in zip(all_possible_addresses, scan(all_possible_addresses)) if online]
+    def get_new():
+        return [
+            address for address, online
+            in zip(all_possible_addresses, scan(all_possible_addresses))
+            if online
+        ]
 
     # Call it `repeats` times and unite all results.
     connectable_addresses = set()
@@ -62,33 +68,50 @@ def do_simple_scan(scan, all_possible_addresses, *, results=False, repeats=3):
         connectable_addresses = connectable_addresses.union(get_new())
 
     # Turn it into a sorted list (just for convenience, order doesn't matter).
-    connectable_addresses = sorted(connectable_addresses, key=lambda x: int(''.join(x.split('.'))))
+    connectable_addresses = sorted(
+        connectable_addresses,
+        key=lambda x: int(''.join(x.split('.')))
+    )
 
     # Print if asked
     if results:
-        print("There are", len(connectable_addresses), protocol, "connectable addresses in this subnet:")
+        print(
+            "There are",
+            len(connectable_addresses),
+            protocol,
+            "connectable addresses in this subnet:"
+        )
         print('    ' + '\n    '.join(connectable_addresses))
-    
+
     return connectable_addresses
 
 
 def standardise_simple_scans(scans: list[tuple[Callable, int]]) -> list[Callable]:
     scans = [scan if isinstance(scan, tuple) else (scan, 1) for scan in scans]
     scans = [scan for scan in scans if scan[1] > 0]
-    
+
     def does_simple_scan(scan):
         scan, repeats = scan
-        return (lambda: do_simple_scan(scan, ipconfig()["All Possible Addresses"], repeats=repeats))
+        return (
+            lambda: do_simple_scan(
+                scan,
+                ipconfig()["All Possible Addresses"],
+                repeats=repeats)
+        )
     lambdas = [does_simple_scan(scan) for scan in scans]
 
     for scan, method in zip(scans, lambdas):
         prefix = f"{scan[1]} × " if scan[1] > 1 else ""
-        method.__name__, method.__doc__ = prefix + scan[0].__name__, prefix + scan[0].__doc__
+        method.__name__ = prefix + scan[0].__name__
+        method.__doc__ = prefix + scan[0].__doc__
     return lambdas
 
 
 def simple_scan(scan: Callable, repeats: int) -> Callable:
-    result = lambda: do_simple_scan(scan, ipconfig()["All Possible Addresses"], repeats=repeats)
+    def result():
+        return do_simple_scan(scan,
+                              ipconfig()["All Possible Addresses"],
+                              repeats=repeats)
     prefix = f"{repeats} × " if repeats > 1 else ""
     result.__name__, result.__doc__ = prefix + scan.__name__, prefix + scan.__doc__
     return result
@@ -113,9 +136,19 @@ def get_public_ip():
     ipv6 = requests.get('https://api64.ipify.org').text
     ipv6 = ipv6 if ipv6 != ip else nothing.ipv6
     try:
-        outside = LockedNetworkEntity(mac=nothing.mac, ip=ip, ipv6=ipv6, name="Public Address")
+        outside = LockedNetworkEntity(
+            mac=nothing.mac,
+            ip=ip,
+            ipv6=ipv6,
+            name="Public Address"
+        )
     except ValueError:  # api64.ipify.org might not return the IPv6, and instead say "gateway timeout"
-        outside = LockedNetworkEntity(mac=nothing.mac, ip=ip, ipv6=nothing.ipv6, name="Public Address")
+        outside = LockedNetworkEntity(
+            mac=nothing.mac,
+            ip=ip,
+            ipv6=nothing.ipv6,
+            name="Public Address"
+        )
     NetworkStorage().special_add(outside)
     return outside
 
@@ -152,12 +185,21 @@ def get_scan_id():
     gateway = int(ipaddress.IPv4Address(router.ip)).to_bytes(4, 'big')
 
     mask = ipconfig()["Subnet Mask"]
-    mask = sum(bin(int(x)).count('1') for x in mask.split('.')).to_bytes(1, 'big')
+    mask = sum(bin(int(x)).count('1')
+               for x in mask.split('.')).to_bytes(1, 'big')
 
     physical = here.mac
     physical = int(physical.replace('-', ''), 16).to_bytes(6, 'big')
 
-    return base64.b64encode(host + b'\x40' + iface + b'\x40' + gateway + mask + physical).decode()
+    return base64.b64encode(
+        host +
+        b'\x40' +
+        iface +
+        b'\x40' +
+        gateway +
+        mask +
+        physical
+    ).decode()
 
 
 def parse_scan_id(scan_id):
@@ -181,47 +223,57 @@ def parse_scan_id(scan_id):
     return f"Here: {host}, {physical}, via {iface}\nRouter: {router}"
 
 
-
 def main():
     raise NotImplementedError("Use `exe.py` instead.")
     remove_scapy_warnings()
 
     ipconfig()
-    cmdtitle("ShZil Network Scanner - ", ipconfig()["Interface"], " at ", ipconfig()["IPv4 Address"])
+    cmdtitle(
+        "ShZil Network Scanner - ",
+        ipconfig()["Interface"],
+        " at ",
+        ipconfig()["IPv4 Address"]
+    )
 
     from testing.tests import test
     test()
 
     print_dict(ipconfig())
-    
+
     # global lookup
     NetworkStorage()
 
     ipconfig.cache["All Possible Addresses"] = all_possible_addresses = get_all_possible_addresses()
     print("Subnet Size:", len(all_possible_addresses), "possible addresses.")
-    
+
     simple_scans = standardise_simple_scans([
         (scan_ICMP, 20),
         (scan_ARP, 20)
     ])
 
-
     def add_to_lookup():
         NetworkStorage().add(ip="255.255.255.255")
         from NetworkStorage import router, here
         NetworkStorage().add(router, here)
-    
 
     def do_TCP():
         from NetworkStorage import router
         print(f"Open TCP ports in {router}:")
         with JustifyPrinting():
             for port, res in scan_TCP(router.ip, repeats=20).items():
-                if res: print(port)
-    
+                if res:
+                    print(port)
 
-    def user_confirmation(): input("Commencing next scan. Press [Enter] to continue . . .")
-    def continuous_ICMP(): scan_ICMP_continuous(NetworkStorage()['ip'], ipconfig()["All Possible Addresses"], compactness=2)
+    def user_confirmation():
+        input("Commencing next scan. Press [Enter] to continue . . .")
+
+    def continuous_ICMP():
+        scan_ICMP_continuous(
+            NetworkStorage()['ip'],
+            ipconfig()["All Possible Addresses"],
+            compactness=2
+        )
+
     def print_scanID(): print("ScanID:", get_scan_id())
 
     actions = [
