@@ -1310,3 +1310,8 @@ It's probably because of mishandling exceptions that are under `gui.py`'s respon
 
 [21:27] Changed the code in `gui.py:_importing` to hopefully catch more exceptions and edge cases,
 like the one currently crashing my application.
+
+[22:45] With some printing statements, I narrowed down the location of the bug to the `popup`.
+I just changed `error=True` to nothing, and now it uses `win32api.MessageBox` instead of `QApplication`,
+and that works?!
+Alright. Not complaining.

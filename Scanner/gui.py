@@ -905,17 +905,17 @@ class SaveScreenImportButton(GreenButton):
             try:
                 content = importer()
             except FileNotFoundError:
-                popup("File Not Found", "The file you selected was not found.", error=True)
+                popup("File Not Found", "The file you selected was not found.")
             except ValueError as e:
-                popup("Error in parsing Scan File", e.args[0], error=True)
-            if content != '':
-                try:
+                popup("Error in parsing Scan File", e.args[0])
+            try:
+                if content != '':
                     update_view_screen(content)
-                except Exception as e:
-                    print("After update_view_screen")
-                    print(e)
-            else:
-                update_view_screen("Couldn't decrypt file.")
+                else:
+                    update_view_screen("Couldn't decrypt file.")
+            except Exception as e:
+                print(e)
+            
         Thread(target=_importing).start()
         state.screen("View")
 
