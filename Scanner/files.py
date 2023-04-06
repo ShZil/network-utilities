@@ -90,9 +90,10 @@ def encrypt(message: bytes, password: str) -> bytes:
 
 
 def decrypt(token: bytes, password: str) -> bytes:
-    decrypter_with_timeout = SetTimeout(files_cryptography.password_decrypt, timeout=10)
-    is_done, is_timeout, erro_message, results = decrypter_with_timeout(token, password)
-    return results if is_done else ""
+    # decrypter_with_timeout = SetTimeout(files_cryptography.password_decrypt, timeout=10)
+    # is_done, is_timeout, erro_message, results = decrypter_with_timeout(token, password)
+    # return results if is_done else ""
+    return files_cryptography.password_decrypt(token, password)
 
 
 class ScanFileBuilder:
