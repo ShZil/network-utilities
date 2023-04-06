@@ -5,8 +5,12 @@ with ImportDefence():
     import requests
     import ipaddress
     import scapy
-    import networkx, numpy, scipy
-    import PyQt5, kivy, tkinter
+    import networkx
+    import numpy
+    import scipy
+    import PyQt5
+    import kivy
+    import tkinter
     import markdown
 
 from main import *
@@ -16,7 +20,6 @@ from NetworkStorage import *
 from register import Register
 from globalstuff import *
 from threading import Thread, enumerate as enumerate_threads
-
 
 
 def keep_resolving_storage():
@@ -30,7 +33,7 @@ def keep_resolving_storage():
             from gui import update_know_screen, diagram
             update_know_screen(NetworkStorage())
             diagram.renew(G)
-    
+
     _resolver.__name__ = '5-second interval repeat'
     Thread(target=_resolver).start()
 
@@ -40,7 +43,10 @@ def register_scans():
     r = Register()
     r["ICMP Sweep"] = simple_scan(scan_ICMP, 3)
     r["ARP Sweep"] = simple_scan(scan_ARP, 3)
-    r["Live ICMP"] = lambda: scan_ICMP_continuous(NetworkStorage()['ip'], ipconfig()["All Possible Addresses"], compactness=2)
+    r["Live ICMP"] = lambda: scan_ICMP_continuous(
+        NetworkStorage()['ip'],
+        ipconfig()["All Possible Addresses"],
+        compactness=2)
     r["Live ARP"] = scan_ARP_continuous
     r["Public Address"] = public_address_action
 
@@ -52,10 +58,14 @@ def main():
     cmdcolor("0A")
     print("Attempting to connect to an network-card interface...")
     ipconfig()
-    cmdtitle("ShZil Network Scanner - ", ipconfig()["Interface"], " at ", ipconfig()["IPv4 Address"])
+    cmdtitle(
+        "ShZil Network Scanner - ",
+        ipconfig()["Interface"],
+        " at ",
+        ipconfig()["IPv4 Address"])
     from testing.tests import test
     test()
-    
+
     NetworkStorage()
     ipconfig.cache["All Possible Addresses"] = get_all_possible_addresses()
     from NetworkStorage import router, here
@@ -67,7 +77,8 @@ def main():
     add_font()
     prestart()
 
-    # Start tk (on main thread) and kivy (on different thread) and `NetworkStorage()._resolve` (on a third thread)
+    # Start tk (on main thread) and kivy (on different thread) and
+    # `NetworkStorage()._resolve` (on a third thread)
     keep_resolving_storage()
     Thread(target=start_kivy).start()
     start_tk()
