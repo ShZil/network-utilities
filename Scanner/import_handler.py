@@ -37,7 +37,7 @@ class ImportDefence:
     ```
 
     - if succeeded, restart the script
-    
+
     ```py
     argv = ['\"' + sys.argv[0] + '\"'] + sys.argv[1:]
     os.execv(sys.executable, ['python'] + argv)
@@ -52,6 +52,7 @@ class ImportDefence:
         from module2 import some_function
     ```
     """
+
     def __init__(self):
         pass
 
@@ -60,7 +61,8 @@ class ImportDefence:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         import os
-        # If no ModuleNotFoundError occured, clear the screen and print and return to original script.
+        # If no ModuleNotFoundError occured, clear the screen and print and
+        # return to original script.
         if exc_val is None:
             os.system('cls')
             print("All imports were successful.")
@@ -76,15 +78,23 @@ class ImportDefence:
             to_install = err.name
             # Some modules have `pip install X` and `import Y`, where `X != Y`.
             # These have to be added manually.
-            if 'win32' in to_install: to_install = 'pywin32'
-            if to_install == 'cv2': to_install = 'opencv-python'
+            if 'win32' in to_install:
+                to_install = 'pywin32'
+            if to_install == 'cv2':
+                to_install = 'opencv-python'
 
-            print(f"Module `{err.name}` was not found. Attempting `pip install {to_install}`...\n")
+            print(
+                f"Module `{err.name}` was not found. Attempting `pip install {to_install}`...\n"
+            )
             try:
-                do_command([sys.executable, "-m", "pip", "install", to_install])
+                do_command(
+                    [sys.executable, "-m", "pip", "install", to_install]
+                )
             except CalledProcessError:
                 if_different = f"" if to_install == err.name else f" (from `{err.name}`)"
-                print(f"\nModule `{to_install}`{if_different} could not be pip-installed. Please install manually.")
+                print(
+                    f"\nModule `{to_install}`{if_different} could not be pip-installed. Please install manually."
+                )
                 sys.exit(1)
             argv = ['\"' + sys.argv[0] + '\"'] + sys.argv[1:]
             os.execv(sys.executable, ['python'] + argv)
