@@ -46,7 +46,8 @@ def register_scans():
     r["Live ICMP"] = lambda: scan_ICMP_continuous(
         NetworkStorage()['ip'],
         ipconfig()["All Possible Addresses"],
-        compactness=2)
+        compactness=2
+    )
     r["Live ARP"] = scan_ARP_continuous
     r["Public Address"] = public_address_action
 
@@ -62,7 +63,8 @@ def main():
         "ShZil Network Scanner - ",
         ipconfig()["Interface"],
         " at ",
-        ipconfig()["IPv4 Address"])
+        ipconfig()["IPv4 Address"]
+    )
     from testing.tests import test
     test()
 

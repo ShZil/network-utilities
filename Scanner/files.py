@@ -45,7 +45,8 @@ def exporter():
         filetypes=(("Scan files", "*.scan"), ("All files", "*.*")),
     )
     print("Exporting to", filename)
-    if filename == "": return
+    if filename == "":
+        return
     builder = ScanFileBuilder()
 
     from main import get_scan_id
@@ -57,12 +58,12 @@ def exporter():
     builder.add_many(data)
 
     # TODO: add scans history
-    
+
     builder.set_password(get_password())
     builder.write_to(filename)
     print("Done writing")
     return filename
-    
+
 
 def importer():
     filename = dialogs.askopenfilename(
@@ -123,7 +124,7 @@ class ScanFileBuilder:
             print("Writing content to file:")
             print(content)
             f.write(content)
-    
+
     def set_password(self, password: str):
         self.password = password
 
@@ -134,19 +135,26 @@ class ScanFileBuilder:
             content = f.read()
             content = decrypt(content, self.password)
             if content == b'':
-                raise ValueError("Couldn't decrypt the file. The password is wrong")
+                raise ValueError(
+                    "Couldn't decrypt the file. The password is wrong"
+                )
             content = content.split(self.SEP)
             if content[0] != self.HEADER:
                 if not path.endswith('.scan'):
-                    raise ValueError("Invalid file format. The extension is also wrong.")
-                raise ValueError("Invalid file format, or wrong password.")  # or wrong password
+                    raise ValueError(
+                        "Invalid file format. The extension is also wrong."
+                    )
+                # or wrong password
+                raise ValueError("Invalid file format, or wrong password.")
 
             self.parts = content[1:]
 
         return {
             "scan_id": self.parts[0].decode(),
-            "network_entities": [x.decode() for x in self.parts[1].split(self.COMMA)]
-        }
+            "network_entities": [
+                x.decode() for x in self.parts[1].split(
+                    self.COMMA)]}
+
 
 if __name__ == '__main__':
     print("This module is used for saving scans as files,")
