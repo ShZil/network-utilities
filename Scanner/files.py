@@ -153,7 +153,10 @@ class ScanFileBuilder:
             "scan_id": self.parts[0].decode(),
             "network_entities": [
                 x.decode() for x in self.parts[1].split(
-                    self.COMMA)]}
+                    self.COMMA
+                )
+            ]
+        }
 
 
 if __name__ == '__main__':
