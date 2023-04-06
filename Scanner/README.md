@@ -1319,3 +1319,9 @@ Alright. Not complaining.
 [22:58] STABLE BUILD. Finally.
 
 [23:08] Gonna `autopep8` the `.py` files in the project!
+
+
+
+### 2023-04-07
+[00:34] I'm `autopep8`-ing the files, going over the fixes and changing those I don't like.
+Use `GitHub Desktop` to see what changed, and the `Git` extension of `VS Code`.
