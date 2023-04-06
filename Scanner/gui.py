@@ -111,6 +111,15 @@ def display_information():
 
 
 def popup(title, message, *, error=False, warning=False, question=False, info=False, cancel=False):
+    print("POPUP:")
+    print("    title =", title)
+    print("    message =", message)
+    if error: print("    ERROR")
+    if warning: print("    WARNING")
+    if question: print("    QUESTION")
+    if info: print("    INFO")
+    if cancel: print("    CANCEL")
+
     if error or warning or question or info:
         with QApplication([]):
             md_text = markdown.markdown(message)
