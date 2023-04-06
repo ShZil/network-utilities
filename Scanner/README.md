@@ -1281,3 +1281,8 @@ Let's try testing.
 [01:57] With ChatGPT, made a new version of `get_password` with PyQt5.
 
 [02:17] Alright, it just keeps crashing. I'm gonna postpone fixing this to tomorrow, because it's getting late.
+
+[20:03] Module testing on `files_cryptography`. Noticed and fixed a simple bug:
+`_init_` instead of `__init__`. This is because WhatsApp sends code using the formatting,
+where `_STRING_` -> _STRING_ becomes italics. And copying doesn't include the hidden underscores.
+Also added a `if __name__ == '__main__'` clause.

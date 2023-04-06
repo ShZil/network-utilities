@@ -15,7 +15,7 @@ def password_decrypt(token: bytes, password: str) -> bytes:
 
 
 class Cipher_CBC:
-    def _init_(self, password: str):
+    def __init__(self, password: str):
         """This function initializes the encryptor.
 
         Args:
@@ -50,3 +50,16 @@ class Cipher_CBC:
             bytes: The decrypted message.
         """
         return unpad(self._decryptor.decrypt(ciphertext), AES.block_size)
+
+
+if __name__ == '__main__':
+    print("This is a module extending `files.py` with encryption.")
+    print("It supplies `files.py` with two methods: password_encrypt and password_decrypt.")
+    print("The internal implementation is irrelevant for `files.py`, and abstracted away.")
+    print("\n\nExample: message=\"Hello, world!\", password=\"A123\", then:")
+    message = "Hello, world!"
+    password = "A123"
+    encrypted = password_encrypt(message.encode(), password)
+    print("Encrypted:", encrypted)
+    decrypted = password_decrypt(encrypted, password)
+    print("Decrypted:", decrypted)
