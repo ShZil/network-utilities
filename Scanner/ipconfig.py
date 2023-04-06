@@ -12,12 +12,14 @@ def read_ipconfig():
 
     Returns:
         list[str]: the command's output as a list of lines
-    
+
     Raises:
         subprocess.CalledProcessError: if subprocess.check_output fails.
     """
     try:
-        return read_command(['ipconfig','/all']).decode(encoding='utf-8', errors='ignore').split('\n')
+        return read_command(['ipconfig',
+                             '/all']).decode(encoding='utf-8',
+                                             errors='ignore').split('\n')
     except CalledProcessError:
         print(">ipconfig /all raised an error.")
         raise
@@ -33,7 +35,7 @@ def dictify(text: list[str] | str) -> dict:
         - if the line is formatted like "key . . . . : value", add this pair to the current active dictionary.
         - otherwise, convert the pair to a (key, list) pair, and add the line's contents as a new value.
         - if the value is empty, use an empty list to represent it.
-    
+
     Example:
     ```r
     Windows IP Configuration
@@ -82,7 +84,7 @@ def dictify(text: list[str] | str) -> dict:
         }
     }
     ```
-        
+
 
 
     Args:
@@ -94,12 +96,16 @@ def dictify(text: list[str] | str) -> dict:
     Raises:
         IndexError: if the format is invalid.
     """
-    if isinstance(text, str): text = text.split('\n')
+    if isinstance(text, str):
+        text = text.split('\n')
     result = {}  # The dictionary to be returned.
-    interface = None  # The current interface whose configuration values are being decoded.
-    title = None  # The current title, inside the interface, whose value/s are being decoded.
+    # The current interface whose configuration values are being decoded.
+    interface = None
+    # The current title, inside the interface, whose value/s are being decoded.
+    title = None
     for line in text:
-        if line.strip() == '': continue
+        if line.strip() == '':
+            continue
 
         if line[0].strip() != '':
             # New interface found. Initialise dictionary.
@@ -112,8 +118,10 @@ def dictify(text: list[str] | str) -> dict:
                 # New property (title).
                 key, value = line.split(':', 1)
                 title, value = key.strip(' .'), value.strip().replace("(Preferred)", "")
-                if value.strip() == "": result[interface][title] = []
-                else: result[interface][title] = value
+                if value.strip() == "":
+                    result[interface][title] = []
+                else:
+                    result[interface][title] = value
             else:
                 # Last property is a list, appending item.
                 value = line.strip().replace("(Preferred)", "")
@@ -148,15 +156,18 @@ def ipconfig() -> dict:
             'Auto-Selected Interface': auto_select_interface(...)
         }
     ```
-    
+
     Raises:
         RuntimeError: if no Default Gateway is found, meaning the computer is disconnected from the Internet.
     """
     if hasattr(ipconfig, 'cache'):
         return ipconfig.cache
-    
+
     information = dictify(read_ipconfig())
-    possible_interfaces = [interface for interface, info in information.items() if 'Default Gateway' in info.keys()]
+    possible_interfaces = [
+        interface for interface,
+        info in information.items() if 'Default Gateway' in info.keys()
+    ]
 
     if len(possible_interfaces) <= 0:
         raise RuntimeError("Computer is not connected to Internet.")
@@ -166,10 +177,16 @@ def ipconfig() -> dict:
         for i, interface in enumerate(possible_interfaces):
             print(f"    ({i}) {interface}")
         selected = get_interface_safe(possible_interfaces)
-    
+
     print("Interface:", selected)
-    auto_selected_interface = auto_select_interface(information[selected]["IPv4 Address"])
-    data = {**information["Windows IP Configuration"], **information[selected], 'Interface': selected, 'Auto-Selected Interface': auto_selected_interface}
+    auto_selected_interface = auto_select_interface(
+        information[selected]["IPv4 Address"])
+    data = {
+        **information["Windows IP Configuration"],
+        **information[selected],
+        'Interface': selected,
+        'Auto-Selected Interface': auto_selected_interface
+    }
     ipconfig.cache = data
     return data
 
@@ -182,11 +199,11 @@ def get_interface_safe(possible):
         except ValueError:
             print("Not a number")
             continue
-        
+
         if not 0 <= num < len(possible):
             print("Not in range")
             continue
-        
+
         return possible[num]
 
 
@@ -200,7 +217,7 @@ def auto_select_interface(ip: str):
 
     Returns:
         str: `str(scapy.config.conf.iface)`
-    """    
+    """
     for iface in get_working_ifaces():
         if iface.ip == ip:
             conf.iface = iface
@@ -211,4 +228,3 @@ if __name__ == '__main__':
     ipconfig()
     from util import print_dict
     print_dict(ipconfig())
-
