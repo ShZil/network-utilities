@@ -1297,3 +1297,6 @@ Also added a `if __name__ == '__main__'` clause.
 Use this dictionary in Know Screen.
 
 [20:34] Testing report: `Export` works fine and quite fast, `Import` crashes.
+
+[20:38] Why create two instances of the same object? This makes no sense given the current usage.
+Plus, fixing it looks super Pythonic, which is good.

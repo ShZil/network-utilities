@@ -24,8 +24,7 @@ class Cipher_CBC:
         hashed = SHA256.new(password.encode()).digest()
         key, iv = hashed[:16], hashed[16:]
 
-        self._encryptor = AES.new(key, AES.MODE_CBC, iv)
-        self._decryptor = AES.new(key, AES.MODE_CBC, iv)
+        self._encryptor = self._decryptor = AES.new(key, AES.MODE_CBC, iv)
     
 
     def encrypt(self, msg: bytes) -> bytes:
