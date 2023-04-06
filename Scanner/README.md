@@ -1315,3 +1315,5 @@ like the one currently crashing my application.
 I just changed `error=True` to nothing, and now it uses `win32api.MessageBox` instead of `QApplication`,
 and that works?!
 Alright. Not complaining.
+
+[22:58] STABLE BUILD. Finally.
