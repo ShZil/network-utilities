@@ -1292,3 +1292,8 @@ Also added a `if __name__ == '__main__'` clause.
 [20:27] Rename `password` to `hashed`, for there not to be dynamic type changing, which is allowed in Python, but confusing.
 
 [20:28] Fix the bug: the `hashed` is 32 bytes long, so take 16 to IV and 16 to the key (not 128).
+
+[20:32] IDEA: add a dictionary of special information, like OS (from `OS-ID`), or entry type (from `Live ARP`'s first stage).
+Use this dictionary in Know Screen.
+
+[20:34] Testing report: `Export` works fine and quite fast, `Import` crashes.
