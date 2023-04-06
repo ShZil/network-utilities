@@ -28,7 +28,6 @@ class Cipher_CBC:
         key, iv = hashed[:16], hashed[16:]
 
         self._encryptor = self._decryptor = AES.new(key, AES.MODE_CBC, iv)
-    
 
     def encrypt(self, msg: bytes) -> bytes:
         """This function encrypts the message.
@@ -40,7 +39,6 @@ class Cipher_CBC:
             bytes: The encrypted message.
         """
         return self._encryptor.encrypt(pad(msg, AES.block_size))
-    
 
     def decrypt(self, ciphertext: bytes) -> bytes:
         """This function decrypts the message.
@@ -62,13 +60,20 @@ if __name__ == '__main__':
     message = "Hello, world!"
     password = "A123"
     encrypted = password_encrypt(message.encode(), password)
-    print("Encrypted (HEX):", ' '.join(format(x, '02x').upper() for x in encrypted))
+    print("Encrypted (HEX):", ' '.join(format(x, '02x').upper()
+          for x in encrypted))
     decrypted = password_decrypt(encrypted, password)
     print("Decrypted:", decrypted)
     print("Example: enter file path:")
     try:
         with open(input(), 'rb') as f:
-            print("Decrypted:", password_decrypt(f.read(), input("Password: ")))
+            print(
+                "Decrypted:",
+                password_decrypt(
+                    f.read(),
+                    input("Password: ")
+                )
+            )
     except Exception as e:
         print(e)
     input()
