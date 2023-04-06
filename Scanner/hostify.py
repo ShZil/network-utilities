@@ -1,7 +1,7 @@
 from import_handler import ImportDefence
 with ImportDefence():
     from util import memorise, NoPrinting, threadify
-    
+
     from subprocess import CalledProcessError, check_output as read_command, DEVNULL
 
     from socket import gethostbyaddr as hostify_base
@@ -34,7 +34,8 @@ def hostify(address: str):
     # If first method failed, second method -> socket.gethostbyaddr
     try:
         with NoPrinting():
-            lines = read_command(['nslookup', address], stderr=DEVNULL).decode(encoding='utf-8', errors='ignore').split('\n')
+            lines = read_command(['nslookup', address], stderr=DEVNULL).decode(
+                encoding='utf-8', errors='ignore').split('\n')
         for line in lines:
             if line.strip().startswith('Name:'):
                 host = line[len("Name:"):].strip()
