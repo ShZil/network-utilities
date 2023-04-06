@@ -1325,3 +1325,8 @@ Alright. Not complaining.
 ### 2023-04-07
 [00:34] I'm `autopep8`-ing the files, going over the fixes and changing those I don't like.
 Use `GitHub Desktop` to see what changed, and the `Git` extension of `VS Code`.
+
+[01:15] Done with `pep8`-ing. Next up:
+- rename files to a consistent format (I like `NetworkStorage.py`'s format, make everything look like a class name in Java)
+- add type hints to everything (okay maybe not everything, just function's signatures)
+- add docstrings and comments.
