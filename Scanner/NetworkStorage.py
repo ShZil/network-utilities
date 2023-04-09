@@ -473,3 +473,23 @@ class LAN:
 
 
 LAN = LAN()
+
+
+class SpecialInformation(dict):
+    def __init__(self):
+        super().__init__()
+
+    def __setitem__(self, keys: tuple[NetworkEntity, str], value):
+        if not isinstance(keys[0], NetworkEntity):
+            raise TypeError("First key must be of type NetworkEntity.")
+        if not isinstance(keys[1], str):
+            raise TypeError("Second key must be a string.")
+        super().__setitem__(keys, value)
+
+    def __getitem__(self, keys):
+        if isinstance(keys, NetworkEntity):
+            return {k: v for (k, v) in self.items() if k[0] == keys}
+        elif isinstance(keys, tuple):
+            return super().__getitem__(keys)
+        else:
+            raise TypeError("Keys must be a tuple or a NetworkEntity.")
