@@ -8,7 +8,7 @@ with ImportDefence():
 class PacketSniffer:
     _instance = None
     DB_PATH = 'packets.db'
-    SQL_CREATE_TABLE = '''CREATE TABLE IF NOT EXISTS packets (id INTEGER PRIMARY KEY AUTOINCREMENT, packet BLOB, proto TEXT, src TEXT, dst TEXT, ttl INT, flags TEXT, options BLOB, sniff_time DATETIME DEFAULT CURRENT_TIMESTAMP)'''
+    SQL_CREATE_TABLE = '''CREATE TABLE IF NOT EXISTS packets (id INTEGER PRIMARY KEY AUTOINCREMENT, packet BLOB, proto TEXT, src TEXT, dst TEXT, ttl INT, flags TEXT, options BLOB, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'''
 
     def __new__(cls, max_packets=100):
         if cls._instance is None:
@@ -84,5 +84,7 @@ if __name__ == '__main__':
     packet_sniffer = PacketSniffer()
     time.sleep(5)
     packets = packet_sniffer.get_packets()
-    print(packets)
+    print(f"{len(packets)} packet(s) were sniffed.")
+    for packet in packets:
+        print(packet)
     packet_sniffer.stop()
