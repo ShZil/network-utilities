@@ -13,13 +13,13 @@ class PacketSniffer:
     def __new__(cls, max_packets=100):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls._instance._db_conn = sqlite3.connect(cls.DB_PATH)
-            cls._instance._db_cursor = cls._instance._db_conn.cursor()
-            cls._instance._max_packets = max_packets
+            cls._instance.db_conn = sqlite3.connect(cls.DB_PATH)
+            cls._instance.db_cursor = cls._instance._db_conn.cursor()
+            cls._instance.max_packets = max_packets
             cls._instance.packets = []
-            cls._instance._db_cursor.execute(cls.SQL_CREATE_TABLE)
-            cls._instance._sniff_thread = AsyncSniffer(prn=cls._instance._packet_handler, lfilter=cls._instance._ip_filter)
-            cls._instance._sniff_thread.start()
+            cls._instance.db_cursor.execute(cls.SQL_CREATE_TABLE)
+            cls._instance.sniff_thread = AsyncSniffer(prn=cls._instance._packet_handler, lfilter=cls._instance._ip_filter)
+            cls._instance.sniff_thread.start()
         return cls._instance
 
     def __init__(self):
