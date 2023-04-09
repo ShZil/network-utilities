@@ -1383,3 +1383,8 @@ FIX: Make the DB connection local to each method.
 Also, cast to string the FlagValue of scapy.
 
 [18:55] Finished creating the module PacketSniffer.
+
+
+
+### 2023-04-10
+[00:19] Add `PacketSniffer.__len__`, and `.length` property.
