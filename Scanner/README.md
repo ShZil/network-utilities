@@ -1398,3 +1398,5 @@ I lost.
 [01:55] Wrote `SpecialInformation` with ChatGPT.
 
 [01:57] Upgraded `SpecialInformation` with Singleton pattern.
+
+[02:44] Add `KnowScreenDeviceProfileButton`.
