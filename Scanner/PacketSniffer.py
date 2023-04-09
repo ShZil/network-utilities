@@ -8,16 +8,16 @@ with ImportDefence():
 class PacketSniffer:
     _instance = None
     DB_PATH = 'packets.db'
-    SQL_CREATE_TABLE = '''CREATE TABLE IF NOT EXISTS packets (id INTEGER PRIMARY KEY AUTOINCREMENT, packet BLOB, proto TEXT, src TEXT, dst TEXT, ttl INT, flags TEXT, options BLOB)'''
+    SQL_CREATE_TABLE = '''CREATE TABLE IF NOT EXISTS packets (id INTEGER PRIMARY KEY AUTOINCREMENT, packet BLOB, proto TEXT, src TEXT, dst TEXT, ttl INT, flags TEXT, options BLOB, sniff_time DATETIME DEFAULT CURRENT_TIMESTAMP)'''
 
     def __new__(cls, max_packets=100):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             cls._instance.db_conn = sqlite3.connect(cls.DB_PATH)
-            cls._instance.db_cursor = cls._instance._db_conn.cursor()
+            cls._instance.cursor = cls._instance.db_conn.cursor()
             cls._instance.max_packets = max_packets
             cls._instance.packets = []
-            cls._instance.db_cursor.execute(cls.SQL_CREATE_TABLE)
+            cls._instance.cursor.execute(cls.SQL_CREATE_TABLE)
             cls._instance.sniff_thread = AsyncSniffer(prn=cls._instance._packet_handler, lfilter=cls._instance._ip_filter)
             cls._instance.sniff_thread.start()
         return cls._instance
@@ -32,11 +32,11 @@ class PacketSniffer:
 
         self._flush_packets()
 
-        self.db_cursor.close()
+        self.cursor.close()
         self.db_conn.close()
 
     def get_packet(self, i: int):
-        packet_row = self.db_cursor.execute('SELECT packet FROM packets WHERE id = ?', (i,)).fetchone()
+        packet_row = self.cursor.execute('SELECT packet FROM packets WHERE id = ?', (i,)).fetchone()
         return pickle.loads(packet_row[0]) if packet_row else None
 
     def get_packets(self, src=None, dst=None):
@@ -61,17 +61,16 @@ class PacketSniffer:
 
         return packets
 
-
     def _packet_handler(self, packet):
-        if IP in packet:
-            fields = packet[IP].fields
-            self.packets.append({'packet': packet, **fields})
-            if len(self.packets) >= self.max_packets:
-                self._flush_packets()
+        fields = packet[IP].fields
+        current_time = int(time.time())  # get current time in seconds since epoch
+        self.packets.append({'packet': packet, **fields, 'timestamp': current_time})
+        if len(self.packets) >= self.max_packets:
+            self._flush_packets()
 
     def _flush_packets(self):
-        packets_to_insert = [(pickle.dumps(p['packet']), *p.values()) for p in self.packets]
-        self.db_cursor.executemany("INSERT INTO packets(packet, proto, src, dst, ttl, flags, options) VALUES (?, ?, ?, ?, ?, ?, ?)", packets_to_insert)
+        packets_to_insert = [(pickle.dumps(p['packet']), p['proto'], p['src'], p['dst'], p['ttl'], p['flags'], pickle.dumps(p['options']), p['timestamp']) for p in self.packets]
+        self.cursor.executemany("INSERT INTO packets(packet, proto, src, dst, ttl, flags, options, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", packets_to_insert)
         self.db_conn.commit()
         self.packets = []
 

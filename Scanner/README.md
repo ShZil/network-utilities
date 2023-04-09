@@ -1365,3 +1365,5 @@ That's pretty much it. I asked it for a few tweaks when I saw stuff I didn't lik
 [17:47] ChatGPT wrote `filter=...`, instead of `lfilter=...`. Fixed.
 
 [17:48] ChatGPT uses inconsistent naming: initialise with `_`, use without. Python no like. Python mad. I fix.
+
+[17:56] Save the time a packet was sniffed too.
