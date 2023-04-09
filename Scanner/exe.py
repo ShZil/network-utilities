@@ -54,7 +54,7 @@ def register_scans():
 
 def main():
     print("Loading...")
-    # remove_scapy_warnings()
+    remove_scapy_warnings()
     os.system('cls')
     cmdcolor("0A")
     print("Attempting to connect to an network-card interface...")
