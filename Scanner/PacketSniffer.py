@@ -18,6 +18,7 @@ class PacketSniffer:
             cls._instance.packets = []
             cls._instance.sniff_thread = AsyncSniffer(prn=cls._instance._packet_handler, lfilter=cls._instance._ip_filter)
             cls._instance.sniff_thread.start()
+            cls._instance.length = 0
         return cls._instance
 
     def __init__(self, max_packets=100):
@@ -66,8 +67,12 @@ class PacketSniffer:
         if IP in packet:
             fields = packet[IP].fields
             self.packets.append({'packet': packet, **fields, 'timestamp': int(time.time())})
+            self.length += 1
             if len(self.packets) >= self.max_packets:
                 self._flush_packets()
+    
+    def __len__(self):
+        return self.length
 
     def _flush_packets(self):
         packets_to_insert = [(pickle.dumps(p['packet']), p['proto'], p['src'], p['dst'], int(p['ttl']), str(p['flags']), pickle.dumps(p['options']), int(p['timestamp'])) for p in self.packets]
@@ -88,7 +93,7 @@ if __name__ == '__main__':
     packet_sniffer = PacketSniffer(max_packets=5)
     time.sleep(5)
     packets = packet_sniffer.get_packets()
-    print(f"{len(packets)} packet(s) were sniffed.")
+    print(f"{len(packet_sniffer)} packet(s) were sniffed.")
     for packet in packets:
         print(packet)
     packet_sniffer.stop()
