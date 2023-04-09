@@ -1399,6 +1399,8 @@ I lost.
 
 [01:57] Upgraded `SpecialInformation` with Singleton pattern.
 
+[02:15] Improve `SpecialInformation` to use `NetworkEntity.equals` and merge information seemlessly.
+
 [02:30] Finish implementing `operating_system_fingerprinting`
 
 [02:44] Add `KnowScreenDeviceProfileButton`.

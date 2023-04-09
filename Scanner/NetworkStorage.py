@@ -483,20 +483,45 @@ class SpecialInformation(dict):
             cls._instance = super().__new__(cls, *args, **kwargs)
         return cls._instance
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self):
+        super().__init__()
 
     def __setitem__(self, keys: tuple[NetworkEntity, str], value):
         if not isinstance(keys[0], NetworkEntity):
             raise TypeError("First key must be of type NetworkEntity.")
         if not isinstance(keys[1], str):
             raise TypeError("Second key must be a string.")
-        super().__setitem__(keys, value)
+        entity, info_key = keys
+        if entity not in self:
+            self[entity] = {}
+        self[entity][info_key] = value
 
-    def __getitem__(self, keys):
-        if isinstance(keys, NetworkEntity):
-            return {k: v for (k, v) in self.items() if k[0] == keys}
-        elif isinstance(keys, tuple):
-            return super().__getitem__(keys)
+    def __getitem__(self, key):
+        # This function trys to find any NetworkEntities in the dict's keys that `.equals` with `key`,
+        # and merges all their information to a single dict that is returned.
+        if isinstance(key, NetworkEntity):
+            merged = {}
+            for entity, value in self.items():
+                if key.equals(entity):
+                    merged.update(value)
+            self[entity] = merged
+            return merged
+        elif isinstance(key, tuple):
+            entity, info_key = key
+            merged = {}
+            for item, value in self.items():
+                if entity.equals(item):
+                    merged.update(value)
+            self[entity] = merged
+            return merged[info_key]
         else:
-            raise TypeError("Keys must be a tuple or a NetworkEntity.")
+            raise TypeError("Key must be NetworkEntity or tuple.")
+
+    def __contains__(self, item):
+        if isinstance(item, NetworkEntity):
+            return any(item.equals(entity) for entity in self.keys())
+        entity, info_key = item
+        if entity not in self:
+            return False
+        return info_key in self[entity]
+
