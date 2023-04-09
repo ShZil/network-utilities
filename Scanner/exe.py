@@ -48,8 +48,9 @@ def register_scans():
         NetworkStorage()['ip'],
         ipconfig()["All Possible Addresses"],
         compactness=2
-    )
-    r["Live ARP"] = scan_ARP_continuous
+    ), True
+    r["Live ARP"] = scan_ARP_continuous, True
+    r["OS-ID"] = operating_system_fingerprinting, True
     r["Public Address"] = public_address_action
 
 

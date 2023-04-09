@@ -8,6 +8,7 @@ class Register(dict):
     ```
     Set: Register()["Scan Name"] = lambda: ...
     Set: Register()["Scan Name"] = execute_scan  # no parentheses
+    Set: Register()["Scan Name"] = execute_infinite_scan, True
     Get: x = Register()["Scan Name"]
     ```
 
@@ -17,6 +18,7 @@ class Register(dict):
     """
     _instance = None
     threads: dict[str, Thread] = {}
+    infinites = set()
 
     def __new__(cls):
         if cls._instance is None:
@@ -26,6 +28,10 @@ class Register(dict):
     def __setitem__(self, key, value):
         if not isinstance(key, str):
             raise TypeError(f"Key must be of type str")
+        if isinstance(value, tuple):
+            value, is_infinite = value
+            if is_infinite:
+                self.infinites.add(key)
         if not callable(value):
             raise TypeError(f"Value must be callable")
         super().__setitem__(key, value)
@@ -57,3 +63,7 @@ class Register(dict):
             return True
         self.threads.pop(name)
         return
+    
+    def is_infinite_scan(self, name: str):
+        # `name` may contain '...' in the end.
+        return name in self.infinites or name[:-3] in self.infinites
