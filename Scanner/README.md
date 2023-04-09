@@ -1330,3 +1330,12 @@ Use `GitHub Desktop` to see what changed, and the `Git` extension of `VS Code`.
 - rename files to a consistent format (I like `NetworkStorage.py`'s format, make everything look like a class name in Java)
 - add type hints to everything (okay maybe not everything, just function's signatures)
 - add docstrings and comments.
+
+
+
+### 2023-04-09
+[14:23] Motivation: find where the `print`ing happens, to remove all unnecessary logs.
+Procedure: set up VSCode's Python IDE stuff.
+Problem: runs from a different path, so couldn't find `scans.db:information table`.
+Fix: run `db.py` (which runs `db.py:init`), to create the table.
+Couldn't reproduce the printing.
