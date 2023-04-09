@@ -1388,3 +1388,9 @@ Also, cast to string the FlagValue of scapy.
 
 ### 2023-04-10
 [00:19] Add `PacketSniffer.__len__`, and `.length` property.
+
+[01:17] Move the responsibility on Infinite Scans to Register,
+which is a more logical place than some obscure place in `gui.py`.
+
+[01:36] Fought against "WARNING: QApplication was not created in the main() thread."
+I lost.

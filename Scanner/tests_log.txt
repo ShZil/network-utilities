@@ -9,5 +9,6 @@ shift_list_test Successful
 does_winpcap_exist Successful
 does_fallback_font_exist Successful
 is_win32_pip_installed Successful
+is_sqlite_table_information_present Successful
 
 All tests were successful.
