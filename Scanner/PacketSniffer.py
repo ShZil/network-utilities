@@ -8,7 +8,7 @@ with ImportDefence():
 class PacketSniffer:
     _instance = None
     DB_PATH = 'packets.db'
-    SQL_CREATE_TABLE = '''CREATE TABLE IF NOT EXISTS packets (id INTEGER PRIMARY KEY AUTOINCREMENT, packet BLOB, proto TEXT, src TEXT, dst TEXT, ttl INT, flags TEXT, options BLOB, timestamp INT)'''
+    SQL_CREATE_TABLE = '''CREATE TABLE IF NOT EXISTS packets (id INTEGER PRIMARY KEY AUTOINCREMENT, packet BLOB, proto TEXT, src TEXT, dst TEXT, ttl INTEGER, flags TEXT, options BLOB, timestamp INTEGER)'''
     INSERT_STATEMENT = "INSERT INTO packets(packet, proto, src, dst, ttl, flags, options, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
 
     def __new__(cls, max_packets=100):
@@ -70,7 +70,8 @@ class PacketSniffer:
                 self._flush_packets()
 
     def _flush_packets(self):
-        packets_to_insert = [(pickle.dumps(p['packet']), p['proto'], p['src'], p['dst'], p['ttl'], p['flags'], pickle.dumps(p['options']), p['timestamp']) for p in self.packets]
+        packets_to_insert = [(pickle.dumps(p['packet']), p['proto'], p['src'], p['dst'], int(p['ttl']), str(p['flags']), pickle.dumps(p['options']), int(p['timestamp'])) for p in self.packets]
+
         with sqlite3.connect(self.DB_PATH) as conn:
             cursor = conn.cursor()
             cursor.executemany(PacketSniffer.INSERT_STATEMENT, packets_to_insert)

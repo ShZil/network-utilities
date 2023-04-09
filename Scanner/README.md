@@ -1376,3 +1376,10 @@ just cast `ttl` to an integer.
 
 [18:17] BUG: `sqlite3.ProgrammingError: SQLite objects created in a thread can only be used in that same thread. The object was created in thread id 14956 and this is thread id 1536.`
 FIX: Make the DB connection local to each method.
+
+[18:25] I'm so glad I'm module-testing `PacketSniffer.py`. There are so many problems with it... Thanks, ChatGPT.
+
+[18:26] LOL right it's `INTEGER`, not `INT` in SQL.
+Also, cast to string the FlagValue of scapy.
+
+[18:55] Finished creating the module PacketSniffer.
