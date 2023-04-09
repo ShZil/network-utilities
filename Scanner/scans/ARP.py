@@ -75,7 +75,6 @@ def scan_ARP_continuous():
         if packet[ARP].op == 2:
             NetworkStorage().add(mac=packet[ARP].hwsrc, ip=packet[ARP].psrc)
             NetworkStorage().add(mac=packet[ARP].hwdst, ip=packet[ARP].pdst)
-            SpecialInformation()
         elif packet[ARP.op] == 1:
             NetworkStorage().add(mac=packet[ARP].hwsrc, ip=packet[ARP].psrc)
     
