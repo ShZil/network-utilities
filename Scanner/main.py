@@ -224,8 +224,22 @@ def parse_scan_id(scan_id):
 
 
 def operating_system_fingerprinting():
+    from NetworkStorage import here, SpecialInformation, NetworkEntity
+    from PacketSniffer import PacketSniffer
+
+    def _determine_os(packet):
+        # do more testing on this
+        return "Linux or Android" if packet.ttl <= 64 else "Windows"
+
     def _fingerprinter():
-        pass
+        while True:
+            for packet in PacketSniffer():
+                if packet.src == here.ipv4:
+                    continue
+                entity = NetworkEntity(ip=packet.src)
+                if entity in SpecialInformation():
+                    continue
+                SpecialInformation()[entity, 'OS'] = _determine_os(packet)
 
     Thread(target=_fingerprinter).start()
 
