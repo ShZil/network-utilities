@@ -1244,6 +1244,7 @@ class KnowScreen(Screen):
         )
         everything.add_widget(title)
         everything.add_widget(Pages())
+        everything.add_widget(KnowScreenDeviceProfileButton())
         everything.add_widget(KnowScreenInfoLabel())
 
         self.add_widget(everything)
