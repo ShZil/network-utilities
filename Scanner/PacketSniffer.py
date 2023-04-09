@@ -8,7 +8,7 @@ with ImportDefence():
 class PacketSniffer:
     _instance = None
     DB_PATH = 'packets.db'
-    SQL_CREATE_TABLE = '''CREATE TABLE IF NOT EXISTS packets (id INTEGER PRIMARY KEY AUTOINCREMENT, packet BLOB, proto TEXT, src TEXT, dst TEXT, ttl INT, flags TEXT, options BLOB, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)'''
+    SQL_CREATE_TABLE = '''CREATE TABLE IF NOT EXISTS packets (id INTEGER PRIMARY KEY AUTOINCREMENT, packet BLOB, proto TEXT, src TEXT, dst TEXT, ttl INT, flags TEXT, options BLOB, timestamp INT)'''
 
     def __new__(cls, max_packets=100):
         if cls._instance is None:
