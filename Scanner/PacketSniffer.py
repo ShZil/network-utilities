@@ -13,17 +13,17 @@ class PacketSniffer:
     def __new__(cls, max_packets=100):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls._instance.db_conn = sqlite3.connect(cls.DB_PATH)
-            cls._instance.cursor = cls._instance.db_conn.cursor()
             cls._instance.max_packets = max_packets
             cls._instance.packets = []
-            cls._instance.cursor.execute(cls.SQL_CREATE_TABLE)
             cls._instance.sniff_thread = AsyncSniffer(prn=cls._instance._packet_handler, lfilter=cls._instance._ip_filter)
             cls._instance.sniff_thread.start()
         return cls._instance
 
     def __init__(self, max_packets=100):
         self.max_packets = max_packets
+        self.db_conn = sqlite3.connect(self.DB_PATH)
+        self.cursor = self.db_conn.cursor()
+        self.cursor.execute(self.SQL_CREATE_TABLE)
 
     def stop(self):
         if self.sniff_thread:
@@ -64,19 +64,16 @@ class PacketSniffer:
     def _packet_handler(self, packet):
         if IP in packet:
             fields = packet[IP].fields
-            timestamp = int(time.time())
-            self.packets.append({'packet': packet, **fields, 'timestamp': timestamp})
+            self.packets.append({'packet': packet, **fields, 'timestamp': int(time.time())})
             if len(self.packets) >= self.max_packets:
                 self._flush_packets()
 
     def _flush_packets(self):
         packets_to_insert = [(pickle.dumps(p['packet']), p['proto'], p['src'], p['dst'], p['ttl'], p['flags'], pickle.dumps(p['options']), p['timestamp']) for p in self.packets]
-        db_conn = sqlite3.connect(self.DB_PATH)
-        cursor = db_conn.cursor()
-        cursor.executemany("INSERT INTO packets(packet, proto, src, dst, ttl, flags, options, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", packets_to_insert)
-        db_conn.commit()
-        cursor.close()
-        db_conn.close()
+        with sqlite3.connect(self.DB_PATH) as conn:
+            cursor = conn.cursor()
+            cursor.executemany("INSERT INTO packets(packet, proto, src, dst, ttl, flags, options, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", packets_to_insert)
+            conn.commit()
         self.packets = []
 
     def _ip_filter(self, packet):
