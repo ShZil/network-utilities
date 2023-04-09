@@ -18,7 +18,7 @@ class PacketSniffer:
             cls._instance._max_packets = max_packets
             cls._instance._packets = []
             cls._instance._db_cursor.execute(cls.SQL_CREATE_TABLE)
-            cls._instance._sniff_thread = AsyncSniffer(prn=cls._instance._packet_handler, filter=cls._instance._ip_filter)
+            cls._instance._sniff_thread = AsyncSniffer(prn=cls._instance._packet_handler, lfilter=cls._instance._ip_filter)
             cls._instance._sniff_thread.start()
         return cls._instance
 
