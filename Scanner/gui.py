@@ -164,6 +164,35 @@ def popup(
         win32api.MessageBox(0, message, title, 0x00000000)
 
 
+def get_string(prompt: str) -> str:
+    from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
+
+    app = QApplication([])
+    widget = QWidget()
+    layout = QVBoxLayout()
+
+    label = QLabel(prompt)
+    text_box = QLineEdit()
+    button = QPushButton("Submit")
+
+    def submit():
+        result = text_box.text()
+        widget.close()
+        app.quit()
+        return result
+
+    button.clicked.connect(submit)
+    layout.addWidget(label)
+    layout.addWidget(text_box)
+    layout.addWidget(button)
+    widget.setLayout(layout)
+
+    widget.show()
+    app.exec_()
+
+    return submit()
+
+
 def information_about(name: str) -> str:
     # Get the entry about the scan and destructure it
     entry = db.get_information_about_scan(name)
@@ -1165,7 +1194,7 @@ class KnowScreenDeviceProfileButton(Button):
 
     def device_profile(*_):
         def _device_profile():
-            
+
 
         Thread(target=_device_profile).start()
     

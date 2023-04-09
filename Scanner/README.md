@@ -1404,3 +1404,5 @@ I lost.
 [02:30] Finish implementing `operating_system_fingerprinting`
 
 [02:44] Add `KnowScreenDeviceProfileButton`.
+
+[02:48] Move responsibility of `get_password` to `gui.py`, and rename to `get_string`.

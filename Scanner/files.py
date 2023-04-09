@@ -3,37 +3,11 @@ with ImportDefence():
     import tkinter.filedialog as dialogs
 
 import files_cryptography
+from gui import get_string
 
 
 def get_password():
-    from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
-
-    app = QApplication([])
-    widget = QWidget()
-    layout = QVBoxLayout()
-
-    label = QLabel("Enter password:")
-    text_box = QLineEdit()
-    button = QPushButton("Submit")
-
-    def submit():
-        password = text_box.text()
-        widget.close()
-        app.quit()
-        return password
-
-    button.clicked.connect(submit)
-    layout.addWidget(label)
-    layout.addWidget(text_box)
-    layout.addWidget(button)
-    widget.setLayout(layout)
-
-    widget.show()
-    app.exec_()
-
-    password = submit()
-    print(password)
-    return password
+    get_string("Enter password:")
 
 
 def exporter():
