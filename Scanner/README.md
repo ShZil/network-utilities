@@ -1343,7 +1343,9 @@ Couldn't reproduce the printing.
 [14:43] Added test against the problem above, called `is_sqlite_table_information_present`.
 
 [14:45] TODO: add the following modules:
-- Global Packet Sniffer (init from `exe.py`; use to implement `OS-ID`; perhaps use special class to integrate seemlessly with SQL database?)
+- Global Packet Sniffer (init from `exe.py`; use to implement `OS-ID`;
+                         perhaps use special class to integrate seemlessly with SQL database?;
+                         button to see packet statistics in Know Screen?)
 - Scan History (implement from `register.py`)
 - Special Information (implement using a similar class to Global Packet Sniffer for integration with SQL;
                        add button in Know Screen to ask for an address and get a popup with the device's "profile",
