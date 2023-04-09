@@ -337,7 +337,7 @@ class Scan:
 
     def finished(self):
         self.is_running = False
-        if self.button.text.endswith('...') and 'Live' not in self.button.text:
+        if self.button.text.endswith('...') and not Register().is_infinite_scan(self.button.text):
             self.button.text = self.button.text[:-3]
 
 
