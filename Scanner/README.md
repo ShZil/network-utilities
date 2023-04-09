@@ -1373,3 +1373,6 @@ ChatGPT couldn't be helpful on this, so I solved it alone (yay!);
 just cast `ttl` to an integer.
 
 [18:12] Fix: `TypeError: PacketSniffer.__init__() got an unexpected keyword argument 'max_packets'`.
+
+[18:17] BUG: `sqlite3.ProgrammingError: SQLite objects created in a thread can only be used in that same thread. The object was created in thread id 14956 and this is thread id 1536.`
+FIX: Make the DB connection local to each method.

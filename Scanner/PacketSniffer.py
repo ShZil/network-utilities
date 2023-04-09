@@ -62,16 +62,21 @@ class PacketSniffer:
         return packets
 
     def _packet_handler(self, packet):
-        fields = packet[IP].fields
-        current_time = int(time.time())  # get current time in seconds since epoch
-        self.packets.append({'packet': packet, **fields, 'timestamp': current_time})
-        if len(self.packets) >= self.max_packets:
-            self._flush_packets()
+        if IP in packet:
+            fields = packet[IP].fields
+            timestamp = int(time.time())
+            self.packets.append({'packet': packet, **fields, 'timestamp': timestamp})
+            if len(self.packets) >= self.max_packets:
+                self._flush_packets()
 
     def _flush_packets(self):
-        packets_to_insert = [(pickle.dumps(p['packet']), p['proto'], p['src'], p['dst'], int(p['ttl']), p['flags'], pickle.dumps(p['options']), p['timestamp']) for p in self.packets]
-        self.cursor.executemany("INSERT INTO packets(packet, proto, src, dst, ttl, flags, options, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", packets_to_insert)
-        self.db_conn.commit()
+        packets_to_insert = [(pickle.dumps(p['packet']), p['proto'], p['src'], p['dst'], p['ttl'], p['flags'], pickle.dumps(p['options']), p['timestamp']) for p in self.packets]
+        db_conn = sqlite3.connect(self.DB_PATH)
+        cursor = db_conn.cursor()
+        cursor.executemany("INSERT INTO packets(packet, proto, src, dst, ttl, flags, options, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", packets_to_insert)
+        db_conn.commit()
+        cursor.close()
+        db_conn.close()
         self.packets = []
 
     def _ip_filter(self, packet):
