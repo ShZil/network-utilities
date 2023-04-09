@@ -22,8 +22,8 @@ class PacketSniffer:
             cls._instance.sniff_thread.start()
         return cls._instance
 
-    def __init__(self):
-        pass
+    def __init__(self, max_packets=100):
+        self.max_packets = max_packets
 
     def stop(self):
         if self.sniff_thread:
@@ -69,7 +69,7 @@ class PacketSniffer:
             self._flush_packets()
 
     def _flush_packets(self):
-        packets_to_insert = [(pickle.dumps(p['packet']), p['proto'], p['src'], p['dst'], p['ttl'], p['flags'], pickle.dumps(p['options']), p['timestamp']) for p in self.packets]
+        packets_to_insert = [(pickle.dumps(p['packet']), p['proto'], p['src'], p['dst'], int(p['ttl']), p['flags'], pickle.dumps(p['options']), p['timestamp']) for p in self.packets]
         self.cursor.executemany("INSERT INTO packets(packet, proto, src, dst, ttl, flags, options, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", packets_to_insert)
         self.db_conn.commit()
         self.packets = []
@@ -81,7 +81,7 @@ class PacketSniffer:
 if __name__ == '__main__':
     print("This module contains the PacketSniffer class.")
     import time
-    packet_sniffer = PacketSniffer()
+    packet_sniffer = PacketSniffer(max_packets=5)
     time.sleep(5)
     packets = packet_sniffer.get_packets()
     print(f"{len(packets)} packet(s) were sniffed.")

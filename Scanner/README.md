@@ -1367,3 +1367,9 @@ That's pretty much it. I asked it for a few tweaks when I saw stuff I didn't lik
 [17:48] ChatGPT uses inconsistent naming: initialise with `_`, use without. Python no like. Python mad. I fix.
 
 [17:56] Save the time a packet was sniffed too.
+
+[18:05] Type mismatch: `sqlite3.InterfaceError: Error binding parameter 5 - probably unsupported type.`.
+ChatGPT couldn't be helpful on this, so I solved it alone (yay!);
+just cast `ttl` to an integer.
+
+[18:12] Fix: `TypeError: PacketSniffer.__init__() got an unexpected keyword argument 'max_packets'`.
