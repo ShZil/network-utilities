@@ -1,8 +1,6 @@
 from import_handler import ImportDefence
 with ImportDefence():
     import tkinter.filedialog as dialogs
-    from call_function_with_timeout import SetTimeout
-    from tkinter.simpledialog import askstring
 
 import files_cryptography
 
