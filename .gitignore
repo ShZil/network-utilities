@@ -6,3 +6,4 @@ nmap udp scan on router results.txt
 wireshark 2023-03-04.pcapng
 arp a output.txt
 Scanner/autopep8 cmd screenshot.txt
+Scanner/packets.db
