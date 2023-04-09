@@ -52,8 +52,7 @@ class Register(dict):
             callback()
 
         _add_callback.__name__ = action.__name__ + "_with_callback"
-        t = Thread(target=_add_callback, args=(action, callback))
-        self.threads[name] = t
+        self.threads[name] = t = Thread(target=_add_callback, args=(action, callback))
         t.start()
 
     def is_running(self, name: str) -> bool:
