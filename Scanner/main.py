@@ -223,6 +223,13 @@ def parse_scan_id(scan_id):
     return f"Here: {host}, {physical}, via {iface}\nRouter: {router}"
 
 
+def operating_system_fingerprinting():
+    def _fingerprinter():
+        pass
+
+    Thread(target=_fingerprinter).start()
+
+
 def main():
     raise NotImplementedError("Use `exe.py` instead.")
     remove_scapy_warnings()
