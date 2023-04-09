@@ -1350,3 +1350,7 @@ Couldn't reproduce the printing.
 - Special Information (implement using a similar class to Global Packet Sniffer for integration with SQL;
                        add button in Know Screen to ask for an address and get a popup with the device's "profile",
                        showing NetworkStorage information as well as Special Information (e.g. OS, Ports)).
+
+[17:09] With ChatGPT assistance, I wrote `class PacketSniffer`,
+as an implementation of the first module requested above ("Global Packet Sniffer").
+I could've written that code, but ChatGPT makes it much faster.
