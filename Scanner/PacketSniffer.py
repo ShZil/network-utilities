@@ -16,7 +16,7 @@ class PacketSniffer:
             cls._instance._db_conn = sqlite3.connect(cls.DB_PATH)
             cls._instance._db_cursor = cls._instance._db_conn.cursor()
             cls._instance._max_packets = max_packets
-            cls._instance._packets = []
+            cls._instance.packets = []
             cls._instance._db_cursor.execute(cls.SQL_CREATE_TABLE)
             cls._instance._sniff_thread = AsyncSniffer(prn=cls._instance._packet_handler, lfilter=cls._instance._ip_filter)
             cls._instance._sniff_thread.start()
