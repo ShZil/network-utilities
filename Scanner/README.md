@@ -1354,3 +1354,8 @@ Couldn't reproduce the printing.
 [17:09] With ChatGPT assistance, I wrote `class PacketSniffer`,
 as an implementation of the first module requested above ("Global Packet Sniffer").
 I could've written that code, but ChatGPT makes it much faster.
+
+[17:32] I improved `PacketSniffer` using ChatGPT.
+Firstly, it uses a `packets.db` file with SQLite3, when the `self.packets: list` fills up to 100 entries.
+Secondly, it allows filtering based on IP layer properties: src and dst.
+That's pretty much it. I asked it for a few tweaks when I saw stuff I didn't like.
