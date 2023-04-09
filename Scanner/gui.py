@@ -454,7 +454,8 @@ class Diagram:
             self.width,
             self.height,
             bg_color,
-            fg_color
+            fg_color,
+            -50
         )
         self.changed = False
 
