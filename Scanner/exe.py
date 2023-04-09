@@ -18,6 +18,7 @@ from util import *
 from gui import *
 from NetworkStorage import *
 from register import Register
+from PacketSniffer import PacketSniffer
 from globalstuff import *
 from threading import Thread, enumerate as enumerate_threads
 
@@ -81,6 +82,7 @@ def main():
 
     # Start tk (on main thread) and kivy (on different thread) and
     # `NetworkStorage()._resolve` (on a third thread)
+    PacketSniffer()
     keep_resolving_storage()
     Thread(target=start_kivy).start()
     start_tk()
