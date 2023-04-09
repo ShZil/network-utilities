@@ -6,16 +6,24 @@ with ImportDefence():
 
 
 class PacketSniffer:
-    def __init__(self, max_packets=100):
-        self.db_conn = sqlite3.connect('packets.db')
-        self.db_cursor = self.db_conn.cursor()
-        self.max_packets = max_packets
-        self.packets = []
+    _instance = None
+    DB_PATH = 'packets.db'
+    SQL_CREATE_TABLE = '''CREATE TABLE IF NOT EXISTS packets (id INTEGER PRIMARY KEY AUTOINCREMENT, packet BLOB, proto TEXT, src TEXT, dst TEXT, ttl INT, flags TEXT, options BLOB)'''
 
-        self.db_cursor.execute('''CREATE TABLE IF NOT EXISTS packets (id INTEGER PRIMARY KEY AUTOINCREMENT, packet BLOB, proto TEXT, src TEXT, dst TEXT, ttl INT, flags TEXT, options BLOB)''')
-        self.sniff_thread = AsyncSniffer(prn=self._packet_handler, filter=self._ip_filter)
+    def __new__(cls, max_packets=100):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._db_conn = sqlite3.connect(cls.DB_PATH)
+            cls._instance._db_cursor = cls._instance._db_conn.cursor()
+            cls._instance._max_packets = max_packets
+            cls._instance._packets = []
+            cls._instance._db_cursor.execute(cls.SQL_CREATE_TABLE)
+            cls._instance._sniff_thread = AsyncSniffer(prn=cls._instance._packet_handler, filter=cls._instance._ip_filter)
+            cls._instance._sniff_thread.start()
+        return cls._instance
 
-        self.sniff_thread.start()
+    def __init__(self):
+        pass
 
     def stop(self):
         if self.sniff_thread:
@@ -69,3 +77,13 @@ class PacketSniffer:
 
     def _ip_filter(self, packet):
         return IP in packet
+
+
+if __name__ == '__main__':
+    print("This module contains the PacketSniffer class.")
+    import time
+    packet_sniffer = PacketSniffer()
+    time.sleep(5)
+    packets = packet_sniffer.get_packets()
+    print(packets)
+    packet_sniffer.stop()
