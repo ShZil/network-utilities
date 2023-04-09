@@ -1339,3 +1339,5 @@ Procedure: set up VSCode's Python IDE stuff.
 Problem: runs from a different path, so couldn't find `scans.db:information table`.
 Fix: run `db.py` (which runs `db.py:init`), to create the table.
 Couldn't reproduce the printing.
+
+[14:43] Added test against the problem above, called `is_sqlite_table_information_present`.

@@ -97,8 +97,17 @@ def is_win32_pip_installed():
             return False
 
 
+def is_sqlite_table_information_present():
+    """The SQLite table `information` was not found. Please execute `python db.py` to solve this issue, and re-run the software."""
+    try:
+        import db
+        db.get_scans()
+        return True
+    except FileNotFoundError:
+        return False
+
 # Each element is a boolean function. False means the test failed.
-tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask, threadify_echo_test, shift_list_test, does_winpcap_exist, does_fallback_font_exist, is_win32_pip_installed]
+tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask, threadify_echo_test, shift_list_test, does_winpcap_exist, does_fallback_font_exist, is_win32_pip_installed, is_sqlite_table_information_present]
 def test() -> None:
     os.system("")  # Enables ANSI colouring
     results = [not run() for run in tests]
