@@ -476,8 +476,15 @@ LAN = LAN()
 
 
 class SpecialInformation(dict):
-    def __init__(self):
-        super().__init__()
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super().__new__(cls, *args, **kwargs)
+        return cls._instance
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def __setitem__(self, keys: tuple[NetworkEntity, str], value):
         if not isinstance(keys[0], NetworkEntity):

@@ -1394,3 +1394,7 @@ which is a more logical place than some obscure place in `gui.py`.
 
 [01:36] Fought against "WARNING: QApplication was not created in the main() thread."
 I lost.
+
+[01:55] Wrote `SpecialInformation` with ChatGPT.
+
+[01:57] Upgraded `SpecialInformation` with Singleton pattern.
