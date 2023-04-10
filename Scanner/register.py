@@ -1,3 +1,4 @@
+import time
 import win32api
 from threading import Thread
 
@@ -19,6 +20,7 @@ class Register(dict):
     _instance = None
     threads: dict[str, Thread] = {}
     infinites = set()
+    history = []
 
     def __new__(cls):
         if cls._instance is None:
@@ -48,6 +50,7 @@ class Register(dict):
 
     def start(self, name: str, action, callback) -> None:
         def _add_callback(action, callback):
+            self.history.append((name, time.time()))
             action()
             callback()
 
@@ -66,3 +69,6 @@ class Register(dict):
     def is_infinite_scan(self, name: str):
         # `name` may contain '...' in the end.
         return name in self.infinites or name[:-3] in self.infinites
+    
+    def get_history(self):
+        return self.history.copy()

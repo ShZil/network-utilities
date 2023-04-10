@@ -1485,3 +1485,24 @@ I added a `return`, so now only one confirmation is requested.
 [18:07] Moved code to `ScanID.py`.
 
 [18:08] BUGFIX: exception logger won't show datetime.
+
+[19:24] Added scan history module inside `class Register`, using ChatGPT:
+```
+Prompt: Write a class ScanHistory in Python. It's singleton. There exists a Scan class, that, before executing the scan, does `ScanHistory().add(self)`. The Scan class has a field 'name' that is a string. I need to be able to extract the scan history, as a list of names and timestamps. 
+
+Answer: Here's an implementation of the ScanHistory class in Python that meets your requirements: [...]
+
+Prompt: You know what? I want to do the scan history inside a class I made called Register. How do you suggest I change it to do that?
+
+class Register(dict):
+    [...]
+
+Answer: To add scan history to your Register class, you can modify it as follows: [...]
+We've added a history list to keep track of the scan history, and modified the start method to add the name of the scan and the current timestamp to the history list after executing the scan and its callback. The get_history method simply returns a copy of the history list.
+
+Here's an example of how you might use this modified Register class: [...]
+
+Prompt: what type does time.time() return?
+
+Answer: The time.time() function in Python returns the time in seconds since the epoch as a floating-point number. Specifically, it returns the number of seconds that have elapsed since January 1, 1970, 00:00:00 UTC (Coordinated Universal Time), not counting leap seconds. The returned value is commonly referred to as a Unix timestamp.
+```
