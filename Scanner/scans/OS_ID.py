@@ -10,7 +10,7 @@ def operating_system_fingerprinting() -> None:
     from PacketSniffer import PacketSniffer
 
     def _determine_os(packet):
-        # do more testing on this
+        # do more testing on this *************
         return "Linux or Android" if packet.ttl <= 64 else "Windows"
 
     def _fingerprinter():
