@@ -1193,8 +1193,34 @@ class KnowScreenDeviceProfileButton(Button):
         self.bind(on_press=self.device_profile)
 
     def device_profile(*_):
-        def _device_profile():
+        from NetworkStorage import NetworkStorage, match, SpecialInformation
+        def _match_device(address):
+            try:
+                entity = match(address)
+                for item in NetworkStorage():
+                    if entity.equals(item):
+                        return item
+            except ValueError:
+                name = address
+                if name == "Unknown": return None
+                for item in NetworkStorage():
+                    if item.name == name:
+                        return item
+            return None
 
+        def _construct_content(info: dict):
+            return '\n\n'.join([f"### {key}:\n{value}" for key, value in info.items()])
+        
+        def _device_profile():
+            address = get_string("Insert device's MAC/IP/IPv6 address or name:")
+            entity = _match_device(address)
+            if entity == None:
+                popup("Device Profile", "The device was not found.\nCheck whether you wrote the address correctly.", warning=True)
+                return
+            regular_info = entity.to_dict()
+            special_info = SpecialInformation()[entity]
+            information = {**regular_info, **special_info}
+            popup("Device Profile", _construct_content(information), info=True)
 
         Thread(target=_device_profile).start()
     

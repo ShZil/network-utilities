@@ -1412,3 +1412,17 @@ I lost.
 - Add `NetworkStorage.py:match(str)`
 - Fixed a bug that was crashing the software by moving an import to inside a function
 - Created a button for Device Profile, and put it in the middle of Know Screen.
+- Add button's functionality (doesn't fully work):
+I'm gonna detail it here, because otherwise I'll have no idea what I wrote there tomorrow.
+The button's on_press is binded to `device_profile`.
+All `device_profile` does is create a `Thread` to `_device_profile`.
+`_device_profile` does this:
+1. gets the address from the user using `get_string`.
+2. gets a NetworkEntity from NetworkStorage that has this address, either as MAC or IP or IPv6, or name.
+This is done by `_match_device(str) -> NetworkEntity from NetworkStorage or None`, using `match(str) -> fake NetworkEntity that has one field set and the rest as default values`.
+3. if the entity wasn't found, say so in a popup.
+4. if the entity was found, display its information (both "regular" like MAC/IP/IPv6/name and "special" from SpeicalInformation) with a popup and markdown.
+Markdown is handled by `_construct_content(information: dict) -> markdown str`.
+Note, it doesn't currently work.
+I'll try fixing it -- I'll see what I can do.
+But perhaps not today.
