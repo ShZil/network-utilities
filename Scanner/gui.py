@@ -1162,7 +1162,7 @@ class KnowScreenInfoLabel(ScrollView):
     def __init__(self, **kwargs):
         super().__init__(width=1200, **kwargs)
         self.label = Label(
-            text='Loading data...',
+            text='\nLoading data...',
             color=(1, 1, 1, 1),
             font_size=20,
             font_name="Monospace",
