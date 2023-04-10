@@ -64,6 +64,7 @@ class PacketSniffer:
         return packets
 
     def _packet_handler(self, packet):
+        import time
         if IP in packet:
             fields = packet[IP].fields
             self.packets.append({'packet': packet, **fields, 'timestamp': int(time.time())})
