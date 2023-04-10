@@ -1506,3 +1506,7 @@ Prompt: what type does time.time() return?
 
 Answer: The time.time() function in Python returns the time in seconds since the epoch as a floating-point number. Specifically, it returns the number of seconds that have elapsed since January 1, 1970, 00:00:00 UTC (Coordinated Universal Time), not counting leap seconds. The returned value is commonly referred to as a Unix timestamp.
 ```
+
+[19:27] And that concludes all three modules I wanted to add.
+Just use Scan History in `files.py`, and that's it for additions for now.
+So, I need more testing, bugfixing, solve attention grabbers (***********), and implement the rest of the scans.
