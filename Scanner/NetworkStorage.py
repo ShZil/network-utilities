@@ -212,6 +212,28 @@ def extend_ipv6(ipv6: str) -> str:
     return ipaddress.ip_address(ipv6).exploded.lower()
 
 
+def match(address: str) -> NetworkEntity:
+    try:
+        standard_mac(address)
+        return NetworkEntity(mac=address, ip=nothing.ip, ipv6=nothing.ipv6, name="Unknown")
+    except ValueError:
+        pass
+
+    try:
+        check_ip(address)
+        return NetworkEntity(mac=nothing.mac, ip=address, ipv6=nothing.ipv6, name="Unknown")
+    except ValueError:
+        pass
+
+    try:
+        extend_ipv6(address)
+        return NetworkEntity(mac=nothing.mac, ip=nothing.ip, ipv6=address, name="Unknown")
+    except ValueError:
+        pass
+
+    raise ValueError("The address is not MAC, not IP, and not IPv6.")
+
+
 class LockedNetworkEntity(NetworkEntity):
     def __setitem__(self, key, value):
         raise TypeError(
