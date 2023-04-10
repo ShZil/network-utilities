@@ -1439,3 +1439,12 @@ From there, it's a trivial solution.
 [15:48] Managed to set up a `launch.json` to debug efficiently.
 It runs `exe.py` from `Scanner`, not from the root directory,
 which is good because it can now access the same files as regular execution!
+
+[15:55] BUGFIX: `SpecialInformation.__setitem__` recognised only `(Entity, key, value)` and not `(Entity, dict)`.
+
+[16:14] I can't figure out why -- the popup immediately crashes,
+but only that of Device Profile, not for example General Information.
+I've tried to understand why using a breakpoint and analysis of the variables,
+but I found nothing out of the ordinary.
+Instead, I'll start separating the code into files,
+which will make navigation easier.

@@ -512,13 +512,16 @@ class SpecialInformation(dict):
         super().__init__()
 
     def __setitem__(self, keys: tuple[NetworkEntity, str], value):
+        if isinstance(keys, NetworkEntity) and isinstance(value, dict):
+            super().__setitem__(keys, value)
+            return
         if not isinstance(keys[0], NetworkEntity):
             raise TypeError("First key must be of type NetworkEntity.")
         if not isinstance(keys[1], str):
             raise TypeError("Second key must be a string.")
         entity, info_key = keys
         if entity not in self:
-            self[entity] = {}
+            super().__setitem__(entity, {})
         self[entity][info_key] = value
 
     def __getitem__(self, key):
