@@ -1,6 +1,6 @@
 from import_handler import ImportDefence
 with ImportDefence():
-    from typing import Callable
+    from typing import Callable, Union
 
 from ipconfig import ipconfig
 
@@ -65,7 +65,7 @@ def do_simple_scan(scan: Callable, all_possible_addresses: list[str], *, results
     return connectable_addresses
 
 
-def standardise_simple_scans(scans: list[tuple[Callable, int] + Callable]) -> list[Callable]:
+def standardise_simple_scans(scans: list[Union[tuple[Callable, int], Callable]]) -> list[Callable]:
     """This function standardises a collection of simple scans.
     The argument is a list of tuples, where each tuple has two items:
     (1) The scan (Callable), (2) The amount of repeats.

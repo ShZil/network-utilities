@@ -1470,3 +1470,5 @@ Consider using this on Register, NetworkStorage, SpecialInformation, etc.
 
 [17:19] Moved code from `main.py` to a new file called `SimpleScan.py`,
 and added docstrings and comments.
+
+[17:35] BUGFIX: incorrectly written type hint.
