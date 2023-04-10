@@ -360,7 +360,8 @@ Saw the ICMP continuous display just go black.
     self._resolve()
   File "...NetworkStorage.py", line 248, in _resolve
     for entity in self.waiting.queue:
-RuntimeError: deque mutated during iteration```
+RuntimeError: deque mutated during iteration
+```
 
 Fix found on https://stackoverflow.com/a/58679808:
 NetworkStorage.py:248 ```for entity in list(self.waiting.queue):```
@@ -387,7 +388,7 @@ Trying to use `Kivy` instead; proved that it can run python from button click.
 
 [20:43] Uninstalling and reinsatlling all packages solved the `numpy` issue.
 Currently, I'm facing this problem: 
-```
+```py
 diagram = None
 ...
 if __name__ == '__main__':
@@ -399,14 +400,14 @@ AttributeError: 'NoneType' object has no attribute 'show'
 ```
 
 The problem is, inside `Diagram.__init__`, the last call is blocking:
-```
+```py
 self.root.mainloop()
 ```
 so initialisation never actually finishes.
 Now, I shall restructure the code, such that this last statement is outside `__init__`.
 
 [21:14] Some thinkning later, I solved it:
-```
+```py
 diagram = Diagram()
 diagram.root.mainloop()
 ```
@@ -432,7 +433,7 @@ now it closes automatically too!
 (Note: it does reappear for a split second)
 
 Relevant code:
-```
+```py
 diagram.show()
 diagram.root.quit()
 sys.exit()
@@ -662,7 +663,8 @@ I found that 150ms (0.15s) is a good time delay, to maximise both user experienc
     ```bg_color, fg_color, button_column_background, DIAGRAM_DIMENSIONS, HOVER_REPLACE_FACTOR,
     DIAGRAM_POINT_RADIUS, BUTTON_COLUMN_FONT_SIZE, SCAN_HIGHLIGHT, OPERATION_BUTTON_FONT_SIZE,
     OPERATION_BUTTON_BACKGROUND, TITLE_HEIGHT, DIAGRAM_SCALE, PAGES_BACKGROUND, TITLE_FONT_SIZE,
-    GREEN, UNDER_DIAGRAM_FONT_SIZE, RIGHT_COLUMN_WIDTH, SAVE_BUTTONS_HOVER_BACKGROUND, SAVE_BUTTONS_FONT_SIZE.```
+    GREEN, UNDER_DIAGRAM_FONT_SIZE, RIGHT_COLUMN_WIDTH, SAVE_BUTTONS_HOVER_BACKGROUND, SAVE_BUTTONS_FONT_SIZE.
+    ```
 - Also clarified some comments.
 
 [23:12] Excpetions were not displaying, unless `diagram` was still `None` (mutlithreaded), in which case it would say `During handling of the above exception`.
@@ -776,7 +778,7 @@ Registering the scans under `gui.py`, in `register_scans` (called directly from 
 It's supposed to group:
 (1) everything under that clause, before `start_tk` and `start_kivy`, e.g. `add_font`, `register_scans`, and possibly `G`'s initialisation; and
 (2) stuff that's currently in `main.py`, that allows for the scans to oparate correctly, i.e. this piece of code (maybe with changes):
-```
+```py
     remove_scapy_warnings()
 
     ipconfig()
@@ -906,7 +908,7 @@ Instead, I'm going to let `Register` handle the threads for the scans.
 [23:21] Register now handles the scans in the following fashion:
 `Register().start(s.name, s.act, s.finished)` -- starts a new thread.
 The thread contains:
-```
+```py
 def _add_callback(action, callback):
     action()  # s.act()
     callback()  # s.finished()
@@ -931,7 +933,7 @@ I managed to get TK to close after Kivy, by replacing `diagram.root.quit()` with
 but the console is still running and occasionally prints a newline.
 
 [12:30] I found this thread: `<Timer(Thread-22, started 10764)>`, which is probably running this code:
-```
+```py
 # exe.py
 def keep_resolving_storage():
     sleep(10)
@@ -973,7 +975,7 @@ Performance shouldn't change too much.
 
 
 
-# 2023-03-13
+### 2023-03-13
 [18:50] Adding Know-Screen functionality.
 During Cyber class today, I noticed that I can't view the addresses, just a basically-useless circle of dots.
 This is frustrating, because although the programme works, it isn't useful to the user.
@@ -999,7 +1001,7 @@ Related things to add soon:
 
 
 
-# 2023-03-17
+### 2023-03-17
 [15:16] Working on turning the Know screen to a table.
 
 [15:56] I twice defined `NetworkEntity.__eq__`, which is a mistake,
@@ -1177,7 +1179,7 @@ and read the output.
 Now, the need has become clear for more special network entities.
 
 [12:08] Implemented a `LAN` variable in `NetworkStorage`, that allows for the clear syntax of:
-```
+```py
 if entity in LAN:
     G.add_edge(router, entity)
 ```
