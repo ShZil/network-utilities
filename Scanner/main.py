@@ -42,6 +42,9 @@ def remove_scapy_warnings():
 
 def main():
     raise NotImplementedError("Use `exe.py` instead.")
+    # The code below is not maintained. 
+    # It mostly misses the necessary imports, but might have some additional issues.
+    # In any case, please do use `exe.py` instead.
     remove_scapy_warnings()
 
     ipconfig()
