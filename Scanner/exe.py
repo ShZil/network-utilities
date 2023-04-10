@@ -21,6 +21,7 @@ from register import Register
 from PacketSniffer import PacketSniffer
 from globalstuff import *
 from threading import Thread, enumerate as enumerate_threads
+from SimpleScan import simple_scan
 
 
 def keep_resolving_storage():

@@ -1,6 +1,5 @@
 from import_handler import ImportDefence
 with ImportDefence():
-    from typing import Callable
     import requests
     import ipaddress
 
@@ -24,97 +23,6 @@ import os
 # print("All imports were successful.")
 
 __author__ = 'Shaked Dan Zilberman'
-
-
-def do_simple_scan(scan, all_possible_addresses, *, results=False, repeats=3):
-    """This is a wrapper for simple* scans, like ARP or ICMP.
-
-    (*) Simple means they are standardised:
-    [X] Have been @threadify-ied.
-    [X] Get list[str] of IPv4 addresses as input (post-threadify).
-    [X] Output list[bool] indicating online-ness of the addresses (index-correlated) (post-threadify).
-
-    Note: index-correlatedness, lists as input, and lists as output are handled by @threadify.
-    The requirements for the base function are just that it's of the form: `scan: str (IPv4 address) -> bool (connectivity)`.
-
-
-    Args:
-        scan (function): a @threadify-ied method from list[str] all_possible_addresses -> list[bool] online.
-        all_possible_addresses (list[str]): a list of IPv4 to test connectivity to.
-        results (bool, optional): Decides whether to print the results. Defaults to True.
-        repeats (int, optional): How many times should the full-range of addresses be scanned? Defaults to 3.
-
-    Returns:
-        list[str]: the addresses which replied, at least once, to the scan.
-    """
-    if repeats < 1:
-        return []
-
-    # Parsing the title & protocol.
-    title = scan.__name__
-    protocol = "".join(char for char in title if char.isupper())
-
-    # Define a <lambda> that returns a list[str] of connectable addresses.
-    def get_new():
-        return [
-            address for address, online
-            in zip(all_possible_addresses, scan(all_possible_addresses))
-            if online
-        ]
-
-    # Call it `repeats` times and unite all results.
-    connectable_addresses = set()
-    for _ in range(repeats):
-        connectable_addresses = connectable_addresses.union(get_new())
-
-    # Turn it into a sorted list (just for convenience, order doesn't matter).
-    connectable_addresses = sorted(
-        connectable_addresses,
-        key=lambda x: int(''.join(x.split('.')))
-    )
-
-    # Print if asked
-    if results:
-        print(
-            "There are",
-            len(connectable_addresses),
-            protocol,
-            "connectable addresses in this subnet:"
-        )
-        print('    ' + '\n    '.join(connectable_addresses))
-
-    return connectable_addresses
-
-
-def standardise_simple_scans(scans: list[tuple[Callable, int]]) -> list[Callable]:
-    scans = [scan if isinstance(scan, tuple) else (scan, 1) for scan in scans]
-    scans = [scan for scan in scans if scan[1] > 0]
-
-    def does_simple_scan(scan):
-        scan, repeats = scan
-        return (
-            lambda: do_simple_scan(
-                scan,
-                ipconfig()["All Possible Addresses"],
-                repeats=repeats)
-        )
-    lambdas = [does_simple_scan(scan) for scan in scans]
-
-    for scan, method in zip(scans, lambdas):
-        prefix = f"{scan[1]} × " if scan[1] > 1 else ""
-        method.__name__ = prefix + scan[0].__name__
-        method.__doc__ = prefix + scan[0].__doc__
-    return lambdas
-
-
-def simple_scan(scan: Callable, repeats: int) -> Callable:
-    def result():
-        return do_simple_scan(scan,
-                              ipconfig()["All Possible Addresses"],
-                              repeats=repeats)
-    prefix = f"{repeats} × " if repeats > 1 else ""
-    result.__name__, result.__doc__ = prefix + scan.__name__, prefix + scan.__doc__
-    return result
 
 
 def cmdtitle(*s, sep=''):
