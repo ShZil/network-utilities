@@ -1411,3 +1411,4 @@ I lost.
 - Add `NetworkEntity.to_dict`
 - Add `NetworkStorage.py:match(str)`
 - Fixed a bug that was crashing the software by moving an import to inside a function
+- Created a button for Device Profile, and put it in the middle of Know Screen.
