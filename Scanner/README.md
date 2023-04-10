@@ -1483,3 +1483,5 @@ I added a `return`, so now only one confirmation is requested.
 [17:46] Moved code to `OS_ID.py`.
 
 [18:07] Moved code to `ScanID.py`.
+
+[18:08] BUGFIX: exception logger won't show datetime.
