@@ -3,10 +3,10 @@ with ImportDefence():
     import tkinter.filedialog as dialogs
 
 import files_cryptography
-from gui import get_string
 
 
 def get_password():
+    from gui import get_string
     get_string("Enter password:")
 
 

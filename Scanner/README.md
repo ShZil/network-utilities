@@ -1410,3 +1410,4 @@ I lost.
 [03:26] I've been working on "Device Profile" for too long after midnight. This is my progress:
 - Add `NetworkEntity.to_dict`
 - Add `NetworkStorage.py:match(str)`
+- Fixed a bug that was crashing the software by moving an import to inside a function
