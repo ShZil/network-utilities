@@ -1435,3 +1435,7 @@ and it presented the exception!
 From there, it's a trivial solution.
 
 [03:59] This still doesn't work. Find out why. Fix. Goodnight!
+
+[15:48] Managed to set up a `launch.json` to debug efficiently.
+It runs `exe.py` from `Scanner`, not from the root directory,
+which is good because it can now access the same files as regular execution!
