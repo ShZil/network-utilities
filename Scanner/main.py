@@ -240,6 +240,7 @@ def operating_system_fingerprinting():
                 if entity in SpecialInformation():
                     continue
                 SpecialInformation()[entity, 'OS'] = _determine_os(packet)
+            sleep(10)
 
     Thread(target=_fingerprinter).start()
 
