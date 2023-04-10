@@ -1426,3 +1426,10 @@ Markdown is handled by `_construct_content(information: dict) -> markdown str`.
 Note, it doesn't currently work.
 I'll try fixing it -- I'll see what I can do.
 But perhaps not today.
+
+[03:49] Doing some old-fashioned print-based debugging.
+
+[03:55] VSCode Python IDE helped me find the bug.
+I placed a breakpoint according to my knowledge,
+and it presented the exception!
+From there, it's a trivial solution.

@@ -529,7 +529,7 @@ class SpecialInformation(dict):
             for entity, value in self.items():
                 if key.equals(entity):
                     merged.update(value)
-            self[entity] = merged
+            self[key] = merged
             return merged
         elif isinstance(key, tuple):
             entity, info_key = key
