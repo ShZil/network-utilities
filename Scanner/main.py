@@ -40,62 +40,6 @@ def remove_scapy_warnings():
         sleep(0.01)
 
 
-@one_cache
-def get_scan_id():
-    """Generates the current scan's identifier, based on `ipconfig()` info.
-    The format:
-    [Host Name]@[Interface]@[Gateway IPv4][Subnet Mask][Physical Address]
-    All in Base64, with integer values whenever possible.
-    """
-    from NetworkStorage import router, here
-    import base64
-
-    # '@' == (char)64 == '\x40'
-
-    host = here.name.replace('@', '\x02').encode()
-    iface = ipconfig()["Interface"].replace('@', '\x02').encode()
-
-    gateway = int(ipaddress.IPv4Address(router.ip)).to_bytes(4, 'big')
-
-    mask = ipconfig()["Subnet Mask"]
-    mask = sum(bin(int(x)).count('1')
-               for x in mask.split('.')).to_bytes(1, 'big')
-
-    physical = here.mac
-    physical = int(physical.replace('-', ''), 16).to_bytes(6, 'big')
-
-    return base64.b64encode(
-        host +
-        b'\x40' +
-        iface +
-        b'\x40' +
-        gateway +
-        mask +
-        physical
-    ).decode()
-
-
-def parse_scan_id(scan_id):
-    # Reverse the logic from `get_scan_id`
-    import base64
-    decoded = base64.b64decode(scan_id)
-    host, iface, others = decoded.split(b'\x40')
-
-    host = host.decode().replace('\x02', '@')
-    iface = iface.decode().replace('\x02', '@')
-
-    gateway, mask, physical = others[:4], others[4:5], others[5:]
-    gateway = int.from_bytes(gateway, 'big')
-    gateway = str(ipaddress.ip_address(gateway))
-    mask = int.from_bytes(mask, 'big')
-    physical = hex(int.from_bytes(physical, 'big'))[2:].upper()
-    physical = '-'.join(a + b for a, b in zip(physical[::2], physical[1::2]))
-
-    router = f"{gateway}/{mask}"
-
-    return f"Here: {host}, {physical}, via {iface}\nRouter: {router}"
-
-
 def main():
     raise NotImplementedError("Use `exe.py` instead.")
     remove_scapy_warnings()
