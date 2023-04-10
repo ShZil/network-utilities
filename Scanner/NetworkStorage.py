@@ -100,6 +100,9 @@ class NetworkEntity:
     def to_string(self, sep=' '):
         return sep.join([self[field] for field in ["mac", "ip",
                         "ipv6", "name"] if self[field] != nothing[field]])
+    
+    def to_dict(self):
+        return {field: self[field] for field in ["mac", "ip", "ipv6", "name"]}
 
     def compare(self):
         """Turns the values of the Entity's fields into integers to be used in a comparison.

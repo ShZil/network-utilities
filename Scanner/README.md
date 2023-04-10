@@ -1406,3 +1406,5 @@ I lost.
 [02:44] Add `KnowScreenDeviceProfileButton`.
 
 [02:48] Move responsibility of `get_password` to `gui.py`, and rename to `get_string`.
+
+[03:26] I've been working on "Device Profile" for too long after midnight. This is my progress:
