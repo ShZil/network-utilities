@@ -22,6 +22,8 @@ from PacketSniffer import PacketSniffer
 from globalstuff import *
 from threading import Thread, enumerate as enumerate_threads
 from SimpleScan import simple_scan
+from CommandLineStyle import cmdcolor, cmdtitle
+from scans.PublicAddress import public_address_action
 
 
 def keep_resolving_storage():

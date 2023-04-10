@@ -25,42 +25,6 @@ import os
 __author__ = 'Shaked Dan Zilberman'
 
 
-def cmdtitle(*s, sep=''):
-    os.system(f'title {sep.join(s)}')
-
-
-def cmdcolor(c):
-    os.system(f'color {str(c).zfill(2)}')
-
-
-def public_address_action():
-    NetworkStorage().add(get_public_ip())
-
-
-@one_cache
-def get_public_ip():
-    from NetworkStorage import nothing, NetworkStorage, LockedNetworkEntity
-    ip = requests.get('https://api.ipify.org').text
-    ipv6 = requests.get('https://api64.ipify.org').text
-    ipv6 = ipv6 if ipv6 != ip else nothing.ipv6
-    try:
-        outside = LockedNetworkEntity(
-            mac=nothing.mac,
-            ip=ip,
-            ipv6=ipv6,
-            name="Public Address"
-        )
-    except ValueError:  # api64.ipify.org might not return the IPv6, and instead say "gateway timeout"
-        outside = LockedNetworkEntity(
-            mac=nothing.mac,
-            ip=ip,
-            ipv6=nothing.ipv6,
-            name="Public Address"
-        )
-    NetworkStorage().special_add(outside)
-    return outside
-
-
 def remove_scapy_warnings():
     """Removes the "MAC address not found, using broadcast" warnings thrown by scapy.
     These warnings occur when a packet is sent to an IP (layer 3) address, without an Ethernet (layer 2) MAC address,
