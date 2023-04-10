@@ -501,6 +501,7 @@ LAN = LAN()
 
 
 class SpecialInformation(dict):
+    # singleton
     _instance = None
 
     def __new__(cls):

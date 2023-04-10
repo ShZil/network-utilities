@@ -1448,3 +1448,20 @@ I've tried to understand why using a breakpoint and analysis of the variables,
 but I found nothing out of the ordinary.
 Instead, I'll start separating the code into files,
 which will make navigation easier.
+
+[16:58] Use ChatGPT to generate this:
+```py
+class Singleton(type):
+    _instance = None
+
+    def __call__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__call__(*args, **kwargs)
+        return cls._instance
+
+
+class MyClassExample(metaclass=Singleton):
+    def __init__(self):
+        self.text = "bubbles"
+```
+Consider using this on Register, NetworkStorage, SpecialInformation, etc.
