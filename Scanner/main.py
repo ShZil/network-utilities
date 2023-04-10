@@ -36,6 +36,7 @@ def remove_scapy_warnings():
             sr1(IP(dst="255.255.255.255"), verbose=0, timeout=0.001)
         except PermissionError:
             input("Failure to send packets <IP dst=broadcast>.\nIf you're sure you've got everything correct, press any key to continue. . .")
+            return
         sleep(0.01)
 
 

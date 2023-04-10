@@ -1476,3 +1476,6 @@ and added docstrings and comments.
 The goal is to eradicate `main.py`.
 
 [17:35] BUGFIX: incorrectly written type hint.
+
+[17:38] `remove_scapy_warnings` would ask for 3 confirmations if PermissionError and "If you're sure you've got everything correct, press any key to continue. . .".
+I added a `return`, so now only one confirmation is requested.
