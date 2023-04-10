@@ -1448,6 +1448,7 @@ which is good because it can now access the same files as regular execution!
 but only that of Device Profile, not for example General Information.
 I've tried to understand why using a breakpoint and analysis of the variables,
 but I found nothing out of the ordinary.
+Also, not entering an address causes a crash.
 Instead, I'll start separating the code into files,
 which will make navigation easier.
 
@@ -1472,5 +1473,6 @@ Consider using this on Register, NetworkStorage, SpecialInformation, etc.
 and added docstrings and comments.
 
 [17:30] Moved code to `PublicAddress.py` and `CommandLineStyle.py` from `main.py`.
+The goal is to eradicate `main.py`.
 
 [17:35] BUGFIX: incorrectly written type hint.
