@@ -1,7 +1,11 @@
 from time import sleep
 from threading import Thread
 
-def operating_system_fingerprinting():
+def operating_system_fingerprinting() -> None:
+    """This function does the OS-ID scan-like action.
+    It's an infinite action, so this method starts a thread to run that action.
+    For further explanation, execute this file alone, or read OS-ID's information.
+    """
     from NetworkStorage import here, SpecialInformation, NetworkEntity
     from PacketSniffer import PacketSniffer
 
