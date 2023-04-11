@@ -1551,3 +1551,8 @@ This just goes to show: one must test their code after writing it.
 
 [21:52] Suggestion: you can improve boot time if you just move `remove_scapy_warnings` to after the GUI loads.
 It's just a cosmetic anyway.
+
+[21:57] BUGFIX: `packet` object requires referring to scapy layers.
+Same function. I really needed to test it right after I wrote it.
+Thankfully, it's quite simple (because I write clean and clear code lol),
+so it's easy to debug.

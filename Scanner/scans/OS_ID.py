@@ -8,6 +8,7 @@ def operating_system_fingerprinting() -> None:
     """
     from NetworkStorage import here, SpecialInformation, NetworkEntity, nothing
     from PacketSniffer import PacketSniffer
+    from scapy.all import Ether, IP
 
     def _determine_os(packet):
         # do more testing on this *************
@@ -20,7 +21,7 @@ def operating_system_fingerprinting() -> None:
                 # if it originates at some other computer...
                 if packet.src == here.ip:
                     continue
-                entity = NetworkEntity(mac=nothing.mac, ip=packet.src, ipv6=nothing.ipv6, name="Unknown")
+                entity = NetworkEntity(mac=packet[Ether].src, ip=packet[IP].src, ipv6=nothing.ipv6, name="Unknown")
                 # ...that has not yet been OS-ID'd
                 if entity in SpecialInformation():
                     continue
