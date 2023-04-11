@@ -1467,7 +1467,7 @@ class MyClassExample(metaclass=Singleton):
     def __init__(self):
         self.text = "bubbles"
 ```
-Consider using this on Register, NetworkStorage, SpecialInformation, etc.
+Suggestion: Consider using this on Register, NetworkStorage, SpecialInformation, etc.
 
 [17:19] Moved code from `main.py` to a new file called `SimpleScan.py`,
 and added docstrings and comments.
@@ -1559,6 +1559,8 @@ so it's easy to debug.
 
 [22:01] Suggestion: I've added some infrastructure.
 Perhaps extract some information from it and present it under General Information?
+Suggestion: turn `NetworkStorage` into an SQL-integrated container too, like PacketSniffer.
+Maybe even have a superclass to do that.
 
 [22:58] BUG: `sqlite3.OperationalError: database is locked`.
 In thread `PacketSniffer:AsyncSniffer`, I have a `_flush_packets` that tries to access the database:
