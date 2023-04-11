@@ -21,7 +21,7 @@ def exporter():
         return
     builder = ScanFileBuilder()
 
-    from main import get_scan_id
+    from ScanID import get_scan_id
     scan_id = get_scan_id().encode()
     builder.add(scan_id)
 
@@ -56,7 +56,7 @@ def importer():
     result = builder.parse(filename)
     # print(result)
 
-    from main import parse_scan_id, get_scan_id
+    from ScanID import parse_scan_id, get_scan_id
     same_network = scan_id == get_scan_id()
     same_network_message = "\nYou're currently in the same connection (computer, interface, network) as the scan file!" if same_network else "\n"
 

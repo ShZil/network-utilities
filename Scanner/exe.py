@@ -13,7 +13,6 @@ with ImportDefence():
     import tkinter
     import markdown
 
-from main import *
 from util import *
 from gui import *
 from NetworkStorage import *
