@@ -1627,3 +1627,8 @@ def do_TCP():
             if res:
                 print(port)
 ```
+
+
+
+### 2023-04-12
+[00:14] Update `ImportDefence`: catch `ImportError`s too and log an error about them.

@@ -4,7 +4,7 @@ from time import sleep
 with ImportDefence():
     from scapy.config import conf
     from scapy.sendrecv import sr1
-    from scapy.layers import IP
+    from scapy.layers.inet import IP
 
 
 def cmdtitle(*s, sep=''):
