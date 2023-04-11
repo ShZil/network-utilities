@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run exe.py",
+            "name": "Run Scanner",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/Scanner/exe.py",
