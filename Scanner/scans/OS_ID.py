@@ -6,7 +6,7 @@ def operating_system_fingerprinting() -> None:
     It's an infinite action, so this method starts a thread to run that action.
     For further explanation, execute this file alone, or read OS-ID's information.
     """
-    from NetworkStorage import here, SpecialInformation, NetworkEntity
+    from NetworkStorage import here, SpecialInformation, NetworkEntity, nothing
     from PacketSniffer import PacketSniffer
 
     def _determine_os(packet):
@@ -20,7 +20,7 @@ def operating_system_fingerprinting() -> None:
                 # if it originates at some other computer...
                 if packet.src == here.ip:
                     continue
-                entity = NetworkEntity(ip=packet.src)
+                entity = NetworkEntity(mac=nothing.mac, ip=packet.src, ipv6=nothing.ipv6, name="Unknown")
                 # ...that has not yet been OS-ID'd
                 if entity in SpecialInformation():
                     continue

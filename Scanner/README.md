@@ -1544,3 +1544,7 @@ Also, make a copy of `self.packets`, to avoid multiple-threads-accessing-the-sam
 [21:46] BUGFIX: I wrote `here.ipv4` instead of `here.ip`
 The previous error was in the previous line in `OS-ID` (21:30).
 It's clear that this scan wasn't tested lol.
+
+[21:50] BUGFIX: NetworkEntity doesn't have default values.
+The previous two errors (21:30, 21:46) were in the previous two lines (that aren't comments or trivial `continue`).
+This just goes to show: one must test their code after writing it.
