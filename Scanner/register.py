@@ -20,7 +20,7 @@ class Register(dict):
     _instance = None
     threads: dict[str, Thread] = {}
     infinites = set()
-    history = []
+    history = []  # list[list[str, int, int]]: [name, start time [unix timestamp], duration [seconds]]
 
     def __new__(cls):
         if cls._instance is None:
@@ -50,9 +50,12 @@ class Register(dict):
 
     def start(self, name: str, action, callback) -> None:
         def _add_callback(action, callback):
-            self.history.append((name, time.time()))
+            entry = [name, int(time.time()), -1]
+            self.history.append(entry)
             action()
             callback()
+            if not self.is_infinite_scan(name):
+                entry[2] = int(time.time()) - entry[1]
 
         _add_callback.__name__ = action.__name__ + "_with_callback"
         self.threads[name] = t = Thread(target=_add_callback, args=(action, callback))
@@ -71,4 +74,4 @@ class Register(dict):
         return name in self.infinites or name[:-3] in self.infinites
     
     def get_history(self):
-        return self.history.copy()
+        return [tuple(item) for item in self.history]

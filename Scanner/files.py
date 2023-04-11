@@ -26,10 +26,17 @@ def exporter():
     builder.add(scan_id)
 
     from NetworkStorage import NetworkStorage
-    data = [str(x).encode() for x in NetworkStorage()]
-    builder.add_many(data)
+    network_entities = [str(x).encode() for x in NetworkStorage()]  # ********* change this to `entity.encode()` and implement that method
+    builder.add_many(network_entities)
 
-    # TODO: add scans history
+    from register import Register
+    scan_history = [
+        int(timestamp).to_bytes(4, byteorder='big') +
+        str(name).encode() +
+        int(duration).to_bytes(3, byteorder='big')
+        for (name, timestamp, duration) in Register().get_history()
+    ]
+    builder.add_many(scan_history)
 
     builder.set_password(get_password())
     builder.write_to(filename)
@@ -48,14 +55,27 @@ def importer():
     builder.set_password(get_password())
     result = builder.parse(filename)
     # print(result)
-    scan_id = result["scan_id"]
-    entities = result["network_entities"]
+
     from main import parse_scan_id, get_scan_id
     same_network = scan_id == get_scan_id()
     same_network_message = "\nYou're currently in the same connection (computer, interface, network) as the scan file!" if same_network else "\n"
+
+    scan_id = result["scan_id"]
     scan_id = parse_scan_id(scan_id)
+
+    entities = result["network_entities"]
     entities = '\n'.join(entities)
-    return f"""{scan_id}{same_network_message}\n\n{entities}"""
+
+    history = result["scan_history"]
+    from datetime import datetime
+    def format_timestamp(t: int) -> str:
+        return datetime.fromtimestamp(t).strftime('%Y-%m-%d %H:%M:%S')
+    def format_duration(t: int) -> str:
+        return f'for {t}[s]' if t > -1 else f'indefinitely'
+    history = [format_timestamp(timestamp) + f' {name} {format_duration(duration)}.' for (timestamp, name, duration) in history]
+    history = '\n'.join(history)
+
+    return f"""{scan_id}{same_network_message}\n\n{entities}\n\n{history}"""
 
 
 def encrypt(message: bytes, password: str) -> bytes:
@@ -120,14 +140,19 @@ class ScanFileBuilder:
                 raise ValueError("Invalid file format, or wrong password.")
 
             self.parts = content[1:]
+        scan_id, entities, history, *rest = self.parts
+        if len(rest) > 0:
+            def _decode_bytes(b):
+                try:
+                    return b.decode('utf-8')
+                except UnicodeDecodeError:
+                    return b.hex()
+            raise ValueError("The file has more content than expected: " + _decode_bytes(rest))
 
         return {
-            "scan_id": self.parts[0].decode(),
-            "network_entities": [
-                x.decode() for x in self.parts[1].split(
-                    self.COMMA
-                )
-            ]
+            "scan_id": scan_id.decode(),
+            "network_entities": [x.decode() for x in entities.split(self.COMMA)],  # ******* change this to NetworkEntity.decode(x) and implement that method
+            "scan_history": [(x[:4], x[4:-3].decode(), x[:-3]) for x in history.split(self.COMMA)]
         }
 
 

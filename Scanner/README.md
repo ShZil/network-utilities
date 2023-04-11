@@ -1510,3 +1510,23 @@ Answer: The time.time() function in Python returns the time in seconds since the
 [19:27] And that concludes all three modules I wanted to add.
 Just use Scan History in `files.py`, and that's it for additions for now.
 So, I need more testing, bugfixing, solve attention grabbers (***********), and implement the rest of the scans.
+
+
+
+### 2023-04-11
+[20:41] Alright. Let's see what I can work on today.
+
+[21:17] Working on `files.py`. My changes:
+- Added scan history: `timestamp (4 bytes) + name (encoded string) + duration (3 bytes)`, from `Register().get_history()`
+- Parse scan history in `importer()`: e.g. "2023-04-11 21:17:05 ICMP Sweep for 12[s]."
+- `ScanFileBuilder.parse`: `scan_id, entities, history, *rest = self.parts` and make sure that `rest` is empty.
+- Parse scan history in `ScanFileBuilder.parse`: {first 4 bytes} + {middle part} + {last 3 bytes}
+```py
+(x[:4], x[4:-3].decode(), x[:-3])
+```
+- Comments encouraging me to encode NetworkEntities more efficiently, and move that responsibility to `NetworkStorage.py`.
+- Don't encrypt/decrypt if the `password == ''`.
+- Removed printing statements in `ScanFileBuilder.write_to` because I can now use an actual debugger.
+- In `register.py:Register`, I changed the form of `self.history: list` to be: `[name: str, start_time: int, duration: int]`
+- In `register.py:Register.start._add_callback`, I used the mutability of lists to update the `duration` value upon returning from the `action()`.
+- In `register.py:Register.get_history`, I'm returning a list of tuples.
