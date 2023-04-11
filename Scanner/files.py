@@ -105,16 +105,10 @@ class ScanFileBuilder:
         self.parts.append(self.COMMA.join(parts))
 
     def write_to(self, path: str):
-        print("Writing to", path)
         assert self.password is not None
-        print("past the assertion")
         with open(path, "xb") as f:
-            print("Opened the file")
             content = self.SEP.join(self.parts)
-            print("Generating content")
             content = encrypt(content, self.password)
-            print("Writing content to file:")
-            print(content)
             f.write(content)
 
     def set_password(self, password: str):
