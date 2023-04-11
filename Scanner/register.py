@@ -1,4 +1,4 @@
-import time
+from time import time as now
 import win32api
 from threading import Thread
 
@@ -50,12 +50,12 @@ class Register(dict):
 
     def start(self, name: str, action, callback) -> None:
         def _add_callback(action, callback):
-            entry = [name, int(time.time()), -1]
+            entry = [name, int(now()), -1]
             self.history.append(entry)
             action()
             callback()
             if not self.is_infinite_scan(name):
-                entry[2] = int(time.time()) - entry[1]
+                entry[2] = int(now()) - entry[1]
 
         _add_callback.__name__ = action.__name__ + "_with_callback"
         self.threads[name] = t = Thread(target=_add_callback, args=(action, callback))

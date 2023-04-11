@@ -63,10 +63,10 @@ class PacketSniffer:
         return packets
 
     def _packet_handler(self, packet):
-        import time
+        from time import time as now
         if IP in packet:
             fields = packet[IP].fields
-            self.packets.append({'packet': packet, **fields, 'timestamp': int(time.time())})
+            self.packets.append({'packet': packet, **fields, 'timestamp': int(now())})
             self.length += 1
             if len(self.packets) >= self.max_packets:
                 self._flush_packets()
