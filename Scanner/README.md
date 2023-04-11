@@ -1542,3 +1542,5 @@ which would be quite intensive. Instead, I'm fetching them one by one.
 Also, make a copy of `self.packets`, to avoid multiple-threads-accessing-the-same-list issues.
 
 [21:46] BUGFIX: I wrote `here.ipv4` instead of `here.ip`
+The previous error was in the previous line in `OS-ID` (21:30).
+It's clear that this scan wasn't tested lol.
