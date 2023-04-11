@@ -18,7 +18,7 @@ def operating_system_fingerprinting() -> None:
             # for each packet,
             for packet in PacketSniffer():
                 # if it originates at some other computer...
-                if packet.src == here.ipv4:
+                if packet.src == here.ip:
                     continue
                 entity = NetworkEntity(ip=packet.src)
                 # ...that has not yet been OS-ID'd

@@ -1540,3 +1540,5 @@ This must be done, because `OS_ID.py:19: for packet in PacketSniffer():` require
 I chose to use `yield`s because, for many packets, I wouldn't have to store them all in dynamic memory,
 which would be quite intensive. Instead, I'm fetching them one by one.
 Also, make a copy of `self.packets`, to avoid multiple-threads-accessing-the-same-list issues.
+
+[21:46] BUGFIX: I wrote `here.ipv4` instead of `here.ip`
