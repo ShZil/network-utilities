@@ -1530,3 +1530,6 @@ So, I need more testing, bugfixing, solve attention grabbers (***********), and 
 - In `register.py:Register`, I changed the form of `self.history: list` to be: `[name: str, start_time: int, duration: int]`
 - In `register.py:Register.start._add_callback`, I used the mutability of lists to update the `duration` value upon returning from the `action()`.
 - In `register.py:Register.get_history`, I'm returning a list of tuples.
+
+[21:30] BUGFIX: Misplaced parentheses: `packet[ARP.op] should have been `packet[ARP].op`.
+This should not have been overlooked for so long.

@@ -75,7 +75,7 @@ def scan_ARP_continuous():
         if packet[ARP].op == 2:
             NetworkStorage().add(mac=packet[ARP].hwsrc, ip=packet[ARP].psrc)
             NetworkStorage().add(mac=packet[ARP].hwdst, ip=packet[ARP].pdst)
-        elif packet[ARP.op] == 1:
+        elif packet[ARP].op == 1:
             NetworkStorage().add(mac=packet[ARP].hwsrc, ip=packet[ARP].psrc)
     
     sniffer = AsyncSniffer(prn=save_to_storage, lfilter=filter_ARP, store=False)
