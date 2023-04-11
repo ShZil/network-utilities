@@ -23,9 +23,6 @@ class PacketSniffer:
 
     def __init__(self, max_packets=100):
         self.max_packets = max_packets
-        self.db_conn = sqlite3.connect(self.DB_PATH)
-        self.cursor = self.db_conn.cursor()
-        self.cursor.execute(self.SQL_CREATE_TABLE)
 
     def stop(self):
         if self.sniff_thread:
@@ -34,11 +31,11 @@ class PacketSniffer:
 
         self._flush_packets()
 
-        self.cursor.close()
-        self.db_conn.close()
-
     def get_packet(self, i: int):
-        packet_row = self.cursor.execute('SELECT packet FROM packets WHERE id = ?', (i,)).fetchone()
+        packet_row = None
+        with sqlite3.connect(self.DB_PATH) as conn:
+            cursor = conn.cursor()
+            packet_row = cursor.execute('SELECT packet FROM packets WHERE id = ?', (i,)).fetchone()
         return pickle.loads(packet_row[0]) if packet_row else None
 
     def get_packets(self, src=None, dst=None):
@@ -49,9 +46,11 @@ class PacketSniffer:
             dst = '%.%.%.%'
 
         # Retrieve packets from SQL
-        query = "SELECT * FROM packets WHERE src LIKE ? AND dst LIKE ?"
-        self.cursor.execute(query, (src, dst))
-        rows = self.cursor.fetchall()
+        with sqlite3.connect(self.DB_PATH) as conn:
+            cursor = conn.cursor()
+            query = "SELECT * FROM packets WHERE src LIKE ? AND dst LIKE ?"
+            cursor.execute(query, (src, dst))
+            rows = cursor.fetchall()
 
         # Decode and return pickled packets from SQL
         packets = [pickle.loads(row[1]) for row in rows]
@@ -89,17 +88,21 @@ class PacketSniffer:
     
     def __iter__(self):
         query = "SELECT packet FROM packets"
-        self.cursor.execute(query)
         packets = self.packets.copy()
-        
-        while True:
-            packet_row = self.cursor.fetchone()
-            if packet_row is None:
-                break
-            yield pickle.loads(packet_row[0])
+
+        with sqlite3.connect(self.DB_PATH) as conn:
+            cursor = conn.cursor()
+            cursor.execute(query)
+
+            while True:
+                packet_row = cursor.fetchone()
+                if packet_row is None:
+                    break
+                yield pickle.loads(packet_row[0])
 
         for packet in packets:
             yield packet['packet']
+
 
 
 

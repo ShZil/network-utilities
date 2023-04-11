@@ -1561,6 +1561,7 @@ so it's easy to debug.
 Perhaps extract some information from it and present it under General Information?
 Suggestion: turn `NetworkStorage` into an SQL-integrated container too, like PacketSniffer.
 Maybe even have a superclass to do that.
+Suggestion: use draw.io to draw flowcharts of how the code is structured.
 
 [22:58] BUG: `sqlite3.OperationalError: database is locked`.
 In thread `PacketSniffer:AsyncSniffer`, I have a `_flush_packets` that tries to access the database:
@@ -1586,3 +1587,13 @@ I thought of two possible solutions:
 The problems:
 1. It might never be freed, and that's an infinite loop.
 2. It's a heavy load on the RAM, which is the whole reason why I'm using `yield`s there.
+
+[23:32] First, google the error.
+Then, enter Stack Overflow.
+https://stackoverflow.com/questions/3172929/operationalerror-database-is-locked
+Then, follow the link from a comment that makes sense:
+https://stackoverflow.com/questions/53270520/how-to-know-which-process-is-responsible-for-a-operationalerror-database-is-lo/53470118#53470118
+Now, I know I need to close the cursor.
+So, I've asked ChatGPT to rewrite `class PacketSniffer` and remove `self.cursor` and `self.db_conn`.
+I was slightly annoyed by the token limit it had on responses, but I got it to work.
+Just copied the result, did some code review on it.
