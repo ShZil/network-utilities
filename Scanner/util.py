@@ -100,6 +100,7 @@ def threadify(f, silent=False):
     **This function is blocking.**
     Its internals run asyncronosly, but calling this will wait until all the tasks are done.
     **It will slurp up any printing done by other threads!**
+    It will stop generating new threads if `globalstuff`'s `terminator` is set.
 
     Also, if the arguments were `f(a, b, c)`, the new argument is `f(list[tuple(a, b, c)])`.
     E.g., the function `add(x: int, y: int)`, if it's `@threadify`-ied, will be called by `add([(x0, y0), (x1, y1), (x2, y2)...])`.
@@ -203,12 +204,17 @@ def threadify(f, silent=False):
                    for i, x in enumerate(args)]
 
         def threadify_start_threads(threads: list):
+            from globalstuff import terminator
             # Activate the threads, waiting for threads to be freed if needed.
             for thread in threads:
                 thread.start()
                 while active_count() >= MAX_THREADS and MAX_THREADS > 0:
                     # print(active_count(), "threads active.", file=real_stdout)
                     sleep(0.02)
+                    if terminator.is_set():
+                        return
+                if terminator.is_set():
+                        return
 
         starter = Thread(target=threadify_start_threads, args=(threads, ))
         starter.start()

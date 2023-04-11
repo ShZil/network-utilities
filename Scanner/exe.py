@@ -31,7 +31,7 @@ from scans.TCP import scan_TCP
 
 def keep_resolving_storage():
     def _resolver():
-        from gui import terminator
+        from globalstuff import terminator
         sleep(7)
         while not terminator.is_set():
             sleep(5)

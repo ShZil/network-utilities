@@ -1637,3 +1637,10 @@ def do_TCP():
 
 [01:08] BUGFIX: In `files.py:get_password`, missing return statement.
 I was tracking a bug for too long: I forgot to `return`.
+
+[01:29] I noticed the program doesn't close,
+even after the window is:
+some threads keep running.
+So, I did some changes in `gui.py`, `exe.py`, `globalstuff.py`:
+moved the `terminator` to be in globalstuff.
+Use the terminator in `threadify` too.

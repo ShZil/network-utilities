@@ -3,7 +3,7 @@ with ImportDefence():
     import kivy
     import networkx as nx
     import tkinter as tk
-    from threading import Thread, Event, enumerate as enumerate_threads
+    from threading import Thread, enumerate as enumerate_threads
     import numpy  # for networkx
     import scipy  # for networkx
     import win32api
@@ -12,7 +12,7 @@ with ImportDefence():
     import re
 kivy.require('2.1.0')
 
-from globalstuff import G
+from globalstuff import G, terminator
 from files import importer, exporter
 from register import Register
 import db
@@ -47,7 +47,6 @@ __author__ = 'Shaked Dan Zilberman'
 diagram = None
 state = None
 is_kivy_running = True
-terminator = Event()
 def update_know_screen(text): return print(text)
 def update_view_screen(text): return print(text)
 
