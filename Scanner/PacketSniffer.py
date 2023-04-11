@@ -87,19 +87,16 @@ class PacketSniffer:
         return IP in packet
     
     def __iter__(self):
-        query = "SELECT packet FROM packets"
         packets = self.packets.copy()
 
-        with sqlite3.connect(self.DB_PATH) as conn:
-            cursor = conn.cursor()
-            cursor.execute(query)
+        # Yield all packets from the SQL database
+        for i in range(self.length - len(packets)):
+            packet = self.get_packet(i)
+            if packet is None:
+                break
+            yield packet
 
-            while True:
-                packet_row = cursor.fetchone()
-                if packet_row is None:
-                    break
-                yield pickle.loads(packet_row[0])
-
+        # Yield all the packets from the `self.packets` (but `copy()`ied earlier).
         for packet in packets:
             yield packet['packet']
 

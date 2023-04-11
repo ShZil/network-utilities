@@ -1597,3 +1597,12 @@ Now, I know I need to close the cursor.
 So, I've asked ChatGPT to rewrite `class PacketSniffer` and remove `self.cursor` and `self.db_conn`.
 I was slightly annoyed by the token limit it had on responses, but I got it to work.
 Just copied the result, did some code review on it.
+
+[23:42] And....... Still doesn't work.
+
+[23:44] Since I know how I'm inserting and changing stuff in the SQL database,
+I can just have a counter that goes up by one (in `__iter__`),
+and yield the packet with that ID.
+I can even use `get_packet`, it's that easy.
+
+[23:52] BUGFIX: Well, the error's gone now, so it worked!
