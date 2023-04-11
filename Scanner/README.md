@@ -1548,3 +1548,6 @@ It's clear that this scan wasn't tested lol.
 [21:50] BUGFIX: NetworkEntity doesn't have default values.
 The previous two errors (21:30, 21:46) were in the previous two lines (that aren't comments or trivial `continue`).
 This just goes to show: one must test their code after writing it.
+
+[21:52] Suggestion: you can improve boot time if you just move `remove_scapy_warnings` to after the GUI loads.
+It's just a cosmetic anyway.
