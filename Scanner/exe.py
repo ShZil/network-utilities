@@ -25,6 +25,10 @@ from SimpleScan import simple_scan
 from CommandLineStyle import cmdcolor, cmdtitle
 from scans.PublicAddress import public_address_action
 from scans.OS_ID import operating_system_fingerprinting
+from scans.ARP import scan_ARP, scan_ARP_continuous
+from scans.ICMP import scan_ICMP, scan_ICMP_continuous
+from scans.TCP import scan_TCP
+
 
 def keep_resolving_storage():
     def _resolver():
