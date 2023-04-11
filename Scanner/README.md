@@ -1556,3 +1556,31 @@ It's just a cosmetic anyway.
 Same function. I really needed to test it right after I wrote it.
 Thankfully, it's quite simple (because I write clean and clear code lol),
 so it's easy to debug.
+
+[22:01] Suggestion: I've added some infrastructure.
+Perhaps extract some information from it and present it under General Information?
+
+[22:58] BUG: `sqlite3.OperationalError: database is locked`.
+In thread `PacketSniffer:AsyncSniffer`, I have a `_flush_packets` that tries to access the database:
+```py
+with sqlite3.connect(self.DB_PATH) as conn:
+    cursor = conn.cursor()
+    cursor.executemany(PacketSniffer.INSERT_STATEMENT, packets_to_insert)
+    conn.commit()  # right here the exception is raised.
+```
+However, in thread `Scans.OS_ID.operating_system_fingerprinting._fingerprinter`,
+I call `PacketSniffer.__iter__`,
+which also tries to access the database:
+```py
+while True:
+    packet_row = self.cursor.fetchone()
+    if packet_row is None: break
+    yield something_from(packet_row)
+```
+And the clash causes an exception from sqlite3.
+I thought of two possible solutions:
+1. Solve from `_flush_packets`: Place the `conn.commit()` in a try-except block, and try again, until it allows access.
+2. Solve from `__iter__`: Save the query result to a variable and yield from there.
+The problems:
+1. It might never be freed, and that's an infinite loop.
+2. It's a heavy load on the RAM, which is the whole reason why I'm using `yield`s there.
