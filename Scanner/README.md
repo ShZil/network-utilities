@@ -1534,3 +1534,9 @@ So, I need more testing, bugfixing, solve attention grabbers (***********), and 
 [21:30] BUGFIX: Misplaced parentheses: `packet[ARP.op] should have been `packet[ARP].op`.
 This should not have been overlooked for so long.
 LESSON: Just goes to show I need more testing.
+
+[21:39] With the help of ChatGPT, and a bit of convincing it, I made `PacketSniffer` an iterator (with `yield`s).
+This must be done, because `OS_ID.py:19: for packet in PacketSniffer():` requires it to run.
+I chose to use `yield`s because, for many packets, I wouldn't have to store them all in dynamic memory,
+which would be quite intensive. Instead, I'm fetching them one by one.
+Also, make a copy of `self.packets`, to avoid multiple-threads-accessing-the-same-list issues.

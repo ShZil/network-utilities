@@ -86,6 +86,21 @@ class PacketSniffer:
 
     def _ip_filter(self, packet):
         return IP in packet
+    
+    def __iter__(self):
+        query = "SELECT packet FROM packets"
+        self.cursor.execute(query)
+        packets = self.packets.copy()
+        
+        while True:
+            packet_row = self.cursor.fetchone()
+            if packet_row is None:
+                break
+            yield pickle.loads(packet_row[0])
+
+        for packet in packets:
+            yield packet['packet']
+
 
 
 if __name__ == '__main__':
