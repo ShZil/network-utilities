@@ -1652,3 +1652,5 @@ because `terminator` was set.
 Solution: wrap in try-except and ignore `RuntimeError`s.
 
 [01:37] Now closes much faster!
+TODO: split `gui.py` into files,
+preferably under the folder `GUI/` if possible.
