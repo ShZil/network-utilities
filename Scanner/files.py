@@ -108,7 +108,7 @@ class ScanFileBuilder:
         assert self.password is not None
         with open(path, "xb") as f:
             content = self.SEP.join(self.parts)
-            content = encrypt(content, self.password)
+            content = encrypt(content, self.password) if self.password != '' else content
             f.write(content)
 
     def set_password(self, password: str):
@@ -119,7 +119,7 @@ class ScanFileBuilder:
         self.parts = [b""] * 3
         with open(path, "rb") as f:
             content = f.read()
-            content = decrypt(content, self.password)
+            content = decrypt(content, self.password) if self.password != '' else content
             if content == b'':
                 raise ValueError(
                     "Couldn't decrypt the file. The password is wrong"
