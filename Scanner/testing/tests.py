@@ -1,7 +1,9 @@
-from main import *
-from ip_handler import *
-from ipconfig import *
 import os
+import sys
+
+from ip_handler import bitify, unbitify
+from ipconfig import dictify, ipconfig
+from util import NoPrinting, shift, threadify
 
 
 def dictify_example1():
