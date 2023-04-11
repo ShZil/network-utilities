@@ -1644,3 +1644,4 @@ some threads keep running.
 So, I did some changes in `gui.py`, `exe.py`, `globalstuff.py`:
 moved the `terminator` to be in globalstuff.
 Use the terminator in `threadify` too.
+I also added a `sys.exit()` under `_resolver`, to ensure everything was closing.

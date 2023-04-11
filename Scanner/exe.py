@@ -40,7 +40,8 @@ def keep_resolving_storage():
             from gui import update_know_screen, diagram
             update_know_screen(NetworkStorage())
             diagram.renew(G)
-
+        sys.exit()
+    
     _resolver.__name__ = '5-second interval repeat'
     Thread(target=_resolver).start()
 
