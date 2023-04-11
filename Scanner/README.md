@@ -1650,3 +1650,5 @@ I also added a `sys.exit()` under `_resolver`, to ensure everything was closing.
 because some threads were not started when I closed the window,
 because `terminator` was set.
 Solution: wrap in try-except and ignore `RuntimeError`s.
+
+[01:37] Now closes much faster!
