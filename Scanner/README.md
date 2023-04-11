@@ -1533,3 +1533,4 @@ So, I need more testing, bugfixing, solve attention grabbers (***********), and 
 
 [21:30] BUGFIX: Misplaced parentheses: `packet[ARP.op] should have been `packet[ARP].op`.
 This should not have been overlooked for so long.
+LESSON: Just goes to show I need more testing.
