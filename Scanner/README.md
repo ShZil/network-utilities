@@ -1645,3 +1645,8 @@ So, I did some changes in `gui.py`, `exe.py`, `globalstuff.py`:
 moved the `terminator` to be in globalstuff.
 Use the terminator in `threadify` too.
 I also added a `sys.exit()` under `_resolver`, to ensure everything was closing.
+
+[01:32] Got a `RuntimeError: cannot join thread before it is started` in `threadify`,
+because some threads were not started when I closed the window,
+because `terminator` was set.
+Solution: wrap in try-except and ignore `RuntimeError`s.

@@ -250,7 +250,10 @@ def threadify(f, silent=False):
         # still not active, joining it will raise a RuntimeError.
         starter.join()
         for thread in threads:
-            thread.join()
+            try:
+                thread.join()
+            except RuntimeError:
+                pass
 
         # Restore printing
         sys.stdout = real_stdout
