@@ -1634,3 +1634,6 @@ def do_TCP():
 [00:14] Update `ImportDefence`: catch `ImportError`s too and log an error about them.
 
 [00:34] Reduce the amount of `parallel_device_discovery` threads in `Live ICMP` from `18` to `6`.
+
+[01:08] BUGFIX: In `files.py:get_password`, missing return statement.
+I was tracking a bug for too long: I forgot to `return`.

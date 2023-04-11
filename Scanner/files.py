@@ -7,7 +7,7 @@ import files_cryptography
 
 def get_password():
     from gui import get_string
-    get_string("Enter password:")
+    return get_string("Enter password:")
 
 
 def exporter():
