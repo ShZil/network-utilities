@@ -22,7 +22,7 @@ from PacketSniffer import PacketSniffer
 from globalstuff import *
 from threading import Thread, enumerate as enumerate_threads
 from SimpleScan import simple_scan
-from CommandLineStyle import cmdcolor, cmdtitle
+from CommandLineStyle import cmdcolor, cmdtitle, remove_scapy_warnings
 from scans.PublicAddress import public_address_action
 from scans.OS_ID import operating_system_fingerprinting
 from scans.ARP import scan_ARP, scan_ARP_continuous

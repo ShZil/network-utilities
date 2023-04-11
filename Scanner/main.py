@@ -25,21 +25,6 @@ import os
 __author__ = 'Shaked Dan Zilberman'
 
 
-def remove_scapy_warnings():
-    """Removes the "MAC address not found, using broadcast" warnings thrown by scapy.
-    These warnings occur when a packet is sent to an IP (layer 3) address, without an Ethernet (layer 2) MAC address,
-    and such an address cannot be found using ARP. Scapy thus uses the broadcast MAC instead.
-    """
-    conf.warning_threshold = 1_000_000  # Time between warnings of the same source should be infinite (many seconds).
-    for _ in range(3):
-        try:
-            sr1(IP(dst="255.255.255.255"), verbose=0, timeout=0.001)
-        except PermissionError:
-            input("Failure to send packets <IP dst=broadcast>.\nIf you're sure you've got everything correct, press any key to continue. . .")
-            return
-        sleep(0.01)
-
-
 def main():
     raise NotImplementedError("Use `exe.py` instead.")
     # The code below is not maintained. 

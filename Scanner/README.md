@@ -1606,3 +1606,24 @@ and yield the packet with that ID.
 I can even use `get_packet`, it's that easy.
 
 [23:52] BUGFIX: Well, the error's gone now, so it worked!
+
+[23:57] I've moved `remove_scapy_warnings` to `CommandLineStyle.py`,
+and added a justification for that in the `if __name__ == '__main__'`.
+This makes `main.py` completely empty! Yay!
+
+Just some stuff from `main.py`'s unmaintained code,
+that might be useful in the future:
+```py
+def add_to_lookup():
+        NetworkStorage().add(ip="255.255.255.255")
+        from NetworkStorage import router, here
+        NetworkStorage().add(router, here)
+
+def do_TCP():
+    from NetworkStorage import router
+    print(f"Open TCP ports in {router}:")
+    with JustifyPrinting():
+        for port, res in scan_TCP(router.ip, repeats=20).items():
+            if res:
+                print(port)
+```
