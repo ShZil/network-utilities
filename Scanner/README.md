@@ -1632,3 +1632,5 @@ def do_TCP():
 
 ### 2023-04-12
 [00:14] Update `ImportDefence`: catch `ImportError`s too and log an error about them.
+
+[00:34] Reduce the amount of `parallel_device_discovery` threads in `Live ICMP` from `18` to `6`.

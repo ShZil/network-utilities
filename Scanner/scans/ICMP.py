@@ -106,7 +106,7 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
         # The iteration shifts in different threads by `shifting = thread_index * 71 mod 255`, to ensure efficiency.
         # Range of values: 1 to 18 (inclusive).
         # Optimal values: 18, 6, 3, 2, 1
-        SCANNER_THREADS = 18
+        SCANNER_THREADS = 6
 
         def ICMP_live_device_discovery(order: int):
             all_addresses = shift(all_possible_addresses, 71*order)
