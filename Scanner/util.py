@@ -34,6 +34,9 @@ def print_dict(x: dict) -> None:
 def shift(seq: list, n: int) -> list:
     """Shifts / Rotates / Rolls a list `seq` by `n` places.
 
+    Example:
+        shift([1, 2, 3, 4], 1) -> [2, 3, 4, 1]
+
     Args:
         seq (list): The list to shift.
         n (int): The amount of places to shift by.
