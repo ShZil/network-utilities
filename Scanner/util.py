@@ -337,22 +337,38 @@ def memorise(f):
     The arguments to the function must be hashable,
     so no lists or sets, but it can get ints or strings or tuples.
 
+    A cached datum that's retreived 10 seconds or more after it was calculated,
+    will be calculated again.
+    The amount of seconds can be varied with `TIME_LIMIT`.
+
     Args:
         f (function): the function to decorate and add a cache to
 
     Returns:
         function: the decorated function with a cache
     """
-    # ********* Add a time limit on each datum
     memory = {}
+    from time import time as now
+    TIME_LIMIT: int = 180  # in seconds
 
     def wrapper(*args):
         try:
+            # Do I have the cached result of these arguments?
             if args in memory:
-                return memory[args]
+                # If I do have the cached result, calculate whether I'm still within the TIME_LIMIT.
+                value, time_created = memory[args]
+                if now() - time_created < TIME_LIMIT:
+                    # If I am, just return the cached value.
+                    return value
+                else:
+                    # If not, calculate the value again.
+                    result = f(*args)
+                    memory[args] = (result, now())
+                    return result
             else:
+                # If I don't have the cached result, calculate it.
                 result = f(*args)
-                memory[args] = result
+                memory[args] = (result, now())
                 return result
         except TypeError:
             print("@memorise function cannot receive unhashable types! (e.g. lists, sets)")
