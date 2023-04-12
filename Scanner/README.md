@@ -1657,9 +1657,12 @@ preferably under the folder `GUI/` if possible.
 
 [16:46] Going over `util.py`, adding typehints, improving docstrings, writing comments.
 
-[17:57] Added time limit for `memorise`.
+[17:57] Added time limit for `@memorise`.
 Tested on a simple `fib` method in IDLE.
 Testing worked.
 I'm going to choose 180 seconds as the time limit (3 minutes),
 because that won't clutter up the software too much,
 but it will allow for new, say, `hostify` entries within a reasonable time.
+
+[18:09] Added exception for None-returning functions in `@one_cache`.
+As well as docstring upgrades and comments.

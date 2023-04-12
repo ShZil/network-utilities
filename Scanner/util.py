@@ -389,21 +389,26 @@ def one_cache(f):
     2. Arguments don't matter; or
     3. The function is expected to be called with the same arguments.
 
+    The function must return some non-None value.
+
     Args:
-        f (function): the function to decorate and add a cache to
+        f (function): the function to decorate and add a cache to.
 
     Returns:
-        function: the decorated function with a cache
+        function: the decorated function with a cache.
     """
     # This is a list for it to be a reference type.
     memory = [None]
 
     def wrapper(*args):
+        # If I have cache, return it.
         if memory[0] is not None:
             return memory[0]
-        else:
-            memory[0] = f(*args)
-            return memory[0]
+        # If I don't have cache, call the function.
+        memory[0] = f(*args)
+        if memory[0] is None:
+            raise ValueError("A @one_cache function cannot return None!")
+        return memory[0]
 
     # Make `wrapper` inherit `f`'s properties.
     wrapper.__name__ = f.__name__
