@@ -1654,3 +1654,6 @@ Solution: wrap in try-except and ignore `RuntimeError`s.
 [01:37] Now closes much faster!
 TODO: split `gui.py` into files,
 preferably under the folder `GUI/` if possible.
+
+[16:46] Going over `util.py`, adding typehints, improving docstrings, writing comments.
+

@@ -71,9 +71,13 @@ def barstyle(name: str) -> str:
     function.options = {"format": style("default")}
     function = threadify(function)
     ```
+    
+    For `name`:
+    Whitespaces are ignored, capital letters are `.lower`ed.
+    If the name was not found, uses the Default style.
 
     Args:
-        name (str): the name of the style.
+        name (str): the name of the style. 
 
     Returns:
         str: the format.
@@ -290,14 +294,38 @@ def threadify(f, silent=False):
     return wrapper
 
 
-def progress(ratio: float, form: str, width: int):
+def progress(ratio: float, form: str, width: int) -> str:
+    """This function generates a printable progress bar.
+    The bar is filled according to `ratio`, which ranges from 0 (all done) to 1 (nothing done).
+    Notice, 0 means the bar is completely filled, and 1 means the bar is completely empty, not the opposite.
+    The ratio should decrease from 1 to 0, in order for the bar to fill up.
+    The characters are taken from `form`, which is a 4-chraracter string specifying the style of the bar.
+    `form` contains the start character, the filler, the no-filler, and the end character; in that order.
+    `width` is the amount of characters the progress bar can expand into, usually the width of the console, minus some padding.
+
+    Example:
+        progress(0.3, '[- ]', 20) -> '[--------   ] (70%)' (19 characters long)
+
+    Args:
+        ratio (float): the ratio of unfilled/all of the bar. Ranges from 0 to 1.
+        form (str): the characters of the progress bar. 4 characters long.
+        width (int): the amount of characters the bar may expand into and take up.
+
+    Returns:
+        str: a progress bar of this format: `{start}{done}{waiting}{end} ({percent}%)`
+    """
     if len(form) < 4:
         form = form.rjust(4)
-    start, fill, nofill, end = tuple(form)
+    start, fill, nofill, end, *ignore = tuple(form)
     width -= len("[] (100%)")
-    done = fill * ceil(width * (1 - ratio))
-    waiting = nofill * floor(width * (ratio))
-    percent = ceil(100 * (1 - ratio))
+
+    done_length: int = ceil(width * (1 - ratio))
+    done: str = fill * done_length
+
+    wating_length: int = floor(width * (ratio))
+    waiting: str = nofill * wating_length
+
+    percent: int = ceil(100 * (1 - ratio))
 
     return f"{start}{done}{waiting}{end} ({percent}%)"
 
@@ -306,6 +334,8 @@ def memorise(f):
     """A decorator that saves the return value of a function to a cache,
     so that when it's called again (with the same arguments!),
     no calculations are made and the result is returned from the cache.
+    The arguments to the function must be hashable,
+    so no lists or sets, but it can get ints or strings or tuples.
 
     Args:
         f (function): the function to decorate and add a cache to
