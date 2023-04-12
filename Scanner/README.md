@@ -1666,3 +1666,11 @@ but it will allow for new, say, `hostify` entries within a reasonable time.
 
 [18:09] Added exception for None-returning functions in `@one_cache`.
 As well as docstring upgrades and comments.
+
+
+
+### 2023-04-13
+[01:58] Improved, I'd say polished, the `util.py` module.
+Added typehints, wrote comments, and updated docstrings.
+Also changed code (moved expressions out of conditional into variables) to make it clearer (in `JustifyPrinting`)
+Added printing as the module's description.

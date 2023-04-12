@@ -1,3 +1,4 @@
+from typing import Callable
 from import_handler import ImportDefence
 with ImportDefence():
     from io import StringIO
@@ -330,7 +331,7 @@ def progress(ratio: float, form: str, width: int) -> str:
     return f"{start}{done}{waiting}{end} ({percent}%)"
 
 
-def memorise(f):
+def memorise(f: Callable) -> Callable:
     """A decorator that saves the return value of a function to a cache,
     so that when it's called again (with the same arguments!),
     no calculations are made and the result is returned from the cache.
@@ -380,7 +381,7 @@ def memorise(f):
     return wrapper
 
 
-def one_cache(f):
+def one_cache(f: Callable) -> Callable:
     """A decorator that saves the return value of a function to a cache,
     so that when it's called again,
     no calculations are made and the result is returned from the cache.
@@ -425,7 +426,7 @@ def render_opacity(percent: int | float):
     ...
     80%-100% -> "█"
 
-    if the percent is outside the range [0, 100], returns "X".
+    if the percent is outside the range [0, 100] inclusive, returns "X".
 
     ```
         -10%  X
@@ -468,12 +469,15 @@ def render_opacity(percent: int | float):
 
     characters = " ░▒▓█"
     # characters = " -─=≡▄█"
+
+    # the 0.1 doesn't change the results,
+    # it just prevents an `IndexError: string index out of range` for `percent=100`.
     jump = 0.1 + 100 / len(characters)
     level = floor(percent / jump)
     return characters[level]
 
 
-def nameof(action):
+def nameof(action: Callable) -> str:
     """Returns a short description of a function by the following logic:
     If a docstring exists, and its length is less than 100 characters, return the docstring.
     Otherwise, return the function's name.
@@ -547,6 +551,12 @@ class _SplitStringIO:
     """This class is like the io.StringIO, but it splits different `write` statements.
     Internally, this is a `list` of `StringIO`s.
     Not meant for use outside the `util` module.
+
+    Implements:
+    `__init__`: initialises an empty list.
+    `write`: adds a StringIO to the list, and writes the data into it.
+    `getvalue`: returns a list of all the `.getvalue`s of the `StringIO`s.
+    `flush`: does nothing.
     """
 
     def __init__(self):
@@ -604,8 +614,9 @@ class JustifyPrinting(InstantPrinting):
             # + Length of current block
             # + assuming `MIN_SEP` spaces in-between (thus, #spaces = #blocks * MIN_SEP)
             # > width of console in characters
-            if sum(map(len, lines[-1])) + len(block) + \
-                    len(lines[-1]) * MIN_SEP > width:
+            all_previous_blocks = sum(map(len, lines[-1]))
+            spaces_in_between = len(lines[-1]) * MIN_SEP
+            if all_previous_blocks + len(block) + spaces_in_between > width:
                 lines.append([])
             lines[-1].append(block)
 
@@ -735,3 +746,5 @@ class AutoLinebreaks(InstantPrinting):
 
 if __name__ == '__main__':
     print("This is a utility module.")
+    print("It provides various methods, content managers, and decorators,")
+    print("That are used all throughout the software.")
