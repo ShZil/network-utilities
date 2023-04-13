@@ -16,7 +16,7 @@ from globalstuff import G, terminator
 from files import importer, exporter
 from register import Register
 import db
-from util import one_cache
+from Decorators import one_cache
 from ipconfig import ipconfig
 
 from PyQt5.QtCore import Qt

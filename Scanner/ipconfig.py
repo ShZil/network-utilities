@@ -1,5 +1,5 @@
 from import_handler import ImportDefence
-from util import one_cache
+from Decorators import one_cache
 
 with ImportDefence():
     from scapy.interfaces import get_working_ifaces
