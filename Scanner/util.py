@@ -17,20 +17,6 @@ __author__ = 'Shaked Dan Zilberman'
 MAX_THREADS: int = 50
 
 
-def print_dict(x: dict) -> None:
-    """Prints a python dictionary using JSON syntax and console colouring.
-
-    Args:
-        x (dict): the dictionary to print.
-    """
-    formatted_json = dumps(x, sort_keys=False, indent=4)
-    colorful_json = highlight(
-        formatted_json,
-        lexers.JsonLexer(),
-        formatters.TerminalFormatter()
-    )
-    print(colorful_json)
-
 
 def shift(seq: list, n: int) -> list:
     """Shifts / Rotates / Rolls a list `seq` by `n` places.
