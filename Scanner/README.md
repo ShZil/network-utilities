@@ -1705,3 +1705,7 @@ Also, "if it ain't broke, don't fix it", but this really seems useless,
 because `threadify`-ied functions are not usually long tasks.
 So, this can be considered as moving responsibility:
 timeouts are the responsibility of `f`, not `@threadify`.
+
+[20:38] I've just created two diagrams on `draw.io`: of `@threadify` and of `@memorise`.
+
+[20:40] Dissolving `util.py` into different files. Moved all the printing classes to `PrintingContexts.py`.
