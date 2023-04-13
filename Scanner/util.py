@@ -8,8 +8,6 @@ with ImportDefence():
     from threading import Thread, active_count
     from time import sleep
     import sys
-    from pygments import highlight, lexers, formatters
-    from json import dumps
     import os
 
 
@@ -461,22 +459,6 @@ def render_opacity(percent: int | float):
     level = floor(percent / jump)
     return characters[level]
 
-
-def nameof(action: Callable) -> str:
-    """Returns a short description of a function by the following logic:
-    If a docstring exists, and its length is less than 100 characters, return the docstring.
-    Otherwise, return the function's name.
-
-    Args:
-        action (function): the function to be named. Primarily, functions intended to be used as actions.
-
-    Returns:
-        str: the name chosen for the function.
-    """
-    if action.__doc__ and len(action.__doc__) < 100:
-        return action.__doc__
-    else:
-        return action.__name__
 
 if __name__ == '__main__':
     print("This is a utility module.")

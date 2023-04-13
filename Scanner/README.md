@@ -1709,3 +1709,25 @@ timeouts are the responsibility of `f`, not `@threadify`.
 [20:38] I've just created two diagrams on `draw.io`: of `@threadify` and of `@memorise`.
 
 [20:40] Dissolving `util.py` into different files. Moved all the printing classes to `PrintingContexts.py`.
+
+[20:43] Moved `print_dict` from `util.py` to `CommandLineStyle.py`.
+
+[20:45] This function wasn't used anywhere (from `util.py`):
+```py
+def nameof(action: Callable) -> str:
+    """Returns a short description of a function by the following logic:
+    If a docstring exists, and its length is less than 100 characters, return the docstring.
+    Otherwise, return the function's name.
+
+    Args:
+        action (function): the function to be named. Primarily, functions intended to be used as actions.
+
+    Returns:
+        str: the name chosen for the function.
+    """
+    if action.__doc__ and len(action.__doc__) < 100:
+        return action.__doc__
+    else:
+        return action.__name__
+```
+It was probably in `main.py`, but it went into unmaintained territory.
