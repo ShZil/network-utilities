@@ -3,7 +3,7 @@ with ImportDefence():
     import requests
 
 from NetworkStorage import NetworkStorage
-from util import one_cache
+from CacheDecorators import one_cache
 
 def public_address_action():
     NetworkStorage().add(get_public_ip())

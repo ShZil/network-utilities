@@ -1,6 +1,8 @@
 from import_handler import ImportDefence
 with ImportDefence():
-    from util import memorise, NoPrinting, threadify
+    from CacheDecorators import memorise
+    from PrintingContexts import NoPrinting
+    from util import threadify
 
     from subprocess import CalledProcessError, check_output as read_command, DEVNULL
 

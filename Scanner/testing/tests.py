@@ -3,7 +3,9 @@ import sys
 
 from ip_handler import bitify, unbitify
 from ipconfig import dictify, ipconfig
-from util import NoPrinting, shift, threadify
+from PrintingContexts import NoPrinting
+from scans.ICMP import shift
+from util import threadify
 
 
 def dictify_example1():

@@ -4,7 +4,8 @@ with ImportDefence():
     from scapy.all import sr1, TCP, IP
     from random import randint
     
-    from util import threadify, InstantPrinting
+    from util import threadify
+    from PrintingContexts import InstantPrinting
 
 
 # A range for the scanned ports.

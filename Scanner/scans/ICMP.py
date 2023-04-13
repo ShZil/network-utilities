@@ -1,7 +1,8 @@
 from import_handler import ImportDefence
 
 with ImportDefence():
-    from util import threadify, barstyle, InstantPrinting, TablePrinting, JustifyPrinting, AutoLinebreaks
+    from util import threadify, barstyle
+    from PrintingContexts import InstantPrinting, TablePrinting, JustifyPrinting, AutoLinebreaks
     from ipconfig import ipconfig
     from NetworkStorage import NetworkStorage
     from colors import Colors

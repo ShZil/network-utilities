@@ -1,5 +1,5 @@
 from ipconfig import ipconfig
-from util import memorise
+from CacheDecorators import memorise
 
 __author__ = 'Shaked Dan Zilberman'
 

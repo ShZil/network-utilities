@@ -4,7 +4,7 @@ with ImportDefence():
     import ipaddress
     from queue import Queue
 
-from util import JustifyPrinting
+from PrintingContexts import JustifyPrinting
 from ipconfig import ipconfig
 from ip_handler import get_all_possible_addresses
 from globalstuff import G
