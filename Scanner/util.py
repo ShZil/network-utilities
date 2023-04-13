@@ -222,11 +222,11 @@ def threadify(f, silent=False):
                 if terminator.is_set():
                         return
 
+        # Rename `threadify_start_threads` to user-friendly name
+        threadify_start_threads.__name__ = f.__name__ + '_threadify_start_threads'
+
         starter = Thread(target=threadify_start_threads, args=(threads, ))
         starter.start()
-
-        # BUGFIX ************: Make it so the progress bar starts already
-        # during threads.starts()
 
         # Print a progress bar if requested
         if options["printing"]:
