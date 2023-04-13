@@ -190,8 +190,6 @@ def threadify(f, silent=False):
             args = arg if isinstance(arg, tuple) else (arg, )
             try:
                 # Execute the function & save to `values` list.
-
-                # Force the function to end within a given timeout!
                 values[index] = func(*args)
             except Exception as e:
                 # Catch any exception and add it to the `fails` queue

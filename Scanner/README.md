@@ -1674,3 +1674,34 @@ As well as docstring upgrades and comments.
 Added typehints, wrote comments, and updated docstrings.
 Also changed code (moved expressions out of conditional into variables) to make it clearer (in `JustifyPrinting`)
 Added printing as the module's description.
+
+[16:35] I've been dreaming tonight, mostly about time travel, but a bit about the Reccomended Scan feature.
+I've realised the idea is close to AI ML Transformers,
+where you feed it an ordered list of tokens (words for language models, past scans for me),
+and you get a probability list for the next token (which would be the Reccomended Scan).
+
+However, this requires too much training data,
+and will be heavily biased by my own choices of which scans to run if I train it on my behaviour,
+so a better option is to have a probability list that gets updated based on each scan that's executed.
+That would simply fall under `Register`'s responsibility.
+
+Perhaps I could design a Directed Graph (nodes = scans),
+whose edges would show the "supportiveness" of each scan towards the others.
+But that doesn't allow me to get much context:
+for example, if the user did ICMP Sweep thrice in a row, I'd recommend Live ICMP.
+Or, maybe I can do that with the proposed system?
+I'll have to think more, design some stuff, and write some code.
+
+[19:15] I want to draw some stuff.
+E.g. I already have a vision for how to explain `@threadify` visually.
+I'll use `draw.io`, or at least try, and I'll see what I can get.
+
+[19:50] In `util.py:@threadify.wrapper.task`, in line 194, there was this comment:
+```py
+# Force the function to end within a given timeout!
+```
+I removed it, because I no longer deem the addition of this feature necessary.
+Also, "if it ain't broke, don't fix it", but this really seems useless,
+because `threadify`-ied functions are not usually long tasks.
+So, this can be considered as moving responsibility:
+timeouts are the responsibility of `f`, not `@threadify`.
