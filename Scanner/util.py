@@ -16,28 +16,6 @@ MAX_THREADS: int = 50
 
 
 
-def shift(seq: list, n: int) -> list:
-    """Shifts / Rotates / Rolls a list `seq` by `n` places.
-
-    Example:
-        shift([1, 2, 3, 4], 1) -> [2, 3, 4, 1]
-
-    Args:
-        seq (list): The list to shift.
-        n (int): The amount of places to shift by.
-
-    Returns:
-        list: the shifted list.
-    """
-    if len(seq) == 0:
-        return []
-    if len(seq) == 1:
-        return seq
-    if n == 0:
-        return seq
-    n = n % len(seq)
-    return seq[n:] + seq[:n]
-
 
 def barstyle(name: str) -> str:
     """Selects a style for @threadify's progress bar.
@@ -398,66 +376,6 @@ def one_cache(f: Callable) -> Callable:
     wrapper.__name__ = f.__name__
     wrapper.__doc__ = f.__doc__
     return wrapper
-
-
-def render_opacity(percent: int | float):
-    """Returns a character to display a given opacity/fillness,
-    according to a percent:
-    0%-20% -> " "
-    ...
-    40%-60% -> "▒"
-    ...
-    80%-100% -> "█"
-
-    if the percent is outside the range [0, 100] inclusive, returns "X".
-
-    ```
-        -10%  X
-         -5%  X
-         0%
-         5%
-         10%
-         15%
-         20%
-         25%  ░
-         30%  ░
-         35%  ░
-         40%  ░
-         45%  ▒
-         50%  ▒
-         55%  ▒
-         60%  ▒
-         65%  ▓
-         70%  ▓
-         75%  ▓
-         80%  ▓
-         85%  █
-         90%  █
-         95%  █
-        100%  █
-        105%  X
-        110%  X
-        115%  X
-        120%  X
-    ```
-
-    Args:
-        percent (int | float): the percent to match.
-
-    Returns:
-        str: a single character representing that percent of fillness.
-    """
-    if not (0 <= percent <= 100):
-        return "X"
-
-    characters = " ░▒▓█"
-    # characters = " -─=≡▄█"
-
-    # the 0.1 doesn't change the results,
-    # it just prevents an `IndexError: string index out of range` for `percent=100`.
-    jump = 0.1 + 100 / len(characters)
-    level = floor(percent / jump)
-    return characters[level]
 
 
 if __name__ == '__main__':
