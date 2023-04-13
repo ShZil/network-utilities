@@ -7,7 +7,7 @@ with ImportDefence():
     from NetworkStorage import NetworkStorage
     from colors import Colors
     from hostify import hostify, hostify_sync
-    from ip_handler import subnet_address_range, subnet_slash_notation
+    from ip_handler import subnet_address_range
     
     from queue import Queue
     from threading import Thread

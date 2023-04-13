@@ -226,5 +226,5 @@ def auto_select_interface(ip: str):
 
 if __name__ == '__main__':
     ipconfig()
-    from util import print_dict
+    from CommandLineStyle import print_dict
     print_dict(ipconfig())

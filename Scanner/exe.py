@@ -13,7 +13,6 @@ with ImportDefence():
     import tkinter
     import markdown
 
-from util import *
 from gui import *
 from NetworkStorage import *
 from register import Register
@@ -27,6 +26,8 @@ from scans.OS_ID import operating_system_fingerprinting
 from scans.ARP import scan_ARP, scan_ARP_continuous
 from scans.ICMP import scan_ICMP, scan_ICMP_continuous
 from scans.TCP import scan_TCP
+from time import sleep
+import os
 
 
 def keep_resolving_storage():
