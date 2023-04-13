@@ -587,6 +587,7 @@ class Hover:
         from kivy.core.window import Window
         Window.bind(mouse_pos=Hover.update)
         Window.bind(size=state.resize_callback)
+        return 0  # to comply with @one_cache's rule: A @one_cache function cannot return None!
 
     @staticmethod
     def add(instance):
