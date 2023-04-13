@@ -1734,3 +1734,5 @@ It was probably in `main.py`, but it went into unmaintained territory.
 
 [22:23] Moved `shift` and `render_opacity` from `util.py` to `scans/ICMP.py`,
 because they are only used under that module.
+
+[22:27] Moved `one_cache` and `memorise` into `Decorators.py`.
