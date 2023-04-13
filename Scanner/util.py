@@ -342,10 +342,10 @@ def memorise(f: Callable) -> Callable:
     The amount of seconds can be varied with `TIME_LIMIT`.
 
     Args:
-        f (function): the function to decorate and add a cache to
+        f (function): the function to decorate and add a cache to.
 
     Returns:
-        function: the decorated function with a cache
+        function: the decorated function with a cache.
     """
     memory = {}
     from time import time as now
