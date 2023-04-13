@@ -1743,3 +1743,5 @@ added printing statements as description,
 changed `tests: list` to dynamic with help from ChatGPT and the `inspect` module,
 added comments.
 This has changed tests_log.txt because the order of the functions is now different.
+
+[23:10] Sort `tests.py`'s `tests: list` in alphabetical order.

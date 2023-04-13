@@ -121,6 +121,8 @@ def test() -> None:
     # extract the functions, if they're defined here (i.e. not imported),
     # and exclude `test` (because that'll cause some infinite recursion issues.)
     tests = [func for name, func in tests if func.__module__ == __name__ and name != 'test']
+    # sort by alphabetical order
+    tests.sort(key=lambda func: func.__name__)
     # Each element is a boolean function. False means the test failed.
     results = [not run() for run in tests]
     # Log all tests, both successful and unsucessful.
