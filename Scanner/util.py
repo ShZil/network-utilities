@@ -254,6 +254,7 @@ def threadify(f, silent=False):
         # Join all threads
         # You have to join `starter` first, because if somehow some thread is
         # still not active, joining it will raise a RuntimeError.
+        # Also, if the `terminator` was set, not all threads will have been started, and you need to catch those RuntimeErrors.
         starter.join()
         for thread in threads:
             try:
