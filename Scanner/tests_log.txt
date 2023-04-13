@@ -1,14 +1,14 @@
+bitify_examples Successful
 dictify_example1 Successful
 dictify_example2 Successful
+does_fallback_font_exist Successful
+does_winpcap_exist Successful
 ipconfig_data Successful
-bitify_examples Successful
+is_sqlite_table_information_present Successful
+is_win32_pip_installed Successful
+shift_list_test Successful
+threadify_echo_test Successful
 unbitify_examples Successful
 valid_subnet_mask Successful
-threadify_echo_test Successful
-shift_list_test Successful
-does_winpcap_exist Successful
-does_fallback_font_exist Successful
-is_win32_pip_installed Successful
-is_sqlite_table_information_present Successful
 
 All tests were successful.

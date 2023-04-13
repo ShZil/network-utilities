@@ -1737,3 +1737,9 @@ because they are only used under that module.
 
 [22:27] Moved `one_cache` and `memorise` into `Decorators.py`.
 Renamed to `CacheDecorators.py`.
+
+[23:07] Worked on `test.py`:
+added printing statements as description,
+changed `tests: list` to dynamic with help from ChatGPT and the `inspect` module,
+added comments.
+This has changed tests_log.txt because the order of the functions is now different.

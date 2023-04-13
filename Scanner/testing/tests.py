@@ -6,6 +6,7 @@ from ipconfig import dictify, ipconfig
 from PrintingContexts import NoPrinting
 from scans.ICMP import shift
 from util import threadify
+import inspect
 
 
 def dictify_example1():
@@ -89,6 +90,8 @@ def does_fallback_font_exist():
 
 def is_win32_pip_installed():
     """`pywin32` is a module necessary for the GUI. It was not installed. Installing it failed."""
+    # This is supposed to be resolved with the updates to ImportDefence,
+    # but you can never be too safe.
     try:
         import win32api
         return True
@@ -110,17 +113,24 @@ def is_sqlite_table_information_present():
     except FileNotFoundError:
         return False
 
-# Each element is a boolean function. False means the test failed.
-tests = [dictify_example1, dictify_example2, ipconfig_data, bitify_examples, unbitify_examples, valid_subnet_mask, threadify_echo_test, shift_list_test, does_winpcap_exist, does_fallback_font_exist, is_win32_pip_installed, is_sqlite_table_information_present]
+
 def test() -> None:
     os.system("")  # Enables ANSI colouring
+    # get all funcstions defined in this module (tests.py)
+    tests = inspect.getmembers(sys.modules[__name__], inspect.isfunction)
+    # extract the functions, if they're defined here (i.e. not imported),
+    # and exclude `test` (because that'll cause some infinite recursion issues.)
+    tests = [func for name, func in tests if func.__module__ == __name__ and name != 'test']
+    # Each element is a boolean function. False means the test failed.
     results = [not run() for run in tests]
+    # Log all tests, both successful and unsucessful.
     with open('tests_log.txt', 'w') as log:
         log.write('\n'.join([
                 test.__name__ + " " + ("Successful" if not result else "Unsucessful")
                 for test, result in zip(tests, results)
             ]))
         if not any(results): log.write("\n\nAll tests were successful.")
+    # If any tests failed, print them to the user, and ask for confirmation.
     if any(results):
         print("Failed tests:")
         for i in [index for index, bad_result in enumerate(results) if bad_result]:
@@ -135,4 +145,6 @@ def test() -> None:
 
 if __name__ == '__main__':
     print("This module runs a few tests.")
-    test()
+    print("You can define additional tests here according to these guidelines:")
+    print("    - the return value is boolean: True means all good, False means the test failed.")
+    print("    - You can define a docstring as a custom error message, otherwise, the function name will be displayed.")
