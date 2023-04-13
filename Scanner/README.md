@@ -1745,3 +1745,6 @@ added comments.
 This has changed tests_log.txt because the order of the functions is now different.
 
 [23:10] Sort `tests.py`'s `tests: list` in alphabetical order.
+
+[23:12] Deleted `logs.txt` because it wasn't used anywhere.
+Probably from an older version of `tests.py`.

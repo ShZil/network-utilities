@@ -1,9 +1,0 @@
-dictify_example1 Successful
-dictify_example2 Successful
-ipconfig_data Successful
-bitify_examples Successful
-unbitify_examples Successful
-valid_subnet_mask Successful
-threadify_echo_test Successful
-
-All tests were successful.
