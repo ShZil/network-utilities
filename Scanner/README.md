@@ -1748,3 +1748,12 @@ This has changed tests_log.txt because the order of the functions is now differe
 
 [23:12] Deleted `logs.txt` because it wasn't used anywhere.
 Probably from an older version of `tests.py`.
+
+
+
+### 2023-04-14
+[10:25] I'm gonna sketch a simple Python programme to calculate a probability list,
+and apply steps to it with a Directed Weighted Hardcoded Graph.
+This is to see if I can design such a system,
+or if I should design such a system,
+for the `★ Recommended Scan` feature.
