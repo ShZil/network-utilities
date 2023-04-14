@@ -2,7 +2,7 @@ import networkx as nx
 import numpy  # Sure?
 
 G = nx.DiGraph()
-probabilities = []
+probabilities = {}
 
 def construct_graph():
     global probabilities, G
@@ -20,13 +20,13 @@ def construct_graph():
     G.add_weighted_edges_from(list((n, n, -1) for n in G.nodes))
     # positive values are "Yeah, if you executed `v`, consider executing `u`".
     # negative values are "If you executed `v` please do not execute `u`".
-    probabilities = [1 for node in G]
+    probabilities = {node: 1 for node in G}
 
 
 def normalise():
     global probabilities
-    s = sum(probabilities)
-    probabilities = [float(i)/s for i in probabilities]
+    s = sum(probabilities.values())
+    probabilities = {node: float(i)/s for node, i in probabilities.items()}
     
 
 def render_graph():
@@ -37,8 +37,7 @@ def render_graph():
     print("Edge colours:", colors)
     print("Node probabilities:", probabilities)
     delta_p = -1 / len(probabilities)
-    print("Node probabilities shifted:", [p + delta_p for p in probabilities])
-    nodes = nx.draw_networkx_nodes(G, pos, node_size=100, node_color=[p + delta_p for p in probabilities], cmap=plt.cm.RdYlGn)
+    nodes = nx.draw_networkx_nodes(G, pos, node_size=100, node_color=[p + delta_p for p in probabilities.values()], cmap=plt.cm.RdYlGn)
     edges = nx.draw_networkx_edges(
         G,
         pos,
