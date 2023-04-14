@@ -1757,3 +1757,13 @@ and apply steps to it with a Directed Weighted Hardcoded Graph.
 This is to see if I can design such a system,
 or if I should design such a system,
 for the `★ Recommended Scan` feature.
+
+[11:04] Update on that.
+I have a system that takes in a hard-coded graph of scans,
+creates a static probabilities list,
+and renders the graph with matplotlib.
+The rendering allows me to see all the labels,
+the connection strengths (as colours),
+and the probability of each node (as colours).
+TODO: I'll add normalisation for the `probabilities: list[float]`,
+and add an ability to choose (randomly) and update probabilities.
