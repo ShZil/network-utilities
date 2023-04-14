@@ -1769,3 +1769,41 @@ TODO: I'll add normalisation for the `probabilities: list[float]`,
 and add an ability to choose (randomly) and update probabilities.
 
 [11:23] Trying to normalise the probabilities.
+
+[11:37] Brainstorming with mom, I wrote the following on a piece of paper in red ink:
+```
+(11:37)
+ - - - - - - - - - -
+|   ↷               |     ╭         ╮
+    (1)   ←→    ↶         | 1: 30%, |
+|             (2)   |     | 2: 10%,  |
+                          | 3: 40%,  |
+|       ⭦   ⭧       |     | 4: 20%  |
+         (3)      ↷       ╰         ╯
+|         ⭮     (4) |           ==
+ - - - - - - - - - -            100%
+
+
+Act 2.
+Keep sum → constant.
+Take from (-) connections and flow over to (+)'s.
+```
+And on the other side:
+```
+look at node 2's connections.
+edges[2] = ┌ 1: +0.4, ┐
+           │ 2: -1.1, │
+           │ 3: 0,    │
+           └ 4: 0     ┘
+```
+
+[11:48] And on another piece of paper,
+an enlagred version of the graph (which I'm not gonna waste time drawing, again),
+and this conclusion:
+```
+11:48
+Treat probabilities as fluid, that flows,
+and normalise.
+```
+
+[11:55] Went upstairs to digitalise all the papers.
