@@ -1767,3 +1767,5 @@ the connection strengths (as colours),
 and the probability of each node (as colours).
 TODO: I'll add normalisation for the `probabilities: list[float]`,
 and add an ability to choose (randomly) and update probabilities.
+
+[11:23] Trying to normalise the probabilities.

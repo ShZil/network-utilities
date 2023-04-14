@@ -20,16 +20,25 @@ def construct_graph():
     G.add_weighted_edges_from(list((n, n, -1) for n in G.nodes))
     # positive values are "Yeah, if you executed `v`, consider executing `u`".
     # negative values are "If you executed `v` please do not execute `u`".
-    probabilities = [1 / len(G) for node in G]
+    probabilities = [1 for node in G]
+
+
+def normalise():
+    global probabilities
+    s = sum(probabilities)
+    probabilities = [float(i)/s for i in probabilities]
     
 
 def render_graph():
     import matplotlib.pyplot as plt
+    import matplotlib.colors as mcolors
     pos = nx.circular_layout(G)
     colors = [w['weight'] for v, u, w in G.edges(data=True)]
-    print(colors)
-    print(probabilities)
-    nodes = nx.draw_networkx_nodes(G, pos, node_size=100, node_color=probabilities, cmap=plt.cm.RdYlGn)
+    print("Edge colours:", colors)
+    print("Node probabilities:", probabilities)
+    delta_p = -1 / len(probabilities)
+    print("Node probabilities shifted:", [p + delta_p for p in probabilities])
+    nodes = nx.draw_networkx_nodes(G, pos, node_size=100, node_color=[p + delta_p for p in probabilities], cmap=plt.cm.RdYlGn)
     edges = nx.draw_networkx_edges(
         G,
         pos,
@@ -47,6 +56,7 @@ def render_graph():
 
 def main():
     construct_graph()
+    normalise()
     render_graph()
     # step
     # renormalise
