@@ -33,7 +33,7 @@ def normalise():
 
 def render_ax1(fig, ax1):
     pos = nx.circular_layout(G)
-    node_values = probabilities.values()
+    node_values = list(probabilities.values())
 
     cmap = cm.RdYlGn
     norm = plt.Normalize(vmin=0, vmax=1)
