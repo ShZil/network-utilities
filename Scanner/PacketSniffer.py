@@ -55,14 +55,21 @@ class ListWithSQL:
         raise NotImplementedError("I don't think you should pop elements from a ListWithSQL.")
 
     def index(self, __value: _T, __start: SupportsIndex = 0, __stop: SupportsIndex = sys.maxsize) -> int:
-        if __start != 0 or __stop != sys.maxsize:
-            raise NotImplementedError("ListWithSQL.index() is not implemented for non-default `start` or `stop` values.")
-        with sqlite3.connect(self.path) as conn:
-            cursor = conn.cursor()
-            row = cursor.execute('SELECT item FROM ? WHERE item = ?', (self.tablename, pickle.dumps(__value),)).fetchone()
-            if row != None:
-                return row['id']
-        return self.ram.index(__value)
+        if __start < 0:
+            __start += self.length
+        if __stop < 0:
+            __stop += self.length
+        if __start < 0:
+            __start = 0
+        if __stop > self.length:
+            __stop = self.length
+
+        for i in range(__start, __stop):
+            item = self[i]
+            if item == __value:
+                return i
+        else:
+            raise ValueError(f"{__value} is not in list")
     
     def count(self, __value: _T) -> int:
         with sqlite3.connect(self.path) as conn:
