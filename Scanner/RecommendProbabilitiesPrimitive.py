@@ -1,5 +1,6 @@
 import networkx as nx
-import numpy  # Sure?
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 
 G = nx.DiGraph()
 probabilities = {}
@@ -27,17 +28,19 @@ def normalise():
     global probabilities
     s = sum(probabilities.values())
     probabilities = {node: float(i)/s for node, i in probabilities.items()}
-    
 
-def render_graph():
+
+def render_ax1(fig, ax1):
     import matplotlib.pyplot as plt
     import matplotlib.colors as mcolors
-    fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(12, 6))
-    
+
+    cmap = mcolors.ListedColormap(['red', 'green'])
+    norm = mcolors.Normalize(vmin=0, vmax=1)
+
     pos = nx.circular_layout(G)
     colors = [w['weight'] for v, u, w in G.edges(data=True)]
-    delta_p = -1 / len(probabilities)
-    nodes = nx.draw_networkx_nodes(G, pos, node_size=100, node_color=[p + delta_p for p in probabilities.values()], cmap=plt.cm.RdYlGn, ax=ax1)
+    # delta_p = -1 / len(probabilities)
+    nodes = nx.draw_networkx_nodes(G, pos, node_size=100, node_color=[p for p in probabilities.values()], cmap=cmap, norm=norm, ax=ax1)
     edges = nx.draw_networkx_edges(
         G,
         pos,
@@ -51,13 +54,29 @@ def render_graph():
         ax=ax1
     )
     labels = nx.draw_networkx_labels(G, pos, ax=ax1)
+
     ax1.set_title("Graph")
-    
+    for node in G.nodes():
+        ax1.annotate(f"{probabilities[node]:.2f}", xy=pos[node], xytext=(-10, -10), textcoords="offset points")
+
+
+def render_ax2(fig, ax2):
     adj_matrix = nx.adjacency_matrix(G)
     adj_array = adj_matrix.toarray()
-    im = ax2.imshow(adj_array, cmap='hot', interpolation='nearest')
+    im = ax2.imshow(adj_array, cmap='coolwarm', interpolation='nearest', vmin=-1, vmax=1)
     ax2.set_title("Adjacency Matrix")
     fig.colorbar(im, ax=ax2)
+    for i in range(adj_array.shape[0]):
+        for j in range(adj_array.shape[1]):
+            ax2.text(j, i, f"{adj_array[i,j]:.2f}", ha="center", va="center", color="black")
+
+
+def render_graph():
+    fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(12, 6))
+    
+    render_ax1(fig, ax1)
+
+    render_ax2(fig, ax2)
     
     plt.show()
 
