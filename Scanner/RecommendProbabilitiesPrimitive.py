@@ -98,7 +98,7 @@ def render_ax2(fig, ax2):
 
 
 def render_graph():
-    fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(17, 7), gridspec_kw={'width_ratios': [1.3, 1]})
+    fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(17, 7), gridspec_kw={'width_ratios': [1.5, 1]})
     
     render_ax1(fig, ax1)
 

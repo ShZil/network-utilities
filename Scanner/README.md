@@ -1675,7 +1675,7 @@ Added typehints, wrote comments, and updated docstrings.
 Also changed code (moved expressions out of conditional into variables) to make it clearer (in `JustifyPrinting`)
 Added printing as the module's description.
 
-[16:35] I've been dreaming tonight, mostly about time travel, but a bit about the Reccomended Scan feature.
+[16:35] I've been dreaming tonight, mostly about time travel, but a bit about the Recommended Scan feature.
 I've realised the idea is close to AI ML Transformers,
 where you feed it an ordered list of tokens (words for language models, past scans for me),
 and you get a probability list for the next token (which would be the Reccomended Scan).
@@ -1812,3 +1812,11 @@ and normalise.
 
 [12:45] Use ChatGPT to quickly write the code to render the adjacency matrix of G,
 on a second subplot.
+
+[13:52] Polished the matplotlib result.
+I still need to enter actual values for the edges' weights...
+IDEA: I could make the edges' weights dynamic, and change based on choices.
+how would I do that, though?
+Maybe, each time a user chooses Action 1 and then Action 2,
+I could strengthen the link between them.
+For now, the connections are static.
