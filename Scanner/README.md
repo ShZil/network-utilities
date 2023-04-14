@@ -1807,3 +1807,8 @@ and normalise.
 ```
 
 [11:55] Went upstairs to digitalise all the papers.
+
+[12:31] Ate hummus (it was good), ready to implement.
+
+[12:45] Use ChatGPT to quickly write the code to render the adjacency matrix of G,
+on a second subplot.

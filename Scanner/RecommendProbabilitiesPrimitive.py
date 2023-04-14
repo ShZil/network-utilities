@@ -53,14 +53,23 @@ def render_graph():
     plt.show()
 
 
+def step(node):
+    edges = G.edges(node, data=True)
+    edges = [(dst, data['weight']) for src, dst, data in edges]
+    print(edges)
+    p = probabilities[node]
+    for scan, weight in edges:
+        probabilities[scan] += weight * p
+        print(f"Changed {scan} by {weight * p}")
+    
+
 def main():
     construct_graph()
     normalise()
     render_graph()
-    # step
-    # renormalise
-    # render
-        
+    step("ARP Live")
+    normalise()
+    render_graph()
 
 
 if __name__ == '__main__':
