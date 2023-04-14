@@ -34,13 +34,12 @@ def render_ax1(fig, ax1):
     import matplotlib.pyplot as plt
     import matplotlib.colors as mcolors
 
-    cmap = mcolors.ListedColormap(['red', 'green'])
-    norm = mcolors.Normalize(vmin=0, vmax=1)
+    cmap = mcolors.LinearSegmentedColormap.from_list("", ["red", "grey", "green"])
+    norm = plt.Normalize(vmin=0, vmax=1)
 
     pos = nx.circular_layout(G)
     colors = [w['weight'] for v, u, w in G.edges(data=True)]
-    # delta_p = -1 / len(probabilities)
-    nodes = nx.draw_networkx_nodes(G, pos, node_size=100, node_color=[p for p in probabilities.values()], cmap=cmap, norm=norm, ax=ax1)
+    nodes = nx.draw_networkx_nodes(G, pos, node_size=100, node_color=list(probabilities.values()), cmap=cmap, norm=norm, ax=ax1)
     edges = nx.draw_networkx_edges(
         G,
         pos,
@@ -58,6 +57,7 @@ def render_ax1(fig, ax1):
     ax1.set_title("Graph")
     for node in G.nodes():
         ax1.annotate(f"{probabilities[node]:.2f}", xy=pos[node], xytext=(-10, -10), textcoords="offset points")
+
 
 
 def render_ax2(fig, ax2):
