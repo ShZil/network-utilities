@@ -32,12 +32,12 @@ def normalise():
 def render_graph():
     import matplotlib.pyplot as plt
     import matplotlib.colors as mcolors
+    fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(12, 6))
+    
     pos = nx.circular_layout(G)
     colors = [w['weight'] for v, u, w in G.edges(data=True)]
-    print("Edge colours:", colors)
-    print("Node probabilities:", probabilities)
     delta_p = -1 / len(probabilities)
-    nodes = nx.draw_networkx_nodes(G, pos, node_size=100, node_color=[p + delta_p for p in probabilities.values()], cmap=plt.cm.RdYlGn)
+    nodes = nx.draw_networkx_nodes(G, pos, node_size=100, node_color=[p + delta_p for p in probabilities.values()], cmap=plt.cm.RdYlGn, ax=ax1)
     edges = nx.draw_networkx_edges(
         G,
         pos,
@@ -47,9 +47,18 @@ def render_graph():
         edge_color=colors,
         edge_cmap=plt.cm.RdYlGn,
         width=2,
-        arrows=True
+        arrows=True,
+        ax=ax1
     )
-    labels = nx.draw_networkx_labels(G, pos)
+    labels = nx.draw_networkx_labels(G, pos, ax=ax1)
+    ax1.set_title("Graph")
+    
+    adj_matrix = nx.adjacency_matrix(G)
+    adj_array = adj_matrix.toarray()
+    im = ax2.imshow(adj_array, cmap='hot', interpolation='nearest')
+    ax2.set_title("Adjacency Matrix")
+    fig.colorbar(im, ax=ax2)
+    
     plt.show()
 
 
