@@ -1,6 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+import matplotlib.cm as cm
 
 G = nx.DiGraph()
 probabilities = {}
@@ -18,7 +19,7 @@ def construct_graph():
         ("ICMP Sweep", "OS-ID", 0.5),
         ("ICMP Live", "OS-ID", 0.6)
     ])
-    G.add_weighted_edges_from(list((n, n, -1) for n in G.nodes))
+    G.add_weighted_edges_from(list((n, n, -0.9) for n in G.nodes))
     # positive values are "Yeah, if you executed `v`, consider executing `u`".
     # negative values are "If you executed `v` please do not execute `u`".
     probabilities = {node: 1 for node in G}
@@ -31,15 +32,17 @@ def normalise():
 
 
 def render_ax1(fig, ax1):
-    import matplotlib.pyplot as plt
-    import matplotlib.colors as mcolors
-
-    cmap = mcolors.LinearSegmentedColormap.from_list("", ["red", "grey", "green"])
-    norm = plt.Normalize(vmin=0, vmax=1)
-
     pos = nx.circular_layout(G)
+    node_values = probabilities.values()
+
+    cmap = cm.RdYlGn
+    norm = plt.Normalize(vmin=0, vmax=1)
+    sm = cm.ScalarMappable(norm=norm, cmap=cmap)
+
+    node_colors = [sm.to_rgba(value) for value in node_values]
+    nodes = nx.draw_networkx_nodes(G, pos, node_size=100, node_color=node_colors, ax=ax1)
+    
     colors = [w['weight'] for v, u, w in G.edges(data=True)]
-    nodes = nx.draw_networkx_nodes(G, pos, node_size=100, node_color=list(probabilities.values()), cmap=cmap, norm=norm, ax=ax1)
     edges = nx.draw_networkx_edges(
         G,
         pos,
@@ -53,10 +56,13 @@ def render_ax1(fig, ax1):
         ax=ax1
     )
     labels = nx.draw_networkx_labels(G, pos, ax=ax1)
-
     ax1.set_title("Graph")
-    for node in G.nodes():
-        ax1.annotate(f"{probabilities[node]:.2f}", xy=pos[node], xytext=(-10, -10), textcoords="offset points")
+    
+    for node, value in probabilities.items():
+        ax1.annotate(f"{value:.2f}", xy=pos[node], xytext=(-10, -10), textcoords="offset points")
+    
+    sm.set_array(node_values)
+    plt.colorbar(sm, ax=ax1)
 
 
 
