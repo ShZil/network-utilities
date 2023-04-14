@@ -74,8 +74,10 @@ class ListWithSQL:
     def count(self, __value: _T) -> int:
         with sqlite3.connect(self.path) as conn:
             cursor = conn.cursor()
-            row = cursor.execute('SELECT COUNT(item) FROM ? WHERE item = ?', (self.tablename, pickle.dumps(__value),)).fetchone()
-            return row[0] + self.ram.count(__value)
+            cursor.execute(f"SELECT COUNT(*) FROM {self.tablename} WHERE item=?", (pickle.dumps(__value),))
+            sql_count = cursor.fetchone()[0]
+        ram_count = self.ram.count(__value)
+        return ram_count + sql_count
 
     def insert(self, __index: SupportsIndex, __object: _T) -> None:
         raise NotImplementedError("Inserting manually is not supported for ListWithSQL. Please use `append` instead.")
