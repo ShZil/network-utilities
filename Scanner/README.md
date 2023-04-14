@@ -1820,3 +1820,8 @@ how would I do that, though?
 Maybe, each time a user chooses Action 1 and then Action 2,
 I could strengthen the link between them.
 For now, the connections are static.
+
+[15:35] I've started implementing ListWithSQL.
+However, this is a really long task.
+So, this is my progress so far,
+and from now on Imma try to use ChatGPT to fill the rest.
