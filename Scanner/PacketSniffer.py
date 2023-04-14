@@ -13,7 +13,7 @@ with ImportDefence():
 
 class ListWithSQL:
     CREATE = '''CREATE TABLE IF NOT EXISTS ? (id INTEGER PRIMARY KEY AUTOINCREMENT, item BLOB)'''
-    INSERT = f"INSERT INTO ? (object) VALUES (?)"
+    INSERT = "INSERT INTO {} (item) VALUES (?)"
     def __init__(self, path: str, table_name: str, maxram: int = 100):
         self.path = path
         self.tablename = table_name
@@ -23,7 +23,7 @@ class ListWithSQL:
 
         with sqlite3.connect(self.path) as conn:
             cursor = conn.cursor()
-            cursor.executemany(ListWithSQL.CREATE, (self.tablename, ))
+            cursor.execute(ListWithSQL.CREATE, (self.tablename,))
             conn.commit()
 
     
@@ -40,10 +40,10 @@ class ListWithSQL:
             self._flush_to_sql()
     
     def _flush_to_sql(self) -> None:
-        to_database = [(self.tablename, pickle.dumps(p)) for p in self.ram]
+        to_database = [(pickle.dumps(p),) for p in self.ram]
         with sqlite3.connect(self.path) as conn:
             cursor = conn.cursor()
-            cursor.executemany(ListWithSQL.INSERT, to_database)
+            cursor.executemany(ListWithSQL.INSERT.format(self.tablename), to_database)
             conn.commit()
         self.ram = []
     

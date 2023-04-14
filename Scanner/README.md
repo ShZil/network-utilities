@@ -1825,3 +1825,6 @@ For now, the connections are static.
 However, this is a really long task.
 So, this is my progress so far,
 and from now on Imma try to use ChatGPT to fill the rest.
+
+[15:37] Unsurprisingly, I made a mistake.
+Surprisingly, ChatGPT caught it and fixed it for me.
