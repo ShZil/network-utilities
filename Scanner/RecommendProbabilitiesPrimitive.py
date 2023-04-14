@@ -35,18 +35,20 @@ def render_ax1(fig, ax1):
     pos = nx.circular_layout(G)
     node_values = list(probabilities.values())
 
-    cmap = cm.RdYlGn
-    norm = plt.Normalize(vmin=0, vmax=1)
-    sm = cm.ScalarMappable(norm=norm, cmap=cmap)
+    # Node colormap and colorbar
+    cmap_nodes = cm.PiYG_r
+    norm_nodes = plt.Normalize(vmin=0, vmax=1)
+    sm_nodes = cm.ScalarMappable(norm=norm_nodes, cmap=cmap_nodes)
 
-    node_colors = [sm.to_rgba(value) for value in node_values]
+    node_colors = [sm_nodes.to_rgba(value) for value in node_values]
     nodes = nx.draw_networkx_nodes(G, pos, node_size=100, node_color=node_colors, ax=ax1)
-    
+
+    # Edge colormap and colorbar
     colors = [w['weight'] for v, u, w in G.edges(data=True)]
-    cmap = plt.cm.RdYlGn
-    norm = plt.Normalize(vmin=min(colors), vmax=max(colors))
-    sm = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
-    sm.set_array([])
+    cmap_edges = plt.cm.coolwarm_r
+    norm_edges = plt.Normalize(vmin=-1, vmax=1)
+    sm_edges = plt.cm.ScalarMappable(norm=norm_edges, cmap=cmap_edges)
+    sm_edges.set_array([])
 
     edges = nx.draw_networkx_edges(
         G,
@@ -55,7 +57,7 @@ def render_ax1(fig, ax1):
         arrowstyle="->",
         arrowsize=10,
         edge_color=colors,
-        edge_cmap=cmap,
+        edge_cmap=cmap_edges,
         edge_vmin=min(colors),
         edge_vmax=max(colors),
         width=2,
@@ -63,8 +65,8 @@ def render_ax1(fig, ax1):
         ax=ax1
     )
 
-    plt.colorbar(sm, ax=ax1)
-
+    plt.colorbar(sm_edges, ax=ax1, label='Edge weights')
+    plt.colorbar(sm_nodes, ax=ax1, label='Node probabilities')
 
     y_off = -0.13
 
@@ -74,19 +76,15 @@ def render_ax1(fig, ax1):
     
     for node, value in probabilities.items():
         ax1.annotate(f"{value:.2f}", xy=pos[node], xytext=(-10, -15), textcoords="offset points")
-    
-    sm.set_array(node_values)
-    plt.colorbar(sm, ax=ax1)
-
 
 
 def render_ax2(fig, ax2):
     adj_matrix = nx.adjacency_matrix(G)
     adj_array = adj_matrix.toarray()
         
-    im = ax2.imshow(adj_array, cmap='coolwarm', interpolation='nearest', vmin=-1, vmax=1)
+    im = ax2.imshow(adj_array, cmap='coolwarm_r', interpolation='nearest', vmin=-1, vmax=1)
     ax2.set_title("Presented as Adjacency Matrix")
-    fig.colorbar(im, ax=ax2)
+    # fig.colorbar(im, ax=ax2)
 
     node_names = list(G.nodes())
     ax2.set_xticks(range(len(node_names)))
