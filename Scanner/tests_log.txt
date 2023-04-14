@@ -7,6 +7,7 @@ ipconfig_data Successful
 is_sqlite_table_information_present Successful
 is_win32_pip_installed Successful
 shift_list_test Successful
+test_append_and_getitem Successful
 threadify_echo_test Successful
 unbitify_examples Successful
 valid_subnet_mask Successful

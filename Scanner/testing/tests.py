@@ -113,6 +113,40 @@ def is_sqlite_table_information_present():
     except FileNotFoundError:
         return False
 
+def test_append_and_getitem():
+    from PacketSniffer import ListWithSQL
+    db_path = "test.db"
+    try:
+        list_with_sql = ListWithSQL(db_path, maxram=2)
+        
+        # Append some items to the list
+        list_with_sql.append("foo")
+        list_with_sql.append("bar")
+        
+        # Check that the items were appended correctly
+        assert list_with_sql[0] == "foo"
+        assert list_with_sql[1] == "bar"
+        
+        # Append some more items to the list
+        list_with_sql.append("baz")
+        list_with_sql.append("qux")
+        
+        # Check that the items were appended correctly
+        assert list_with_sql[2] == "baz"
+        assert list_with_sql[3] == "qux"
+        
+        # Change an item in the list
+        list_with_sql[1] = "spam"
+        
+        # Check that the item was changed correctly
+        assert list_with_sql[1] == "spam"
+        
+        # Check that the list length is correct
+        assert len(list_with_sql) == 4
+    except (AssertionError, ValueError, IndexError, NotImplementedError):
+        return False
+    return True
+
 
 def test() -> None:
     os.system("")  # Enables ANSI colouring

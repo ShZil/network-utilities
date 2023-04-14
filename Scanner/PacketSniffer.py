@@ -12,23 +12,26 @@ with ImportDefence():
 
 
 class ListWithSQL:
-    CREATE = '''CREATE TABLE IF NOT EXISTS ? (id INTEGER PRIMARY KEY AUTOINCREMENT, item BLOB)'''
-    INSERT = "INSERT INTO {} (item) VALUES (?)"
-    def __init__(self, path: str, table_name: str, maxram: int = 100):
+    CREATE = '''CREATE TABLE IF NOT EXISTS list_with_sql (id INTEGER PRIMARY KEY AUTOINCREMENT, item BLOB)'''
+    INSERT = "INSERT INTO list_with_sql (item) VALUES (?)"
+    CLEAR = "DELETE FROM list_with_sql"
+    RESET_AUTOINCREMENT = "UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='list_with_sql'"
+    def __init__(self, path: str, maxram: int = 100):
         self.path = path
-        self.tablename = table_name
         self.ram = list()
         self.length = 0
         self.maxram = maxram
 
         with sqlite3.connect(self.path) as conn:
             cursor = conn.cursor()
-            cursor.execute(ListWithSQL.CREATE, (self.tablename,))
+            cursor.execute(ListWithSQL.CREATE)
+            cursor.execute(ListWithSQL.CLEAR)
+            cursor.execute(ListWithSQL.RESET_AUTOINCREMENT)
             conn.commit()
 
     
     def copy(self):
-        copied = ListWithSQL(self.path, self.tablename + "_copy", self.maxram)
+        copied = ListWithSQL(self.path, "list_with_sql_copy", self.maxram)
         for item in self:
             copied.append(item)
         return copied
@@ -43,7 +46,7 @@ class ListWithSQL:
         to_database = [(pickle.dumps(p),) for p in self.ram]
         with sqlite3.connect(self.path) as conn:
             cursor = conn.cursor()
-            cursor.executemany(ListWithSQL.INSERT.format(self.tablename), to_database)
+            cursor.executemany(ListWithSQL.INSERT, to_database)
             conn.commit()
         self.ram = []
     
@@ -74,7 +77,7 @@ class ListWithSQL:
     def count(self, __value: _T) -> int:
         with sqlite3.connect(self.path) as conn:
             cursor = conn.cursor()
-            cursor.execute(f"SELECT COUNT(*) FROM {self.tablename} WHERE item=?", (pickle.dumps(__value),))
+            cursor.execute(f"SELECT COUNT(*) FROM list_with_sql WHERE item=?", (pickle.dumps(__value),))
             sql_count = cursor.fetchone()[0]
         ram_count = self.ram.count(__value)
         return ram_count + sql_count
@@ -96,34 +99,69 @@ class ListWithSQL:
             yield self[i]
         
     __hash__: ClassVar[None]  # type: ignore[assignment]
-    def __getitem__(self, __i: SupportsIndex) -> _T:
-        row = None
-        with sqlite3.connect(self.DB_PATH) as conn:
-            cursor = conn.cursor()
-            row = cursor.execute('SELECT item FROM ? WHERE id = ?', (self.tablename, __i,)).fetchone()
-        if row:
-            return pickle.loads(row[0])
-        else:
+    def __getitem__(self, __i: SupportsIndex | slice) -> _T:
+        if isinstance(__i, slice):
+            return [self[j] for j in range(*__i.indices(len(self)))]
+
+        if not (-len(self) <= __i < len(self)):
+            raise IndexError("list index out of range")
+
+        if __i < 0:
+            __i += len(self)
+
+        if __i >= len(self) - len(self.ram):
             return self.ram[__i - len(self) + len(self.ram)]
+
+        with sqlite3.connect(self.path) as conn:
+            cursor = conn.cursor()
+            cursor.execute(f"SELECT item FROM list_with_sql WHERE id = ?", (__i + 1,))
+            res = cursor.fetchone()
+            if res is None:
+                raise IndexError("list index out of range")
+            return pickle.loads(res[0])
+
     
-    def __setitem__(self, __key: SupportsIndex, __value: _T) -> None: ...
+    def __setitem__(self, __key: SupportsIndex, __value: _T) -> None:
+        # Convert negative indices to positive indices
+        if isinstance(__key, int) and __key < 0:
+            __key += len(self)
+        
+        # If index is in range of SQL data, update it in the SQL table
+        if __key < len(self) - len(self.ram):
+            with sqlite3.connect(self.path) as conn:
+                cursor = conn.cursor()
+                cursor.execute(f"UPDATE list_with_sql SET item=? WHERE id=?", (pickle.dumps(__value), __key+1))
+        
+        # If index is in range of RAM data, update it in RAM
+        elif __key < len(self):
+            self.ram[__key - len(self) + len(self.ram)] = __value
+        
+        # If index is out of range, raise an IndexError
+        else:
+            raise IndexError('list assignment index out of range')
     
     def __delitem__(self, __key: SupportsIndex | slice) -> None:
         raise NotImplementedError("I don't think you should remove (__delitem__) elements from a ListWithSQL.")
     
-    def __add__(self, __value: list[_T]) -> list[_T]: ...
-    def __add__(self, __value: list[_S]) -> list[_S | _T]: ...
-    def __iadd__(self, __value: Iterable[_T]) -> Self: ...  # type: ignore[misc]
-    def __mul__(self, __value: SupportsIndex) -> list[_T]: ...
-    def __rmul__(self, __value: SupportsIndex) -> list[_T]: ...
-    def __imul__(self, __value: SupportsIndex) -> Self: ...
-    def __contains__(self, __key: object) -> bool: ...
-    def __reversed__(self) -> Iterator[_T]: ...
-    def __gt__(self, __value: list[_T]) -> bool: ...
-    def __ge__(self, __value: list[_T]) -> bool: ...
-    def __lt__(self, __value: list[_T]) -> bool: ...
-    def __le__(self, __value: list[_T]) -> bool: ...
-    def __class_getitem__(cls, __item: Any) -> GenericAlias: ...
+    def __contains__(self, __key: object) -> bool:
+        if __key in self.ram:
+            return True
+        with sqlite3.connect(self.path) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT COUNT(*) FROM list_with_sql WHERE item=?", (pickle.dumps(__key),))
+            return cursor.fetchone()[0] > 0
+
+    def __reversed__(self) -> Iterator[_T]:
+        for item in reversed(self.ram):
+            yield item
+        with sqlite3.connect(self.path) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT item FROM list_with_sql ORDER BY id DESC")
+            while True:
+                res = cursor.fetchone()
+                if res is None:
+                    break
+                yield pickle.loads(res[0])
 
 
 class PacketSniffer:

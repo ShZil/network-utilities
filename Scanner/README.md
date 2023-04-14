@@ -1828,3 +1828,16 @@ and from now on Imma try to use ChatGPT to fill the rest.
 
 [15:37] Unsurprisingly, I made a mistake.
 Surprisingly, ChatGPT caught it and fixed it for me.
+
+[16:39] There used to be some f-strings and a `self.tablename: str` field,
+but I removed it and hardcoded it to "list_with_sql",
+to prevent the slightest chance of an SQL injection.
+
+[16:41] I asked ChatGPT to write some tests for ListWithSQL too,
+because that was too much code to write without testing,
+for both a human and an AI.
+
+[16:46] BUGFIX: don't forget to clear the table before creation!
+
+[16:52] Finished creating and running the test.
+The implementation of ListWithSQL worked surprisingly well.
