@@ -1841,3 +1841,13 @@ for both a human and an AI.
 
 [16:52] Finished creating and running the test.
 The implementation of ListWithSQL worked surprisingly well.
+
+
+
+### 2023-04-17
+[22:25] Working on decomposing `gui.py`.
+
+[22:30] It's more intertwined than I thought.
+So, I'll just continue splitting the code into files,
+and bear with the import warnings for now.
+Then, once it's all split, I'll handle the importing.
