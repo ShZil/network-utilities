@@ -1851,3 +1851,6 @@ The implementation of ListWithSQL worked surprisingly well.
 So, I'll just continue splitting the code into files,
 and bear with the import warnings for now.
 Then, once it's all split, I'll handle the importing.
+
+[23:44] Moving the gui code to under `./gui/`,
+to not clutter up the main folder.
