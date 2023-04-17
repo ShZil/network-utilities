@@ -2,9 +2,13 @@ from import_handler import ImportDefence
 with ImportDefence():
     from kivy.uix.relativelayout import RelativeLayout
     from kivy.uix.label import Label
+    from kivy.uix.screenmanager import Screen
+    from kivy.clock import Clock
+    from kivy.uix.boxlayout import BoxLayout
 
 from globalstuff import *
 from Screens.Pages import Pages
+from register import Register
 
 class ScanScreenMiddleDiagram(RelativeLayout):
     """Builds the middle diagram used in the screen 'Scan'.
