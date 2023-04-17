@@ -1854,3 +1854,6 @@ Then, once it's all split, I'll handle the importing.
 
 [23:44] Moving the gui code to under `./gui/`,
 to not clutter up the main folder.
+
+[23:51] Please finish decomposing `gui.py`,
+because the current build will not work.

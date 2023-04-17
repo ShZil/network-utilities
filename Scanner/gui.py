@@ -614,54 +614,6 @@ class ViewScreenInfo(ScrollView):
             raise TypeError()
 
 
-class KnowScreen(Screen):
-    """Builds an interface that looks like this:
-
-    ```md
-    The Window (Unicode Box Art):
-        ┌────────────────────────────────────────────┐
-        │                  [#1 Title]                │
-        │  #4 Save.                                  │
-        │  #5 Scan.                                  │
-        │  #6 Know.                                  │
-        │             #3 Device Profile              │
-        │                   #2 Data                  │
-        │          [_______________________]         │
-        │          [_______________________]         │
-        │          [_______________________]         │
-        │          [_______________________]         │
-        │                                            │
-        │                                            │
-        └────────────────────────────────────────────┘
-    ```
-
-    Args:
-        Screen (kivy): the base class for a screen.
-    """
-
-    def __init__(self, **kw):
-        name = 'Know'
-        super().__init__(name=name, **kw)
-        Hover.enter(name)
-
-        everything = BoxLayout(orientation='vertical')
-        title = Label(
-            text=f"[color={GREEN}]Knowledge about Network[/color]",
-            size=(0, TITLE_HEIGHT),
-            size_hint=(1, None),
-            font_size=TITLE_FONT_SIZE,
-            underline=True,
-            pos_hint={'center_x': .5, 'top': 1},
-            markup=True
-        )
-        everything.add_widget(title)
-        everything.add_widget(Pages())
-        everything.add_widget(KnowScreenDeviceProfileButton())
-        everything.add_widget(KnowScreenInfoLabel())
-
-        self.add_widget(everything)
-
-
 class ViewScreen(Screen):
     """Builds an interface that looks like this:
 
