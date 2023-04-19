@@ -10,6 +10,9 @@ from globalstuff import *
 from gui.Screens.Pages import Pages
 
 
+def update_view_screen(text): return print("update_view_screen:", text)
+
+
 class ViewScreenInfo(ScrollView):
     """Holds the requested data in string format, displayed to the user.
     Has a scrolling mechanic.

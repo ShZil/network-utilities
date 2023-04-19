@@ -69,6 +69,7 @@ class SaveScreenImportButton(GreenButton):
             except ValueError as e:
                 popup("Error in parsing Scan File", e.args[0])
             try:
+                from gui.Screens.ViewScreen import update_view_screen
                 if content != '':
                     update_view_screen(content)
                 else:

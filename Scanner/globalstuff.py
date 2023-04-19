@@ -9,8 +9,6 @@ terminator = Event()
 
 # --- GUI Global Values ---
 is_kivy_running = True
-def update_know_screen(text): return print(text)
-def update_view_screen(text): return print(text)
 
 
 # --- Design Settings ---

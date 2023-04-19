@@ -2046,3 +2046,11 @@ I'll change `Diagram()` to a Singleton. Singletons to the rescue!
 I had ChatGPT move the initialisation code and use `cls._instance` instead of `self`,
 because it's a repetitive task and boring. I could try to have a Find&Replace do that,
 but ChatGPT's input is in natural language, which is faster to think about for me.
+
+[22:50] I found the mysterious network entity printing!
+It comes from `update_know_screen`,
+if it's not yet converted to a gui action,
+and remains a printing statement.
+
+[22:56] Moved the responsibility on `update_know_screen` and `update_view_screen`
+exclusively to `gui.Screens.KnowScreen` and `gui.Screens.ViewScreen` respectively.

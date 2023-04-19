@@ -13,6 +13,9 @@ from gui.dialogs import get_string, popup
 from globalstuff import *
 
 
+def update_know_screen(text): return print("update_know_screen:", text)
+
+
 class KnowScreen(Screen):
     """Builds an interface that looks like this:
 
