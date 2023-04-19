@@ -9,7 +9,7 @@ with ImportDefence():
 from threading import Thread
 from gui.Hover import Hover
 from gui.Screens.Pages import Pages
-from Scanner.gui.dialogs import get_string, popup
+from gui.dialogs import get_string, popup
 from globalstuff import *
 
 
