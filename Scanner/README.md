@@ -1866,3 +1866,12 @@ because the current build will not work.
 [11:37] ImportDefence didn’t work on `import requests`, and weirdly entered the “You've misnamed your import. Check it.” print, even though it IS a ModuleNotFoundError. Within a minute of googling I found out that ModuleNotFoundError is a subclass of ImportError, and thus the error would be caught in the first clause, which is problematic.
 Solution: move the `except ImportError` to after the `except ModuleNotFoundError`, not before.
 
+[11:43] This computer now has no pip packages. This can be checked with `pip freeze`, which returns an empty output here. I’ll now execute the software and measure the time it takes to load and pip-install all the packages, using my watch.
+
+[11:46] `pip install Crypto` gives an infinite loop :( – 2 minutes 50 seconds before it got stuck.
+Solution: add this in `import_handler.py:85`:
+```py
+if 'Crypto' in to_install:
+    to_install = 'pycryptodome'
+```
+

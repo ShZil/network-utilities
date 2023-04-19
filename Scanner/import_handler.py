@@ -82,6 +82,8 @@ class ImportDefence:
                 to_install = 'pywin32'
             if to_install == 'cv2':
                 to_install = 'opencv-python'
+            if to_install == 'Crypto':
+                to_install = 'pycryptodome'
 
             print(
                 f"Module `{err.name}` was not found. Attempting `pip install {to_install}`...\n"
