@@ -1965,3 +1965,6 @@ so using it to generate words and synonyms given context is quite good.
 [21:02] Created `gui/Information.py`. I don't really like the name, but it's fine.
 
 [21:05] Add imports in `gui/Screens/SaveScreen.py`.
+
+[21:11] Wow naming is difficult. I created `gui/ScanButton.py` and changed it to `gui/ScanClasses.py`,
+because it doesn't contain an actual UI button.
