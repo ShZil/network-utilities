@@ -1880,3 +1880,8 @@ if 'Crypto' in to_install:
 [11:58] PyCharm* is mad that the directory `gui` isn’t a module or whatever, so add an empty `__init__.py` file in it.
 (*) Yes, I’m using PyCharm. I don’t like PyCharm. I have VSCode at home, which is much more comfortable, and in class I usually use Notepad++, but it’s useless for debugging.
 
+[12:00] Consider using PyCharm to optimise imports, something I’ve been wanting to do.
+
+[12:01] That’s enough for now. I’m gonna do something more fun: work on the MultiMouse project! Once the dissolution of `gui.py` is complete (at home, with Git), I’ll run the software here; I really hate the heat (it’s 32°C!!).
+
+[15:43] Applying all the changes from back home.
