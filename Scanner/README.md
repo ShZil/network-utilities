@@ -1943,3 +1943,5 @@ def render():
 Then, I'll try to implement the `matplotlib` upgrade.
 
 [16:11] Renamed `color_hex` to `color_to_hex`, and moved to `util.py`.
+
+[16:18] Renamed `add_font` to `add_fonts`, and moved to `gui/KivyFonts.py`.

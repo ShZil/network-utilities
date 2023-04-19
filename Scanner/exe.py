@@ -28,6 +28,7 @@ from scans.TCP import scan_TCP
 from time import sleep
 import os
 import sys
+from gui.KivyFonts import add_fonts
 
 
 def keep_resolving_storage():

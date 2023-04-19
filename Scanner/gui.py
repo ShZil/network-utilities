@@ -31,7 +31,6 @@ from kivy.clock import Clock
 from kivy.config import Config
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.utils import escape_markup
-from kivy.core.text import LabelBase
 from kivy.graphics import Color, Ellipse, Rectangle, Line
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
@@ -48,20 +47,6 @@ __author__ = 'Shaked Dan Zilberman'
 
 
 # --- Small Utilities ---
-def add_font():
-    """Loads a font (`kivy`'s)."""
-    def _add_font(path, name, fallback='fonts/Segoe UI Symbol.ttf'):
-        path = f'fonts/{path}'
-        try:
-            LabelBase.register(name=name, fn_regular=path)
-        except OSError:
-            LabelBase.register(name=name, fn_regular=fallback)
-
-    _add_font('BainsleyBold.ttf', 'Symbols')
-    _add_font('Segoe UI Symbol.ttf', 'Symbols+')
-    _add_font('Symbola.ttf', 'Symbols++')
-    _add_font('Consolas.ttf', 'Monospace')
-
 
 def prestart():
     """Code to execute when the program starts to load, but before the GUI windows start."""
