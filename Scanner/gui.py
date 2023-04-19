@@ -46,17 +46,6 @@ import traceback
 __author__ = 'Shaked Dan Zilberman'
 
 
-# --- Small Utilities ---
-
-def prestart():
-    """Code to execute when the program starts to load, but before the GUI windows start."""
-    from NetworkStorage import router
-    from globalstuff import G
-    G.add_node(router)
-
-    start_kivy.__name__ = 'Main GUI Thread'
-
-
 # --- GUI-invoked code ---
 def display_information():
     if state.highlighted_scan is DummyScan() or state.highlighted_scan is None:
@@ -671,6 +660,7 @@ def start_kivy():
         import threading
         print('\n'.join([str(thread) for thread in threading.enumerate()]))
         # sys.exit()
+start_kivy.__name__ = 'Main GUI Thread'
 
 
 def start_tk():

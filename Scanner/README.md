@@ -1945,3 +1945,12 @@ Then, I'll try to implement the `matplotlib` upgrade.
 [16:11] Renamed `color_hex` to `color_to_hex`, and moved to `util.py`.
 
 [16:18] Renamed `add_font` to `add_fonts`, and moved to `gui/KivyFonts.py`.
+
+[16:20] I added the Zentabs extension to VSCode, because there were too many tabs open.
+This is an extension I'm familiar with from Atom, and it extends easily to VSCode.
+
+[20:32] Created `gui/Screens/ViewScreen.py`.
+
+[20:33] Removed `prestart`, and moved the two statements to more logical places:
+- `G.add_node(router)` -- in `exe.py`, near a similar statement `NetworkStorage().add(router, here)`.
+- `start_kivy.__name__ = 'Main GUI Thread'` -- right after the definition of `start_kivy`.

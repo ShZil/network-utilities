@@ -16,7 +16,6 @@ with ImportDefence():
 from NetworkStorage import *
 from register import Register
 from PacketSniffer import PacketSniffer
-from globalstuff import *
 from threading import Thread, enumerate as enumerate_threads
 from SimpleScan import simple_scan
 from CommandLineStyle import cmdcolor, cmdtitle, remove_scapy_warnings
@@ -82,13 +81,14 @@ def main():
     NetworkStorage()
     ipconfig.cache["All Possible Addresses"] = get_all_possible_addresses()
     from NetworkStorage import router, here
+    from globalstuff import G
     NetworkStorage().add(router, here)
+    G.add_node(router)
 
     register_scans()
 
     # GUI initialisation
-    add_font()
-    prestart()
+    add_fonts()
 
     # Start tk (on main thread) and kivy (on different thread) and
     # `NetworkStorage()._resolve` (on a third thread)
