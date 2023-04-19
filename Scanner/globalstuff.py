@@ -8,7 +8,6 @@ G = networkx.empty_graph()
 terminator = Event()
 
 # --- GUI Global Values ---
-diagram = None
 is_kivy_running = True
 def update_know_screen(text): return print(text)
 def update_view_screen(text): return print(text)

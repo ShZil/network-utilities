@@ -42,9 +42,10 @@ def keep_resolving_storage():
             sleep(5)
             NetworkStorage()._resolve()
             # print(len(NetworkStorage()), G.copy())
-            from globalstuff import update_know_screen, diagram
+            from globalstuff import update_know_screen
             update_know_screen(NetworkStorage())
-            diagram.renew(G)
+            from gui.Diagrams import Diagram
+            Diagram().renew(G)
         sys.exit()
     
     _resolver.__name__ = '5-second interval repeat'

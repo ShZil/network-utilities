@@ -11,7 +11,7 @@ import threading
 
 def start_kivy():
     """Starts the `kivy` app, and handles the `tkinter` diagram's closing."""
-    global is_kivy_running, diagram
+    global is_kivy_running
     try:
         is_kivy_running = True
         # disable multi-touch emulation
@@ -25,9 +25,9 @@ def start_kivy():
         )
     finally:
         is_kivy_running = False
-        assert diagram is not None
-        diagram.show()
-        diagram.root.after(1, diagram.root.destroy)
+        Diagram().show()
+        root = Diagram().root
+        root.after(1, root.destroy)
         terminator.set()
         print('\n'.join([str(thread) for thread in threading.enumerate()]))
         # sys.exit()
@@ -37,9 +37,7 @@ start_kivy.__name__ = 'Main GUI Thread'
 def start_tk():
     """Starts the `tkinter` diagram in the background.
     This has to be on the main thread (because `tkinter` said so)."""
-    global diagram
-    diagram = Diagram()
-    diagram.root.mainloop()
+    Diagram().root.mainloop()
 
 
 if __name__ == '__main__':

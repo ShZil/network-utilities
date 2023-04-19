@@ -2036,3 +2036,8 @@ fixed to:
 ```py
 from globalstuff import update_know_screen, diagram
 ```
+
+Debugging is so much easier with VSCode.
+
+[22:32] I ~gave up on diagram from globalstuff~ am taking another approach to solving why `diagram` stays `None`.
+I'll change `Diagram()` to a Singleton. Singletons to the rescue!

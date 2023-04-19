@@ -11,6 +11,13 @@ class Diagram:
     """This is a class responsible for the hovering diagram, that is created in a separate window when the 'Fullscreen' button is pressed.
     Uses `tkinter` (not `kivy`, like the other parts). Black diagram on white background. Can be expanded in both directions.
     """
+    _instance = None
+
+    def __new__(cls):
+        """Override the __new__ method to create only one instance of the class -- Singleton pattern."""
+        if not cls._instance:
+            cls._instance = super().__new__(cls)
+        return cls._instance
 
     def __init__(self):
         """A few parts:
@@ -21,6 +28,9 @@ class Diagram:
         - bind `self.try_close` to the relevant user operation
         - initial `update` and `hide`.
         """
+        if self._instance is not None:
+            return
+        
         self.root = tk.Tk()
         self.root.title("Network Diagram")
         self.width, self.height = DIAGRAM_DIMENSIONS
