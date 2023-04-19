@@ -2006,3 +2006,7 @@ That's error 1, solved. My 95% bet won.
 [22:13] Another circular import. Expanded the paper graph,
 changed more imports to dynamic (more than necessary to prevent more errors).
 That's error 2, solved. Will we get to the 70% bet?
+
+[22:14] That's technically error 3:
+`from Screens.Pages import Pages` should have been `from gui.Screens.Pages import Pages`.
+Whoops. Fixed now.

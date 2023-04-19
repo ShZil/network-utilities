@@ -8,7 +8,7 @@ with ImportDefence():
 
 from globalstuff import *
 import db
-from Screens.Pages import Pages
+from gui.Screens.Pages import Pages
 from register import Register
 from gui.Activation import activate
 from gui.Diagrams import *
