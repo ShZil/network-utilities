@@ -2054,3 +2054,8 @@ and remains a printing statement.
 
 [22:56] Moved the responsibility on `update_know_screen` and `update_view_screen`
 exclusively to `gui.Screens.KnowScreen` and `gui.Screens.ViewScreen` respectively.
+
+[23:04] `test.db` uses timestamps, so it changes on each execution,
+but doesn't provide information worthy of being uploaded to github,
+so I added it to `.gitignore`.
+You can generate it from the code that is present, anywhere.
