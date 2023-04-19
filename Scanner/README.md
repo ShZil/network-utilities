@@ -2041,3 +2041,8 @@ Debugging is so much easier with VSCode.
 
 [22:32] I ~gave up on diagram from globalstuff~ am taking another approach to solving why `diagram` stays `None`.
 I'll change `Diagram()` to a Singleton. Singletons to the rescue!
+
+[22:44] Good singletons have their initialisation in __new__, not __init__.
+I had ChatGPT move the initialisation code and use `cls._instance` instead of `self`,
+because it's a repetitive task and boring. I could try to have a Find&Replace do that,
+but ChatGPT's input is in natural language, which is faster to think about for me.

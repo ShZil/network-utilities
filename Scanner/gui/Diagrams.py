@@ -17,42 +17,29 @@ class Diagram:
         """Override the __new__ method to create only one instance of the class -- Singleton pattern."""
         if not cls._instance:
             cls._instance = super().__new__(cls)
+            cls._instance.root = tk.Tk()
+            cls._instance.root.title("Network Diagram")
+            cls._instance.width, cls._instance.height = DIAGRAM_DIMENSIONS
+
+            cls._instance.canvas = tk.Canvas(
+                cls._instance.root,
+                bg=color_to_hex(bg_color),
+                height=cls._instance.height,
+                width=cls._instance.width,
+                borderwidth=0,
+                highlightthickness=0
+            )
+            cls._instance.canvas.pack(expand=True, fill='both')
+
+            cls._instance.graph = G
+            cls._instance.diagram_cache = None
+
+            cls._instance.canvas.bind('<Configure>', cls._instance.resize)
+            cls._instance.update()
+
+            cls._instance.hide()
+            cls._instance.root.protocol("WM_DELETE_WINDOW", cls._instance.try_close)
         return cls._instance
-
-    def __init__(self):
-        """A few parts:
-        - Tk stuff (root, title, width & height)
-        - tk.Canvas initialisation (+ fit window)
-        - fields for `G` (the graph) and `diagram_cache` (see `Diagram.update`)
-        - bind `self.resize` to the relevant user operation
-        - bind `self.try_close` to the relevant user operation
-        - initial `update` and `hide`.
-        """
-        if self._instance is not None:
-            return
-        
-        self.root = tk.Tk()
-        self.root.title("Network Diagram")
-        self.width, self.height = DIAGRAM_DIMENSIONS
-
-        self.canvas = tk.Canvas(
-            self.root,
-            bg=color_to_hex(bg_color),
-            height=self.height,
-            width=self.width,
-            borderwidth=0,
-            highlightthickness=0
-        )
-        self.canvas.pack(expand=True, fill='both')
-
-        self.graph = G
-        self.diagram_cache = None
-
-        self.canvas.bind('<Configure>', self.resize)
-        self.update()
-
-        self.hide()
-        self.root.protocol("WM_DELETE_WINDOW", self.try_close)
 
     def try_close(self):
         """To prevent the user from really closing this window if the source (kivy) is still open."""
