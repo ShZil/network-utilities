@@ -1,34 +1,14 @@
 from import_handler import ImportDefence
 with ImportDefence():
-    import kivy
-    import networkx as nx
-    import tkinter as tk
-    from threading import Thread
-    import numpy  # for networkx
-    import scipy  # for networkx
-    import win32api
-    import PyQt5
-    import markdown
-    import re
-kivy.require('2.1.0')
-
-from globalstuff import G, terminator
-from register import Register
-from gui.Screens.ScanScreen import ScanScreen
-from gui.Screens.SaveScreen import SaveScreen
-from gui.Screens.KnowScreen import KnowScreen
-from util import color_to_hex
-
-from kivy.config import Config
-from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
-from kivy.uix.scrollview import ScrollView
+    from kivy.config import Config
 
 import sys
 import traceback
+from gui.App import MyApp
+from gui.Diagrams import Diagram
+from globalstuff import terminator
+import threading
 
-__author__ = 'Shaked Dan Zilberman'
-
-# --- Basically Main ---
 def start_kivy():
     """Starts the `kivy` app, and handles the `tkinter` diagram's closing."""
     global is_kivy_running, diagram
@@ -49,7 +29,6 @@ def start_kivy():
         diagram.show()
         diagram.root.after(1, diagram.root.destroy)
         terminator.set()
-        import threading
         print('\n'.join([str(thread) for thread in threading.enumerate()]))
         # sys.exit()
 start_kivy.__name__ = 'Main GUI Thread'
@@ -64,10 +43,5 @@ def start_tk():
 
 
 if __name__ == '__main__':
-    raise NotImplementedError("Use `exe.py` instead.")
-    print("Adding the fonts...")
-    add_font()
-    prestart()
-    print("Starting kivy...")
-    Thread(target=start_kivy).start()
-    start_tk()
+    print("This file is responsible for starting the kivy and tkinter gui.")
+    print("The callers are responsible for thread handling: start_tk on main, start_kivy on separate thread.")

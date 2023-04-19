@@ -12,6 +12,9 @@ with ImportDefence():
     import kivy
     import tkinter
     import markdown
+    import win32api
+    import re
+kivy.require('2.1.0')
 
 from NetworkStorage import *
 from register import Register
@@ -28,6 +31,7 @@ from time import sleep
 import os
 import sys
 from gui.KivyFonts import add_fonts
+from gui.StartApp import start_tk, start_kivy
 
 
 def keep_resolving_storage():
