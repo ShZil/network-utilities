@@ -1885,3 +1885,61 @@ if 'Crypto' in to_install:
 [12:01] That’s enough for now. I’m gonna do something more fun: work on the MultiMouse project! Once the dissolution of `gui.py` is complete (at home, with Git), I’ll run the software here; I really hate the heat (it’s 32°C!!).
 
 [15:43] Applying all the changes from back home.
+
+[15:53] I just realised, and this is kind of big, that I could try using `matplotlib` to render the graph,
+which would be more efficient, more elegant, more beautiful, and simpler.
+I just need to find a way to automatically update a networkx graph on a matplotlib.pyplot plot.
+Using this comment on Stack Overflow:
+https://stackoverflow.com/questions/59794523/how-to-update-a-networkx-plot-in-real-time
+And ChatGPT, I made this code snippet:
+```py
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# assume `G: nx.Graph` exists
+
+# initialize the plot
+fig, ax = plt.subplots()
+pos = nx.spring_layout(G)
+nx.draw(G, pos, ax=ax)
+
+# main loop
+while True:
+    # clear the plot and redraw the graph
+    ax.clear()
+    pos = nx.spring_layout(G)
+    nx.draw(G, pos, ax=ax)
+
+    # draw the new plot and wait for a short time
+    plt.draw()
+    plt.pause(1)
+```
+
+[16:05] With IDLE, I created a working prototype for this behaviour (updating graph on matplotlib):
+```py
+# start this on another thread
+def add():
+    while True:
+        G.add_node(int(len(G)))
+        sleep(1)
+
+
+# start this on the main thread
+def render():
+    fig, ax = plt.subplots()
+
+    while True:
+        H = G.copy()
+        pos = nx.spring_layout(H)
+        nx.draw(H, pos, ax=ax)
+
+        plt.draw()
+        plt.pause(1)
+
+        ax.clear()
+```
+
+[16:09] I'll keep decomposing `gui.py`, because it's impossible to do testing like this.
+Then, I'll try to implement the `matplotlib` upgrade.
+
+[16:11] Renamed `color_hex` to `color_to_hex`, and moved to `util.py`.

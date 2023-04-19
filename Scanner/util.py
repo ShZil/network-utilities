@@ -14,6 +14,19 @@ with ImportDefence():
 __author__ = 'Shaked Dan Zilberman'
 MAX_THREADS: int = 50
 
+def color_to_hex(rgb) -> str:
+    """This function converts between two common representations of RGB colours.
+    It takes in a tuple or list (any iterable) that has 3 items, floats between 0 and 1,
+    and converts it into a hex string with hash symbol, like #00FF00 (green).
+
+    Args:
+        rgb (Iterable[float]): the input colour, as an iterable with 3 items, as floats between 0 and 1, representing the RGB channel strengths.
+
+    Returns:
+        str: a hex representation of an RGB colour, with 7 characters (#RRGGBB).
+    """
+    return '#%02x%02x%02x' % tuple([int(c * 255) for c in rgb])
+
 
 def barstyle(name: str) -> str:
     """Selects a style for @threadify's progress bar.

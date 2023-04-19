@@ -21,6 +21,7 @@ from ipconfig import ipconfig
 from gui.Screens.ScanScreen import ScanScreen
 from gui.Screens.SaveScreen import SaveScreen
 from gui.Screens.KnowScreen import KnowScreen
+from util import color_to_hex
 
 
 from PyQt5.QtCore import Qt
@@ -47,9 +48,6 @@ __author__ = 'Shaked Dan Zilberman'
 
 
 # --- Small Utilities ---
-def color_hex(rgb): return '#%02x%02x%02x' % tuple([int(c * 255) for c in rgb])
-
-
 def add_font():
     """Loads a font (`kivy`'s)."""
     def _add_font(path, name, fallback='fonts/Segoe UI Symbol.ttf'):
@@ -383,7 +381,7 @@ class Diagram:
 
         self.canvas = tk.Canvas(
             self.root,
-            bg=color_hex(bg_color),
+            bg=color_to_hex(bg_color),
             height=self.height,
             width=self.width,
             borderwidth=0,
@@ -470,7 +468,7 @@ class TKDiagram:
     def color(self, r=None, g=None, b=None):
         if r is None:
             return self.color_cache
-        self.color_cache = color_hex((r, g, b))
+        self.color_cache = color_to_hex((r, g, b))
 
     def rectangle(self, x, y, w, h):
         self.diagram.canvas.create_rectangle(x, y, w, h, fill=self.color())
