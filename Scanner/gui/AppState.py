@@ -3,7 +3,6 @@ with ImportDefence():
     import win32api
     from kivy.clock import Clock
 
-from gui.Hover import Hover
 from gui.ScanClasses import DummyScan
 
 class State:
@@ -25,6 +24,7 @@ class State:
     def screen(self, name=None):
         if name is None:
             return self.currentScreen
+        from gui.Hover import Hover
         Hover.enter(name)
         self.screenManager.current = name
         self.currentScreen = name

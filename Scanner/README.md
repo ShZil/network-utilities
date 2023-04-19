@@ -1976,3 +1976,29 @@ because it doesn't contain an actual UI button.
 [21:44] After fixing many many many imports,
 I believe that's all with the import warnings.
 `gui.py` is almost fully dissolved.
+
+[21:49] Deleted `gui.py`. All the code has been migrated to the directory `gui/`.
+
+[21:52] Finally, I might be able to execute the whole software again.
+Place your bets! I feel like there's a 95% chance it's not gonna work on the first try,
+and 70% chance that there are at least 5 errors to fix.
+
+[21:54] Circular import. Am I going to suffer going through the Circular Import Hell again?
+```
+Exception has occurred: ImportError
+  Hover.py:3:
+    from gui.AppState import State
+  gui\AppState.py:6:
+    from gui.Hover import Hover
+  gui\App.py:6:
+    from gui.AppState import State
+  gui\StartApp.py:7:
+    from gui.App import MyApp
+  exe.py:34:
+    from gui.StartApp import start_tk, start_kivy
+ImportError: cannot import name 'State' from partially initialized module 'gui.AppState' (most likely due to a circular import)
+```
+
+[22:07] Alright that wasn't too hellish, I just drew a graph on paper to understand,
+and changed to dynamic (inside-method) import.
+That's error 1, solved. My 95% bet won.
