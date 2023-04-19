@@ -2059,3 +2059,8 @@ exclusively to `gui.Screens.KnowScreen` and `gui.Screens.ViewScreen` respectivel
 but doesn't provide information worthy of being uploaded to github,
 so I added it to `.gitignore`.
 You can generate it from the code that is present, anywhere.
+
+[23:07] TODO in Cyber class tomorrow:
+- More testing on another network
+- Try starting to add the `matplotlib` diagram instead of tkinter's. (Cleanse the project from tkinter)
+- Investigate why Device Profile crashes everything.
