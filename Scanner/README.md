@@ -2026,3 +2026,13 @@ There are no stakes anyway lol.
 [22:20] There were two hanging dynamic imports of the shape `from gui import something`,
 in `keep_resolving_storage` and `files.py:get_password`.
 I changed them to the updated modules.
+
+[22:23] My bad, I imported from the wrong novel module.
+```py
+from globalstuff import update_know_screen
+from gui.Diagrams import diagram  # this is None
+```
+fixed to:
+```py
+from globalstuff import update_know_screen, diagram
+```
