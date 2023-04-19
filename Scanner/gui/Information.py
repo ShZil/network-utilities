@@ -11,7 +11,6 @@ def display_information():
     if state.highlighted_scan is DummyScan() or state.highlighted_scan is None:
         popup(f"General Information", general_information(), info=True)
     else:
-        # win32api.MessageBox(0, information_about(state.highlighted_scan.name), f"Information about {state.highlighted_scan.name}", 0x00000000)
         popup(
             f"Information about {state.highlighted_scan.name}",
             information_about(

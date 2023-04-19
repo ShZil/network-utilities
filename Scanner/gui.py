@@ -3,7 +3,7 @@ with ImportDefence():
     import kivy
     import networkx as nx
     import tkinter as tk
-    from threading import Thread, enumerate as enumerate_threads
+    from threading import Thread
     import numpy  # for networkx
     import scipy  # for networkx
     import win32api
@@ -13,11 +13,7 @@ with ImportDefence():
 kivy.require('2.1.0')
 
 from globalstuff import G, terminator
-from files import importer, exporter
 from register import Register
-import db
-from CacheDecorators import one_cache
-from ipconfig import ipconfig
 from gui.Screens.ScanScreen import ScanScreen
 from gui.Screens.SaveScreen import SaveScreen
 from gui.Screens.KnowScreen import KnowScreen
@@ -33,7 +29,6 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.uix.scrollview import ScrollView
-from kivy.uix.label import Label
 from kivy.app import App
 
 import sys
