@@ -13,7 +13,6 @@ with ImportDefence():
     import tkinter
     import markdown
 
-from gui import *
 from NetworkStorage import *
 from register import Register
 from PacketSniffer import PacketSniffer
@@ -28,6 +27,7 @@ from scans.ICMP import scan_ICMP, scan_ICMP_continuous
 from scans.TCP import scan_TCP
 from time import sleep
 import os
+import sys
 
 
 def keep_resolving_storage():
