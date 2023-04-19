@@ -8,3 +8,4 @@ arp a output.txt
 Scanner/autopep8 cmd screenshot.txt
 Scanner/packets.db
 *.db-journal
+known.txt
