@@ -7,6 +7,7 @@ from gui.dialogs import popup
 import db
 from ipconfig import ipconfig
 from gui.ScanClasses import DummyScan
+from gui.AppState import State
 
 
 def display_information():
@@ -106,7 +107,7 @@ def general_information() -> str:
         f"Subnet mask: {mask}",
         f"Possible IPv4 addresses: {computers_in_network} addresses",
         f"## Others",
-        f"Premission to scan: {state.permission}",
+        f"Premission to scan: {State().permission}",
         f"## Current Threads",
         *_get_readable_threads()
     ])

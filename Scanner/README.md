@@ -1972,3 +1972,7 @@ because it doesn't contain an actual UI button.
 [21:22] Added `Activation.py`, `Diagrams.py`, and `AppState.py`, all under `gui/`.
 
 [21:35] Converted State into a Singleton.
+
+[21:44] After fixing many many many imports,
+I believe that's all with the import warnings.
+`gui.py` is almost fully dissolved.

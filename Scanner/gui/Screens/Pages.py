@@ -3,6 +3,8 @@ with ImportDefence():
     from kivy.uix.boxlayout import BoxLayout
 
 from globalstuff import *
+from gui.AppState import State
+from gui.KivyExtensions import GreenButton
 
 
 class Pages(BoxLayout):

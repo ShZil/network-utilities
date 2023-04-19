@@ -7,8 +7,17 @@ with ImportDefence():
     from kivy.uix.boxlayout import BoxLayout
 
 from globalstuff import *
+import db
 from Screens.Pages import Pages
 from register import Register
+from gui.Activation import activate
+from gui.Diagrams import *
+from gui.KivyExtensions import GreenButton, MyPaintWidget, OperationButton, ButtonColumn
+from gui.Configuration import display_configuration
+from gui.Hover import Hover
+from gui.ScanClasses import Scan
+from gui.Information import display_information
+
 
 class ScanScreenMiddleDiagram(RelativeLayout):
     """Builds the middle diagram used in the screen 'Scan'.

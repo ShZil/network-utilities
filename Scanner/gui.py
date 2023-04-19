@@ -21,10 +21,6 @@ from util import color_to_hex
 
 from kivy.config import Config
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
-from kivy.utils import escape_markup
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.widget import Widget
 from kivy.uix.scrollview import ScrollView
 
 import sys

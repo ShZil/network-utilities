@@ -1,6 +1,7 @@
 from register import Register
 from gui.ScanClasses import DummyScan
 from gui.dialogs import popup
+from gui.AppState import State
 
 def activate(x):
     if State().ask_for_permission():

@@ -7,6 +7,7 @@ from gui.dialogs import popup
 from globalstuff import *
 from register import Register
 from gui.Hover import Hover
+from gui.AppState import State
 
 
 class Scan:

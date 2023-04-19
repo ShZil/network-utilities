@@ -1,8 +1,13 @@
 from import_handler import ImportDefence
 with ImportDefence():
     from kivy.uix.button import Button
+    from kivy.utils import escape_markup
+    from kivy.uix.gridlayout import GridLayout
+    from kivy.uix.widget import Widget
 
 from globalstuff import *
+from gui.Diagrams import update_kivy_diagram
+from gui.Hover import Hover, HoverReplace
 
 
 #     --- Kivy Extensions ---
