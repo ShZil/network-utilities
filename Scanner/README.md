@@ -1970,3 +1970,5 @@ so using it to generate words and synonyms given context is quite good.
 because it doesn't contain an actual UI button.
 
 [21:22] Added `Activation.py`, `Diagrams.py`, and `AppState.py`, all under `gui/`.
+
+[21:35] Converted State into a Singleton.

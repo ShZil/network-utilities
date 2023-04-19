@@ -30,10 +30,10 @@ class Scan:
         Hover.add(self.button)
 
     def select(self, x):
-        if state.highlighted_scan == self:
-            state.scan(DummyScan())
+        if State().highlighted_scan == self:
+            State().scan(DummyScan())
             return
-        state.scan(self)
+        State().scan(self)
         with self.button.canvas.after:
             self.highlight = Color(*SCAN_HIGHLIGHT)
             self.highlight_rect = Rectangle(

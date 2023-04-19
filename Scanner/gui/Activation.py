@@ -3,8 +3,8 @@ from gui.ScanClasses import DummyScan
 from gui.dialogs import popup
 
 def activate(x):
-    if state.ask_for_permission():
-        s = state.highlighted_scan
+    if State().ask_for_permission():
+        s = State().highlighted_scan
         if Register().is_running(s.name) or s.is_running:
             popup(
                 "Cannot run scan",

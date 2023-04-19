@@ -7,12 +7,17 @@ from gui.Hover import Hover
 from gui.ScanClasses import DummyScan
 
 class State:
-    def __init__(self) -> None:
-        self.screenManager = None
-        self.currentScreen = None
-        self.permission = False
-        self.highlighted_scan = DummyScan()
-        self.scans = [DummyScan()]
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance.screenManager = None
+            cls._instance.currentScreen = None
+            cls._instance.permission = False
+            cls._instance.highlighted_scan = DummyScan()
+            cls._instance.scans = [DummyScan()]
+        return cls._instance
 
     def setScreenManager(self, screens):
         self.screenManager = screens
@@ -51,7 +56,7 @@ class State:
 
 
 if __name__ == '__main__':
-    print("This file is responsible for the State class/object.")
+    print("This file is responsible for the State class/object (Singleton Pattern).")
     print("It keeps track of the state in terms of:")
     print("    - Screen Manager of kivy, and which screen is currently displayed.")
     print("        All calls to change screen must pass through here.")

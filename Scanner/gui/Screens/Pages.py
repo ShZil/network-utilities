@@ -12,9 +12,9 @@ class Pages(BoxLayout):
 
         labels = ['Save.', 'Scan.', 'Know.']
         actions = [
-            lambda _: state.screen("Save"),
-            lambda _: state.screen("Scan"),
-            lambda _: state.screen("Know")
+            lambda _: State().screen("Save"),
+            lambda _: State().screen("Scan"),
+            lambda _: State().screen("Know")
         ]
         buttons = [
             GreenButton(

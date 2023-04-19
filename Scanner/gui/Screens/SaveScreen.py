@@ -2,6 +2,7 @@ from import_handler import ImportDefence
 with ImportDefence():
     from kivy.uix.screenmanager import Screen
     from kivy.uix.relativelayout import RelativeLayout
+    from kivy.uix.label import Label
 
 from globalstuff import *
 from threading import Thread
@@ -10,7 +11,6 @@ from gui.Hover import Hover, HoverReplaceBackground
 from gui.dialogs import popup
 from gui.KivyExtensions import GreenButton
 from gui.Screens.Pages import Pages
-from kivy.uix.label import Label
 
 
 class SaveScreenExportButton(GreenButton):
@@ -76,7 +76,7 @@ class SaveScreenImportButton(GreenButton):
                 print(e)
 
         Thread(target=_importing).start()
-        state.screen("View")
+        State().screen("View")
 
 
 class SaveScreen(Screen):

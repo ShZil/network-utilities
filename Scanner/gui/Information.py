@@ -6,16 +6,17 @@ with ImportDefence():
 from gui.dialogs import popup
 import db
 from ipconfig import ipconfig
+from gui.ScanClasses import DummyScan
+
 
 def display_information():
-    if state.highlighted_scan is DummyScan() or state.highlighted_scan is None:
+    highlighted = State().highlighted_scan
+    if highlighted is DummyScan() or highlighted is None:
         popup(f"General Information", general_information(), info=True)
     else:
         popup(
-            f"Information about {state.highlighted_scan.name}",
-            information_about(
-                state.highlighted_scan.name
-            ),
+            f"Information about {highlighted.name}",
+            information_about(highlighted.name),
             info=True
         )
 

@@ -26,7 +26,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.widget import Widget
 from kivy.uix.scrollview import ScrollView
-from kivy.app import App
 
 import sys
 import traceback
@@ -34,42 +33,6 @@ import traceback
 __author__ = 'Shaked Dan Zilberman'
 
 # --- Basically Main ---
-class MyApp(App):
-    """The main application, using `kivy`.
-    Includes five screens:
-    1. ScanScreen
-    2. SaveScreen
-    3. KnowScreen
-    4. StartScreen (soon ******************)
-    5. ViewScreen (only accessible through `KnowScreen.ImportButton`)
-
-
-    Args:
-        App (tk): the tkinter base app.
-    """
-
-    def build(self):
-        self.title = 'Local Network Scanner'
-        self.icon = 'favicon.png'
-        from kivy.core.window import Window
-        Window.size = (1300, 800)
-        global state
-        state = State()
-        screens = ScreenManager(transition=FadeTransition())
-        state.setScreenManager(screens)
-
-        screens.add_widget(ScanScreen())
-        screens.add_widget(SaveScreen())
-        screens.add_widget(KnowScreen())
-        screens.add_widget(ViewScreen())
-
-        state.screen('Scan')
-
-        Hover.start()
-
-        return screens
-
-
 def start_kivy():
     """Starts the `kivy` app, and handles the `tkinter` diagram's closing."""
     global is_kivy_running, diagram
