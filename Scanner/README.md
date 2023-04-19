@@ -2002,3 +2002,7 @@ ImportError: cannot import name 'State' from partially initialized module 'gui.A
 [22:07] Alright that wasn't too hellish, I just drew a graph on paper to understand,
 and changed to dynamic (inside-method) import.
 That's error 1, solved. My 95% bet won.
+
+[22:13] Another circular import. Expanded the paper graph,
+changed more imports to dynamic (more than necessary to prevent more errors).
+That's error 2, solved. Will we get to the 70% bet?

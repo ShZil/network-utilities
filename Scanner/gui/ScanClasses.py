@@ -7,7 +7,6 @@ from gui.dialogs import popup
 from globalstuff import *
 from register import Register
 from gui.Hover import Hover
-from gui.AppState import State
 
 
 class Scan:
@@ -31,6 +30,7 @@ class Scan:
         Hover.add(self.button)
 
     def select(self, x):
+        from gui.AppState import State
         if State().highlighted_scan == self:
             State().scan(DummyScan())
             return

@@ -1,9 +1,7 @@
 from globalstuff import *
 from CacheDecorators import one_cache
-from gui.AppState import State
 
 
-#     --- Hovering ---
 class Hover:
     """Enables hovering cursor and behaviours. Uses singleton structure (because it accesses a system function of changing cursor).
     Includes two lists: `items`, where each item can change the cursor to `pointer` if hovered (`item.collide_point(x, y) -> True`);
@@ -21,6 +19,7 @@ class Hover:
     @one_cache
     def _bind():
         from kivy.core.window import Window
+        from gui.AppState import State
         Window.bind(mouse_pos=Hover.update)
         Window.bind(size=State().resize_callback)
         return 0  # to comply with @one_cache's rule: A @one_cache function cannot return None!
