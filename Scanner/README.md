@@ -1875,3 +1875,8 @@ if 'Crypto' in to_install:
     to_install = 'pycryptodome'
 ```
 
+[11:54] Technically 00:35, but it was probably cached somewhere, so don’t treat this as an actual value for a new machine.
+
+[11:58] PyCharm* is mad that the directory `gui` isn’t a module or whatever, so add an empty `__init__.py` file in it.
+(*) Yes, I’m using PyCharm. I don’t like PyCharm. I have VSCode at home, which is much more comfortable, and in class I usually use Notepad++, but it’s useless for debugging.
+
