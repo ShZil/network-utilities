@@ -23,10 +23,6 @@ from gui.Screens.SaveScreen import SaveScreen
 from gui.Screens.KnowScreen import KnowScreen
 from util import color_to_hex
 
-
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QMessageBox
-
 from kivy.clock import Clock
 from kivy.config import Config
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
@@ -59,76 +55,6 @@ def display_information():
             ),
             info=True
         )
-
-
-def popup(
-        title,
-        message,
-        *,
-        error=False,
-        warning=False,
-        question=False,
-        info=False,
-        cancel=False):
-    # print("POPUP:")
-    # print("    title =", title)
-    # print("    message =", message)
-    # if error: print("    ERROR")
-    # if warning: print("    WARNING")
-    # if question: print("    QUESTION")
-    # if info: print("    INFO")
-    # if cancel: print("    CANCEL")
-
-    if error or warning or question or info:
-        with QApplication([]):
-            md_text = markdown.markdown(message)
-            html_text = f"<html><body>{md_text}</body></html>"
-
-            popup = QMessageBox()
-            popup.setWindowTitle(title)
-            popup.setTextFormat(Qt.RichText)
-            popup.setStandardButtons(QMessageBox.Ok)
-            popup.setEscapeButton(QMessageBox.Ok)
-            popup.setDefaultButton(QMessageBox.Ok)
-            icon = QMessageBox.Critical if error else QMessageBox.Warning if warning else QMessageBox.Question if question else QMessageBox.Information
-            popup.setIcon(icon)
-            popup.setText(html_text)
-
-            popup.exec_()
-            return -1
-    elif cancel:
-        return win32api.MessageBox(0, message, title, 0x00000001) != 2
-    else:
-        win32api.MessageBox(0, message, title, 0x00000000)
-
-
-def get_string(prompt: str) -> str:
-    from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
-
-    app = QApplication([])
-    widget = QWidget()
-    layout = QVBoxLayout()
-
-    label = QLabel(prompt)
-    text_box = QLineEdit()
-    button = QPushButton("Submit")
-
-    def submit():
-        result = text_box.text()
-        widget.close()
-        app.quit()
-        return result
-
-    button.clicked.connect(submit)
-    layout.addWidget(label)
-    layout.addWidget(text_box)
-    layout.addWidget(button)
-    widget.setLayout(layout)
-
-    widget.show()
-    app.exec_()
-
-    return submit()
 
 
 def information_about(name: str) -> str:

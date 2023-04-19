@@ -1954,3 +1954,10 @@ This is an extension I'm familiar with from Atom, and it extends easily to VSCod
 [20:33] Removed `prestart`, and moved the two statements to more logical places:
 - `G.add_node(router)` -- in `exe.py`, near a similar statement `NetworkStorage().add(router, here)`.
 - `start_kivy.__name__ = 'Main GUI Thread'` -- right after the definition of `start_kivy`.
+
+[20:42] With the assistance of ChatGPT, I came up with the name `dialogs.py` for the next file.
+It's simple, and obvious in hindsight, but it was kind of difficult to come up with.
+ChatGPT's power really shines in natural language (after all it's an LLM),
+so using it to generate words and synonyms given context is quite good.
+
+[20:58] Moved `popup` and `get_string` to `dialogs.py`, and added docstrings.
