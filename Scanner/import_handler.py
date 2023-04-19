@@ -70,10 +70,6 @@ class ImportDefence:
         # Otherwise, raise the exception.
         try:
             raise exc_val
-        # If the exception is of type ImportError, log an error and keep raising it.
-        except ImportError:
-            print("You've misnamed your import. Check it.")
-            raise
         # If the exception is of type ModuleNotFoundError, handle it:
         except ModuleNotFoundError as err:
             import sys
@@ -102,3 +98,7 @@ class ImportDefence:
                 sys.exit(1)
             argv = ['\"' + sys.argv[0] + '\"'] + sys.argv[1:]
             os.execv(sys.executable, ['python'] + argv)
+        # If the exception is of type ImportError, log an error and keep raising it.
+        except ImportError:
+            print("You've misnamed your import. Check it.")
+            raise

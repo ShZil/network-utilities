@@ -1857,3 +1857,12 @@ to not clutter up the main folder.
 
 [23:51] Please finish decomposing `gui.py`,
 because the current build will not work.
+
+
+
+### 2023-04-19
+[11:36] Working on the project from school, after a long Passover break when I haven’t interacted with the school network and devices.
+
+[11:37] ImportDefence didn’t work on `import requests`, and weirdly entered the “You've misnamed your import. Check it.” print, even though it IS a ModuleNotFoundError. Within a minute of googling I found out that ModuleNotFoundError is a subclass of ImportError, and thus the error would be caught in the first clause, which is problematic.
+Solution: move the `except ImportError` to after the `except ModuleNotFoundError`, not before.
+
