@@ -6,7 +6,7 @@ import files_cryptography
 
 
 def get_password():
-    from gui import get_string
+    from gui.dialogs import get_string
     return get_string("Enter password:")
 
 
