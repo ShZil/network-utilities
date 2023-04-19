@@ -1960,4 +1960,6 @@ It's simple, and obvious in hindsight, but it was kind of difficult to come up w
 ChatGPT's power really shines in natural language (after all it's an LLM),
 so using it to generate words and synonyms given context is quite good.
 
-[20:58] Moved `popup` and `get_string` to `dialogs.py`, and added docstrings.
+[20:58] Moved `popup` and `get_string` to `gui/dialogs.py`, and added docstrings.
+
+[21:02] Created `gui/Information.py`. I don't really like the name, but it's fine.
