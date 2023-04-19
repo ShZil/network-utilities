@@ -1968,3 +1968,5 @@ so using it to generate words and synonyms given context is quite good.
 
 [21:11] Wow naming is difficult. I created `gui/ScanButton.py` and changed it to `gui/ScanClasses.py`,
 because it doesn't contain an actual UI button.
+
+[21:22] Added `Activation.py`, `Diagrams.py`, and `AppState.py`, all under `gui/`.

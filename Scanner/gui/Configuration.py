@@ -1,3 +1,4 @@
+from gui.ScanClasses import DummyScan
 from gui.dialogs import popup
 
 
