@@ -2101,10 +2101,10 @@ This will constitute 30% of my grade!
 
 [22:47] Add docstring to `KivyDiagram`.
 
-[22:51] Fix `StartApp.py` to accomadate the new changes in `Diagrams.py`,
+[22:51] Fix `StartApp.py` to accommodate the new changes in `Diagrams.py`,
 and have the software ready for testing.
 
-[22:53] Removed `gui.bat`, a remenent from the GUI creation and fine tuning.
+[22:53] Removed `gui.bat`, a remnant from the GUI creation and fine tuning.
 
 [22:54] The software crashes when started from `run.bat`,
 without a visible exception. So, execute with VSCode debugger.
@@ -2112,3 +2112,5 @@ without a visible exception. So, execute with VSCode debugger.
 [23:00] Bug: `KivyExtensions.py` still uses `update_kivy_diagram`,
 which is no longer supported after the `Diagram.py` overhaul.
 Solution: update to the new version. However, this requires changing KivyDiagram to a Singleton.
+
+[23:07] Changed `KivyDiagram` to a Singleton with minor assistance from ChatGPT.

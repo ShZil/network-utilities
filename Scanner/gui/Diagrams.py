@@ -186,15 +186,24 @@ class KivyDiagram(Diagram, ContextManager):
     Linked to a kivy widget with `self.widget` and `.set_widget(widget)`.
     There has to be a widget set before rendering (entering the context manager)!
     You cannot change the widget once you set it.
-    Does not use the Singleton pattern -- you have to maintain the object reference and pay attention when tossing it around.
+    Uses the Singleton pattern.
 
     Extends:
         Diagram (abstract class): allows for this class to be used as a diagram.
         ContextManager (type): allows for this class to be used as a context manager (for rendering).
     """
+
+    _instance = None
+
+    def __new__(cls):
+        if not cls._instance:
+            cls._instance = super().__new__(cls)
+            cls._instance.widget = None
+            cls._instance.radius = DIAGRAM_POINT_RADIUS
+        return cls._instance
+
     def __init__(self):
-        self.widget = None
-        self.radius = DIAGRAM_POINT_RADIUS
+        pass
 
     @one_cache
     def set_widget(self, widget):
