@@ -238,7 +238,7 @@ class KivyDiagram(Diagram, ContextManager):
             return collides(x, y)
         return collides(x + r, y + r) and collides(x - r, y - r)
     
-    def update(self):
+    def update(self, *_):
         render_diagram(
             self,
             *self.widget.pos,

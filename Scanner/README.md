@@ -2130,3 +2130,6 @@ However, `__enter__` is fine not being overriden.
 [23:46] Error logging from `StartApp.py` now redirected to `error log.txt`.
 
 [23:47] UnicodeEncodeError -- fixed with specifiying the encoding.
+
+[23:51] I need to "suck up" any leftover arguments from kivy's call to `KivyDiagram.update`.
+Additionally, `Diagrams().update()` needs no argument.
