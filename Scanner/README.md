@@ -2114,3 +2114,6 @@ which is no longer supported after the `Diagram.py` overhaul.
 Solution: update to the new version. However, this requires changing KivyDiagram to a Singleton.
 
 [23:07] Changed `KivyDiagram` to a Singleton with minor assistance from ChatGPT.
+
+[23:10] `TKDiagram` uses the default implementations of the `ContextManager` methods,
+so you can just not override them.

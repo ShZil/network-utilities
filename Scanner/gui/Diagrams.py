@@ -109,12 +109,6 @@ class TKDiagram(Diagram, ContextManager):
     def __init__(self):
         pass
 
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exception_type, exception_value, exception_traceback):
-        pass
-
     def color(self, r, g, b):
         self.color_cache = color_to_hex((r, g, b))
 
