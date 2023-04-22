@@ -2126,3 +2126,7 @@ However, `__enter__` is fine not being overriden.
 [23:25] Python uses `.append` to lists, not `.add`. :facepalm:
 
 [23:28] Add protection against `RuntimeError`s around `TKDiagram().show()` (when terminating).
+
+[23:46] Error logging from `StartApp.py` now redirected to `error log.txt`.
+
+[23:47] UnicodeEncodeError -- fixed with specifiying the encoding.

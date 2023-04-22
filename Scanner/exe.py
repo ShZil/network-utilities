@@ -109,6 +109,6 @@ if __name__ == '__main__':
         main()
     except Exception as err:
         from datetime import datetime
-        with open('error log.txt', 'w', encoding='utf-8') as f:
+        with open('error log.txt', 'a', encoding='utf-8') as f:
             f.write(f'An exception occurred - {err}\n{datetime.now()}')
         raise
