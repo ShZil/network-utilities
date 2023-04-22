@@ -23,7 +23,7 @@ class Diagrams:
         """Override the __new__ method to create only one instance of the class -- Singleton pattern."""
         if not cls._instance:
             cls._instance = super().__new__(cls)
-            cls._instance.diagrams = [TKDiagram()]#, PlotDiagram]
+            cls._instance.diagrams = []  # add PlotDiagram
         return cls._instance
     
     def add(self, diagram):
@@ -71,6 +71,7 @@ class TKDiagram(Diagram, ContextManager):
     """A diagram under `tkinter` window.
     Uses tk.Canvas.
     Doesn't actually close until `is_kivy_running` is set to False, and another closing is attempted.
+    Uses the Singleton pattern.
 
     Extends:
         Diagram (abstract class): allows for this class to be used as a diagram.
@@ -79,7 +80,6 @@ class TKDiagram(Diagram, ContextManager):
     _instance = None
 
     def __new__(cls):
-        """Override the __new__ method to create only one instance of the class -- Singleton pattern."""
         if not cls._instance:
             cls._instance = super().__new__(cls)
             cls._instance.root = tk.Tk()
@@ -186,6 +186,7 @@ class KivyDiagram(Diagram, ContextManager):
     Linked to a kivy widget with `self.widget` and `.set_widget(widget)`.
     There has to be a widget set before rendering (entering the context manager)!
     You cannot change the widget once you set it.
+    Does not use the Singleton pattern -- you have to maintain the object reference and pay attention when tossing it around.
 
     Extends:
         Diagram (abstract class): allows for this class to be used as a diagram.
