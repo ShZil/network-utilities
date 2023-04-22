@@ -28,7 +28,7 @@ class Diagrams:
     
     def add(self, diagram):
         if isinstance(diagram, Diagram) and isinstance(diagram, ContextManager):
-            self.diagrams.add(diagram)
+            self.diagrams.append(diagram)
     
     def update(self):
         for diagram in self.diagrams:

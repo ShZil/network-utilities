@@ -2122,3 +2122,7 @@ so you can just not override them.
 (in professional terms: the `__exit__` method is defined as abstract in `ContextManager`)
 Solution: revive the overriding of `__exit__`.
 However, `__enter__` is fine not being overriden.
+
+[23:25] Python uses `.append` to lists, not `.add`. :facepalm:
+
+[23:28] Add protection against `RuntimeError`s around `TKDiagram().show()` (when terminating).

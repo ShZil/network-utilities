@@ -25,7 +25,10 @@ def start_kivy():
         )
     finally:
         is_kivy_running = False
-        TKDiagram().show()
+        try:
+            TKDiagram().show()
+        except RuntimeError:
+            pass
         root = TKDiagram().root
         root.after(1, root.destroy)
         terminator.set()
