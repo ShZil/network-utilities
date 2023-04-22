@@ -5,7 +5,7 @@ with ImportDefence():
 import sys
 import traceback
 from gui.App import MyApp
-from gui.Diagrams import Diagram
+from gui.Diagrams import Diagrams, TKDiagram
 from globalstuff import terminator
 import threading
 
@@ -25,8 +25,8 @@ def start_kivy():
         )
     finally:
         is_kivy_running = False
-        Diagram().show()
-        root = Diagram().root
+        TKDiagram().show()
+        root = TKDiagram().root
         root.after(1, root.destroy)
         terminator.set()
         print('\n'.join([str(thread) for thread in threading.enumerate()]))
@@ -37,7 +37,8 @@ start_kivy.__name__ = 'Main GUI Thread'
 def start_tk():
     """Starts the `tkinter` diagram in the background.
     This has to be on the main thread (because `tkinter` said so)."""
-    Diagram().root.mainloop()
+    Diagrams().add(TKDiagram())
+    TKDiagram().root.mainloop()  # main thread waits here until the user leaves the application.
 
 
 if __name__ == '__main__':

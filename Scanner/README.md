@@ -2100,3 +2100,6 @@ This will constitute 30% of my grade!
   Use `self.color` only in `set` operations.
 
 [22:47] Add docstring to `KivyDiagram`.
+
+[22:51] Fix `StartApp.py` to accomadate the new changes in `Diagrams.py`,
+and have the software ready for testing.
