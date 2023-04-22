@@ -96,8 +96,6 @@ class TKDiagram(Diagram, ContextManager):
             )
             cls._instance.canvas.pack(expand=True, fill='both')
 
-            cls._instance.graph = G
-
             cls._instance.radius = DIAGRAM_POINT_RADIUS
             cls._instance.color_cache = '#000000'
 
@@ -117,13 +115,11 @@ class TKDiagram(Diagram, ContextManager):
     def __exit__(self, exception_type, exception_value, exception_traceback):
         pass
 
-    def color(self, r=None, g=None, b=None):
-        if r is None:
-            return self.color_cache
+    def color(self, r, g, b):
         self.color_cache = color_to_hex((r, g, b))
 
     def rectangle(self, x, y, w, h):
-        self.canvas.create_rectangle(x, y, w, h, fill=self.color())
+        self.canvas.create_rectangle(x, y, w, h, fill=self.color_cache)
 
     def circle(self, x, y, node):
         r = self.radius
@@ -135,16 +131,16 @@ class TKDiagram(Diagram, ContextManager):
             x0,
             y0 - 30,
             text=node.to_string('\n'),
-            fill=self.color(),
+            fill=self.color_cache,
             font=("Consolas", 10),
             justify=tk.CENTER
         )
         return self.canvas.create_oval(
-            x0, y0, x1, y1, fill=self.color())
+            x0, y0, x1, y1, fill=self.color_cache)
 
     def line(self, x0, y0, x1, y1, stroke):
         self.canvas.create_line(
-            x0, y0, x1, y1, width=stroke, fill=self.color())
+            x0, y0, x1, y1, width=stroke, fill=self.color_cache)
 
     def __contains__(self, pos):
         return True
@@ -170,23 +166,6 @@ class TKDiagram(Diagram, ContextManager):
         geometry = self.root.geometry().replace('+', 'x')
         self.width, self.height, *_ = map(int, geometry.split('x'))
         self.update()
-
-    # Graph management -- renew (if graph has changed, redraw) and update (draw anyway).
-    def renew(self, G: nx.Graph):
-        """Update the rendered graph.
-        Saves a `G.copy()` to `self.graph` and calls `self.update()`.
-        Args:
-            G (nx.Graph): the new graph.
-        """
-        renewed = G.copy()
-        try:
-            if not nx.utils.graphs_equal(renewed, self.graph):
-                self.graph = renewed
-                self.update()
-                return True
-        except KeyError as e:
-            print(e)
-        return False
 
     def update(self):
         render_diagram(
@@ -268,8 +247,8 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
     with draw:
         draw.color(*bg)
         draw.rectangle(x, y, w, h)
+        
         draw.color(*fg)
-
         for node, (x0, y0) in pos.items():
             if (x0, y0) in draw:
                 draw.circle(x0, y0, node)

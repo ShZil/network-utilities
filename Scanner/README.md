@@ -2092,3 +2092,9 @@ See GitHub commits for the progress and decisions.
 [22:22] Worked on an empty Project Portfolio,
 to later add my information into.
 This will constitute 30% of my grade!
+
+[22:40] Changes in `TKDiagram`:
+- remove `self.renew` (unused).
+- remove `self.graph` (unused).
+- use `self.color_cache` instead of `self.color` in `get` operations.
+  Use `self.color` only in `set` operations.
