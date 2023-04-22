@@ -2133,3 +2133,6 @@ However, `__enter__` is fine not being overriden.
 
 [23:51] I need to "suck up" any leftover arguments from kivy's call to `KivyDiagram.update`.
 Additionally, `Diagrams().update()` needs no argument.
+
+[23:56] Turns out you can keep raising exceptions in Python, and the `finally` block still runs,
+so do that for `StartApp.py`. https://stackoverflow.com/questions/49262379/does-finally-always-execute-in-python

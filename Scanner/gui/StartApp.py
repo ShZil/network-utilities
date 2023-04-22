@@ -24,6 +24,7 @@ def start_kivy():
             f"{type(e).__name__} at {__file__}:{e.__traceback__.tb_lineno}: {e}\n{datetime.now()}",
             file=open('error log.txt', 'a', encoding='utf-8')
         )
+        raise
     finally:
         is_kivy_running = False
         try:
