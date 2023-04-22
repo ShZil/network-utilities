@@ -84,11 +84,14 @@ class ScanScreenMiddleDiagram(RelativeLayout):
             size_hint=(1, 1),
             pos_hint={'center_x': .5, 'center_y': .5}
         )
-        paint.bind(pos=update_kivy_diagram, size=update_kivy_diagram)
+        kivy_diagram = KivyDiagram()
+        kivy_diagram.set_widget(paint)
+        Diagrams().add(kivy_diagram)
+        paint.bind(pos=kivy_diagram.update, size=kivy_diagram.update)
 
+        # *********** move this to the responsibiliy of exe.py
         def update_diagrams(*_):
-            update_kivy_diagram(paint)
-            Diagram().renew(G)
+            Diagrams().update()
         Clock.schedule_interval(update_diagrams, 5)
 
         # Unite all widgets of the middle diagram.
