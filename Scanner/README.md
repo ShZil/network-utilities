@@ -2064,3 +2064,30 @@ You can generate it from the code that is present, anywhere.
 - More testing on another network
 - Try starting to add the `matplotlib` diagram instead of tkinter's. (Cleanse the project from tkinter)
 - Investigate why Device Profile crashes everything.
+
+
+
+### 2023-04-20
+[15:45] Working on `Diagrams.py`, to simplify the code and add easy support for future types,
+specifically `matplotlib` as discussed earlier.
+
+[16:13] Please keep working on `Diagrams.py`!
+It is not complete, and not stable, to say the least.
+I won't commit to git yet so you can easily see changes.
+
+
+
+### 2023-04-21
+[14:26] I spent 6 minutes installing setting up a good-looking status bar clock,
+in the VSCode editor.
+
+
+
+### 2023-04-22
+[20:31] Continue working on `Diagrams.py`
+
+[20:58] Started working on the Project Portfolio.
+
+[22:22] Worked on an empty Project Portfolio,
+to later add my information into.
+This will constitute 30% of my grade!

@@ -1,15 +1,80 @@
 from import_handler import ImportDefence
 with ImportDefence():
-    import tkinter as tk
     import networkx as nx
+    import tkinter as tk
     from kivy.graphics import Color, Ellipse, Rectangle, Line
+    from matplotlib import pyplot as plt
 
 from globalstuff import *
 from util import color_to_hex
+from CacheDecorators import one_cache
 
-class Diagram:
-    """This is a class responsible for the hovering diagram, that is created in a separate window when the 'Fullscreen' button is pressed.
-    Uses `tkinter` (not `kivy`, like the other parts). Black diagram on white background. Can be expanded in both directions.
+from abc import ABC, abstractmethod
+from typing import ContextManager
+
+
+class Diagrams:
+    """This class handles all the Diagrams that present the network graph (`G`).
+    To use, simply create an instance (uses Singleton), and do `.add` to your diagram.
+    """
+    _instance = None
+
+    def __new__(cls):
+        """Override the __new__ method to create only one instance of the class -- Singleton pattern."""
+        if not cls._instance:
+            cls._instance = super().__new__(cls)
+            cls._instance.diagrams = [TKDiagram()]#, PlotDiagram]
+        return cls._instance
+    
+    def add(self, diagram):
+        if isinstance(diagram, Diagram) and isinstance(diagram, ContextManager):
+            self.diagrams.add(diagram)
+    
+    def update(self):
+        for diagram in self.diagrams:
+            diagram.update()
+
+
+class Diagram(ABC):
+    """This is an abstarct base class for diagrams that render the network.
+    """
+    @abstractmethod
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def update(self):
+        pass
+
+    @abstractmethod
+    def color(self, r, g, b):
+        pass
+
+    @abstractmethod
+    def rectangle(self, x, y, w, h):
+        pass
+
+    @abstractmethod
+    def circle(self, x, y, node):
+        pass
+
+    @abstractmethod
+    def line(self, x0, y0, x1, y1, stroke):
+        pass
+
+    @abstractmethod
+    def __contains__(self, pos):
+        pass
+
+
+class TKDiagram(Diagram, ContextManager):
+    """A diagram under `tkinter` window.
+    Uses tk.Canvas.
+    Doesn't actually close until `is_kivy_running` is set to False, and another closing is attempted.
+
+    Extends:
+        Diagram (abstract class): allows for this class to be used as a diagram.
+        ContextManager (type): allows for this class to be used as a context manager (for rendering).
     """
     _instance = None
 
@@ -32,7 +97,9 @@ class Diagram:
             cls._instance.canvas.pack(expand=True, fill='both')
 
             cls._instance.graph = G
-            cls._instance.diagram_cache = None
+
+            cls._instance.radius = DIAGRAM_POINT_RADIUS
+            cls._instance.color_cache = '#000000'
 
             cls._instance.canvas.bind('<Configure>', cls._instance.resize)
             cls._instance.update()
@@ -41,13 +108,70 @@ class Diagram:
             cls._instance.root.protocol("WM_DELETE_WINDOW", cls._instance.try_close)
         return cls._instance
 
+    def __init__(self):
+        pass
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exception_type, exception_value, exception_traceback):
+        pass
+
+    def color(self, r=None, g=None, b=None):
+        if r is None:
+            return self.color_cache
+        self.color_cache = color_to_hex((r, g, b))
+
+    def rectangle(self, x, y, w, h):
+        self.canvas.create_rectangle(x, y, w, h, fill=self.color())
+
+    def circle(self, x, y, node):
+        r = self.radius
+        x0 = x - r
+        y0 = y - r
+        x1 = x + r
+        y1 = y + r
+        self.canvas.create_text(
+            x0,
+            y0 - 30,
+            text=node.to_string('\n'),
+            fill=self.color(),
+            font=("Consolas", 10),
+            justify=tk.CENTER
+        )
+        return self.canvas.create_oval(
+            x0, y0, x1, y1, fill=self.color())
+
+    def line(self, x0, y0, x1, y1, stroke):
+        self.canvas.create_line(
+            x0, y0, x1, y1, width=stroke, fill=self.color())
+
+    def __contains__(self, pos):
+        return True
+
+    # Window management -- closing, hiding, showing, resizing.
     def try_close(self):
         """To prevent the user from really closing this window if the source (kivy) is still open."""
+        from globalstuff import is_kivy_running
         if is_kivy_running:
             self.hide()
         else:
             self.root.destroy()
 
+    def hide(self):
+        self.root.withdraw()
+
+    def show(self):
+        self.root.update()
+        self.root.deiconify()
+    
+    def resize(self, event):
+        # `geomery` is of the form "{width}x{height}+{x}+{y}"
+        geometry = self.root.geometry().replace('+', 'x')
+        self.width, self.height, *_ = map(int, geometry.split('x'))
+        self.update()
+
+    # Graph management -- renew (if graph has changed, redraw) and update (draw anyway).
     def renew(self, G: nx.Graph):
         """Update the rendered graph.
         Saves a `G.copy()` to `self.graph` and calls `self.update()`.
@@ -64,27 +188,9 @@ class Diagram:
             print(e)
         return False
 
-    def hide(self):
-        self.root.withdraw()
-
-    def show(self):
-        self.root.update()
-        self.root.deiconify()
-
-    def resize(self, event):
-        # `geomery` is of the form "{width}x{height}+{x}+{y}"
-        geometry = self.root.geometry().replace('+', 'x')
-        # Uses this property of the `map` function: "Stops when the shortest
-        # iterable is exhausted."
-        # Convert to `int` with base 10, but only twice.
-        self.width, self.height = map(int, geometry.split('x'), [10, 10])
-        self.update()
-
     def update(self):
-        if self.diagram_cache is None:
-            self.diagram_cache = TKDiagram(self, DIAGRAM_POINT_RADIUS)
         render_diagram(
-            self.diagram_cache,
+            self,
             0,
             0,
             self.width,
@@ -93,64 +199,25 @@ class Diagram:
             fg_color,
             -50
         )
-        self.changed = False
 
 
-class TKDiagram:
-    def __init__(self, diagram, radius):
-        self.diagram = diagram
-        self.radius = radius
-        self.color_cache = '#000000'
+class KivyDiagram(Diagram, ContextManager):
+    def __init__(self):
+        self.widget = None
+        self.radius = DIAGRAM_POINT_RADIUS
 
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exception_type, exception_value, exception_traceback):
-        pass
-
-    def color(self, r=None, g=None, b=None):
-        if r is None:
-            return self.color_cache
-        self.color_cache = color_to_hex((r, g, b))
-
-    def rectangle(self, x, y, w, h):
-        self.diagram.canvas.create_rectangle(x, y, w, h, fill=self.color())
-
-    def circle(self, x, y, node):
-        r = self.radius
-        x0 = x - r
-        y0 = y - r
-        x1 = x + r
-        y1 = y + r
-        self.diagram.canvas.create_text(
-            x0,
-            y0 - 30,
-            text=node.to_string('\n'),
-            fill=self.color(),
-            font=("Consolas", 10),
-            justify=tk.CENTER
-        )
-        return self.diagram.canvas.create_oval(
-            x0, y0, x1, y1, fill=self.color())
-
-    def line(self, x0, y0, x1, y1, stroke):
-        self.diagram.canvas.create_line(
-            x0, y0, x1, y1, width=stroke, fill=self.color())
-
-    def __contains__(self, pos):
-        return True
-
-
-class KivyDiagram:
-    def __init__(self, widget, radius):
+    @one_cache
+    def set_widget(self, widget):
         self.widget = widget
-        self.radius = radius
+        return widget
 
     def __enter__(self):
+        assert self.widget is not None
         self.widget.canvas.__enter__()
         return self
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
+        assert self.widget is not None
         self.widget.canvas.__exit__()
 
     def color(self, r, g, b):
@@ -167,32 +234,23 @@ class KivyDiagram:
         Line(points=(x0, y0, x1, y1), width=stroke)
 
     def __contains__(self, pos):
+        assert self.widget is not None
         x, y = pos
         r = self.radius
         def collides(x0, y0): return self.widget.collide_point(x0, y0)
         if r == 0:
             return collides(x, y)
         return collides(x + r, y + r) and collides(x - r, y - r)
-
-
-# --- Rendering ---
-def update_kivy_diagram(painter, _=0):
-    """Renders stuff on the diagram (object #9).
-    Caches `painter` on first call.
-    Args:
-        painter (MyPaintWidget): the diagram to paint on. **This is passed in once**. All next calls will use the object that was given in the first call.
-        value (int): just for compatibility.
-    """
-    if hasattr(update_kivy_diagram, 'cache'):
-        painter = update_kivy_diagram.cache
-    else:
-        update_kivy_diagram.cache = painter
-        update_kivy_diagram.diagram_cache = KivyDiagram(
-            painter, DIAGRAM_POINT_RADIUS
+    
+    def update(self):
+        render_diagram(
+            self,
+            *self.widget.pos,
+            *self.widget.size,
+            bg_color,
+            fg_color,
+            -TITLE_HEIGHT
         )
-
-    render_diagram(update_kivy_diagram.diagram_cache, *painter.pos,
-                   *painter.size, bg_color, fg_color, -TITLE_HEIGHT)
 
 
 def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
@@ -224,4 +282,7 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
 
 
 if __name__ == '__main__':
-    print("This file handles the two kinds of diagrams: Kivy diagram and TKinter diagram.")
+    print("This file handles Diagrams that present the network graph.")
+    print("Currently two types: KivyDiagram and TKDiagram.")
+    print("To create a new diagram, simply inherit Diagram and typing.ContextManager,")
+    print("and implement all the methods.")
