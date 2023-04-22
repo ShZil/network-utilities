@@ -2084,7 +2084,8 @@ in the VSCode editor.
 
 
 ### 2023-04-22
-[20:31] Continue working on `Diagrams.py`
+[20:31] Continue working on `Diagrams.py`.
+See GitHub commits for the progress and decisions.
 
 [20:58] Started working on the Project Portfolio.
 

@@ -3,7 +3,6 @@ with ImportDefence():
     from kivy.uix.relativelayout import RelativeLayout
     from kivy.uix.label import Label
     from kivy.uix.screenmanager import Screen
-    from kivy.clock import Clock
     from kivy.uix.boxlayout import BoxLayout
 
 from globalstuff import *
@@ -88,11 +87,6 @@ class ScanScreenMiddleDiagram(RelativeLayout):
         kivy_diagram.set_widget(paint)
         Diagrams().add(kivy_diagram)
         paint.bind(pos=kivy_diagram.update, size=kivy_diagram.update)
-
-        # *********** move this to the responsibiliy of exe.py
-        def update_diagrams(*_):
-            Diagrams().update()
-        Clock.schedule_interval(update_diagrams, 5)
 
         # Unite all widgets of the middle diagram.
         self.add_widget(paint)
