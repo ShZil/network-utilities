@@ -2117,3 +2117,8 @@ Solution: update to the new version. However, this requires changing KivyDiagram
 
 [23:10] `TKDiagram` uses the default implementations of the `ContextManager` methods,
 so you can just not override them.
+
+[23:21] BUG: Apparently it dislikes when I don't override `__exit__`
+(in professional terms: the `__exit__` method is defined as abstract in `ContextManager`)
+Solution: revive the overriding of `__exit__`.
+However, `__enter__` is fine not being overriden.
