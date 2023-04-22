@@ -2103,3 +2103,5 @@ This will constitute 30% of my grade!
 
 [22:51] Fix `StartApp.py` to accomadate the new changes in `Diagrams.py`,
 and have the software ready for testing.
+
+[22:53] Removed `gui.bat`, a remenent from the GUI creation and fine tuning.
