@@ -83,10 +83,8 @@ class ScanScreenMiddleDiagram(RelativeLayout):
             size_hint=(1, 1),
             pos_hint={'center_x': .5, 'center_y': .5}
         )
-        kivy_diagram = KivyDiagram()
-        kivy_diagram.set_widget(paint)
-        Diagrams().add(kivy_diagram)
-        paint.bind(pos=kivy_diagram.update, size=kivy_diagram.update)
+        Diagrams().add(KivyDiagram())
+        paint.bind(pos=KivyDiagram().update, size=KivyDiagram().update)
 
         # Unite all widgets of the middle diagram.
         self.add_widget(paint)

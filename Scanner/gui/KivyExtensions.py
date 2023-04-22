@@ -6,7 +6,7 @@ with ImportDefence():
     from kivy.uix.widget import Widget
 
 from globalstuff import *
-from gui.Diagrams import update_kivy_diagram
+from gui.Diagrams import KivyDiagram
 from gui.Hover import Hover, HoverReplace
 
 
@@ -46,15 +46,17 @@ class ButtonColumn(GridLayout):
 
 class MyPaintWidget(Widget):
     """Responsible for the middle diagram (object #9).
+    Automatically sets itself as the `KivyDiagram()`'s widget.
+    
     Args:
         Widget (tkinter widget): the superclass.
     """
 
     def init(self):
-        update_kivy_diagram(self, 0)
+        KivyDiagram().set_widget(self)
 
     def on_touch_down(self, touch):
-        update_kivy_diagram(self, 0)
+        KivyDiagram().update()
 
 
 class GreenButton(Button):

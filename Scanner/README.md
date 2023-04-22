@@ -2105,3 +2105,10 @@ This will constitute 30% of my grade!
 and have the software ready for testing.
 
 [22:53] Removed `gui.bat`, a remenent from the GUI creation and fine tuning.
+
+[22:54] The software crashes when started from `run.bat`,
+without a visible exception. So, execute with VSCode debugger.
+
+[23:00] Bug: `KivyExtensions.py` still uses `update_kivy_diagram`,
+which is no longer supported after the `Diagram.py` overhaul.
+Solution: update to the new version. However, this requires changing KivyDiagram to a Singleton.
