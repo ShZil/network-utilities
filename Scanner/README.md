@@ -2098,3 +2098,5 @@ This will constitute 30% of my grade!
 - remove `self.graph` (unused).
 - use `self.color_cache` instead of `self.color` in `get` operations.
   Use `self.color` only in `set` operations.
+
+[22:47] Add docstring to `KivyDiagram`.

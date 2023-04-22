@@ -181,6 +181,16 @@ class TKDiagram(Diagram, ContextManager):
 
 
 class KivyDiagram(Diagram, ContextManager):
+    """A diagram under `kivy` window, specifically the `Scan` screen, more specifically the `ScanScreenMiddleDiagram` widget.
+    Uses kivy's widget.canvas.
+    Linked to a kivy widget with `self.widget` and `.set_widget(widget)`.
+    There has to be a widget set before rendering (entering the context manager)!
+    You cannot change the widget once you set it.
+
+    Extends:
+        Diagram (abstract class): allows for this class to be used as a diagram.
+        ContextManager (type): allows for this class to be used as a context manager (for rendering).
+    """
     def __init__(self):
         self.widget = None
         self.radius = DIAGRAM_POINT_RADIUS
