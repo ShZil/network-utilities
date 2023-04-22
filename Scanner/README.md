@@ -2136,3 +2136,18 @@ Additionally, `Diagrams().update()` needs no argument.
 
 [23:56] Turns out you can keep raising exceptions in Python, and the `finally` block still runs,
 so do that for `StartApp.py`. https://stackoverflow.com/questions/49262379/does-finally-always-execute-in-python
+
+[23:58] Added this line in `KivyDiagram.update`
+```py
+assert self.widget is not None
+```
+Suggestion: Consider changing all its occurences in `KivyDiagram` to a type check, like:
+```py
+assert isinstance(self.widget, MyPaintWidget)
+```
+with the necessary import. Also, ensure that this prevents `None`s from passing.
+
+[23:59] The assertion fails. If it's removed, another error is raised. Find out why the widget is None, and consider these solutions:
+- (internal responsibility) skip updating when the widget is None
+- (external responsibility) don't call `.update` before calling `.set_widget`.
+Currently a non-functional version, solve this bug.

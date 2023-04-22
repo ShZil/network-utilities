@@ -239,6 +239,7 @@ class KivyDiagram(Diagram, ContextManager):
         return collides(x + r, y + r) and collides(x - r, y - r)
     
     def update(self, *_):
+        assert self.widget is not None
         render_diagram(
             self,
             *self.widget.pos,
