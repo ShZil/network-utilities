@@ -83,6 +83,7 @@ class ScanScreenMiddleDiagram(RelativeLayout):
             size_hint=(1, 1),
             pos_hint={'center_x': .5, 'center_y': .5}
         )
+        KivyDiagram().set_widget(paint)
         Diagrams().add(KivyDiagram())
         paint.bind(pos=KivyDiagram().update, size=KivyDiagram().update)
 

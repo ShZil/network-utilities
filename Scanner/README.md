@@ -2151,3 +2151,16 @@ with the necessary import. Also, ensure that this prevents `None`s from passing.
 - (internal responsibility) skip updating when the widget is None
 - (external responsibility) don't call `.update` before calling `.set_widget`.
 Currently a non-functional version, solve this bug.
+
+
+
+### 2023-04-23
+[20:39] Placed an if and a breakpoint to debug why the assertion fails.
+```py
+if self.widget is None:
+    print("Whoops")  # Breakpoint here
+```
+
+[20:44] Solved by moving the responsibility on setting the widget to outside the class `MyPaintWidget`.
+This previously failed because it was inside `.init` of` `MyPaintWidget` (no `__`, just `init`, 'cuz Kivy),
+which is probably called too late.

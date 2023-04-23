@@ -46,14 +46,14 @@ class ButtonColumn(GridLayout):
 
 class MyPaintWidget(Widget):
     """Responsible for the middle diagram (object #9).
-    Automatically sets itself as the `KivyDiagram()`'s widget.
+    It is the caller's responsibility to set this as the `KivyDiagram()`'s widget.
     
     Args:
         Widget (tkinter widget): the superclass.
     """
 
     def init(self):
-        KivyDiagram().set_widget(self)
+        pass
 
     def on_touch_down(self, touch):
         KivyDiagram().update()
