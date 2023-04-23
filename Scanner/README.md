@@ -2183,3 +2183,9 @@ How funny.
 Solved with `self.root.after(<ms>, <action>)`.
 
 [21:33] Protect around `self.root.after` against `RuntimeError`s.
+
+[21:34] Doing some PEP8 fixes, these are the commands:
+```bat
+pycodestyle "C:\...\Scanner" --ignore=E501
+autopep8 "C:\...\Scanner" --inplace --select=W293,E303,E305,E302,E701,E226 --recursive
+```
