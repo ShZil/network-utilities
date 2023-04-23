@@ -68,10 +68,10 @@ class Register(dict):
             return True
         self.threads.pop(name)
         return
-    
+
     def is_infinite_scan(self, name: str):
         # `name` may contain '...' in the end.
         return name in self.infinites or name[:-3] in self.infinites
-    
+
     def get_history(self):
         return [tuple(item) for item in self.history]

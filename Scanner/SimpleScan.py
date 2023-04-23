@@ -4,6 +4,7 @@ with ImportDefence():
 
 from ipconfig import ipconfig
 
+
 def do_simple_scan(scan: Callable, all_possible_addresses: list[str], *, results=False, repeats=3) -> list[str]:
     """This is a wrapper for simple* scans, like ARP or ICMP.
 

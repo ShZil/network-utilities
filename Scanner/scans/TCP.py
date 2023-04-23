@@ -3,7 +3,7 @@ from import_handler import ImportDefence
 with ImportDefence():
     from scapy.all import sr1, TCP, IP
     from random import randint
-    
+
     from util import threadify
     from PrintingContexts import InstantPrinting
 
@@ -30,6 +30,7 @@ def scan_port(ip: str, port: int) -> int:
         else:
             return OPEN
 
+
 scan_ports = threadify(scan_port, silent=False)
 
 
@@ -42,8 +43,7 @@ def scan_TCP(ip: str, repeats: int) -> dict:
         for i, port in enumerate(PORT_RANGE):
             if one_scan[i] == OPEN:
                 result[port] = True
-        
-    
+
     return result
 
 
@@ -56,7 +56,6 @@ def main(addr=''):
         address = addr
     else:
         address = input("Which IP address? ")
-    
 
     def is_ipv4(string):
         try:
@@ -64,7 +63,7 @@ def main(addr=''):
             return True
         except ValueError:
             return False
-    
+
     while not is_ipv4(address):
         print("This does not appear to be a valid IPv4 address.")
         address = input("Which IP address? ")
@@ -77,15 +76,17 @@ def main(addr=''):
     try:
         minimum = int(input("Choose min port: "))
         maximum = int(input("Choose max port: "))
-        if maximum < minimum: raise ValueError("Maximum can't be smaller than minimum.")
-        if minimum < 0: minimum = 0
-        if maximum > 65536: maximum = 65536
+        if maximum < minimum:
+            raise ValueError("Maximum can't be smaller than minimum.")
+        if minimum < 0:
+            minimum = 0
+        if maximum > 65536:
+            maximum = 65536
         global PORT_RANGE
         PORT_RANGE = list(range(minimum, maximum))
     except ValueError:
         pass
 
-    
     print()
     print(f"Open TCP ports in {address} in range {PORT_RANGE[0]} → {PORT_RANGE[-1]} ({repeats} repeats):")
     with InstantPrinting():

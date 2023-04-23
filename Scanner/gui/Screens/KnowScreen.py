@@ -115,7 +115,8 @@ class KnowScreenDeviceProfileButton(Button):
                         return item
             except ValueError:
                 name = address
-                if name == "Unknown": return None
+                if name == "Unknown":
+                    return None
                 for item in NetworkStorage():
                     if item.name == name:
                         return item
@@ -123,7 +124,7 @@ class KnowScreenDeviceProfileButton(Button):
 
         def _construct_content(info: dict):
             return '\n\n'.join([f"### {key}:\n{value}" for key, value in info.items()])
-        
+
         def _device_profile():
             address = get_string("Insert device's MAC/IP/IPv6 address or name:")
             entity = _match_device(address)
@@ -136,7 +137,6 @@ class KnowScreenDeviceProfileButton(Button):
             popup("Device Profile", _construct_content(information), info=True)
 
         Thread(target=_device_profile).start()
-
 
 
 if __name__ == '__main__':

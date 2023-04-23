@@ -90,4 +90,4 @@ if __name__ == '__main__':
     print("    - The physical (MAC) address of the host computer")
     print("This file provides both an encoder: get_scan_id() -> scan ID,")
     print("and a decoder: parse_scan_id(scan ID) -> textual description of the network")
-    
+

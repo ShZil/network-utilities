@@ -43,11 +43,11 @@ def scan_ARP(addresses: list[str]) -> list[str]:
             sys.exit(1)
         else:
             raise
-    
+
     lookup = NetworkStorage()
     for result in results:
         lookup.add(mac=result[0], ip=result[1])
-    
+
     return [result[1] for result in results]
 
 
@@ -77,6 +77,6 @@ def scan_ARP_continuous():
             NetworkStorage().add(mac=packet[ARP].hwdst, ip=packet[ARP].pdst)
         elif packet[ARP].op == 1:
             NetworkStorage().add(mac=packet[ARP].hwsrc, ip=packet[ARP].psrc)
-    
+
     sniffer = AsyncSniffer(prn=save_to_storage, lfilter=filter_ARP, store=False)
     sniffer.start()

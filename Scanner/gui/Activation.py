@@ -3,6 +3,7 @@ from gui.ScanClasses import DummyScan
 from gui.dialogs import popup
 from gui.AppState import State
 
+
 def activate(x):
     if State().ask_for_permission():
         s = State().highlighted_scan
@@ -25,6 +26,7 @@ def activate(x):
                 "The scan has been cancelled.\n\n\n<sub><sup>Cancel culture, I'm telling ya.</sup></sub>",
                 warning=True
             )
+
 
 if __name__ == '__main__':
     print("This file is responsible for any methods called by the Activation Button (▶) in Scan Screen.")

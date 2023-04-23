@@ -5,6 +5,7 @@ with ImportDefence():
 from NetworkStorage import NetworkStorage
 from CacheDecorators import one_cache
 
+
 def public_address_action():
     NetworkStorage().add(get_public_ip())
 

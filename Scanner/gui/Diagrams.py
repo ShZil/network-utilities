@@ -171,7 +171,6 @@ class TKDiagram(Diagram, ContextManager):
             self.root.after(0, lambda *_: render_diagram(self, 0, 0, self.width, self.height, bg_color, fg_color, -50))
         except RuntimeError:
             pass  # raised when terminating because tkinter cannot find its main thread.
-        
 
 
 class KivyDiagram(Diagram, ContextManager):

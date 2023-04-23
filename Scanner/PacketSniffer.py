@@ -29,7 +29,6 @@ class ListWithSQL:
             cursor.execute(ListWithSQL.RESET_AUTOINCREMENT)
             conn.commit()
 
-    
     def copy(self):
         copied = ListWithSQL(self.path, "list_with_sql_copy", self.maxram)
         for item in self:
@@ -41,7 +40,7 @@ class ListWithSQL:
         self.length += 1
         if len(self.ram) >= self.maxram:
             self._flush_to_sql()
-    
+
     def _flush_to_sql(self) -> None:
         to_database = [(pickle.dumps(p),) for p in self.ram]
         with sqlite3.connect(self.path) as conn:
@@ -49,11 +48,11 @@ class ListWithSQL:
             cursor.executemany(ListWithSQL.INSERT, to_database)
             conn.commit()
         self.ram = []
-    
+
     def extend(self, __iterable: Iterable[_T]) -> None:
         for item in __iterable:
             self.append(item)
-    
+
     def pop(self, __index: SupportsIndex = -1) -> _T:
         raise NotImplementedError("I don't think you should pop elements from a ListWithSQL.")
 
@@ -73,7 +72,7 @@ class ListWithSQL:
                 return i
         else:
             raise ValueError(f"{__value} is not in list")
-    
+
     def count(self, __value: _T) -> int:
         with sqlite3.connect(self.path) as conn:
             cursor = conn.cursor()
@@ -84,20 +83,20 @@ class ListWithSQL:
 
     def insert(self, __index: SupportsIndex, __object: _T) -> None:
         raise NotImplementedError("Inserting manually is not supported for ListWithSQL. Please use `append` instead.")
-    
+
     def remove(self, __value: _T) -> None:
         raise NotImplementedError("I don't think you should remove elements from a ListWithSQL.")
-    
+
     def sort(self: list, *, key: None = None, reverse: bool = False) -> None:
         raise NotImplementedError("Sorting is not supported for ListWithSQL. Please use `__iter__` and sort manually instead.")
-    
+
     def __len__(self) -> int:
         return self.length
-    
+
     def __iter__(self) -> Iterator[_T]:
         for i in range(self.length):
             yield self[i]
-        
+
     __hash__: ClassVar[None]  # type: ignore[assignment]
     def __getitem__(self, __i: SupportsIndex | slice) -> _T:
         if isinstance(__i, slice):
@@ -120,29 +119,28 @@ class ListWithSQL:
                 raise IndexError("list index out of range")
             return pickle.loads(res[0])
 
-    
     def __setitem__(self, __key: SupportsIndex, __value: _T) -> None:
         # Convert negative indices to positive indices
         if isinstance(__key, int) and __key < 0:
             __key += len(self)
-        
+
         # If index is in range of SQL data, update it in the SQL table
         if __key < len(self) - len(self.ram):
             with sqlite3.connect(self.path) as conn:
                 cursor = conn.cursor()
-                cursor.execute(f"UPDATE list_with_sql SET item=? WHERE id=?", (pickle.dumps(__value), __key+1))
-        
+                cursor.execute(f"UPDATE list_with_sql SET item=? WHERE id=?", (pickle.dumps(__value), __key + 1))
+
         # If index is in range of RAM data, update it in RAM
         elif __key < len(self):
             self.ram[__key - len(self) + len(self.ram)] = __value
-        
+
         # If index is out of range, raise an IndexError
         else:
             raise IndexError('list assignment index out of range')
-    
+
     def __delitem__(self, __key: SupportsIndex | slice) -> None:
         raise NotImplementedError("I don't think you should remove (__delitem__) elements from a ListWithSQL.")
-    
+
     def __contains__(self, __key: object) -> bool:
         if __key in self.ram:
             return True
@@ -202,7 +200,6 @@ class PacketSniffer:
             packet_row = cursor.execute('SELECT packet FROM packets WHERE id = ?', (i,)).fetchone()
         return pickle.loads(packet_row[0]) if packet_row else None
 
-
     def _packet_handler(self, packet):
         from time import time as now
         if IP in packet:
@@ -211,7 +208,7 @@ class PacketSniffer:
             self.length += 1
             if len(self.packets) >= self.max_packets:
                 self._flush_packets()
-    
+
     def __len__(self):
         return self.length
 
@@ -229,7 +226,7 @@ class PacketSniffer:
 
     def _ip_filter(self, packet):
         return IP in packet
-    
+
     def __iter__(self):
         packets = self.packets.copy()
 

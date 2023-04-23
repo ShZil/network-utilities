@@ -10,6 +10,7 @@ from gui.Screens.KnowScreen import KnowScreen
 from gui.Screens.ViewScreen import ViewScreen
 from gui.Hover import Hover
 
+
 class MyApp(App):
     """The main application, using `kivy`.
     Includes five screens:
@@ -29,7 +30,7 @@ class MyApp(App):
         self.icon = 'favicon.png'
         from kivy.core.window import Window
         Window.size = (1300, 800)
-        
+
         screens = ScreenManager(transition=FadeTransition())
         State().setScreenManager(screens)
 

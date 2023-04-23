@@ -5,6 +5,7 @@ with ImportDefence():
 
 from gui.ScanClasses import DummyScan
 
+
 class State:
     _instance = None
 

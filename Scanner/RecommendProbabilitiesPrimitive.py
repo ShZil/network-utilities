@@ -6,6 +6,7 @@ import matplotlib.cm as cm
 G = nx.DiGraph()
 probabilities = {}
 
+
 def construct_graph():
     global probabilities, G
     G.add_nodes_from(["ARP Sweep", "ICMP Sweep", "ARP Live", "ICMP Live", "OS-ID", "Public Address"])
@@ -28,7 +29,7 @@ def construct_graph():
 def normalise():
     global probabilities
     s = sum(probabilities.values())
-    probabilities = {node: float(i)/s for node, i in probabilities.items()}
+    probabilities = {node: float(i) / s for node, i in probabilities.items()}
 
 
 def render_ax1(fig, ax1):
@@ -70,10 +71,10 @@ def render_ax1(fig, ax1):
 
     y_off = -0.13
 
-    pos_higher = {k: (v[0], v[1]+y_off) for k, v in pos.items()}
+    pos_higher = {k: (v[0], v[1] + y_off) for k, v in pos.items()}
     labels = nx.draw_networkx_labels(G, pos_higher, ax=ax1)
     ax1.set_title("Scan's Influence On Each Other")
-    
+
     for node, value in probabilities.items():
         ax1.annotate(f"{value:.2f}", xy=pos[node], xytext=(-10, -15), textcoords="offset points")
 
@@ -81,7 +82,7 @@ def render_ax1(fig, ax1):
 def render_ax2(fig, ax2):
     adj_matrix = nx.adjacency_matrix(G)
     adj_array = adj_matrix.toarray()
-        
+
     im = ax2.imshow(adj_array, cmap='coolwarm_r', interpolation='nearest', vmin=-1, vmax=1)
     ax2.set_title("Presented as Adjacency Matrix")
     # fig.colorbar(im, ax=ax2)
@@ -91,7 +92,7 @@ def render_ax2(fig, ax2):
     ax2.set_yticks(range(len(node_names)))
     ax2.set_xticklabels(node_names, rotation=45)
     ax2.set_yticklabels(node_names)
-    
+
     for i in range(adj_array.shape[0]):
         for j in range(adj_array.shape[1]):
             ax2.text(j, i, f"{adj_array[i,j]:.2f}", ha="center", va="center", color="black")
@@ -99,11 +100,11 @@ def render_ax2(fig, ax2):
 
 def render_graph():
     fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(17, 7), gridspec_kw={'width_ratios': [1.5, 1]})
-    
+
     render_ax1(fig, ax1)
 
     render_ax2(fig, ax2)
-    
+
     plt.show()
 
 
@@ -116,7 +117,7 @@ def step(node):
         probabilities[scan] += weight * p
         print(f"Changed {scan} by {weight * p}")
     normalise()
-    
+
 
 def main():
     construct_graph()

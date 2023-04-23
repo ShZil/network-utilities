@@ -8,7 +8,7 @@ with ImportDefence():
     from colors import Colors
     from hostify import hostify, hostify_sync
     from ip_handler import subnet_address_range
-    
+
     from queue import Queue
     from threading import Thread
     from time import sleep
@@ -117,7 +117,8 @@ def can_connect_ICMP_base(address: str) -> bool:
     Returns:
         bool: a boolean indicating whether the echo ping had been successfully sent, and a response was received.
     """
-    if (address == ipconfig()["IPv4 Address"]): return False
+    if (address == ipconfig()["IPv4 Address"]):
+        return False
     packet = IP(dst=address) / ICMP()
     response = sr1(packet, verbose=0, timeout=1)
     lookup = NetworkStorage()
@@ -127,6 +128,7 @@ def can_connect_ICMP_base(address: str) -> bool:
             lookup.add(ip=response[IP].src)
             return True
     return False
+
 
 can_connect_ICMP_base.options = {"format": barstyle("Dot Fill")}
 scan_ICMP = threadify(can_connect_ICMP_base)
@@ -142,7 +144,7 @@ def calculate_opacity(connections: list[bool]) -> float:
     Returns:
         float: a value between `0.0` (disconnected) and `1.0` (connected) representing certainty that the device is still connected (a.k.a its opacity).
     """
-    
+
     # #   │++                             │+++++++++ 
     # #   │  ++                           │         +++++  
     # #   │    ++                         │              ++
@@ -166,8 +168,10 @@ def calculate_opacity(connections: list[bool]) -> float:
     # if opacity < 0: return 0.0
     # # Maybe calculate the average amount of disconnected time for devices? And not just choose some random numbers?
     # return opacity
-    if len(connections) == 0: return 1.0
-    if not any(connections): return 0.0
+    if len(connections) == 0:
+        return 1.0
+    if not any(connections):
+        return 0.0
     n = list(reversed(connections)).index(True)
     a = connections.count(True) / len(connections)
     return a ** n
@@ -178,10 +182,11 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
     # compactness=1 -> "255.255.255.255 (Smartphone-Galaxy-S90-5G) [█]".
     # compactness=2 -> "<ff:ff:ff:ff:ff:ff | 255.255.255.255 | Smartphone-Galaxy-S90-5G>" (text colour changes depending on opacity).
     # otherwise -> "255.255.255.255 (Smartphone-Galaxy-S90-5G)" (text colour changes depending on opacity).
-    if not isinstance(addresses, list): addresses = list(addresses)
+    if not isinstance(addresses, list):
+        addresses = list(addresses)
     table = {address: [] for address in addresses}
     waiting = Queue()
-    
+
     network = subnet_address_range(ipconfig()["Subnet Mask"], ipconfig()["IPv4 Address"])
     # from NetworkStorage import router
     # network = subnet_slash_notation(ipconfig()["Subnet Mask"], router.ip)
@@ -194,17 +199,18 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
         SCANNER_THREADS = 6
 
         def ICMP_live_device_discovery(order: int):
-            all_addresses = shift(all_possible_addresses, 71*order)
+            all_addresses = shift(all_possible_addresses, 71 *order)
             while True:
                 for address in all_addresses:
-                    if address in table.keys(): continue
-                    if address in waiting.queue: continue
+                    if address in table.keys():
+                        continue
+                    if address in waiting.queue:
+                        continue
                     if can_connect_ICMP_base(address):
                         waiting.put(address)
 
         for i in range(SCANNER_THREADS):
             Thread(target=ICMP_live_device_discovery, args=(i, )).start()
-    
 
     def resolve_queue():
         lookup = NetworkStorage()
@@ -214,7 +220,6 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
                 addresses.append(address)
                 lookup.add(ip=address)
                 print("Adding address", address)
-    
 
     def sweep_scan():
         for address, online in zip(addresses, scan_ICMP(addresses)):
@@ -223,7 +228,6 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
             table[address].append(online)
             if len(table[address]) > save_count:
                 table[address] = table[address][-save_count:]
-    
 
     def print0(sorted_table):
         print(f"Connection testing (ICMP ping) to {network}\n")
@@ -238,7 +242,6 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
                     f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
                 )
             print()
-    
 
     def print1(sorted_table):
         print(f"Connections (ICMP ping) to {network}\n")
@@ -249,7 +252,6 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
                     f"({hostify(address)})",
                     f"[{render_opacity(100 * calculate_opacity(table[address]))}]"
                 )
-    
 
     def print2(sorted_table):
         print(f"ICMP ping sweep over {network}\n")
@@ -259,13 +261,13 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
             for address in sorted_table:
                 opacity = calculate_opacity(table[address])
                 index = floor(opacity * (len(opacities) - 1))
-                if index == 0: continue
+                if index == 0:
+                    continue
                 color = opacities[index]
                 try:
                     print(f"{color}{data[address]}{Colors.END}  ")
                 except KeyError:
                     print(f"{color}{address} ({hostify(address)}){Colors.END}  ")
-    
 
     def print3(sorted_table):
         print(f"ICMP continuous: {network}\n")
@@ -274,20 +276,20 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
             for address in sorted_table:
                 opacity = calculate_opacity(table[address])
                 index = floor(opacity * (len(opacities) - 1))
-                if index == 0: continue
+                if index == 0:
+                    continue
                 color = opacities[index]
                 print(f"{color}{address} ({hostify(address)}){Colors.END}  ")
-
 
     while True:
         sleep(continuous_pause_seconds)
 
         resolve_queue()
         sweep_scan()
-        
+
         hostify_sync(list(table.keys()))
         # os.system("cls")
-        
+
         # sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
 
         # try:

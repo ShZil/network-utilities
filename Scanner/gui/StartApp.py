@@ -10,6 +10,7 @@ from gui.Diagrams import Diagrams, TKDiagram
 from globalstuff import terminator
 import threading
 
+
 def start_kivy():
     """Starts the `kivy` app, and handles the `tkinter` diagram's closing."""
     global is_kivy_running
@@ -35,6 +36,7 @@ def start_kivy():
         root.after(1, root.destroy)
         terminator.set()
         print('\n'.join([str(thread) for thread in threading.enumerate()]))
+
         # sys.exit()
 start_kivy.__name__ = 'Main GUI Thread'
 

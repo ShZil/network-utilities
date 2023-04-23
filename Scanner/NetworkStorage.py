@@ -100,7 +100,7 @@ class NetworkEntity:
     def to_string(self, sep=' '):
         return sep.join([self[field] for field in ["mac", "ip",
                         "ipv6", "name"] if self[field] != nothing[field]])
-    
+
     def to_dict(self):
         return {field: self[field] for field in ["mac", "ip", "ipv6", "name"]}
 
@@ -297,7 +297,7 @@ class NetworkStorage:
                 ipv6=nothing.ipv6,
                 name="broadcast"
             )
-            
+
             router = LockedNetworkEntity(
                 mac=nothing.mac,
                 ip=filterIP(
@@ -312,7 +312,7 @@ class NetworkStorage:
                 ipv6=nothing.ipv6,
                 name="local broadcast"
             )  # You sure you can't know the MAC and IPv6?
-            
+
             here = LockedNetworkEntity(
                 mac=ipconfig()["Physical Address"],
                 ip=ipconfig()["IPv4 Address"],

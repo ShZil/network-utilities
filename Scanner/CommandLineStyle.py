@@ -9,6 +9,7 @@ with ImportDefence():
     from pygments import highlight, lexers, formatters
     from json import dumps
 
+
 def cmdtitle(*s, sep=''):
     os.system(f'title {sep.join(s)}')
 

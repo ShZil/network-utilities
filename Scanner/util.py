@@ -14,6 +14,7 @@ with ImportDefence():
 __author__ = 'Shaked Dan Zilberman'
 MAX_THREADS: int = 50
 
+
 def color_to_hex(rgb) -> str:
     """This function converts between two common representations of RGB colours.
     It takes in a tuple or list (any iterable) that has 3 items, floats between 0 and 1,
