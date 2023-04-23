@@ -191,9 +191,9 @@ def check_ip(ip: str) -> str:
     return ip
 
 
-def filterIP(l: list[str]) -> list[str]:
-    if isinstance(l, str):
-        return [l]
+def filterIP(addresses: list[str]) -> list[str]:
+    if isinstance(addresses, str):
+        return [addresses]
 
     def isip(ip: str) -> bool:
         try:
@@ -201,7 +201,7 @@ def filterIP(l: list[str]) -> list[str]:
         except ValueError:
             return False
 
-    return list(filter(isip, l))
+    return list(filter(isip, addresses))
 
 
 def extend_ipv6(ipv6: str) -> str:
