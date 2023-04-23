@@ -26,11 +26,12 @@ class Diagrams:
             cls._instance = super().__new__(cls)
             cls._instance.diagrams = []  # add PlotDiagram
         return cls._instance
-    
+
     def add(self, diagram):
-        if isinstance(diagram, Diagram) and isinstance(diagram, ContextManager):
+        if isinstance(diagram, Diagram) \
+            and isinstance(diagram, ContextManager):
             self.diagrams.append(diagram)
-    
+
     def update(self):
         for diagram in self.diagrams:
             diagram.update()
@@ -158,7 +159,7 @@ class TKDiagram(Diagram, ContextManager):
     def show(self):
         self.root.update()
         self.root.deiconify()
-    
+
     def resize(self, event):
         # `geomery` is of the form "{width}x{height}+{x}+{y}"
         geometry = self.root.geometry().replace('+', 'x')
@@ -238,7 +239,7 @@ class KivyDiagram(Diagram, ContextManager):
         if r == 0:
             return collides(x, y)
         return collides(x + r, y + r) and collides(x - r, y - r)
-    
+
     def update(self, *_):
         assert self.widget is not None
         Clock.schedule_once(lambda *_: render_diagram(
@@ -267,7 +268,7 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
     with draw:
         draw.color(*bg)
         draw.rectangle(x, y, w, h)
-        
+
         draw.color(*fg)
         for node, (x0, y0) in pos.items():
             if (x0, y0) in draw:

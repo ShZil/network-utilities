@@ -2172,3 +2172,5 @@ Then, it schedules the action ON THE MAIN KIVY THREAD, and won't raise that bug.
 
 [21:08] BUG: `TypeError: <lambda>() takes 0 positional arguments but 1 was given`.
 Solution: Instruct the lambda to ignore arguments: `lambda *_: ...`.
+
+[21:11] Run `autopep8` on `gui/Diagrams.py` and manually fix some changes I didn't like.
