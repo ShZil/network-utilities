@@ -34,13 +34,7 @@ def get_scan_id() -> str:
     physical = int(physical.replace('-', ''), 16).to_bytes(6, 'big')
 
     return base64.b64encode(
-        host
-        + b'\x40'
-        + iface
-        + b'\x40'
-        + gateway
-        + mask
-        + physical
+        host + b'\x40' + iface + b'\x40' + gateway + mask + physical
     ).decode()
 
 

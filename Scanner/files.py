@@ -31,9 +31,7 @@ def exporter():
 
     from register import Register
     scan_history = [
-        int(timestamp).to_bytes(4, byteorder='big')
-        + str(name).encode()
-        + int(duration).to_bytes(3, byteorder='big')
+        int(timestamp).to_bytes(4, byteorder='big') + str(name).encode() + int(duration).to_bytes(3, byteorder='big')
         for (name, timestamp, duration) in Register().get_history()
     ]
     builder.add_many(scan_history)
