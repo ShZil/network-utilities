@@ -68,7 +68,7 @@ def scan_ARP_continuous():
                 NetworkStorage().add(mac=parts[1], ip=parts[0])
     except CalledProcessError:
         pass
-    
+
     # Stage 2
     filter_ARP = lambda x: ARP in x
 

@@ -22,7 +22,7 @@ def dictify_example2():
 def ipconfig_data():
     data = ipconfig()
     for key in ["IPv4 Address", "Subnet Mask"]:
-        if not key in data:
+        if key not in data:
             print("ipconfig() has no key \"" + key + "\".")
             return False
     return True

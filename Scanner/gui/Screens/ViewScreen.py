@@ -10,7 +10,8 @@ from globalstuff import *
 from gui.Screens.Pages import Pages
 
 
-def update_view_screen(text): return print("update_view_screen:", text)
+def update_view_screen(text):
+    return print("update_view_screen:", text)
 
 
 class ViewScreenInfo(ScrollView):
