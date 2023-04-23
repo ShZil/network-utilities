@@ -167,16 +167,8 @@ class TKDiagram(Diagram, ContextManager):
         self.update()
 
     def update(self):
-        render_diagram(
-            self,
-            0,
-            0,
-            self.width,
-            self.height,
-            bg_color,
-            fg_color,
-            -50
-        )
+        self.root.after(0, lambda *_: render_diagram(self, 0, 0, self.width, self.height, bg_color, fg_color, -50))
+        
 
 
 class KivyDiagram(Diagram, ContextManager):

@@ -2175,4 +2175,9 @@ Solution: Instruct the lambda to ignore arguments: `lambda *_: ...`.
 
 [21:11] Run `autopep8` on `gui/Diagrams.py` and manually fix some changes I didn't like.
 
-[21:14] Update `Diagram()` (which is now abstract) to `TKDiagram()`.
+[21:14] BUGFIX: Update `Diagram()` (which is now abstract) to `TKDiagram()`.
+
+[21:28] BUG: `RuntimeError: main thread is not in main loop`
+Basically an identical error, just on tkinter and not kivy.
+How funny.
+Solved with `self.root.after(<ms>, <action>)`.
