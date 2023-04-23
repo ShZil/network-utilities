@@ -3,15 +3,15 @@ with ImportDefence():
     import sqlite3
 
 CREATE_INFORMATION_TABLE = """CREATE TABLE IF NOT EXISTS `information` (
-	`name` VARCHAR(49) NOT NULL,
-	`Description` TEXT,
-	`Time` FLOAT,
-	`Reward` VARCHAR(100),
-	`Certainty` TINYINT unsigned,
-	`Safety` TINYINT unsigned,
-	`Mode` INT,
+    `name` VARCHAR(49) NOT NULL,
+    `Description` TEXT,
+    `Time` FLOAT,
+    `Reward` VARCHAR(100),
+    `Certainty` TINYINT unsigned,
+    `Safety` TINYINT unsigned,
+    `Mode` INT,
     `repeats` BOOLEAN,
-	PRIMARY KEY (`name`)
+    PRIMARY KEY (`name`)
 );"""
 INSERT_INFORMATION = "INSERT INTO information VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
 GET_ALL_SCANS = "SELECT name FROM information"
