@@ -13,7 +13,8 @@ from gui.dialogs import get_string, popup
 from globalstuff import *
 
 
-def update_know_screen(text): return print("update_know_screen:", text)
+def update_know_screen(text):
+    return print("update_know_screen:", text)
 
 
 class KnowScreen(Screen):
@@ -129,7 +130,7 @@ class KnowScreenDeviceProfileButton(Button):
         def _device_profile():
             address = get_string("Insert device's MAC/IP/IPv6 address or name:")
             entity = _match_device(address)
-            if entity == None:
+            if entity is None:
                 popup("Device Profile", "The device was not found.\nCheck whether you wrote the address correctly.", warning=True)
                 return
             regular_info = entity.to_dict()

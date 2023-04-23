@@ -38,6 +38,8 @@ def start_kivy():
         print('\n'.join([str(thread) for thread in threading.enumerate()]))
 
         # sys.exit()
+
+
 start_kivy.__name__ = 'Main GUI Thread'
 
 
