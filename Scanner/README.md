@@ -2239,3 +2239,6 @@ To solve this issue, you can use Matplotlib's built-in mechanism for running the
 
 Another option is to modify the show() method of PlotDiagram to run in the main thread using run_in_main_thread function from the kivy.clock module.
 ```
+
+[23:48] Currently, `PlotDiagram` doesn't work (due to multi threading issues probably).
+Reverted to `TKDiagram` for now.
