@@ -2225,3 +2225,17 @@ but you also need to exercise discretion.
 It's only 5,633 lines of Python code (in total!),
 so it seems improbable that I'll get the bonus for "extensive project".
 Unfortunate.
+
+[23:04] I just closed VSCode/GitHub Desktop, and then remembered I still have to implement `PlotDiagram`!
+
+[23:20] Consider adding an abstract class `DiagramWindow` with methods `show` and `hide`,
+and enforce it on `PlotDiagram` and `TKDiagram`, not `KivyDiagram`.
+
+[23:31] ChatGPT proposed:
+```
+To solve this issue, you can use Matplotlib's built-in mechanism for running the GUI in a separate thread by adding the following code at the beginning of your script:
+    import matplotlib
+    matplotlib.use('TkAgg')
+
+Another option is to modify the show() method of PlotDiagram to run in the main thread using run_in_main_thread function from the kivy.clock module.
+```
