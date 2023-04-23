@@ -2181,3 +2181,5 @@ Solution: Instruct the lambda to ignore arguments: `lambda *_: ...`.
 Basically an identical error, just on tkinter and not kivy.
 How funny.
 Solved with `self.root.after(<ms>, <action>)`.
+
+[21:33] Protect around `self.root.after` against `RuntimeError`s.
