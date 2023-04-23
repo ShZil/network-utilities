@@ -24,7 +24,7 @@ class Diagrams:
         """Override the __new__ method to create only one instance of the class -- Singleton pattern."""
         if not cls._instance:
             cls._instance = super().__new__(cls)
-            cls._instance.diagrams = []  # add PlotDiagram
+            cls._instance.diagrams = []
         return cls._instance
 
     def add(self, diagram):
@@ -171,6 +171,66 @@ class TKDiagram(Diagram, ContextManager):
             self.root.after(0, lambda *_: render_diagram(self, 0, 0, self.width, self.height, bg_color, fg_color, -50))
         except RuntimeError:
             pass  # raised when terminating because tkinter cannot find its main thread.
+
+
+class PlotDiagram(Diagram, ContextManager):
+    """A diagram in a `matplotlib.pyplot` window.
+    Uses the Singleton pattern.
+
+    Extends:
+        Diagram (abstract class): allows for this class to be used as a diagram.
+        ContextManager (type): allows for this class to be used as a context manager (for rendering).
+    """
+
+    _instance = None
+
+    def __new__(cls):
+        if not cls._instance:
+            cls._instance = super().__new__(cls)
+            fig, ax = plt.subplots()
+            cls._instance.fig = fig
+            cls._instance.ax = ax
+            cls._instance.manager = plt.get_current_fig_manager()
+            fig.canvas.mpl_connect('close_event', cls._instance.hide)
+        return cls._instance
+
+    def __init__(self):
+        pass
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exception_type, exception_value, exception_traceback):
+        pass
+
+    def color(self, r, g, b):
+        pass
+
+    def rectangle(self, x, y, w, h):
+        pass
+
+    def circle(self, x, y, node):
+        pass
+
+    def line(self, x0, y0, x1, y1, stroke):
+        pass
+
+    def __contains__(self, pos):
+        return True
+
+    def update(self):
+        self.ax.clear()
+        H = G.copy()
+        pos = nx.kamada_kawai_layout(H)
+        nx.draw(H, pos, ax=self.ax)
+        
+        plt.draw()
+
+    def show(self):
+        self.manager.window.show()
+    
+    def hide(self):
+        self.manager.window.hide()
 
 
 class KivyDiagram(Diagram, ContextManager):
