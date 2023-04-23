@@ -2197,3 +2197,30 @@ I manually scrolled to make sure nothing is too bad, but it seems alright.
 [22:11] Even more whitespace/newline changes! With my supervision, ofc.
 Using `pycodestyle`, I'll now correct style issues manually,
 that were not fixed by `autopep8`, and the code'll be perfect!
+
+[22:51] Corrected *all* of the PEP8 warnings!
+The output of `pycodestyle ...` is empty, ignoring these warnings:
+```
+E501 line too long (X > 79 characters)
+E402 module level import not at top of file
+E731 do not assign a lambda expression, use a def
+```
+
+I chose to ignore them for the following reasons:
+1. long lines are not too bad, they are more readable than the alternative.
+2. I have `import_handler.ImportDefence` that improves execution on a new computer by automatically pip-installing,
+   and I do not wish to give up on that. It's a context manager, so this warning will appear.
+3. I like lambda expressions, where they're more readable.
+All in all, you need to consider PEP8 guidelines to maintain consistency internally and between programmers,
+but you also need to exercise discretion.
+
+[22:58] Counting the lines in the directory usign the `VSCodeCounter` extension.
+| language | files | code | comment | blank | total |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| Python | 46 | 3,360 | 1,405 | 868 | 5,633 |
+| Markdown | 1 | 1,549 | 0 | 669 | 2,218 |
+| Batch | 4 | 47 | 1 | 13 | 61 |
+| Database | 1 | 38 | 0 | 1 | 39 |
+It's only 5,633 lines of Python code (in total!),
+so it seems improbable that I'll get the bonus for "extensive project".
+Unfortunate.
