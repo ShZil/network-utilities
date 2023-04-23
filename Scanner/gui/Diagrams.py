@@ -241,7 +241,7 @@ class KivyDiagram(Diagram, ContextManager):
     
     def update(self, *_):
         assert self.widget is not None
-        Clock.schedule_once(lambda: render_diagram(
+        Clock.schedule_once(lambda *_: render_diagram(
             self,
             *self.widget.pos,
             *self.widget.size,
