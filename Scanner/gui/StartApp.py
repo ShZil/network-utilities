@@ -6,7 +6,7 @@ import sys
 from datetime import datetime
 import traceback
 from gui.App import MyApp
-from gui.Diagrams import Diagrams, TKDiagram
+from gui.Diagrams import Diagrams, TKDiagram, PlotDiagram
 from globalstuff import terminator
 import threading
 
@@ -46,6 +46,7 @@ start_kivy.__name__ = 'Main GUI Thread'
 def start_tk():
     """Starts the `tkinter` diagram in the background.
     This has to be on the main thread (because `tkinter` said so)."""
+    # PlotDiagram().show()
     Diagrams().add(TKDiagram())
     TKDiagram().root.mainloop()  # main thread waits here until the user leaves the application.
 
