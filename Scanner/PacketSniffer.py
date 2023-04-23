@@ -16,6 +16,7 @@ class ListWithSQL:
     INSERT = "INSERT INTO list_with_sql (item) VALUES (?)"
     CLEAR = "DELETE FROM list_with_sql"
     RESET_AUTOINCREMENT = "UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='list_with_sql'"
+
     def __init__(self, path: str, maxram: int = 100):
         self.path = path
         self.ram = list()
@@ -98,6 +99,7 @@ class ListWithSQL:
             yield self[i]
 
     __hash__: ClassVar[None]  # type: ignore[assignment]
+
     def __getitem__(self, __i: SupportsIndex | slice) -> _T:
         if isinstance(__i, slice):
             return [self[j] for j in range(*__i.indices(len(self)))]

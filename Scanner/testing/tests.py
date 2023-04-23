@@ -164,8 +164,8 @@ def test() -> None:
     # Log all tests, both successful and unsucessful.
     with open('tests_log.txt', 'w') as log:
         log.write('\n'.join([
-                test.__name__ + " " + ("Successful" if not result else "Unsucessful")
-                for test, result in zip(tests, results)
+            test.__name__ + " " + ("Successful" if not result else "Unsucessful")
+            for test, result in zip(tests, results)
             ]))
         if not any(results):
             log.write("\n\nAll tests were successful.")

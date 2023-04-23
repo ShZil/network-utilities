@@ -199,7 +199,7 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
         SCANNER_THREADS = 6
 
         def ICMP_live_device_discovery(order: int):
-            all_addresses = shift(all_possible_addresses, 71 *order)
+            all_addresses = shift(all_possible_addresses, 71 * order)
             while True:
                 for address in all_addresses:
                     if address in table.keys():
