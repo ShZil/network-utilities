@@ -2195,3 +2195,5 @@ I manually scrolled to make sure nothing is too bad, but it seems alright.
 22 Changed files.
 
 [22:11] Even more whitespace/newline changes! With my supervision, ofc.
+Using `pycodestyle`, I'll now correct style issues manually,
+that were not fixed by `autopep8`, and the code'll be perfect!
