@@ -2187,7 +2187,7 @@ Solved with `self.root.after(<ms>, <action>)`.
 [21:34] Doing some PEP8 fixes, these are the commands:
 ```bat
 pycodestyle "C:\...\Scanner" --ignore=E501
-autopep8 "C:\...\Scanner" --in-place --select=W293,E303,E305,E302,E701,E226 --recursive
+autopep8 "C:\...\Scanner" --in-place --select=W293,E303,E305,E302,E701,E226,W191,E101,W391,W504,E125 --recursive
 ```
 
 [21:40] That fixed so many whitespace or newline inconsistencies.
