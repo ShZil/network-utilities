@@ -102,7 +102,7 @@ def threadify(f, silent=False):
         options={
             # daemon: bool -- if True, the threads forcibly end when main ends.
             # Else, they can continue running in the background.
-            "daemon": True,
+            "daemon": False,
             # printing: bool -- should there be a progress bar?
             "printing": True,
             # min_printing_length: int -- the minimal size of the progress bar (in characters). The actual length can be larger, if the terminal is wide enough.
@@ -127,7 +127,7 @@ def threadify(f, silent=False):
     """
     # Set up the options dictionary with default values.
     options = {
-        "daemon": True,
+        "daemon": False,
         "printing": True,
         "min_printing_length": 10,
         "format": "[─ ]",
@@ -180,7 +180,7 @@ def threadify(f, silent=False):
             sys.stdout = output
 
         # Create Thread objects
-        threads = [Thread(target=task, args=(f, x, i), daemon=True)
+        threads = [Thread(target=task, args=(f, x, i), daemon=options["daemon"])
                    for i, x in enumerate(args)]
 
         def threadify_start_threads(threads: list):
