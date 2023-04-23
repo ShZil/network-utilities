@@ -102,11 +102,12 @@ class KnowScreenInfoLabel(ScrollView):
 
 class KnowScreenDeviceProfileButton(Button):
     def __init__(self, **kwargs):
-        super().__init__(text="Device Profile", size_hint=(.2, .1), pos_hint={'x': 0.39, 'top': 0.1}, font_size=20, background_color=[0,1,0,1], font_name="Roboto", **kwargs)
+        super().__init__(text="Device Profile", size_hint=(.2, .1), pos_hint={'x': 0.39, 'top': 0.1}, font_size=20, background_color=[0, 1, 0, 1], font_name="Roboto", **kwargs)
         self.bind(on_press=self.device_profile)
 
     def device_profile(*_):
         from NetworkStorage import NetworkStorage, match, SpecialInformation
+
         def _match_device(address):
             try:
                 entity = match(address)

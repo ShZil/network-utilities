@@ -55,7 +55,7 @@ def scan_ARP_continuous():
     """Starts a passive ARP scan.
     Detects and extracts information from both `ARP who-has` and `ARP is-at` packets.
     NetworkStorage handles duplicates.
-    
+
     Terminates quickly, since `scapy`'s `AsyncSniffer` opens its own thread.
     """
     # Stage 1
@@ -70,6 +70,7 @@ def scan_ARP_continuous():
         pass
     # Stage 2
     filter_ARP = lambda x: ARP in x
+
     def save_to_storage(packet):
         # print(packet.summary())
         if packet[ARP].op == 2:

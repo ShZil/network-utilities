@@ -68,7 +68,7 @@ def main(addr=''):
         print("This does not appear to be a valid IPv4 address.")
         address = input("Which IP address? ")
 
-    try:    
+    try:
         repeats = int(input("How many repeats? "))
     except ValueError:
         repeats = 3

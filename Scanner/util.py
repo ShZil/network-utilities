@@ -46,7 +46,7 @@ def barstyle(name: str) -> str:
     function.options = {"format": style("default")}
     function = threadify(function)
     ```
-    
+
     For `name`:
     Whitespaces are ignored, capital letters are `.lower`ed.
     If the name was not found, uses the Default style.
@@ -194,7 +194,7 @@ def threadify(f, silent=False):
                     if terminator.is_set():
                         return
                 if terminator.is_set():
-                        return
+                    return
 
         # Rename `threadify_start_threads` to user-friendly name
         threadify_start_threads.__name__ = f.__name__ + '_threadify_start_threads'

@@ -34,13 +34,13 @@ def get_scan_id() -> str:
     physical = int(physical.replace('-', ''), 16).to_bytes(6, 'big')
 
     return base64.b64encode(
-        host +
-        b'\x40' +
-        iface +
-        b'\x40' +
-        gateway +
-        mask +
-        physical
+        host
+        + b'\x40'
+        + iface
+        + b'\x40'
+        + gateway
+        + mask
+        + physical
     ).decode()
 
 
@@ -90,4 +90,3 @@ if __name__ == '__main__':
     print("    - The physical (MAC) address of the host computer")
     print("This file provides both an encoder: get_scan_id() -> scan ID,")
     print("and a decoder: parse_scan_id(scan ID) -> textual description of the network")
-

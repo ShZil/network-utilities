@@ -145,16 +145,16 @@ def calculate_opacity(connections: list[bool]) -> float:
         float: a value between `0.0` (disconnected) and `1.0` (connected) representing certainty that the device is still connected (a.k.a its opacity).
     """
 
-    # #   │++                             │+++++++++ 
-    # #   │  ++                           │         +++++  
+    # #   │++                             │+++++++++
+    # #   │  ++                           │         +++++
     # #   │    ++                         │              ++
-    # #   │      ++                       │                ++ 
-    # #   │        ++                =>   │                  + 
-    # #   │          ++                   │                   + 
+    # #   │      ++                       │                ++
+    # #   │        ++                =>   │                  +
+    # #   │          ++                   │                   +
     # #   │            ++                 │                    +
-    # #   │              ++               │                    + 
+    # #   │              ++               │                    +
     # #   │                ++             │                     +
-    # #   │                  ++           │                     + 
+    # #   │                  ++           │                     +
     # # ──┼─────────────────────────    ──┼────────────────────────
     # #   │                               │
 
@@ -296,5 +296,3 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
         #     [print0, print1, print2][compactness](sorted_table)
         # except KeyError:
         #     print3()
-
-

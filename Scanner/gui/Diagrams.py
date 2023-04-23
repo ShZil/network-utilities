@@ -29,7 +29,7 @@ class Diagrams:
 
     def add(self, diagram):
         if isinstance(diagram, Diagram) \
-            and isinstance(diagram, ContextManager):
+                and isinstance(diagram, ContextManager):
             self.diagrams.append(diagram)
 
     def update(self):

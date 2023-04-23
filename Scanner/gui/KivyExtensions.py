@@ -47,7 +47,7 @@ class ButtonColumn(GridLayout):
 class MyPaintWidget(Widget):
     """Responsible for the middle diagram (object #9).
     It is the caller's responsibility to set this as the `KivyDiagram()`'s widget.
-    
+
     Args:
         Widget (tkinter widget): the superclass.
     """

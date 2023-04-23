@@ -353,7 +353,7 @@ class NetworkStorage:
         else:
             for entity in args:
                 if isinstance(entity, NetworkEntity) \
-                    or isinstance(entity, LockedNetworkEntity):
+                        or isinstance(entity, LockedNetworkEntity):
                     self.waiting.put(entity)
 
     def special_add(self, *entities):
@@ -553,4 +553,3 @@ class SpecialInformation(dict):
         if entity not in self:
             return False
         return info_key in self[entity]
-
