@@ -2221,6 +2221,7 @@ but you also need to exercise discretion.
 | Markdown | 1 | 1,549 | 0 | 669 | 2,218 |
 | Batch | 4 | 47 | 1 | 13 | 61 |
 | Database | 1 | 38 | 0 | 1 | 39 |
+
 It's only 5,633 lines of Python code (in total!),
 so it seems improbable that I'll get the bonus for "extensive project".
 Unfortunate.
