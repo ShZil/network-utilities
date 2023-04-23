@@ -2174,3 +2174,5 @@ Then, it schedules the action ON THE MAIN KIVY THREAD, and won't raise that bug.
 Solution: Instruct the lambda to ignore arguments: `lambda *_: ...`.
 
 [21:11] Run `autopep8` on `gui/Diagrams.py` and manually fix some changes I didn't like.
+
+[21:14] Update `Diagram()` (which is now abstract) to `TKDiagram()`.

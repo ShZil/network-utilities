@@ -76,7 +76,7 @@ class ScanScreenMiddleDiagram(RelativeLayout):
                                    size_hint=(.1, .1),
                                    pos_hint={'right': 1, 'y': 0},
                                    font_name="Symbols")
-        open_diagram.bind(on_press=lambda _: Diagram().show())
+        open_diagram.bind(on_press=lambda _: TKDiagram().show())
 
         #     Object #9
         paint = MyPaintWidget(
