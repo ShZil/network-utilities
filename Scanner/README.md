@@ -2192,3 +2192,4 @@ autopep8 "C:\...\Scanner" --in-place --select=W293,E303,E305,E302,E701,E226 --re
 
 [21:40] That fixed so many whitespace or newline inconsistencies.
 I manually scrolled to make sure nothing is too bad, but it seems alright.
+22 Changed files.
