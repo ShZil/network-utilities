@@ -2186,7 +2186,7 @@ Solved with `self.root.after(<ms>, <action>)`.
 
 [21:34] Doing some PEP8 fixes, these are the commands:
 ```bat
-pycodestyle "C:\...\Scanner" --ignore=E501
+pycodestyle "C:\...\Scanner" --ignore=E501,E731,E402
 autopep8 "C:\...\Scanner" --in-place --select=W293,E303,E305,E302,E701,E226,W191,E101,W391,W504,E125,E231,E306,W291,E301,E126,E121,E225,W191,W503 --recursive
 ```
 

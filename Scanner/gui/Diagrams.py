@@ -229,7 +229,7 @@ class KivyDiagram(Diagram, ContextManager):
         assert self.widget is not None
         x, y = pos
         r = self.radius
-        def collides(x0, y0): return self.widget.collide_point(x0, y0)
+        collides = lambda x0, y0: self.widget.collide_point(x0, y0)
         if r == 0:
             return collides(x, y)
         return collides(x + r, y + r) and collides(x - r, y - r)

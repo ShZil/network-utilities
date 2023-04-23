@@ -52,7 +52,7 @@ def barstyle(name: str) -> str:
     If the name was not found, uses the Default style.
 
     Args:
-        name (str): the name of the style. 
+        name (str): the name of the style.
 
     Returns:
         str: the format.

@@ -166,7 +166,7 @@ def test() -> None:
         log.write('\n'.join([
             test.__name__ + " " + ("Successful" if not result else "Unsucessful")
             for test, result in zip(tests, results)
-            ]))
+        ]))
         if not any(results):
             log.write("\n\nAll tests were successful.")
     # If any tests failed, print them to the user, and ask for confirmation.
