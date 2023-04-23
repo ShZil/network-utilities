@@ -2164,3 +2164,8 @@ if self.widget is None:
 [20:44] Solved by moving the responsibility on setting the widget to outside the class `MyPaintWidget`.
 This previously failed because it was inside `.init` of` `MyPaintWidget` (no `__`, just `init`, 'cuz Kivy),
 which is probably called too late.
+
+[20:48] Next error: `TypeError: Cannot create graphics instruction outside the main Kivy thread`.
+
+[21:04] Solution: Move the `render_diagram` call in `KivyDiagram.update` to a `<lambda>` under `kivy.clock.Clock.schedule_once`.
+Then, it schedules the action ON THE MAIN KIVY THREAD, and won't raise that bug.

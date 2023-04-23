@@ -3,6 +3,7 @@ with ImportDefence():
     import networkx as nx
     import tkinter as tk
     from kivy.graphics import Color, Ellipse, Rectangle, Line
+    from kivy.clock import Clock
     from matplotlib import pyplot as plt
 
 from globalstuff import *
@@ -240,13 +241,14 @@ class KivyDiagram(Diagram, ContextManager):
     
     def update(self, *_):
         assert self.widget is not None
-        render_diagram(
+        Clock.schedule_once(lambda: render_diagram(
             self,
             *self.widget.pos,
             *self.widget.size,
             bg_color,
             fg_color,
             -TITLE_HEIGHT
+        )
         )
 
 
