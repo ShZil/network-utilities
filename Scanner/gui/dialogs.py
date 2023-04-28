@@ -64,12 +64,14 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
         win32api.MessageBox(0, message, title, 0x00000000)
 
 
-def get_string(prompt: str) -> str:
+def get_string(title: str, prompt: str) -> str:
     """This function prompts the user to give a string input.
     It's basially like `input` in plain Python,
     but with a GUI.
+    The window's title will be `title`.
 
     Args:
+        title (str): the title of the small window.
         prompt (str): the question to ask the user.
 
     Returns:
@@ -95,6 +97,7 @@ def get_string(prompt: str) -> str:
     layout.addWidget(label)
     layout.addWidget(text_box)
     layout.addWidget(button)
+    widget.setWindowTitle(title)
     widget.setLayout(layout)
 
     widget.show()

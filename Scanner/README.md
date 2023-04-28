@@ -2242,3 +2242,12 @@ Another option is to modify the show() method of PlotDiagram to run in the main 
 
 [23:48] Currently, `PlotDiagram` doesn't work (due to multi threading issues probably).
 Reverted to `TKDiagram` for now.
+
+
+
+### 2023-04-28
+[15:21] Gonna start debugging why Device Profile crashes the app.
+
+[15:25] Everything seems fine, up until the `dialogs.popup`.
+
+[15:32] Added a title to `get_string`.

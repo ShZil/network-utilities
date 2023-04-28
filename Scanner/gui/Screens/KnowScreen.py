@@ -128,7 +128,7 @@ class KnowScreenDeviceProfileButton(Button):
             return '\n\n'.join([f"### {key}:\n{value}" for key, value in info.items()])
 
         def _device_profile():
-            address = get_string("Insert device's MAC/IP/IPv6 address or name:")
+            address = get_string("Device Profile - Choose Address", "Insert device's MAC/IP/IPv6 address or name:")
             entity = _match_device(address)
             if entity is None:
                 popup("Device Profile", "The device was not found.\nCheck whether you wrote the address correctly.", warning=True)
