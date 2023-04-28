@@ -2,6 +2,8 @@ class ImportDefence:
     """This context manager ensures all `import` statements were successful,
     and if some weren't, it attempts a `pip install`.
 
+    Source: https://raw.githubusercontent.com/ShZil/network-utilities/main/Scanner/import_handler.py
+
     This function handles a ModuleNotFoundError,
     attempting to install the not-found module using `pip install`,
     and restarting the script / instructing the user.
