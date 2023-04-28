@@ -2273,3 +2273,7 @@ to see if they are matching.
 
 [16:11] Notice, when I close the `get_string` before inputting,
 it crashes too. Why is that?
+
+[23:11] Another friend had a problem with `pip install`,
+so I updated `import_handler.py` to solve it automatically,
+and sent him the file.
