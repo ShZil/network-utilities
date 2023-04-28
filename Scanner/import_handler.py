@@ -84,6 +84,8 @@ class ImportDefence:
                 to_install = 'opencv-python'
             if to_install == 'Crypto':
                 to_install = 'pycryptodome'
+            if to_install == 'PIL':
+                to_install = 'pillow'
             to_install = to_install.split('.')[0]
 
             print(
