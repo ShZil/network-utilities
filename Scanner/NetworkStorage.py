@@ -266,6 +266,7 @@ specials = []
 class NetworkStorage:
     data = []
     waiting = Queue()
+    connections = Queue()
 
     # Use Singleton pattern:
     def __new__(cls):
@@ -366,6 +367,9 @@ class NetworkStorage:
         for entity in entities:
             if isinstance(entity, LockedNetworkEntity):
                 specials.append(entity)
+    
+    def connect(self, ip1, ip2):
+        self.connections.put((ip1, ip2))
 
     def _resolve(self):
         def append(entity):
@@ -394,6 +398,14 @@ class NetworkStorage:
             if entity.name == nothing.name:
                 entity.name = hostify(entity.ip)
             append(entity)
+        ips = {entity.ip: entity
+                for entity in self.data
+                if entity.ip != nothing.ip}
+        for ip1, ip2 in list(self.connections.queue):
+            if (ip1 not in ips) or (ip2 not in ips):
+                continue
+            G.add_edge(ips[ip1], ips[ip2])
+            
 
     def sort(self, key="ip"):
         self._resolve()

@@ -2277,3 +2277,12 @@ it crashes too. Why is that?
 [23:11] Another friend had a problem with `pip install`,
 so I updated `import_handler.py` to solve it automatically,
 and sent him the file.
+
+[23:59] Working on TraceRoute scan.
+Registered the scan (hardcoded to `dst=8.8.8.8`) in `exe.py:register_scans`.
+Added `connections = Queue()` in `NetworkStorage.py` to save graph connections that should be added.
+Added `connect(ip1, ip2)` to insert to this queue.
+Added, in `_resolve`, logic to add the necessary edges from the `connections` queue.
+The code in `TraceRouter.py` has two functions now:
+- hop: checks the host thrice for responses, and returns the ip (or `'Timed Out'` or `'Undefined'`).
+- traceroute: hops a bunch of times and adds the results to `NetworkStorage`.

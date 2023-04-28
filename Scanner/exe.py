@@ -27,6 +27,7 @@ from scans.OS_ID import operating_system_fingerprinting
 from scans.ARP import scan_ARP, scan_ARP_continuous
 from scans.ICMP import scan_ICMP, scan_ICMP_continuous
 from scans.TCP import scan_TCP
+from scans.TraceRouter import traceroute
 from time import sleep
 import os
 import sys
@@ -65,6 +66,7 @@ def register_scans():
     r["Live ARP"] = scan_ARP_continuous, True
     r["OS-ID"] = operating_system_fingerprinting, True
     r["Public Address"] = public_address_action
+    r["Traceroute"] = lambda: traceroute('8.8.8.8')
 
 
 def main():
