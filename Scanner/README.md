@@ -2286,3 +2286,13 @@ Added, in `_resolve`, logic to add the necessary edges from the `connections` qu
 The code in `TraceRouter.py` has two functions now:
 - hop: checks the host thrice for responses, and returns the ip (or `'Timed Out'` or `'Undefined'`).
 - traceroute: hops a bunch of times and adds the results to `NetworkStorage`.
+
+
+
+### 2023-04-29
+[00:05] Traceroute is working now.
+I'd just like to say it was super easy to implement,
+honestly, it took so little time!
+
+[00:08] I texted a friend of mine with the results, and am image of the network graph.
+He nicknamed it 'A Pendulum Of Computers', and it kind of looks like one.
