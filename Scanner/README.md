@@ -2251,3 +2251,25 @@ Reverted to `TKDiagram` for now.
 [15:25] Everything seems fine, up until the `dialogs.popup`.
 
 [15:32] Added a title to `get_string`.
+
+[15:46] Testing in IDLE resulted in no error or crash.
+
+[16:02] Maybe the thread is the problem? Nope, tested this on IDLE:
+```py
+message = '### mac:\n**-**-**-**-**-**\n\n### ip:\n10.0.0.***\n\n### ipv6:\n****:****\n\n### name:\nDESKTOP-****** (censored)'
+popup("Device Profile", message, info=True)
+>>> -1
+from threading import Thread
+Thread(target=popup, args=("Device Profile", message), kwargs={'info':True}).start()
+>>> [awaiting next command]
+```
+And both popups (threadless and threaded displayed fine).
+
+[16:03] I'm on a phone call with a friend, trying to debug this,
+and he proposed to check the Python versions on IDLE and VSCode,
+to see if they are matching.
+
+[16:07] They are matching. printed `sys.version` on both. 🙁
+
+[16:11] Notice, when I close the `get_string` before inputting,
+it crashes too. Why is that?

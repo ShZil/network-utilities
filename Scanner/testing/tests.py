@@ -179,6 +179,7 @@ def test() -> None:
         input("Press any key to continue. . . ")
     else:
         print("All tests were successful.")
+        print(sys.version)
     print("\033[0m")  # End colors
 
 

@@ -105,6 +105,7 @@ class KnowScreenDeviceProfileButton(Button):
     def __init__(self, **kwargs):
         super().__init__(text="Device Profile", size_hint=(.2, .1), pos_hint={'x': 0.39, 'top': 0.1}, font_size=20, background_color=[0, 1, 0, 1], font_name="Roboto", **kwargs)
         self.bind(on_press=self.device_profile)
+        Hover.add(self)
 
     def device_profile(*_):
         from NetworkStorage import NetworkStorage, match, SpecialInformation
@@ -136,7 +137,11 @@ class KnowScreenDeviceProfileButton(Button):
             regular_info = entity.to_dict()
             special_info = SpecialInformation()[entity]
             information = {**regular_info, **special_info}
-            popup("Device Profile", _construct_content(information), info=True)
+            try:
+                popup("Device Profile", _construct_content(information), info=True)
+            except Exception as e:
+                print(e)
+            print("Popped")
 
         Thread(target=_device_profile).start()
 
