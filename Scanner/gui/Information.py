@@ -92,7 +92,7 @@ def general_information() -> str:
             f"{count} × {name}" if count > 1 else name for name,
             count in zip(uniques, counts)
         ]
-        threads = ['* ' + name for name in threads]
+        threads = [f'* `{name}`' for name in threads]
         return threads
 
     from NetworkStorage import here, router

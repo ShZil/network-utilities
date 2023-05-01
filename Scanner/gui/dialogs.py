@@ -51,11 +51,11 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
             )
         ]]
         window = sg.Window(title, layout, finalize=True)
-        unescape_html_text = html.unescape(html_text)
-        window['_HTML_'].update(unescape_html_text)
+        # unescape_html_text = html.unescape(html_text)
+        window['_HTML_'].update(html_text)
 
         while True:
-            event, values = window.read()
+            event, values = window.read(timeout=500)
             if event == sg.WIN_CLOSED:
                 break
 
