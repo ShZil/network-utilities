@@ -40,12 +40,27 @@ def information_about(name: str) -> str:
     # If the description includes a packet model, escape it into a code block.
     if not description.endswith(('.', '. ', '>')):
         description += '.'
-    description = re.sub(
-        "<[^<>]+>",
-        "<br>```\\g<0>```",
-        description,
-        flags=re.DOTALL
-    )
+    
+    def _html_from_osi_model(message: str) -> str:
+        import re
+
+        pattern = r"<([A-Z][^>]*)>"
+        replacement = r"<tr><td>\1</td></tr>"
+
+        new_string = re.sub(pattern, replacement, message)
+        new_string = re.sub(r"<tr><td>([^<>]*)</td></tr>\s*<tr><td>", r"<tr><td>\1</td></tr>", new_string)
+
+        new_string = re.sub(r"<tr>", "<table><tr>", new_string, count=1)
+        new_string = new_string.rsplit("</tr>", 1)[0] + "</tr></table>"
+        
+        return new_string
+    description = _html_from_osi_model(description)
+    # description = re.sub(
+    #     "<[^<>]+>",
+    #     "<br>```\\g<0>```",
+    #     description,
+    #     flags=re.DOTALL
+    # )
 
     # Return everything in markdown format.
     return '\n'.join([

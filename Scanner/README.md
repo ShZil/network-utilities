@@ -2345,3 +2345,7 @@ I'll save the previous implementation (PyQt5), now the code has the newer one (P
 [01:12] Small bugfix: scans' information wouldn't show the packet breakdown,
 because it would be escaped as HTML and not rendered.
 So, I just removed the `html.unescape`!
+
+[01:45] Added HTML formatting for the packet OSI models,
+when showing information about scans,
+all under `gui.Information.py:information_about`.
