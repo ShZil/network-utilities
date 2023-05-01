@@ -43,7 +43,13 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
     """
     if error or warning or question or info:
         html_text = markdown2.markdown(message)
-        layout = [[sg.Column([[sg.Text('', key='_HTML_')]], size=(600, 400), scrollable=True)]]
+        layout = [[
+            sg.Column(
+                [[sg.Text('', key='_HTML_')]],
+                size=(1000, 600),
+                scrollable=True
+            )
+        ]]
         window = sg.Window(title, layout, finalize=True)
         unescape_html_text = html.unescape(html_text)
         window['_HTML_'].update(unescape_html_text)

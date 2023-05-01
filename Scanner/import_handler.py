@@ -109,3 +109,6 @@ class ImportDefence:
         except ImportError:
             print("You've misnamed your import. Check it.")
             raise
+
+# possible add pip updating, using:
+# `python.exe -m pip install --upgrade pip`
