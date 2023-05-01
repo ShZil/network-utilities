@@ -2296,3 +2296,49 @@ honestly, it took so little time!
 
 [00:08] I texted a friend of mine with the results, and am image of the network graph.
 He nicknamed it 'A Pendulum Of Computers', and it kind of looks like one.
+
+
+
+### 2023-05-01
+[16:26] I tried debugging this further (Device Profile crashes).
+I got assistence from a friend, a smart friend.
+Nothing. We couldn't solve it. Together.
+
+[16:27] Asked ChatGPT for an alternative to `PyQt5`, for `popup`.
+It suggested `easygui`. I gave it the docstring, with some changes,
+and asked it to remake `popup`. It did.
+
+[16:36] It failed, and corrected itself,
+but that would've required me to have image files in the directory,
+rendering each of the icons. 
+So I asked it to propose another alternative, and it came up with `PySimpleGUI`.
+Rewrote it with `PySimpleGUI`.
+
+
+
+
+### 2023-05-02
+[00:22] The markdown part of `popup`, now using a different library,
+is now functional. It still doesn't solve the `Device Profile` crash issue,
+but it's nice to have it!
+
+I'll save the previous implementation (PyQt5), now the code has the newer one (PySimpleGUI).
+**`gui.dialogs.py:popup` using `PyQt5`:**
+```py
+        with QApplication([]):
+            md_text = markdown.markdown(message)
+            html_text = f"<html><body>{md_text}</body></html>"
+
+            popup = QMessageBox()
+            popup.setWindowTitle(title)
+            popup.setTextFormat(Qt.RichText)
+            popup.setStandardButtons(QMessageBox.Ok)
+            popup.setEscapeButton(QMessageBox.Ok)
+            popup.setDefaultButton(QMessageBox.Ok)
+            icon = QMessageBox.Critical if error else QMessageBox.Warning if warning else QMessageBox.Question if question else QMessageBox.Information
+            popup.setIcon(icon)
+            popup.setText(html_text)
+
+            popup.exec_()
+            return -1
+```
