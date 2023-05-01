@@ -3,7 +3,9 @@ with ImportDefence():
     import win32api
     from PyQt5.QtCore import Qt
     from PyQt5.QtWidgets import QApplication, QMessageBox
-    import markdown
+    import markdown2
+    import PySimpleGUIQt as sg
+    import html
 
 
 def popup(title: str, message: str, *, error=False, warning=False, question=False, info=False, cancel=False):
@@ -13,7 +15,7 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
     You can add `cancel` to give the user a choice between "OK" (returns True) and "Cancel" (returns False).
     This function uses:
     - `win32api.MessageBox` -- if no icon is chosen. This displays plaintext, and allows for cancelling (if `cancel` is set).
-    - `PyQt5.QMessageBox` -- if any icon is chosen. This displays markdown content.
+    - `PySimpleGUI` -- if any icon is chosen. This displays markdown content.
 
     Note: if you supply markdown content into `message`, and you wish for it to not display as plaintext,
     set one of the icons, e.g. `info=True`.
@@ -23,10 +25,9 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
     If no icon is chosen, the text is displayed as plaintext, not markdown.
 
     The function returns:
-    - The integer -1 for all `PyQt5` dialogs, i.e. anything with an icon.
+    - The integer -1 for all `PySimpleGUI` dialogs, i.e. anything with an icon.
     - Boolean (True/False) indicating whether the Cancel button wasn't pressed, if `cancel=True`.
     - None if no keyword arguments were set, after displaying a `MessageBox`.
-
 
     Args:
         title (str): the title of the window.
@@ -40,24 +41,20 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
     Returns:
         (bool | Literal[-1] | None): return value's meaning depends on the arguments, see above.
     """
-
     if error or warning or question or info:
-        with QApplication([]):
-            md_text = markdown.markdown(message)
-            html_text = f"<html><body>{md_text}</body></html>"
+        html_text = markdown2.markdown(message)
+        layout = [[sg.Column([[sg.Text('', key='_HTML_')]], size=(600, 400), scrollable=True)]]
+        window = sg.Window(title, layout, finalize=True)
+        unescape_html_text = html.unescape(html_text)
+        window['_HTML_'].update(unescape_html_text)
 
-            popup = QMessageBox()
-            popup.setWindowTitle(title)
-            popup.setTextFormat(Qt.RichText)
-            popup.setStandardButtons(QMessageBox.Ok)
-            popup.setEscapeButton(QMessageBox.Ok)
-            popup.setDefaultButton(QMessageBox.Ok)
-            icon = QMessageBox.Critical if error else QMessageBox.Warning if warning else QMessageBox.Question if question else QMessageBox.Information
-            popup.setIcon(icon)
-            popup.setText(html_text)
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED:
+                break
 
-            popup.exec_()
-            return -1
+        window.close()
+        return -1
     elif cancel:
         return win32api.MessageBox(0, message, title, 0x00000001) != 2
     else:

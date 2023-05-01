@@ -2316,7 +2316,6 @@ Rewrote it with `PySimpleGUI`.
 
 
 
-
 ### 2023-05-02
 [00:22] The markdown part of `popup`, now using a different library,
 is now functional. It still doesn't solve the `Device Profile` crash issue,
