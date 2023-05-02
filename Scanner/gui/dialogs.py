@@ -21,7 +21,10 @@ class IconType(Enum):
     NOTHING = 0
 
 POPUP_WINDOW_SIZE = (1000, 600)
-POPUP_CSS = "<style>table {background-color: black;}</style>"
+try:
+    POPUP_CSS = f"<style>{open('./gui/popup_style.css', 'r').read()}</style>"
+except OSError:
+    POPUP_CSS = f"<style></style>"
 POPUP_WINDOW_LOOP_TIMEOUT_MS = 500
 
 
