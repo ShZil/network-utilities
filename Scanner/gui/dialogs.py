@@ -43,6 +43,7 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
     """
     if error or warning or question or info:
         html_text = markdown2.markdown(message)
+        html_text = "<style>table {background-color: black;}</style>" + html_text
         layout = [[
             sg.Column(
                 [[sg.Text('', key='_HTML_')]],

@@ -2349,3 +2349,13 @@ So, I just removed the `html.unescape`!
 [01:45] Added HTML formatting for the packet OSI models,
 when showing information about scans,
 all under `gui.Information.py:information_about`.
+
+[19:59] Tested CSS on the new popup graphics library (PySimpleGUI).
+I'm honestly surprised, it is incredibly simple. Not trivial, but simple.
+Anyway, CSS does work, and that's good.
+
+[20:12] Suggestion: move popup code to a different thread,
+maintain a `Queue` of messages to display,
+and resolve it in the thread.
+This way, there'll never be more than one popup,
+and there is NO WAY it will keep crashing in `Device Profile`.
