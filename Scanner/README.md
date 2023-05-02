@@ -2384,3 +2384,6 @@ There won't be loss because Python lists can handle a dynamic size, specifically
 
 [21:50] Made the popup window non-resizable, because scrolling is allowed.
 Allow only vertical scrolling, not horizontal.
+
+[22:02] BUGFIX: `Column.__init__() got an unexpected keyword argument 'vertical_scroll_only'`.
+It seems `PySimpleGUIQt` uses a different argument set to `PySimpleGUI`. Solved with ChatGPT.
