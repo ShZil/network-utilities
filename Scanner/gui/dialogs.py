@@ -78,9 +78,24 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
     The popup itself isn't too large.
     You can add `error`, `warning`, `question`, `info`, to set an icon next to the content.
     You can add `cancel` to give the user a choice between "OK" (returns True) and "Cancel" (returns False).
-    This function uses:
-    - `win32api.MessageBox` -- if no icon is chosen. This displays plaintext, and allows for cancelling (if `cancel` is set).
-    - `PySimpleGUI` -- if any icon is chosen. This displays markdown content.
+
+    This function unifys two separate ideas, under an abstracted interface.
+    One is icnoned, with markdown support, and slower.
+    One is iconless, plaintext, Win API, and faster.
+
+    |     Popup Type     |                          Markdowned                         |               Plaintext              |
+    |:------------------:|:-----------------------------------------------------------:|:------------------------------------:|
+    | Supports plaintext | Yes                                                         | Yes                                  |
+    |  Supports Markdown | Yes                                                         | No                                   |
+    |  Supports HTML/CSS | Yes                                                         | No                                   |
+    |   Supports Icons   | Yes (soon)                                                  | No                                   |
+    |  Graphical Library | PySimpleGUI                                                 | Win32 API                            |
+    |  Graphical Object  | `PySimpleGUIQt as sg; sg.Window, sg.Column, sg.Text`        | `win32api.MessageBox`                |
+    |    Return Value    | None                                                        | bool or None                         |
+    |   Arguments Used   | title, message, error, warning, question, info              | title, message, cancel               |
+    |      Immediate     | No, uses a Queue on a separate thread                       | Yes                                  |
+    |      Blocking      | No                                                          | Yes, until the user closes the popup |
+    |    How to apply    | set either of these to True: error, warning, question, info | Don't apply the other option         |
 
     Note: if you supply markdown content into `message`, and you wish for it to not display as plaintext,
     set one of the icons, e.g. `info=True`.
@@ -90,9 +105,10 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
     If no icon is chosen, the text is displayed as plaintext, not markdown.
 
     The function returns:
-    - The integer -1 for all `PySimpleGUI` dialogs, i.e. anything with an icon.
+    - None for all `PySimpleGUI` dialogs, i.e. anything with an icon.
     - Boolean (True/False) indicating whether the Cancel button wasn't pressed, if `cancel=True`.
     - None if no keyword arguments were set, after displaying a `MessageBox`.
+    Notice: the function will return immediately for `Markdowned`, it will be blocking for `Plaintext` (even if the return value will be `None` eventually).
 
     Args:
         title (str): the title of the window.
@@ -104,7 +120,7 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
         cancel (bool, optional): if no icon is chosen, this determines the type of the MessageBox: whether there'll be a Cancel button. Defaults to False.
 
     Returns:
-        (bool | Literal[-1] | None): return value's meaning depends on the arguments, see above.
+        (bool | None): `False` if the Cancel Button was pressed, `True` if not, `None` if irrelevant. See above.
     """
     if not (error or warning or question or info):
         if cancel:
