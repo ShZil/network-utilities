@@ -218,9 +218,9 @@ class PacketSniffer:
         packets_to_insert = [(pickle.dumps(p['packet']), p['proto'], p['src'], p['dst'], int(p['ttl']), str(p['flags']), pickle.dumps(p['options']), int(p['timestamp'])) for p in self.packets]
 
         with sqlite3.connect(self.DB_PATH) as conn:
-            cursor = conn.cursor()
-            cursor.executemany(PacketSniffer.INSERT_STATEMENT, packets_to_insert)
             try:
+                cursor = conn.cursor()
+                cursor.executemany(PacketSniffer.INSERT_STATEMENT, packets_to_insert)
                 conn.commit()
             except sqlite3.OperationalError:
                 return

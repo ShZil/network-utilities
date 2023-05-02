@@ -2359,3 +2359,14 @@ maintain a `Queue` of messages to display,
 and resolve it in the thread.
 This way, there'll never be more than one popup,
 and there is NO WAY it will keep crashing in `Device Profile`.
+[21:35] BUG: `sqlite3.OperationalError` on `cursor.executemany(PacketSniffer.INSERT_STATEMENT, packets_to_insert)` in `PacketSniffer.py`.
+Solution: extend the `try`-`except` block to be around this call too.
+Explanation: It'll be fine,
+because the reasonable thing to do here would be to wait a bit and then try to commit again, in a loop.
+This does that automatically, because of:
+```py
+if len(self.packets) >= self.max_packets:
+    self._flush_packets()
+```
+Every time a packet is added, it flushes, so it acts like a "wait and try again repeatedly" mechanism.
+There won't be loss because Python lists can handle a dynamic size, specifically 100 and above.
