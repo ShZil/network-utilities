@@ -2392,3 +2392,27 @@ It seems `PySimpleGUIQt` uses a different argument set to `PySimpleGUI`. Solved 
 
 [22:40] Duplicate linebreaks before markdown parsing, because markdown treats only `\n\n` and more as linebreaks.
 Plus, more linebreaks aren't gonna hurt anyone.
+
+[23:05] I believe major progress was done today,
+regarding the solution to Device Profile's crashing.
+Still not fully solved, but on the way.
+
+Insights:
+the popup opens, and then the whole application crashes even before the contents are rendered.
+The app does not crash if `_device_profile` is not called.
+
+[23:12] It no longesr crashes in the specific case of `if entity is None`,
+but still in the general case, even if executed from a thread.
+
+[23:57] Remove padding and border in the GUI of popup (PySimpleGUI).
+
+[23:59] Keep in mind it's not uniform in PySimpleGUIQt... Fixed.
+
+### 2023-05-03
+[00:28] Moved `POPUP_CSS`'s contents to a `.css` file.
+
+[00:29] Import naming issue: just `import queue`. 
+
+[00:31] Just trying whatever might work, I'm close to giving up on this:
+- Moved to outside function, not in `class KnowScreenDeviceProfileButton(Button)`.
+- Just print the content to the console.
