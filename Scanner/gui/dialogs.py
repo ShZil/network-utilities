@@ -7,6 +7,71 @@ with ImportDefence():
     import PySimpleGUIQt as sg
     import html
 
+class IconType(Enum):
+    ERROR = 4
+    WARNING = 3
+    QUESTION = 2
+    INFO = 1
+    NOTHING = 0
+
+POPUP_WINDOW_SIZE = (1000, 600)
+POPUP_CSS = "<style>table {background-color: black;}</style>"
+POPUP_WINDOW_LOOP_TIMEOUT_MS = 500
+
+
+class PopupManager:
+    _instance = None  # Private class variable to store the singleton instance
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance.waiting = Queue()
+            cls._instance.popup_thread = threading.Thread(target=cls._instance._popup_loop, name="Popup Thread")
+            cls._instance._stop_thread = threading.Event()
+            cls._instance.popup_thread.start()
+        return cls._instance
+
+    def add(self, popup):
+        self.waiting.put(popup)
+
+    def render_popup(self, popup):
+        title, message, icon = popup
+        icon = IconType(int(icon))
+        html_text = POPUP_CSS + markdown2.markdown(message)
+
+        layout = [[
+            sg.Column(
+                [[sg.Text('', key='_HTML_')]],
+                size=POPUP_WINDOW_SIZE,
+                scrollable=True
+            )
+        ]]
+        window = sg.Window(title, layout, finalize=True)
+        window['_HTML_'].update(html_text)
+
+        while True:
+            event, values = window.read(timeout=POPUP_WINDOW_LOOP_TIMEOUT_MS)
+            if event == sg.WIN_CLOSED:
+                break
+
+        window.close()
+        return -1
+    
+    def stop(self):
+        self._stop_thread.set()
+
+    def _popup_loop(self):
+        """
+        Private method that runs continuously as the popup thread.
+        Waits for popups to arrive and displays them when available.
+        """
+        while not self._stop_thread.is_set():
+            try:
+                popup = self.waiting.get(block=False)
+                self.render_popup(popup)
+            except QueueEmptyError:
+                time.sleep(0.1)
+
 
 def popup(title: str, message: str, *, error=False, warning=False, question=False, info=False, cancel=False):
     """This function creates a visual UI popup, with `title` as the window's title, and `message` in the body.
@@ -41,31 +106,24 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
     Returns:
         (bool | Literal[-1] | None): return value's meaning depends on the arguments, see above.
     """
-    if error or warning or question or info:
-        html_text = markdown2.markdown(message)
-        html_text = "<style>table {background-color: black;}</style>" + html_text
-        layout = [[
-            sg.Column(
-                [[sg.Text('', key='_HTML_')]],
-                size=(1000, 600),
-                scrollable=True
-            )
-        ]]
-        window = sg.Window(title, layout, finalize=True)
-        # unescape_html_text = html.unescape(html_text)
-        window['_HTML_'].update(html_text)
+    if not (error or warning or question or info):
+        if cancel:
+            return win32api.MessageBox(0, message, title, win32con.MB_OKCANCEL) != win32con.IDCANCEL
+        else:
+            win32api.MessageBox(0, message, title, win32con.MB_OK)
+            return None
+    
+    icon = IconType.NOTHING
+    if error:
+        icon = IconType.ERROR
+    elif warning:
+        icon = IconType.WARNING
+    elif question:
+        icon = IconType.QUESTION
+    elif info:
+        icon = IconType.INFO
 
-        while True:
-            event, values = window.read(timeout=500)
-            if event == sg.WIN_CLOSED:
-                break
-
-        window.close()
-        return -1
-    elif cancel:
-        return win32api.MessageBox(0, message, title, 0x00000001) != 2
-    else:
-        win32api.MessageBox(0, message, title, 0x00000000)
+    PopupManager().add((title, message, icon.value))
 
 
 def get_string(title: str, prompt: str) -> str:
