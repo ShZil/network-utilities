@@ -1,14 +1,14 @@
 from import_handler import ImportDefence
 with ImportDefence():
-    from CacheDecorators import memorise
-    from PrintingContexts import NoPrinting
-    from util import threadify
-
     from subprocess import CalledProcessError, check_output as read_command, DEVNULL
 
     from socket import gethostbyaddr as hostify_base
     from socket import herror as hostify_error1
     from socket import gaierror as hostify_error2
+
+from CacheDecorators import memorise
+from PrintingContexts import NoPrinting
+from util import threadify
 
 
 @memorise
