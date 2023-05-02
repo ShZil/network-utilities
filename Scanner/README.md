@@ -2381,3 +2381,6 @@ if len(self.packets) >= self.max_packets:
 ```
 Every time a packet is added, it flushes, so it acts like a "wait and try again repeatedly" mechanism.
 There won't be loss because Python lists can handle a dynamic size, specifically 100 and above.
+
+[21:50] Made the popup window non-resizable, because scrolling is allowed.
+Allow only vertical scrolling, not horizontal.
