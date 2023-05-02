@@ -33,6 +33,7 @@ import os
 import sys
 from gui.KivyFonts import add_fonts
 from gui.StartApp import start_tk, start_kivy
+from gui.dialogs import PopupManager
 
 
 def keep_resolving_storage():
@@ -96,6 +97,7 @@ def main():
 
     # GUI initialisation
     add_fonts()
+    PopupManager()  # starts the popup thread
 
     # Start tk (on main thread) and kivy (on different thread) and
     # `NetworkStorage()._resolve` (on a third thread)

@@ -2359,6 +2359,17 @@ maintain a `Queue` of messages to display,
 and resolve it in the thread.
 This way, there'll never be more than one popup,
 and there is NO WAY it will keep crashing in `Device Profile`.
+
+[20:29] Used ChatGPT to generate `PopupManager` (Singleton, contains Queue, maintains Thread),
+after some brainstorming regarding a good way to do it.
+
+[20:51] Done with creating `PopupManager`.
+
+[21:24] Used https://www.tablesgenerator.com/markdown_tables to generate a table in the docstring,
+to explain and differentiate the two behaviours of `popup`.
+
+[21:31] Moved magic numbers to constants in `dialogs.py`.
+
 [21:35] BUG: `sqlite3.OperationalError` on `cursor.executemany(PacketSniffer.INSERT_STATEMENT, packets_to_insert)` in `PacketSniffer.py`.
 Solution: extend the `try`-`except` block to be around this call too.
 Explanation: It'll be fine,
