@@ -2432,3 +2432,8 @@ Printing is good enough.
 I might continue debugging it tomorrow.
 
 More angry text in the github commit.
+
+[01:29] I've diverted my efforts to another thing I want for the project.
+It's a simple Python file, I'm just having ChatGPT write it for me,
+part-by-part, with supervision; it creates a graph of connections between `.py` files,
+according to their imports, under a specific directory.
