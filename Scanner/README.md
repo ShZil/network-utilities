@@ -2416,3 +2416,5 @@ but still in the general case, even if executed from a thread.
 [00:31] Just trying whatever might work, I'm close to giving up on this:
 - Moved to outside function, not in `class KnowScreenDeviceProfileButton(Button)`.
 - Just print the content to the console.
+
+[00:40] Stop the `PopupManager` thread when the application leaves.
