@@ -2387,3 +2387,8 @@ Allow only vertical scrolling, not horizontal.
 
 [22:02] BUGFIX: `Column.__init__() got an unexpected keyword argument 'vertical_scroll_only'`.
 It seems `PySimpleGUIQt` uses a different argument set to `PySimpleGUI`. Solved with ChatGPT.
+
+[22:34] More elaborate messages in popups, because the space looks otherwise unused and empty.
+
+[22:40] Duplicate linebreaks before markdown parsing, because markdown treats only `\n\n` and more as linebreaks.
+Plus, more linebreaks aren't gonna hurt anyone.

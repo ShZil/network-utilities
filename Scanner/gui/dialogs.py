@@ -43,7 +43,7 @@ class PopupManager:
     def render_popup(self, popup):
         title, message, icon = popup
         icon = IconType(int(icon))
-        html_text = POPUP_CSS + markdown2.markdown(message)
+        html_text = POPUP_CSS + markdown2.markdown(message.replace('\n', '\n\n'))
 
         layout = [[
             sg.Column(
