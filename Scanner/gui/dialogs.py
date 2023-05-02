@@ -1,11 +1,17 @@
 from import_handler import ImportDefence
 with ImportDefence():
     import win32api
+    import win32con
     from PyQt5.QtCore import Qt
     from PyQt5.QtWidgets import QApplication, QMessageBox
     import markdown2
     import PySimpleGUIQt as sg
     import html
+    import threading
+    import time
+    from enum import Enum
+    from queue import Queue, Empty as QueueEmptyError
+
 
 class IconType(Enum):
     ERROR = 4
