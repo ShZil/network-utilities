@@ -2437,3 +2437,7 @@ More angry text in the github commit.
 It's a simple Python file, I'm just having ChatGPT write it for me,
 part-by-part, with supervision; it creates a graph of connections between `.py` files,
 according to their imports, under a specific directory.
+
+[02:20] Still working on it.
+Gonna upload a functional although unpretty stable build to github,
+so that any unexpected event (like,,, umm... idk, if I wrote something here it'd be expected) doesn't delete my progess.
