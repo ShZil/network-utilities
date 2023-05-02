@@ -2418,3 +2418,17 @@ but still in the general case, even if executed from a thread.
 - Just print the content to the console.
 
 [00:40] Stop the `PopupManager` thread when the application leaves.
+
+[00:46] My debugging has led me nowhere.
+When I hardcode the data to the popup, it works.
+It manages to fetch and format the data correctly.
+It crashes with no reason!
+Inside a try-except block.
+Execution of the popup is on a different thread, and works!
+The only thing that's passed onto this different thread is some strings.
+It works in IDLE.
+This makes perfectly zero sense, and I give up for now.
+Printing is good enough.
+I might continue debugging it tomorrow.
+
+More angry text in the github commit.

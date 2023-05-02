@@ -98,6 +98,19 @@ def main():
     # GUI initialisation
     add_fonts()
     PopupManager()  # starts the popup thread
+    #     from gui.dialogs import popup
+
+    #     popup("Device Profile", """### mac:
+    # 80-CE-62-A4-E6-E5
+
+    # ### ip:
+    # 10.0.0.16
+
+    # ### ipv6:
+    # 2a06:c701:430b:cf00:1089:2d5b:9e9a:255d
+
+    # ### name:
+    # DESKTOP-0DRD7S7""", info=True)
 
     # Start tk (on main thread) and kivy (on different thread) and
     # `NetworkStorage()._resolve` (on a third thread)

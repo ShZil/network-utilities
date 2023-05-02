@@ -108,8 +108,7 @@ class KnowScreenDeviceProfileButton(Button):
         Hover.add(self)
 
 def device_profile(*a):
-    print(a)
-
+    
     def _match_device(address):
         from NetworkStorage import NetworkStorage, match
         try:
@@ -127,7 +126,7 @@ def device_profile(*a):
         return None
 
     def _construct_content(info: dict):
-        return '\n\n'.join([f"### {key}:\n{value}" for key, value in info.items()])
+        return '\n\n'.join([f"### {key.upper()}:\n{value}" for key, value in info.items()])
 
     def _device_profile():
         from NetworkStorage import SpecialInformation
@@ -144,7 +143,6 @@ def device_profile(*a):
         #     popup("Device Profile", _construct_content(information), info=True)
         # except Exception as e:
         #     print(e)
-        print("Popped")
 
     Thread(target=_device_profile).start()
     # _device_profile()
