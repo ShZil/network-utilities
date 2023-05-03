@@ -4,7 +4,9 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from matplotlib.cm import ScalarMappable
 from matplotlib.colors import Normalize
+import matplotlib.patches as patches
 import numpy as np
+from random import random
 
 def list_py_files(directory):
     py_files = []
@@ -15,11 +17,12 @@ def list_py_files(directory):
     return py_files
 
 
-def find_import_statements(file_path):
+def find_import_statements(file_path, allow_dynamic_imports=True):
     import_regex = re.compile(r'^\s*from .* import .*|^\s*import .*')  # manual regex using regexr.com
     matching_lines = []
     with open(file_path, 'r', encoding='utf-8') as f:
         for line in f:
+            if not allow_dynamic_imports and 'def ' in line: break
             if import_regex.match(line):
                 line = line.strip()
                 if 'from ' in line:
@@ -38,33 +41,38 @@ def name(f):
 
 
 def render(G, pos):
+    fig, ax = plt.subplots()
     node_numbers = {node: sum(1 for _ in G.predecessors(node)) for node in G.nodes()}
-    print(node_numbers)
+    # print(node_numbers)
     norm = Normalize(vmin=min(node_numbers.values()), vmax=max(node_numbers.values()))
     cmap = plt.get_cmap('YlOrRd')
     node_colors = [cmap(norm(node_numbers[node])) for node in G.nodes()]
-    nx.draw_networkx(G, pos, with_labels=True, node_color=node_colors)
+    nx.draw_networkx(G, pos, with_labels=True, node_color=node_colors, ax=ax)
     sm = ScalarMappable(norm=norm, cmap=cmap)
     sm.set_array([])
-    cbar = plt.colorbar(sm)
+    cbar = plt.colorbar(sm, ax=ax)
     cbar.set_label('Number of Modules In Which I\'m used')
+
+    rect = patches.Rectangle((POSX-.05, POSY-.05), POSW+.1, POSH+.1, linewidth=1, edgecolor='black', facecolor='none')
+    # Add the rectangle to the plot
+    ax.add_patch(rect)
     plt.show()
 
 
+POSX, POSY, POSW, POSH = .5, 1, 1, .5
 def update_position(pos, changes):
     for node, position in pos.items():
+        x, y = position[0], position[1]
         if node.startswith('gui.'):
-            x, y = position[0], position[1]
-            pos[node] = np.array([(1+x)*4, (1+y)*4])
+            pos[node] = np.array([POSX + random()*POSW, POSY + random()*POSH])
+        if node.startswith('scans.'):
+            pos[node] = np.array([-.3+random()*.5, 1.2 + random()*.2])
     for name, value in changes.items():
         pos[name] = np.array(value)
     return pos
 
 
 def distribute_weights(G):
-    # create a dictionary to store the weight for each node
-    node_weights = {node: 1 for node in G.nodes()}
-    
     # loop through each node in the graph
     for node in G.nodes():
         # get the list of incoming edges for this node
@@ -76,7 +84,7 @@ def distribute_weights(G):
             continue
         
         # calculate the weight to assign to each incoming edge
-        weight_per_edge = node_weights[node] / num_incoming_edges
+        weight_per_edge = 2 / num_incoming_edges
         
         # loop through each incoming edge and assign the weight
         for edge in incoming_edges:
@@ -91,9 +99,9 @@ file_names = list(map(name, files))
 G = nx.DiGraph()
 for f in files:
     G.add_node(name(f))
-    print(name(f))
+    # print(name(f))
     # print(find_import_statements(f))
-    G.add_edges_from([(name(f), v) for v in find_import_statements(f) if v in file_names])
+    G.add_edges_from([(name(f), v) for v in find_import_statements(f, allow_dynamic_imports=True) if v in file_names])
 
 print(G)
 G = distribute_weights(G)
@@ -110,7 +118,17 @@ changes = {
     'gui.__init__': [-.9, .6],
     'gui.Screens.__init__': [-.9, .4],
     'RecommendProbabilitiesPrimitive': [-.9, .2],
-    'exe': [-.6, 0]
+    'exe': [-.6, 0],
+    'register': [-.5, .8],
+    'colors': [.9, 0],
+    'CommandLineStyle': [.9, -.2],
+    'PrintingContexts': [.9, -.4],
+    'testing.tests': [.35, -.4],
+    'ip_handler': [.3, -.2],
+    'db': [1.5, .3],
+    'NetworkStorage': [1.5, .5],
+    'ipconfig': [.75, .5],
+    'SimpleScan': [.05, .25]
 }
 pos = update_position(pos, changes)
 G.remove_nodes_from(['import_handler', 'globalstuff', 'CacheDecorators'])

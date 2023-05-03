@@ -2441,3 +2441,10 @@ according to their imports, under a specific directory.
 [02:20] Still working on it.
 Gonna upload a functional although unpretty stable build to github,
 so that any unexpected event (like,,, umm... idk, if I wrote something here it'd be expected) doesn't delete my progess.
+
+[02:37] Just manually inserting positions for the nodes...
+
+[03:12] Stable build.
+Trying to find some library (not matplotlib) that'll allow me to render the graph and drag nodes.
+I might have to use PowerPoint lol.
+Anyways, it's really late. Goodnight!
