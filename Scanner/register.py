@@ -1,6 +1,7 @@
 from time import time as now
-import win32api
 from threading import Thread
+
+from gui.dialogs import popup
 
 
 class Register(dict):
@@ -42,10 +43,7 @@ class Register(dict):
         try:
             return super().__getitem__(key)
         except KeyError:
-            return lambda: win32api.MessageBox(0,
-                                               "This scan is not implemented yet.",
-                                               "Coming Soon",
-                                               0x00000000)
+            return lambda: popup("Coming Soon", "This scan is not implemented yet.")
             # raise KeyError(f"Key \"{key}\" not found in register. Try adding it :)")
 
     def start(self, name: str, action, callback) -> None:
