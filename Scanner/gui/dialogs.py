@@ -46,11 +46,22 @@ class PopupManager:
     def render_popup(self, popup):
         title, message, icon = popup
         icon = IconType(int(icon))
-        html_text = POPUP_CSS + markdown2.markdown(message.replace('\n', '\n\n'))
+        lines = message.split('\n')
+        lines = [
+            item for line in lines
+            for item in (
+            line.split('. ') if len(line) > 200 else [line]
+            )
+        ]
+        lines = [line.strip() for line in lines]
+        message = '\n\n'.join(lines)
+        message = message.replace('\n', '\n\n')
+        markdown_text = markdown2.markdown(message)
+        html_text = f"{POPUP_CSS}<div class=\"limit-width\">{markdown_text}</div>"
 
         layout = [[
             sg.Column(
-                [[sg.Text('', key='_HTML_')]],
+                [[sg.Text('', key='_HTML_', size=POPUP_WINDOW_SIZE)]],
                 size=POPUP_WINDOW_SIZE,
                 scrollable=(False, True)
             )

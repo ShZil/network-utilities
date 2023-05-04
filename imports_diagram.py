@@ -89,7 +89,6 @@ def distribute_weights(G):
         # loop through each incoming edge and assign the weight
         for edge in incoming_edges:
             G[edge[0]][edge[1]]['weight'] = weight_per_edge
-            
     return G
 
 

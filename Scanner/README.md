@@ -2485,3 +2485,5 @@ Now, just more colouring and labelling, and that'll be it with this diagram.
 
 [20:56] Going over this diagram after a break,
 it looks great. I like it.
+
+[21:22] Working on popup's ability to wrap lines.

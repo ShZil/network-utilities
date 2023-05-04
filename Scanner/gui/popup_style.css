@@ -5,3 +5,12 @@
 table {
     background-color: black;
 }
+
+code {
+    font-family: 'Consolas', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+div.limit-width {
+    width: 600px;
+    word-break: break-all;
+}
