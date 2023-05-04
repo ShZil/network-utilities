@@ -2,7 +2,7 @@ from import_handler import ImportDefence
 with ImportDefence():
     import ipaddress
 
-from util import one_cache
+from CacheDecorators import one_cache
 from ipconfig import ipconfig
 
 
