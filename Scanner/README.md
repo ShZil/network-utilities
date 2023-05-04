@@ -2452,6 +2452,16 @@ Anyways, it's really late. Goodnight!
 
 
 ### 2023-05-04
+[02:42] Working on a diagram using `draw.io`,
+regarding the modules of my software.
+
+[02:49] Manipulated the internal XML of the file,
+and inserted ellipses with the file names,
+using the parsing I recently made on `imports_diagram.py`.
+
+[03:00] I'm making the connections according to the code,
+and the logical relationships between the modules.
+
 [03:27] This helped me find an incorrect import statement,
 in a file that's rarely used, and correct it.
 
