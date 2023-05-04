@@ -70,7 +70,7 @@ def barstyle(name: str) -> str:
         return "[─ ]"
 
 
-def threadify(f, silent=False):
+def threadify(f: Callable, silent=False):
     """This function turns methods (tasks) into thread-based on-list execution.
     Therefore, the execution will be faster.
     Returns the same result as `[f() for _ in input]`, but faster.
