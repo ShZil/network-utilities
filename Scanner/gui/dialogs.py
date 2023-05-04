@@ -53,6 +53,12 @@ class PopupManager:
             line.split('. ') if len(line) > 200 else [line]
             )
         ]
+        lines = [
+            item for line in lines
+            for item in (
+            line.split(', ') if len(line) > 150 else [line]
+            )
+        ]
         lines = [line.strip() for line in lines]
         message = '\n\n'.join(lines)
         message = message.replace('\n', '\n\n')

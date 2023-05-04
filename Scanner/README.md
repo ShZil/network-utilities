@@ -2496,3 +2496,4 @@ specifically the call to `https://api.ipify.org`, and how it looks.
 
 [23:57] Did a bunch of things:
 - Improved some database scans' entries. 
+- Added a secondary 'by-comma' line-splitting in `popup`, after the 'by-period' splitting.
