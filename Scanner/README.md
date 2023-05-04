@@ -2466,3 +2466,22 @@ and the logical relationships between the modules.
 in a file that's rarely used, and correct it.
 
 [03:28] And helped me update the register `MessageBox` to a `popup`.
+
+[03:43] I've made fair progress on the connections,
+it's mostly all done except GUI.
+Now, I've diverted my efforts to rendering a different type of information,
+using colours, to display different parts of my system.
+I've currently got GUI - Green (with different hues for: Initialise, Main, and Screen);
+and File System - Blue (with a different hue for each file).
+
+[15:21] Continue working on the diagram.
+
+[15:29] TBH, this is plenty insightful regarding the arcitecture of my code,
+and reflects my code-structure decisions.
+
+[18:28] Done with the connections, did the GUI and the Scans.
+I removed some unimportant connections, for the clarity of the diagram.
+Now, just more colouring and labelling, and that'll be it with this diagram.
+
+[20:56] Going over this diagram after a break,
+it looks great. I like it.
