@@ -2498,3 +2498,4 @@ specifically the call to `https://api.ipify.org`, and how it looks.
 - Improved some database scans' entries. 
 - Added a secondary 'by-comma' line-splitting in `popup`, after the 'by-period' splitting.
 - Added a margin for the table in `popup_style.css`.
+That's it. Good night!
