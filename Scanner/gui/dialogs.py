@@ -61,7 +61,7 @@ class PopupManager:
 
         layout = [[
             sg.Column(
-                [[sg.Text('', key='_HTML_', size=POPUP_WINDOW_SIZE)]],
+                [[sg.Text('', key='_HTML_')]],
                 size=POPUP_WINDOW_SIZE,
                 scrollable=(False, True)
             )
