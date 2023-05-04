@@ -2490,3 +2490,9 @@ it looks great. I like it.
 
 [21:29] Added a batch file to refresh the `scans.db` database,
 on any changes in `db.py`. Works first try, wooo.
+
+[21:36] Used Burp Suite Community Edition to investigate `PublicAddress.py`,
+specifically the call to `https://api.ipify.org`, and how it looks.
+
+[23:57] Did a bunch of things:
+- Improved some database scans' entries. 
