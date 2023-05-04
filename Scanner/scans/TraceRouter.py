@@ -10,7 +10,7 @@ with ImportDefence():
     from ipconfig import ipconfig
 
 # This is intentionally not @threadify-ied.
-# The ICMP echoes are supposed to be temporally separated.
+# The ICMP echoes in each hop are supposed to be temporally separated.
 def hop(ttl, dst):
     TIMEOUT = 0.1
     REPEATS = 3
