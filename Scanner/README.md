@@ -2487,3 +2487,6 @@ Now, just more colouring and labelling, and that'll be it with this diagram.
 it looks great. I like it.
 
 [21:22] Working on popup's ability to wrap lines.
+
+[21:29] Added a batch file to refresh the `scans.db` database,
+on any changes in `db.py`. Works first try, wooo.
