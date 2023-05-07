@@ -15,16 +15,19 @@ def display_information():
     if highlighted is DummyScan() or highlighted is None:
         popup(f"General Information", general_information(), info=True)
     else:
-        popup(
-            f"Information about {highlighted.name}",
-            information_about(highlighted.name),
-            info=True
-        )
+        name = highlighted.name
+        information = information_about(name)
+        if information == '': return
+        popup(f"Information about {name}", information, info=True)
 
 
 def information_about(name: str) -> str:
     # Get the entry about the scan and destructure it
     entry = db.get_information_about_scan(name)
+    if entry is None:
+        popup(f"Information about {name}", "It appears the database has no information regarding this scan.\
+              \n\nPlease try updating your installation!", warning=True)
+        return ""
     name0, description, time, reward, certainty, safety, mode, repeats = entry
     if name != name0:
         raise ValueError(

@@ -148,6 +148,10 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
     Returns:
         (bool | None): `False` if the Cancel Button was pressed, `True` if not, `None` if irrelevant. See above.
     """
+    if not isinstance(message, str):
+        raise TypeError("Popup message must be a string.")
+    if not isinstance(title, str):
+        raise TypeError("Popup title must be a string.")
     if not (error or warning or question or info):
         if cancel:
             return win32api.MessageBox(0, message, title, win32con.MB_OKCANCEL) != win32con.IDCANCEL

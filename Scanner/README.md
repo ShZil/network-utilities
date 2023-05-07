@@ -2503,7 +2503,10 @@ That's it. Good night!
 
 
 ### 2023-05-07
-[16:01] I've added a (temporaary) scan-like action to view the packets, using a popup.
+[16:01] I've added a (temporary) scan-like action to view the packets, using a popup.
 However, I'm thinking it's much more reasonable to do that action under Know Screen.
 This will unite well with Device Profile, and I can put them both in a sidebar, like in Scan Screen.
 However, currently, it's in Scan Screen, and working.
+
+[16:04] While adding this scan, I've also tried to find edge cases that my code doesn't handle,
+and place conditionals or `try-except`s to catch them.
