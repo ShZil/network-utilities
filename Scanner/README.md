@@ -2543,3 +2543,5 @@ except the background colour is blue and not green.
 By extension, it also accepts 0 arguments, which is what the Analyse Operation asks for.
 
 [00:23] Repositioned the Know Screen title, to be in the correct centre.
+
+[00:24] Compacted creation of `operations` in `KnowScreenRightColumn`.
