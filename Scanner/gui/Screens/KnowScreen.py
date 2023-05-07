@@ -14,6 +14,7 @@ from gui.KivyExtensions import ButtonColumn, OperationButton
 from gui.dialogs import get_string, popup
 from gui.Configuration import display_configuration
 from gui.Information import display_information
+from gui.Activation import activate
 from gui.ScanClasses import Analysis
 from register import Register
 from globalstuff import *
