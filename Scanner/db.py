@@ -82,7 +82,7 @@ def get_analyses():
 
 
 def init():
-    connection = sqlite3.connect('scans.db')
+    connection = sqlite3.connect(PATH)
     cursor = connection.cursor()
     try:
         cursor.execute(CREATE_INFORMATION_TABLE)
