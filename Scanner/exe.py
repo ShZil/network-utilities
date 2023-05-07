@@ -18,7 +18,7 @@ kivy.require('2.1.0')
 
 from NetworkStorage import *
 from register import Register
-from PacketSniffer import PacketSniffer
+from PacketSniffer import PacketSniffer, log_packets
 from threading import Thread, enumerate as enumerate_threads
 from SimpleScan import simple_scan
 from CommandLineStyle import cmdcolor, cmdtitle, remove_scapy_warnings
@@ -68,6 +68,7 @@ def register_scans():
     r["OS-ID"] = operating_system_fingerprinting, True
     r["Public Address"] = public_address_action
     r["Traceroute"] = lambda: traceroute('8.8.8.8')
+    r["Log packets"] = log_packets
 
 
 def main():

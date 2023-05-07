@@ -29,7 +29,8 @@ INFORMATION_DATA = [
     ("UDP Ports", "User Datagram Protocol (UDP) Scanning, can detect some closed ports, because they will respond with an ICMP Port Unreachable error packet. <IP dst=specific_ip> <UDP> -> <IP> <ICMP type=3 (unreachable)>", 0.1, "", 0, 0, 0, True),
     ("woo!", "", 0.1, "", 0, 0, 0, True),
     ("Public Address", "Gets the outside IP address of the router, using `https://api.ipify.org`. <IP> <TCP> <HTTPS GET / HTTP/2 [Host: api.ipify.org]>", 1.3, "Public IP address of the router", 97, 90, 1, True),
-    ("Traceroute", "Using ICMP and IP:ttl, find the route to a distant device.", 0.1, "IP addresses of all devices in the route", 0, 0, 1, True)
+    ("Traceroute", "Using ICMP and IP:ttl, find the route to a distant device.", 0.1, "IP addresses of all devices in the route", 0, 0, 1, True),
+    ("Log Packets", "Log all the packets that were silently sniffed.", 0, "The packets are already saved, you're just viewing them.", 99, 100, 1, True)
 ]
 
 

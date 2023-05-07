@@ -2499,3 +2499,11 @@ specifically the call to `https://api.ipify.org`, and how it looks.
 - Added a secondary 'by-comma' line-splitting in `popup`, after the 'by-period' splitting.
 - Added a margin for the table in `popup_style.css`.
 That's it. Good night!
+
+
+
+### 2023-05-07
+[16:01] I've added a (temporaary) scan-like action to view the packets, using a popup.
+However, I'm thinking it's much more reasonable to do that action under Know Screen.
+This will unite well with Device Profile, and I can put them both in a sidebar, like in Scan Screen.
+However, currently, it's in Scan Screen, and working.

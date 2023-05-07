@@ -244,6 +244,14 @@ class PacketSniffer:
             yield packet['packet']
 
 
+def log_packets():
+    from gui.dialogs import popup
+    packets = [str(packet.summary()) for packet in PacketSniffer()]
+    packets = [packet.split('/').join('</td><td>') for packet in packets]
+    packets = [f"<table><tr><td>{packet}</td></tr></table>" for packet in packets]
+    popup("Packets", '\n'.join(packets), info=True)
+
+
 if __name__ == '__main__':
     print("This module contains the PacketSniffer class.")
     import time
