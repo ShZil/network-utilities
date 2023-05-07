@@ -101,21 +101,28 @@ class KnowScreenRightColumn(ButtonColumn):
     """
 
     def __init__(self):
-        super().__init__(width=RIGHT_COLUMN_WIDTH * 0.7)
+        super().__init__(width=RIGHT_COLUMN_WIDTH * 0.8)
 
         #     Objects #2, #3 -- two operations on each analysis
-        operations = BoxLayout(orientation='horizontal', spacing=-3)
+        operations = BoxLayout(orientation='horizontal', spacing=-3, size_hint=(0.3, None))
+        operations.add_widget(
+            OperationButton(
+                '📚',
+                "Analyse",
+                lambda _: activate()
+            )
+        )
         operations.add_widget(
             OperationButton(
                 '⚙',
-                "Configure",
+                "Config",
                 lambda _: display_configuration()
             )
         )
         operations.add_widget(
             OperationButton(
                 'ℹ',
-                "Information",
+                "Info",
                 lambda _: display_information()
             )
         )  # Consider a '?' instead
