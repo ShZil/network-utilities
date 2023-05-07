@@ -108,7 +108,7 @@ class KnowScreenRightColumn(ButtonColumn):
         operations = BoxLayout(orientation='horizontal', spacing=-3, size_hint=(0.3, None))
         operations.add_widget(
             OperationButton(
-                '📚',
+                '🎓',
                 "Analyse",
                 lambda _: activate()
             )

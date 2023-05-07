@@ -2538,3 +2538,6 @@ except the background colour is blue and not green.
 [22:55] Had a z-index issue -- the `Pages` weren't responding because they were behind the label.
 
 [23:02] At last, some consistency -- finally, the `Pages` stay in the same position between screens.
+
+[00:19] Changed `Activation.py:activate` to ignore all arguments.
+By extension, it also accepts 0 arguments, which is what the Analyse Operation asks for.

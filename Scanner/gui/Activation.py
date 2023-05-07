@@ -4,7 +4,7 @@ from gui.dialogs import popup
 from gui.AppState import State
 
 
-def activate(x):
+def activate(*x):
     if State().ask_for_permission():
         s = State().highlighted_scan
         if Register().is_running(s.name) or s.is_running:
