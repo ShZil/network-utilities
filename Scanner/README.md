@@ -2541,3 +2541,5 @@ except the background colour is blue and not green.
 
 [00:19] Changed `Activation.py:activate` to ignore all arguments.
 By extension, it also accepts 0 arguments, which is what the Analyse Operation asks for.
+
+[00:23] Repositioned the Know Screen title, to be in the correct centre.

@@ -62,7 +62,7 @@ class KnowScreen(Screen):
             size_hint=(1, None),
             font_size=TITLE_FONT_SIZE,
             underline=True,
-            pos_hint={'center_x': .5, 'top': 1},
+            pos_hint={'center_x': .42, 'top': 1},
             markup=True
         )
         everything.add_widget(title)
