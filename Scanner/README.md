@@ -2545,7 +2545,23 @@ By extension, it also accepts 0 arguments, which is what the Analyse Operation a
 [00:23] Repositioned the Know Screen title, to be in the correct centre.
 
 [00:24] Compacted creation of `operations` in `KnowScreenRightColumn`.
+
+[00:33] Added boot button for analyses.
+
+[00:34] `str` comes before `list` in Python's `join`. :sad:
+
 [00:38] My, silly-ly, linked both Device Profile and Log Packets to the same function.
 Fixed...
+
+[00:45] More silly-ly-ness, I accidentally `'\n'.join`'ed a string.
+Whoops. Took a lot of breakpoints to find that one.
+
+[00:48] It feels like the software freezes after boot,
+just until the first node of the graph is displayed.
+Investigate this.
+
+[00:52] Device Profile worked. Once.
+I'm not sure this is stable at all, I'm just glad it worked.
+In debug mode, I'll note.
 
 [00:53] I used https://fontdrop.info/#/?darkmode=true to find a character for "Analyse" operation button.
