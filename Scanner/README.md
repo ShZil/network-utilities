@@ -2521,3 +2521,9 @@ Nonetheless, it's good progress.
 
 [22:34] Went over it again, seems fine, committed to GitHub,
 gonna test now.
+
+[22:36] I should probably also register them XD.
+I'm using a unified interface of `Register`.
+The data whether an action is a scan or an analysis is stored in the database,
+and under the responsibility of the relevant screen to insert buttons,
+with the interface provided from `db.py`.
