@@ -85,3 +85,12 @@ class DummyScan(Scan):
 
     def finished(self):
         pass
+
+
+class Analysis(Scan):
+    """This is identical to a scan, except the background colour.
+    It's intended to be used under Know Screen.
+    """
+    def __init__(self, name, action, parent):
+        super().__init__(name, action, parent)
+        self.button.background_color = [0.2, 0.4, 1, 1]

@@ -2527,3 +2527,10 @@ I'm using a unified interface of `Register`.
 The data whether an action is a scan or an analysis is stored in the database,
 and under the responsibility of the relevant screen to insert buttons,
 with the interface provided from `db.py`.
+
+[22:45] Worked on the layout of Know Screen widgets.
+
+[22:50] I'm satisfied with how Know Screen looks.
+I've added another class in `ScanClasses.py`, `Analysis`,
+but it's the exact same as Scan (inheritence),
+except the background colour is blue and not green.

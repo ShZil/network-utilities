@@ -5,6 +5,7 @@ with ImportDefence():
     from kivy.uix.button import Button
     from kivy.uix.screenmanager import Screen
     from kivy.uix.boxlayout import BoxLayout
+    from kivy.uix.relativelayout import RelativeLayout
 
 from threading import Thread
 from gui.Hover import Hover
@@ -13,7 +14,7 @@ from gui.KivyExtensions import ButtonColumn, OperationButton
 from gui.dialogs import get_string, popup
 from gui.Configuration import display_configuration
 from gui.Information import display_information
-from gui.ScanClasses import Scan
+from gui.ScanClasses import Analysis
 from register import Register
 from globalstuff import *
 import db
@@ -53,7 +54,8 @@ class KnowScreen(Screen):
         super().__init__(name=name, **kw)
         Hover.enter(name)
 
-        everything = BoxLayout(orientation='vertical')
+        everything = RelativeLayout()
+        everything.add_widget(Pages())
         title = Label(
             text=f"[color={GREEN}]Knowledge about Network[/color]",
             size=(0, TITLE_HEIGHT),
@@ -64,9 +66,11 @@ class KnowScreen(Screen):
             markup=True
         )
         everything.add_widget(title)
-        everything.add_widget(Pages())
-        everything.add_widget(KnowScreenRightColumn())
-        everything.add_widget(KnowScreenInfoLabel())
+
+        body = BoxLayout(orientation='horizontal')
+        body.add_widget(KnowScreenInfoLabel())
+        body.add_widget(KnowScreenRightColumn())
+        everything.add_widget(body)
 
         self.add_widget(everything)
 
@@ -97,8 +101,7 @@ class KnowScreenRightColumn(ButtonColumn):
     """
 
     def __init__(self):
-        super().__init__(width=RIGHT_COLUMN_WIDTH)
-        self.background_color = [0.1, 0.3, 1, 1]  # blue
+        super().__init__(width=RIGHT_COLUMN_WIDTH * 0.7)
 
         #     Objects #2, #3 -- two operations on each analysis
         operations = BoxLayout(orientation='horizontal', spacing=-3)
@@ -121,7 +124,7 @@ class KnowScreenRightColumn(ButtonColumn):
 
         # Objects #7 - #10
         for name in db.get_analyses():
-            Scan(name, Register()[name], self)
+            Analysis(name, Register()[name], self)
 
 
 class KnowScreenInfoLabel(ScrollView):
@@ -135,7 +138,7 @@ class KnowScreenInfoLabel(ScrollView):
     def __init__(self, **kwargs):
         super().__init__(width=1200, **kwargs)
         self.label = Label(
-            text='\nLoading data...',
+            text='\n\n\n\n\n\n\n\nLoading data...',
             color=(1, 1, 1, 1),
             font_size=20,
             font_name="Monospace",
@@ -157,7 +160,7 @@ class KnowScreenInfoLabel(ScrollView):
                 # print('\n'.join(items))
             except AttributeError:
                 items = [str(x) for x in text]
-            self.label.text = '\n'.join(items)
+            self.label.text = '\n\n\n\n\n\n\n' + '\n'.join(items)
 
 
 if __name__ == '__main__':
