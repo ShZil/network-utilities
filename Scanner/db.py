@@ -14,7 +14,8 @@ CREATE_INFORMATION_TABLE = """CREATE TABLE IF NOT EXISTS `information` (
     PRIMARY KEY (`name`)
 );"""
 INSERT_INFORMATION = "INSERT INTO information VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
-GET_ALL_SCANS = "SELECT name FROM information"
+GET_ALL_SCANS = "SELECT name FROM information WHERE mode=1"
+GET_ALL_ANALYSES = "SELECT name FROM information WHERE mode=0"
 SELECT_SPECIFIC_SCAN = "SELECT * FROM information WHERE name=?"
 PATH = "scans.db"
 INFORMATION_DATA = [
@@ -64,6 +65,22 @@ def get_scans():
     return result
 
 
+def get_analyses():
+    connection = sqlite3.connect(PATH)
+    cursor = connection.cursor()
+    try:
+        cursor.execute(GET_ALL_ANALYSES)
+    except sqlite3.OperationalError:
+        raise FileNotFoundError("SQL table 'information' was not found.")
+    # a list of tuples is returned, where each tuple has only a string within
+    # (at index 0).
+    result = cursor.fetchall()
+    # Convert it to a list of strings. list[tuple[single str]] -> list[str]
+    result = [item[0] for item in result]
+    connection.close()
+    return result
+
+
 def init():
     connection = sqlite3.connect('scans.db')
     cursor = connection.cursor()
@@ -83,3 +100,4 @@ if __name__ == '__main__':
     init()
     print(get_information_about_scan('ICMP Sweep'))
     print(get_scans())
+    print(get_analyses())
