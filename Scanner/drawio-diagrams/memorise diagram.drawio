@@ -1,193 +1,193 @@
-<mxfile host="app.diagrams.net" modified="2023-04-13T17:32:44.549Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36 OPR/97.0.0.0" etag="N2Cb59krhC7rjm_rVQuZ" version="21.1.6" type="google">
-  <diagram name="Page-1" id="wB2l0Od9lxEJv1YIjhiM">
-    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="3P61lCE1jjGmRBm23AmS-43" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=11;" vertex="1" parent="1">
-          <mxGeometry y="190" width="824" height="700" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-3" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-46" target="3P61lCE1jjGmRBm23AmS-4">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="85" y="184" as="sourcePoint" />
-            <mxPoint x="204" y="300" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-4" value="Can the arguments be hashed?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
-          <mxGeometry x="179" y="230" width="100" height="100" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-6" value="&lt;font color=&quot;#ff0000&quot; style=&quot;font-size: 18px;&quot;&gt;no&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=18;entryX=0.89;entryY=0.11;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-4" target="3P61lCE1jjGmRBm23AmS-7">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="254" y="410" as="sourcePoint" />
-            <mxPoint x="144" y="400" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-7" value="&lt;font face=&quot;Consolas&quot;&gt;raise TypeError&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
-          <mxGeometry x="24" y="400" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-8" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;yes&lt;br&gt;&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=18;fontColor=#00FF00;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-4" target="3P61lCE1jjGmRBm23AmS-9">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="264" y="360" as="sourcePoint" />
-            <mxPoint x="404" y="300" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-9" value="&lt;p style=&quot;line-height: 120%;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Is there an&lt;br&gt;already cached&lt;br&gt;result for these arguments?&lt;/font&gt;&lt;/p&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;align=center;" vertex="1" parent="1">
-          <mxGeometry x="384" y="235" width="120" height="130" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-10" value="&lt;font color=&quot;#ff0000&quot; style=&quot;font-size: 18px;&quot;&gt;no&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=18;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-9" target="3P61lCE1jjGmRBm23AmS-42">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="417" y="365" as="sourcePoint" />
-            <mxPoint x="294" y="422" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-12" value="" style="curved=1;endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-9" target="3P61lCE1jjGmRBm23AmS-13">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="514" y="320" as="sourcePoint" />
-            <mxPoint x="614" y="290" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="534" y="320" />
-              <mxPoint x="514" y="270" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-13" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;font-family: Consolas; background-color: initial;&quot;&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;&amp;nbsp; &amp;nbsp; &lt;/span&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;memory =&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Consolas&quot;&gt;&amp;nbsp; &amp;nbsp; {&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Consolas&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;	&lt;/span&gt;&lt;span style=&quot;background-color: initial; white-space: normal;&quot;&gt;args1: (result1, time1),&lt;/span&gt;&lt;/div&gt;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;	&lt;/span&gt;&lt;span style=&quot;background-color: initial; white-space: normal;&quot;&gt;args2: (result2, time2),&lt;/span&gt;&lt;/div&gt;&lt;/span&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Consolas&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;	&lt;/span&gt;...&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Consolas&quot;&gt;&amp;nbsp; &amp;nbsp; }&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" style="shape=internalStorage;whiteSpace=wrap;html=1;dx=15;dy=15;rounded=1;arcSize=8;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="564" y="220" width="240" height="120" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-16" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0;entryDx=0;entryDy=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-42" target="3P61lCE1jjGmRBm23AmS-17">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="244" y="630" as="sourcePoint" />
-            <mxPoint x="284" y="580" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-17" value="&lt;font style=&quot;font-weight: normal;&quot;&gt;Find current time&lt;br&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="174" y="550" width="60" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-19" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-17" target="3P61lCE1jjGmRBm23AmS-20">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="284" y="690" as="sourcePoint" />
-            <mxPoint x="284" y="650" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-20" value="Cache result:&lt;br&gt;&lt;font face=&quot;Consolas&quot;&gt;memory[arguments] = (value, time)&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="109" y="660" width="240" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-21" value="" style="curved=1;endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-20" target="3P61lCE1jjGmRBm23AmS-13">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="294" y="680" as="sourcePoint" />
-            <mxPoint x="344" y="630" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="544" y="530" />
-              <mxPoint x="354" y="550" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-22" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-20" target="3P61lCE1jjGmRBm23AmS-23">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="114" y="810" as="sourcePoint" />
-            <mxPoint x="144" y="770" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-23" value="&lt;font face=&quot;Consolas&quot;&gt;return value&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
-          <mxGeometry x="169" y="780" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-25" value="&lt;font style=&quot;font-weight: normal;&quot;&gt;Get the cached result:&lt;br&gt;&lt;font face=&quot;Consolas&quot;&gt;value, time_created&lt;/font&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontStyle=1;resizeHeight=0;resizeWidth=0;" vertex="1" parent="1">
-          <mxGeometry x="544" y="400" width="150" height="80" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-26" value="&lt;font style=&quot;font-weight: normal;&quot;&gt;Find current time&lt;br&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontStyle=1" vertex="1" parent="1">
-          <mxGeometry x="574" y="520" width="60" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-27" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-25" target="3P61lCE1jjGmRBm23AmS-26">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="604" y="680" as="sourcePoint" />
-            <mxPoint x="654" y="630" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-28" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-26" target="3P61lCE1jjGmRBm23AmS-30">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="629" y="490" as="sourcePoint" />
-            <mxPoint x="604" y="630" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-30" value="&lt;p style=&quot;line-height: 120%;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Is the result within&lt;br&gt;the time limit?&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 120%;&quot;&gt;&lt;font face=&quot;Consolas&quot; style=&quot;font-size: 12px;&quot;&gt;now() - time_created&lt;br&gt;&amp;lt; TIME_LIMIT&lt;/font&gt;&lt;/p&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;align=center;" vertex="1" parent="1">
-          <mxGeometry x="504" y="600" width="200" height="130" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-31" value="&lt;font color=&quot;#ff0000&quot; style=&quot;font-size: 18px;&quot;&gt;no&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=18;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-30" target="3P61lCE1jjGmRBm23AmS-42">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="494" y="670" as="sourcePoint" />
-            <mxPoint x="344" y="745" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-32" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;yes&lt;br&gt;&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=18;fontColor=#00FF00;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-30" target="3P61lCE1jjGmRBm23AmS-33">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="534" y="760" as="sourcePoint" />
-            <mxPoint x="604" y="780" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-33" value="&lt;font face=&quot;Consolas&quot;&gt;return value&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
-          <mxGeometry x="544" y="780" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-34" value="" style="curved=1;endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-25" target="3P61lCE1jjGmRBm23AmS-13">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="704" y="410" as="sourcePoint" />
-            <mxPoint x="754" y="360" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="654" y="370" />
-              <mxPoint x="604" y="380" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-11" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;yes&lt;br&gt;&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=18;fontColor=#00FF00;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-9" target="3P61lCE1jjGmRBm23AmS-25">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="314" y="310" as="sourcePoint" />
-            <mxPoint x="544" y="420" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-36" value="&lt;font style=&quot;font-size: 34px;&quot; face=&quot;Consolas&quot;&gt;f&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="353" y="20" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-37" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;arguments&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Consolas;" vertex="1" parent="1">
-          <mxGeometry x="130" y="25" width="149" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-38" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-37" target="3P61lCE1jjGmRBm23AmS-36">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="389" y="340" as="sourcePoint" />
-            <mxPoint x="439" y="290" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-39" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-36" target="3P61lCE1jjGmRBm23AmS-40">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="289" y="60" as="sourcePoint" />
-            <mxPoint x="549" y="50" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-40" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;value&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Consolas;" vertex="1" parent="1">
-          <mxGeometry x="549" y="25" width="101" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-42" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Call&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;font style=&quot;border-color: var(--border-color); font-size: 15px;&quot; face=&quot;Consolas&quot;&gt;f(arguments)&lt;/font&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="230" y="460" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-45" value="&lt;font style=&quot;font-size: 23px;&quot; face=&quot;Consolas&quot;&gt;@memorise&lt;/font&gt;" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-36" target="3P61lCE1jjGmRBm23AmS-43">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="390" y="150" as="sourcePoint" />
-            <mxPoint x="440" y="100" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-46" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;arguments&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Consolas;" vertex="1" parent="1">
-          <mxGeometry x="9.5" y="120" width="149" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-48" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;value&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Consolas;" vertex="1" parent="1">
-          <mxGeometry x="368.5" y="920" width="101" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-49" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;snapToPoint=0;points=[[0,0.5,0,0,0],[0.5,0,0,0,0],[0.5,1,0,0,0],[1,0,0,0,0],[1,0.5,0,0,0],[1,1,0,0,0]];rotation=-90;" vertex="1" parent="1">
-          <mxGeometry x="399" y="675" width="40" height="370" as="geometry" />
-        </mxCell>
-        <mxCell id="3P61lCE1jjGmRBm23AmS-51" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="3P61lCE1jjGmRBm23AmS-49" target="3P61lCE1jjGmRBm23AmS-48">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="410" y="1050" as="sourcePoint" />
-            <mxPoint x="460" y="1000" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
+<mxfile host="65bd71144e">
+    <diagram name="Page-1" id="wB2l0Od9lxEJv1YIjhiM">
+        <mxGraphModel dx="1083" dy="825" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-43" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=11;" parent="1" vertex="1">
+                    <mxGeometry y="190" width="824" height="700" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-3" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;" parent="1" source="3P61lCE1jjGmRBm23AmS-46" target="3P61lCE1jjGmRBm23AmS-4" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="85" y="184" as="sourcePoint"/>
+                        <mxPoint x="204" y="300" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-4" value="Can the arguments be hashed?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="179" y="230" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-6" value="&lt;font color=&quot;#ff0000&quot; style=&quot;font-size: 18px;&quot;&gt;no&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=18;entryX=0.89;entryY=0.11;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-4" target="3P61lCE1jjGmRBm23AmS-7" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="254" y="410" as="sourcePoint"/>
+                        <mxPoint x="144" y="400" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-7" value="&lt;font face=&quot;Consolas&quot;&gt;raise TypeError&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="24" y="400" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-8" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;yes&lt;br&gt;&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=18;fontColor=#00FF00;" parent="1" source="3P61lCE1jjGmRBm23AmS-4" target="3P61lCE1jjGmRBm23AmS-9" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="264" y="360" as="sourcePoint"/>
+                        <mxPoint x="404" y="300" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-9" value="&lt;p style=&quot;line-height: 120%;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Is there an&lt;br&gt;already cached&lt;br&gt;result for these arguments?&lt;/font&gt;&lt;/p&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="384" y="235" width="120" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-10" value="&lt;font color=&quot;#ff0000&quot; style=&quot;font-size: 18px;&quot;&gt;no&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=18;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-9" target="3P61lCE1jjGmRBm23AmS-42" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="417" y="365" as="sourcePoint"/>
+                        <mxPoint x="294" y="422" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-12" value="" style="curved=1;endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-9" target="3P61lCE1jjGmRBm23AmS-13" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="514" y="320" as="sourcePoint"/>
+                        <mxPoint x="614" y="290" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="534" y="320"/>
+                            <mxPoint x="514" y="270"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-13" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;font-family: Consolas; background-color: initial;&quot;&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;&amp;nbsp; &amp;nbsp; &lt;/span&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;memory =&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Consolas&quot;&gt;&amp;nbsp; &amp;nbsp; {&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Consolas&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt; &lt;/span&gt;&lt;span style=&quot;background-color: initial; white-space: normal;&quot;&gt;args1: (result1, time1),&lt;/span&gt;&lt;/div&gt;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt; &lt;/span&gt;&lt;span style=&quot;background-color: initial; white-space: normal;&quot;&gt;args2: (result2, time2),&lt;/span&gt;&lt;/div&gt;&lt;/span&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Consolas&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt; &lt;/span&gt;...&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Consolas&quot;&gt;&amp;nbsp; &amp;nbsp; }&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" style="shape=internalStorage;whiteSpace=wrap;html=1;dx=15;dy=15;rounded=1;arcSize=8;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="564" y="220" width="240" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-16" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0;entryDx=0;entryDy=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-42" target="3P61lCE1jjGmRBm23AmS-17" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="244" y="630" as="sourcePoint"/>
+                        <mxPoint x="284" y="580" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-17" value="&lt;font style=&quot;font-weight: normal;&quot;&gt;Find current time&lt;br&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="174" y="550" width="60" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-19" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-17" target="3P61lCE1jjGmRBm23AmS-20" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="284" y="690" as="sourcePoint"/>
+                        <mxPoint x="284" y="650" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-20" value="Cache result:&lt;br&gt;&lt;font face=&quot;Consolas&quot;&gt;memory[arguments] = (value, time)&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="109" y="660" width="240" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-21" value="" style="curved=1;endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-20" target="3P61lCE1jjGmRBm23AmS-13" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="294" y="680" as="sourcePoint"/>
+                        <mxPoint x="344" y="630" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="544" y="530"/>
+                            <mxPoint x="354" y="550"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-22" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-20" target="3P61lCE1jjGmRBm23AmS-23" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="114" y="810" as="sourcePoint"/>
+                        <mxPoint x="144" y="770" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-23" value="&lt;font face=&quot;Consolas&quot;&gt;return value&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="169" y="780" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-25" value="&lt;font style=&quot;font-weight: normal;&quot;&gt;Get the cached result:&lt;br&gt;&lt;font face=&quot;Consolas&quot;&gt;value, time_created&lt;/font&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontStyle=1;resizeHeight=0;resizeWidth=0;" parent="1" vertex="1">
+                    <mxGeometry x="544" y="400" width="150" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-26" value="&lt;font style=&quot;font-weight: normal;&quot;&gt;Find current time&lt;br&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="574" y="520" width="60" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-27" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-25" target="3P61lCE1jjGmRBm23AmS-26" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="604" y="680" as="sourcePoint"/>
+                        <mxPoint x="654" y="630" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-28" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-26" target="3P61lCE1jjGmRBm23AmS-30" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="629" y="490" as="sourcePoint"/>
+                        <mxPoint x="604" y="630" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-30" value="&lt;p style=&quot;line-height: 120%;&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;Is the result within&lt;br&gt;the time limit?&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;line-height: 120%;&quot;&gt;&lt;font face=&quot;Consolas&quot; style=&quot;font-size: 12px;&quot;&gt;now() - time_created&lt;br&gt;&amp;lt; TIME_LIMIT&lt;/font&gt;&lt;/p&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="504" y="600" width="200" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-31" value="&lt;font color=&quot;#ff0000&quot; style=&quot;font-size: 18px;&quot;&gt;no&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#f8cecc;strokeColor=#b85450;fontSize=18;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-30" target="3P61lCE1jjGmRBm23AmS-42" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="494" y="670" as="sourcePoint"/>
+                        <mxPoint x="344" y="745" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-32" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;yes&lt;br&gt;&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=18;fontColor=#00FF00;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-30" target="3P61lCE1jjGmRBm23AmS-33" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="534" y="760" as="sourcePoint"/>
+                        <mxPoint x="604" y="780" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-33" value="&lt;font face=&quot;Consolas&quot;&gt;return value&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="544" y="780" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-34" value="" style="curved=1;endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-25" target="3P61lCE1jjGmRBm23AmS-13" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="704" y="410" as="sourcePoint"/>
+                        <mxPoint x="754" y="360" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="654" y="370"/>
+                            <mxPoint x="604" y="380"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-11" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;yes&lt;br&gt;&lt;/font&gt;" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=18;fontColor=#00FF00;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-9" target="3P61lCE1jjGmRBm23AmS-25" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="314" y="310" as="sourcePoint"/>
+                        <mxPoint x="544" y="420" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-36" value="&lt;font style=&quot;font-size: 34px;&quot; face=&quot;Consolas&quot;&gt;f&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="353" y="20" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-37" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;arguments&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Consolas;" parent="1" vertex="1">
+                    <mxGeometry x="129" y="25" width="149" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-38" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-37" target="3P61lCE1jjGmRBm23AmS-36" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="389" y="340" as="sourcePoint"/>
+                        <mxPoint x="439" y="290" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-39" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-36" target="3P61lCE1jjGmRBm23AmS-40" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="289" y="60" as="sourcePoint"/>
+                        <mxPoint x="549" y="50" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-40" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;value&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Consolas;" parent="1" vertex="1">
+                    <mxGeometry x="549" y="25" width="101" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-42" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Call&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;font style=&quot;border-color: var(--border-color); font-size: 15px;&quot; face=&quot;Consolas&quot;&gt;f(arguments)&lt;/font&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="230" y="460" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-45" value="&lt;font style=&quot;font-size: 23px;&quot; face=&quot;Consolas&quot;&gt;@memorise&lt;/font&gt;" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="3P61lCE1jjGmRBm23AmS-36" target="3P61lCE1jjGmRBm23AmS-43" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="390" y="150" as="sourcePoint"/>
+                        <mxPoint x="440" y="100" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-46" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;arguments&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Consolas;" parent="1" vertex="1">
+                    <mxGeometry x="9.5" y="120" width="149" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-48" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;value&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Consolas;" parent="1" vertex="1">
+                    <mxGeometry x="368.5" y="920" width="101" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-49" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;snapToPoint=0;points=[[0,0.5,0,0,0],[0.5,0,0,0,0],[0.5,1,0,0,0],[1,0,0,0,0],[1,0.5,0,0,0],[1,1,0,0,0]];rotation=-90;" parent="1" vertex="1">
+                    <mxGeometry x="399" y="675" width="40" height="370" as="geometry"/>
+                </mxCell>
+                <mxCell id="3P61lCE1jjGmRBm23AmS-51" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" parent="1" source="3P61lCE1jjGmRBm23AmS-49" target="3P61lCE1jjGmRBm23AmS-48" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="410" y="1050" as="sourcePoint"/>
+                        <mxPoint x="460" y="1000" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
 </mxfile>
