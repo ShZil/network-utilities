@@ -2510,3 +2510,11 @@ However, currently, it's in Scan Screen, and working.
 
 [16:04] While adding this scan, I've also tried to find edge cases that my code doesn't handle,
 and place conditionals or `try-except`s to catch them.
+
+[16:12] I'm in the process of copying the button column from Scan Screen to Know Screen,
+and it seems possible that this'll actually solve the Device Profile crash.
+Also, I decided not to duplicate State, because a single highlighted button (between screens),
+is fine, and also maybe even desireable.
+
+[16:24] I've made so many changes, I feel like I'm gonna miss something.
+Nonetheless, it's good progress.
