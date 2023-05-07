@@ -2518,3 +2518,6 @@ is fine, and also maybe even desireable.
 
 [16:24] I've made so many changes, I feel like I'm gonna miss something.
 Nonetheless, it's good progress.
+
+[22:34] Went over it again, seems fine, committed to GitHub,
+gonna test now.
