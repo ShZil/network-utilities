@@ -2568,3 +2568,4 @@ In debug mode, I'll note.
 
 [00:58] Following a friend's advice, I installed the `Draw.io Integration v1.6.6` extension onto VS Code.
 Also, uploaded the `draw.io` diagrams I've been working on, to the GitHub repos.
+This is gonna be useful.
