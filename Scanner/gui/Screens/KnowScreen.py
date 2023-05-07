@@ -9,8 +9,14 @@ with ImportDefence():
 from threading import Thread
 from gui.Hover import Hover
 from gui.Screens.Pages import Pages
+from gui.KivyExtensions import ButtonColumn, OperationButton
 from gui.dialogs import get_string, popup
+from gui.Configuration import display_configuration
+from gui.Information import display_information
+from gui.ScanClasses import Scan
+from register import Register
 from globalstuff import *
+import db
 
 
 def update_know_screen(text):
@@ -28,11 +34,11 @@ class KnowScreen(Screen):
         │  #5 Scan.                                  │
         │  #6 Know.                                  │
         │             #3 Device Profile              │
-        │                   #2 Data                  │
-        │          [_______________________]         │
-        │          [_______________________]         │
-        │          [_______________________]         │
-        │          [_______________________]         │
+        │              #2 Data                       │
+        │     [_______________________]              │
+        │     [_______________________]              │
+        │     [_______________________]              │
+        │     [_______________________]              │
         │                                            │
         │                                            │
         └────────────────────────────────────────────┘
@@ -59,10 +65,63 @@ class KnowScreen(Screen):
         )
         everything.add_widget(title)
         everything.add_widget(Pages())
-        everything.add_widget(KnowScreenDeviceProfileButton())
+        everything.add_widget(KnowScreenRightColumn())
         everything.add_widget(KnowScreenInfoLabel())
 
         self.add_widget(everything)
+
+
+class KnowScreenRightColumn(ButtonColumn):
+    """Builds the right column used in the screen 'Know'.
+
+    ```md
+        Know Screen
+        . . . ─╥───────────────────────────┐
+               ║   [#2 Conf]   [#3 Info]   │
+               ╟───────────────────────────┤
+               ║        [#7 KnowA]         │
+               ║                           │
+               ║        [#8 KnowB]         │
+               ║                           │
+               ║        [#9 KnowC]         │
+               ║                           │
+               ║        [#10 KnowD]        │
+               ║                           │
+               ║           . . .           │
+               ║                           │
+        . . . ─╨───────────────────────────┘
+    ```
+
+    Args:
+        ButtonColumn (GridLayout): this inherits from ButtonColumn.
+    """
+
+    def __init__(self):
+        super().__init__(width=RIGHT_COLUMN_WIDTH)
+        self.background_color = [0.1, 0.3, 1, 1]  # blue
+
+        #     Objects #2, #3 -- two operations on each analysis
+        operations = BoxLayout(orientation='horizontal', spacing=-3)
+        operations.add_widget(
+            OperationButton(
+                '⚙',
+                "Configure",
+                lambda _: display_configuration()
+            )
+        )
+        operations.add_widget(
+            OperationButton(
+                'ℹ',
+                "Information",
+                lambda _: display_information()
+            )
+        )  # Consider a '?' instead
+
+        self.add_widget(operations)
+
+        # Objects #7 - #10
+        for name in db.get_analyses():
+            Scan(name, Register()[name], self)
 
 
 class KnowScreenInfoLabel(ScrollView):
