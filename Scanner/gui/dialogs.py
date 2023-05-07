@@ -61,7 +61,7 @@ class PopupManager:
         ]
         lines = [line.strip() for line in lines]
         message = '\n\n'.join(lines)
-        message = message.replace('\n', '\n\n')
+        # message = message.replace('\n', '\n\n')
         markdown_text = markdown2.markdown(message)
         html_text = f"{POPUP_CSS}<div class=\"limit-width\">{markdown_text}</div>"
 
