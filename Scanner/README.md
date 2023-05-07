@@ -2545,3 +2545,6 @@ By extension, it also accepts 0 arguments, which is what the Analyse Operation a
 [00:23] Repositioned the Know Screen title, to be in the correct centre.
 
 [00:24] Compacted creation of `operations` in `KnowScreenRightColumn`.
+[00:38] My, silly-ly, linked both Device Profile and Log Packets to the same function.
+Fixed...
+

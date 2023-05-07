@@ -70,7 +70,7 @@ def register_scans():
     r["Public Address"] = public_address_action
     r["Traceroute"] = lambda: traceroute('8.8.8.8')
     r["Log Packets"] = log_packets
-    r["Device Profile"] = log_packets
+    r["Device Profile"] = device_profile
 
 
 def main():
