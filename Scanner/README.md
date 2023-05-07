@@ -2534,3 +2534,7 @@ with the interface provided from `db.py`.
 I've added another class in `ScanClasses.py`, `Analysis`,
 but it's the exact same as Scan (inheritence),
 except the background colour is blue and not green.
+
+[22:55] Had a z-index issue -- the `Pages` weren't responding because they were behind the label.
+
+[23:02] At last, some consistency -- finally, the `Pages` stay in the same position between screens.

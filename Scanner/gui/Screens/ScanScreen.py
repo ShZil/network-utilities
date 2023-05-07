@@ -57,9 +57,6 @@ class ScanScreenMiddleDiagram(RelativeLayout):
             markup=True
         )
 
-        #     Objects #4, #5, #6 -- Page frippery (top left corner)
-        pages = Pages()
-
         #     Object #15
         play_button = GreenButton(text='▶',
                                   font_size=UNDER_DIAGRAM_FONT_SIZE,
@@ -89,7 +86,6 @@ class ScanScreenMiddleDiagram(RelativeLayout):
 
         # Unite all widgets of the middle diagram.
         self.add_widget(paint)
-        self.add_widget(pages)
         self.add_widget(open_diagram)
         self.add_widget(play_button)
         self.add_widget(title)
@@ -186,9 +182,15 @@ class ScanScreen(Screen):
         super().__init__(name=name, **kw)
         Hover.enter(name)
 
-        everything = BoxLayout(orientation='horizontal')
-        everything.add_widget(ScanScreenMiddleDiagram())
-        everything.add_widget(ScanScreenRightColumn())
+        everything = RelativeLayout()
+
+        body = BoxLayout(orientation='horizontal')
+        body.add_widget(ScanScreenMiddleDiagram())
+        body.add_widget(ScanScreenRightColumn())
+
+        everything.add_widget(body)
+        # Objects #4, #5, #6 -- Page frippery (top left corner)
+        everything.add_widget(Pages())
 
         self.add_widget(everything)
 

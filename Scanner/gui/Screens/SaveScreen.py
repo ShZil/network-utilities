@@ -122,11 +122,11 @@ class SaveScreen(Screen):
             markup=True
         )
         everything.add_widget(title)
-        everything.add_widget(Pages())
         everything.add_widget(SaveScreenExportButton())
         everything.add_widget(SaveScreenImportButton())
         # *************** add the recents
         # everything.add_widget(SaveScreenRecents())
+        everything.add_widget(Pages())
 
         self.add_widget(everything)
 

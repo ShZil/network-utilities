@@ -55,7 +55,6 @@ class KnowScreen(Screen):
         Hover.enter(name)
 
         everything = RelativeLayout()
-        everything.add_widget(Pages())
         title = Label(
             text=f"[color={GREEN}]Knowledge about Network[/color]",
             size=(0, TITLE_HEIGHT),
@@ -71,6 +70,7 @@ class KnowScreen(Screen):
         body.add_widget(KnowScreenInfoLabel())
         body.add_widget(KnowScreenRightColumn())
         everything.add_widget(body)
+        everything.add_widget(Pages())
 
         self.add_widget(everything)
 
