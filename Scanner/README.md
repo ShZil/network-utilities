@@ -2548,3 +2548,4 @@ By extension, it also accepts 0 arguments, which is what the Analyse Operation a
 [00:38] My, silly-ly, linked both Device Profile and Log Packets to the same function.
 Fixed...
 
+[00:53] I used https://fontdrop.info/#/?darkmode=true to find a character for "Analyse" operation button.

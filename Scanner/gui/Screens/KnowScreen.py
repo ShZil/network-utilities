@@ -106,7 +106,7 @@ class KnowScreenRightColumn(ButtonColumn):
 
         #     Objects #2, #3 -- two operations on each analysis
         operations = BoxLayout(orientation='horizontal', spacing=-3, size_hint=(0.3, None))
-        operations.add_widget(OperationButton('🎓', "Analyse", activate))
+        operations.add_widget(OperationButton('⏻', "Analyse", activate))
         operations.add_widget(OperationButton('⚙', "Config", display_configuration))
         operations.add_widget(OperationButton('ℹ', "Info", display_information))
 
