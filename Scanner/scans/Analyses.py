@@ -32,7 +32,7 @@ def device_profile(*a):
     regular_info = entity.to_dict()
     special_info = SpecialInformation()[entity]
     information = {**regular_info, **special_info}
-    print(_construct_content(information))
+    # print(_construct_content(information))
     try:
         popup("Device Profile", _construct_content(information), info=True)
     except Exception as e:

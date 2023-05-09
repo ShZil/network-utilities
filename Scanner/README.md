@@ -2608,3 +2608,6 @@ I don't even have to change other code where `get_string` is used.
 And maybe also some other ones.
 
 [18:20] Forgot to `return` XD.
+
+[18:31] The Device Profile chrash is resolved.
+I don't know when, it just stopped crashing at some point.
