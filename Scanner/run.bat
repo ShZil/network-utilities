@@ -3,4 +3,6 @@ color 0A
 title Shzil Network Scanner
 set "KIVY_NO_CONSOLELOG=true"
 python exe.py
-@REM pause
+echo.
+echo Process exited with code %errorlevel%.
+pause

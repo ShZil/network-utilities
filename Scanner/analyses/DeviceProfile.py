@@ -21,7 +21,7 @@ def _match_device(address):
 def _construct_content(info: dict):
     from NetworkStorage import nothing
     info = {
-        key: value.upper() if key == 'mac' else value
+        key: value.upper() if key in ['mac', 'ipv6'] else value
         for key, value in info.items()
     }
     markdowned = [

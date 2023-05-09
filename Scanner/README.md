@@ -2625,3 +2625,7 @@ I'd like to write myself a TODO, now that the _thing that drives the plot_ is go
 [22:17] Moved analyses' code to different folder and split files.
 
 [22:26] Improved `device_profile`.
+
+[22:33] I'm not using the exit code for a lot,
+but I just thought it'd look neat in the console output.
+So I upgraded `run.bat` to show it.
