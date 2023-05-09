@@ -2,11 +2,8 @@ from import_handler import ImportDefence
 with ImportDefence():
     import win32api
     import win32con
-    from PyQt5.QtCore import Qt
-    from PyQt5.QtWidgets import QApplication, QMessageBox
     import markdown2
     import PySimpleGUIQt as sg
-    import html
     import threading
     import time
     from enum import Enum
@@ -174,7 +171,7 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
 
 def get_string(title: str, prompt: str) -> str:
     """This function prompts the user to give a string input.
-    It's basially like `input` in plain Python,
+    It's basically like `input` in plain Python,
     but with a GUI.
     The window's title will be `title`.
 
@@ -185,33 +182,21 @@ def get_string(title: str, prompt: str) -> str:
     Returns:
         str: the input the user provided, and then hit `Submit`.
     """
-    from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
 
-    app = QApplication([])
-    widget = QWidget()
-    layout = QVBoxLayout()
+    layout = [[sg.Text(prompt)],
+              [sg.Input(key='-IN-')],
+              [sg.Button('Submit')]]
 
-    label = QLabel(prompt)
-    text_box = QLineEdit()
-    button = QPushButton("Submit")
+    window = sg.Window(title, layout)
 
-    def submit():
-        result = text_box.text()
-        widget.close()
-        app.quit()
-        return result
-
-    button.clicked.connect(submit)
-    layout.addWidget(label)
-    layout.addWidget(text_box)
-    layout.addWidget(button)
-    widget.setWindowTitle(title)
-    widget.setLayout(layout)
-
-    widget.show()
-    app.exec_()
-
-    return submit()
+    while True:
+        event, values = window.read()
+        if event == sg.WINDOW_CLOSED:
+            return ''
+        elif event == 'Submit':
+            result = values['-IN-']
+            window.close()
+            return result
 
 
 if __name__ == '__main__':
