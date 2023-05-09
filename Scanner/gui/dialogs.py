@@ -71,6 +71,7 @@ class PopupManager:
         ]]
         window = sg.Window(title, layout, finalize=True, resizable=False)
         window['_HTML_'].update(html_text)
+        # window['_HTML_'].Widget.setOpenExternalLinks(True) # Allow links to be clicked
 
         while True:
             event, values = window.read(timeout=POPUP_WINDOW_LOOP_TIMEOUT_MS)
