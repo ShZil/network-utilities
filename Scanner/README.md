@@ -2580,3 +2580,6 @@ This is gonna be useful.
 
 [15:49] With ChatGPT, I changed `get_string` to use `PySimpleGUIQt` instead of `PyQt5`.
 It's a lot simpler now.
+
+[16:08] This has caused too many issues, and they are difficult to debug without good access to the threads and `Qt` system.
+Therefore, more logically, I've switched `get_string` to use `Win API`.
