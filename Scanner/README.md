@@ -2629,3 +2629,5 @@ I'd like to write myself a TODO, now that the _thing that drives the plot_ is go
 [22:33] I'm not using the exit code for a lot,
 but I just thought it'd look neat in the console output.
 So I upgraded `run.bat` to show it.
+
+[22:39] BUGFIX: `ValueError: embedded null character`, unescape all `\` characters.

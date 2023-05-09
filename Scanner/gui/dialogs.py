@@ -82,7 +82,7 @@ class PopupManager:
             line.split(', ') if len(line) > 150 else [line]
             )
         ]
-        lines = [line.strip() for line in lines]
+        lines = [line.strip().replace('\\', '\\\\') for line in lines]
         message = '\n\n'.join(lines)
         # message = message.replace('\n', '\n\n')
         markdown_text = markdown2.markdown(message)
