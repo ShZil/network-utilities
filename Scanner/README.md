@@ -2588,3 +2588,8 @@ Therefore, more logically, I've switched `get_string` to use `Win API`.
 Made `get_string` asynchronous, and unified it into the `PopupManager` interface.
 Now, there won't be a simultaneous input (`get_string`) and display (`popup`).
 Also, using the `callback` concept, whose architecture name I do not remember.
+
+[18:00] Some bugfixes in `files.py`.
+- `Variable referenced before assignment` -- move assignment `scan_id = result["scan_id"]`.
+- Empty history raises an exception (because it interprets bytes as int).
+  So, in `<listcomp>`, ignore all empty entries.

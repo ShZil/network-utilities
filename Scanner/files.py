@@ -55,10 +55,10 @@ def importer():
     # print(result)
 
     from ScanID import parse_scan_id, get_scan_id
+    scan_id = result["scan_id"]
     same_network = scan_id == get_scan_id()
     same_network_message = "\nYou're currently in the same connection (computer, interface, network) as the scan file!" if same_network else "\n"
 
-    scan_id = result["scan_id"]
     scan_id = parse_scan_id(scan_id)
 
     entities = result["network_entities"]
@@ -72,7 +72,7 @@ def importer():
 
     def format_duration(t: int) -> str:
         return f'for {t}[s]' if t > -1 else f'indefinitely'
-    history = [format_timestamp(timestamp) + f' {name} {format_duration(duration)}.' for (timestamp, name, duration) in history]
+    history = [format_timestamp(timestamp) + f' {name} {format_duration(duration)}.' for (timestamp, name, duration) in history if name != '']
     history = '\n'.join(history)
 
     return f"""{scan_id}{same_network_message}\n\n{entities}\n\n{history}"""
