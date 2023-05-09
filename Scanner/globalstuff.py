@@ -24,6 +24,7 @@ BUTTON_COLUMN_FONT_SIZE = 24  # int: px
 # tuple[float]: rgba; used as overlay, do not set alpha=1, because that
 # will hide the text.
 SCAN_HIGHLIGHT = (0, 1, 0, 0.2)
+ANALYSIS_HIGHLIGHT = (0, 0, 1, 0.2)
 OPERATION_BUTTON_FONT_SIZE = 30  # int: px
 OPERATION_BUTTON_BACKGROUND = [0.8, 0.8, 0.8, 1]  # list[float]: rgba
 # int: px; the padding used by the kivy diagram from the top, to avoid

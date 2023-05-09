@@ -2631,3 +2631,4 @@ but I just thought it'd look neat in the console output.
 So I upgraded `run.bat` to show it.
 
 [22:39] BUGFIX: `ValueError: embedded null character`, unescape all `\` characters.
+[23:37] BUGFIX: Analyses' highlight looks disgusting. Change it to blue.

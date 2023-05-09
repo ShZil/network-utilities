@@ -35,13 +35,16 @@ class Scan:
             State().scan(DummyScan())
             return
         State().scan(self)
+        self.paint_highligh()
+        self.x = x
+    
+    def paint_highligh(self):
         with self.button.canvas.after:
             self.highlight = Color(*SCAN_HIGHLIGHT)
             self.highlight_rect = Rectangle(
                 pos=(self.button.x, self.button.y),
                 size=(self.button.width, self.button.height)
             )
-        self.x = x
 
     def deselect(self):
         self.button.canvas.after.clear()
@@ -88,9 +91,21 @@ class DummyScan(Scan):
 
 
 class Analysis(Scan):
-    """This is identical to a scan, except the background colour.
+    """This is identical to a scan, except for cosmetic changes.
     It's intended to be used under Know Screen.
+
+    Changes:
+    - background colour is more blue.
+    - highlight colour is ANALYSIS_HIGHLIGHT.
     """
     def __init__(self, name, action, parent):
         super().__init__(name, action, parent)
         self.button.background_color = [0.2, 0.4, 1, 1]
+    
+    def paint_highligh(self):
+        with self.button.canvas.after:
+            self.highlight = Color(*ANALYSIS_HIGHLIGHT)
+            self.highlight_rect = Rectangle(
+                pos=(self.button.x, self.button.y),
+                size=(self.button.width, self.button.height)
+            )
