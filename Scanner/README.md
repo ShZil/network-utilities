@@ -2606,3 +2606,5 @@ I don't even have to change other code where `get_string` is used.
 
 [18:15] Suggestion: send the environment variable `OS` in device discovery.
 And maybe also some other ones.
+
+[18:20] Forgot to `return` XD.
