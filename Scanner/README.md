@@ -2614,7 +2614,10 @@ I don't know when, it just stopped crashing at some point.
 This is hillarious.
 
 I'd like to write myself a TODO, now that the _thing that drives the plot_ is gone.
+0. Work on the formatting of Device Profile: hide `nothing.mac` if it appears (for example), use capital letters etc.
 1. Device Discovery
 2. Move special entities' unique identification to `SpecialInformation` (like, `router`, or `here`).
 3. Add the rest of the scans.
 4. Go over the document and find stuff to implement.
+
+[22:14] Added docstrings to `db.py`, and an entry about Device Discovery.
