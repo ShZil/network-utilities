@@ -2623,3 +2623,5 @@ I'd like to write myself a TODO, now that the _thing that drives the plot_ is go
 [22:14] Added docstrings to `db.py`, and an entry about Device Discovery.
 
 [22:17] Moved analyses' code to different folder and split files.
+
+[22:26] Improved `device_profile`.

@@ -28,7 +28,8 @@ from scans.ARP import scan_ARP, scan_ARP_continuous
 from scans.ICMP import scan_ICMP, scan_ICMP_continuous
 from scans.TCP import scan_TCP
 from scans.TraceRouter import traceroute
-from analyses.Analyses import log_packets, device_profile
+from analyses.DeviceProfile import device_profile
+from analyses.LogPackets import log_packets
 from time import sleep
 import os
 import sys
