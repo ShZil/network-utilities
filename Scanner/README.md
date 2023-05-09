@@ -2539,6 +2539,9 @@ except the background colour is blue and not green.
 
 [23:02] At last, some consistency -- finally, the `Pages` stay in the same position between screens.
 
+
+
+### 2023-05-08
 [00:19] Changed `Activation.py:activate` to ignore all arguments.
 By extension, it also accepts 0 arguments, which is what the Analyse Operation asks for.
 
@@ -2569,3 +2572,8 @@ In debug mode, I'll note.
 [00:58] Following a friend's advice, I installed the `Draw.io Integration v1.6.6` extension onto VS Code.
 Also, uploaded the `draw.io` diagrams I've been working on, to the GitHub repos.
 This is gonna be useful.
+
+
+
+### 2023-05-09
+[15:44] Invert condition in `Activation.py:activate` to decrease indent.
