@@ -2583,3 +2583,8 @@ It's a lot simpler now.
 
 [16:08] This has caused too many issues, and they are difficult to debug without good access to the threads and `Qt` system.
 Therefore, more logically, I've switched `get_string` to use `Win API`.
+
+[17:35] Switched back to `PySimpleGUIQt`.
+Made `get_string` asynchronous, and unified it into the `PopupManager` interface.
+Now, there won't be a simultaneous input (`get_string`) and display (`popup`).
+Also, using the `callback` concept, whose architecture name I do not remember.

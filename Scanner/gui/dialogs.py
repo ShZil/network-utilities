@@ -1,8 +1,8 @@
+from typing import Callable
 from import_handler import ImportDefence
 with ImportDefence():
     import win32api
     import win32con
-    import win32gui
     import markdown2
     import PySimpleGUIQt as sg
     import threading
@@ -12,6 +12,7 @@ with ImportDefence():
 
 
 class IconType(Enum):
+    INPUT = 5
     ERROR = 4
     WARNING = 3
     QUESTION = 2
@@ -42,8 +43,31 @@ class PopupManager:
         self.waiting.put(popup)
 
     def render_popup(self, popup):
-        title, message, icon = popup
+        title, message, icon, *_ = popup
         icon = IconType(int(icon))
+        if icon == IconType.INPUT:
+            callback = popup[3]
+            callback(self._get_input(title, message))
+        else:
+            self._show_text(title, message, icon)
+
+    def _get_input(self, title: str, message: str):
+        layout = [[sg.Text(message)],
+              [sg.Input(key='-IN-')],
+              [sg.Button('Submit')]]
+
+        window = sg.Window(title, layout)
+
+        while True:
+            event, values = window.read()
+            if event == sg.WINDOW_CLOSED:
+                return ''
+            elif event == 'Submit':
+                result = values['-IN-']
+                window.close()
+                return result
+
+    def _show_text(self, title: str, message: str, icon: IconType):
         lines = message.split('\n')
         lines = [
             item for line in lines
@@ -171,52 +195,20 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
     PopupManager().add((title, message, icon.value))
 
 
-def get_string(title: str, prompt: str) -> str:
+def get_string(title: str, prompt: str, callback: Callable) -> None:
     """This function prompts the user to give a string input.
     It's basically like `input` in plain Python,
     but with a GUI.
     The window's title will be `title`.
+    The `callback` will be called with a single argument,
+    a string containing the user's text.
 
     Args:
         title (str): the title of the small window.
         prompt (str): the question to ask the user.
-
-    Returns:
-        str: the input the user provided, and then hit `Submit`.
+        callback (Callable): the Python code to run after getting input.
     """
-    # create a dialog box with an edit control for the user to input text
-    edit = win32gui.CreateWindowEx(
-        0, "EDIT", "", 
-        win32con.WS_CHILD | win32con.WS_VISIBLE | win32con.ES_AUTOHSCROLL, 
-        10, 10, 200, 20, 
-        win32gui.FindWindow(None, title), 
-        0, 0, 0)
-    
-    # set the prompt text as the window title
-    win32gui.SetWindowText(win32gui.FindWindow(None, title), prompt)
-
-    # focus the edit control so the user can start typing
-    win32gui.SetFocus(edit)
-
-    # wait for the user to press Enter or Cancel
-    result = ""
-    while True:
-        msg = win32gui.GetMessage(None, 0, 0)
-        if msg[1] == win32con.WM_KEYDOWN:
-            if msg[2] == win32con.VK_RETURN:
-                # if the user presses Enter, retrieve the text from the edit control and close the window
-                result = win32gui.GetWindowText(edit)
-                win32gui.DestroyWindow(edit)
-                break
-            elif msg[2] == win32con.VK_ESCAPE:
-                # if the user presses Escape, close the window without returning anything
-                win32gui.DestroyWindow(edit)
-                break
-        win32gui.TranslateMessage(msg)
-        win32gui.DispatchMessage(msg)
-
-    return result
-
+    PopupManager().add((title, prompt, IconType.INPUT, callback))
 
 
 if __name__ == '__main__':
