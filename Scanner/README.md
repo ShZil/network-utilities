@@ -2579,3 +2579,4 @@ This is gonna be useful.
 [15:44] Invert condition in `Activation.py:activate` to decrease indent.
 
 [15:49] With ChatGPT, I changed `get_string` to use `PySimpleGUIQt` instead of `PyQt5`.
+It's a lot simpler now.
