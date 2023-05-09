@@ -2611,3 +2611,10 @@ And maybe also some other ones.
 
 [18:31] The Device Profile chrash is resolved.
 I don't know when, it just stopped crashing at some point.
+This is hillarious.
+
+I'd like to write myself a TODO, now that the _thing that drives the plot_ is gone.
+1. Device Discovery
+2. Move special entities' unique identification to `SpecialInformation` (like, `router`, or `here`).
+3. Add the rest of the scans.
+4. Go over the document and find stuff to implement.
