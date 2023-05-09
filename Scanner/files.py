@@ -8,13 +8,7 @@ import files_cryptography
 
 def get_password():
     from gui.dialogs import get_string
-    l = []
-    def _save(l ,x):
-        l.append(x)
-    get_string("File Password", "Enter password:", lambda x: _save(l, x))
-    while len(l) == 0:
-        sleep(0.1)
-    return l[0]
+    get_string("File Password", "Enter password:")
 
 
 def exporter():

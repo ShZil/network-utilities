@@ -1,3 +1,4 @@
+from time import sleep
 from typing import Callable
 from import_handler import ImportDefence
 with ImportDefence():
@@ -195,20 +196,24 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
     PopupManager().add((title, message, icon.value))
 
 
-def get_string(title: str, prompt: str, callback: Callable) -> None:
+def get_string(title: str, prompt: str) -> None:
     """This function prompts the user to give a string input.
     It's basically like `input` in plain Python,
     but with a GUI.
     The window's title will be `title`.
-    The `callback` will be called with a single argument,
-    a string containing the user's text.
+    **Blocking** until user input is given.
 
     Args:
         title (str): the title of the small window.
         prompt (str): the question to ask the user.
-        callback (Callable): the Python code to run after getting input.
     """
-    PopupManager().add((title, prompt, IconType.INPUT.value, callback))
+    l = []  # Python has lists as reference type, so they can store data in just the way I need
+    def _save(l ,x):  # used as callback, to store the result in the list.
+        l.append(x)
+    PopupManager().add((title, prompt, IconType.INPUT.value, lambda x: _save(l, x)))
+    while len(l) == 0:  # blocking until `l` is given an item with the string.
+        sleep(0.1)
+    return l[0]
 
 
 if __name__ == '__main__':

@@ -2597,3 +2597,12 @@ Also, using the `callback` concept, whose architecture name I do not remember.
 [18:02] `dialogs.py:get_string` should put the `IconType.INPUT.value` (as integer) in the tuple.
 Also, improve `get_password` to actually work with the new callback architecture of `get_string`.
 This is temporary -- it will be put inside `get_string` later.
+
+[18:11] Returned `get_string` to its original interface,
+with the internal implementation now handling data movement and blocking-ness,
+using the code I previously had under `get_password`.
+Now, since the interface is the same,
+I don't even have to change other code where `get_string` is used.
+
+[18:15] Suggestion: send the environment variable `OS` in device discovery.
+And maybe also some other ones.
