@@ -208,7 +208,7 @@ def get_string(title: str, prompt: str, callback: Callable) -> None:
         prompt (str): the question to ask the user.
         callback (Callable): the Python code to run after getting input.
     """
-    PopupManager().add((title, prompt, IconType.INPUT, callback))
+    PopupManager().add((title, prompt, IconType.INPUT.value, callback))
 
 
 if __name__ == '__main__':

@@ -2593,3 +2593,7 @@ Also, using the `callback` concept, whose architecture name I do not remember.
 - `Variable referenced before assignment` -- move assignment `scan_id = result["scan_id"]`.
 - Empty history raises an exception (because it interprets bytes as int).
   So, in `<listcomp>`, ignore all empty entries.
+
+[18:02] `dialogs.py:get_string` should put the `IconType.INPUT.value` (as integer) in the tuple.
+Also, improve `get_password` to actually work with the new callback architecture of `get_string`.
+This is temporary -- it will be put inside `get_string` later.
