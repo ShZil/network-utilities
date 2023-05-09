@@ -2619,6 +2619,7 @@ I'd like to write myself a TODO, now that the _thing that drives the plot_ is go
 2. Move special entities' unique identification to `SpecialInformation` (like, `router`, or `here`).
 3. Add the rest of the scans.
 4. Go over the document and find stuff to implement.
+5. Use `icon` in popup (`_show_text`).
 
 [22:14] Added docstrings to `db.py`, and an entry about Device Discovery.
 
@@ -2641,3 +2642,45 @@ I looks wonderful. Heavily inspired by the OSI model visualisations.
 [23:37] BUGFIX: Analyses' highlight looks disgusting. Change it to blue.
 
 [23:47] Now doing dynamic CSS-getting for popup.
+
+
+
+### 2023-05-10
+[00:27] Suggestion: Use this to improve `popup`'s scrollbar: https://www.pysimplegui.org/en/latest/?#ttk-scrollbars
+
+[00:36] The CSS support of PySimpleGUIQt is simply not enough to do what I wanted,
+which looked really good on the w3 testing site.
+For reference, copy this into the web editor:
+```html
+<style>
+table {background-color: black; border-collapse: collapse;}
+
+table div {display: flex; flex-direction: row; padding: 3px; margin-left: 6px; align-items: center;}
+
+td div {border: solid 1px rgb(255, 255, 0, 0.2); color: orange;}
+td div div {border: solid 1px rgb(0, 255, 0, 0.2); color: forestgreen;}
+td div div div {border: solid 1px rgb(255, 0, 0, 0.2); color: firebrick;}
+td div div div div {border: solid 1px rgb(255, 0, 255, 0.2); color: purple;}
+td div div div div div {border: solid 1px rgb(255, 255, 255, 0.2); color: white;}
+
+div.limit-width { width: 1200px; word-break: break-all;}
+
+</style>
+<div class="limit-width"><table>
+    <tr>
+      <td>
+        <div>Ether
+          <div>IP
+            <div>UDP 10.0.0.138:35195 &gt; 239.255.255.250:ssdp
+              <div>
+                Raw
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+</table></div>
+```
+
+I had to settle for a less pretty design, but it's fine too.

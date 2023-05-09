@@ -7,9 +7,14 @@ table {
     margin: 10px;
     color: white;
     border-collapse: collapse;
+    padding: 10px;
 }
 
-table div {
+td {
+    background-color: black;
+}
+
+table span {
     display: flex;
     flex-direction: row;
     padding: 3px;
@@ -17,15 +22,11 @@ table div {
     align-items: center;
 }
 
-td > div {border: solid 1px rgb(255, 255, 0, 0.2); color: orange;}
-
-td > div > div {border: solid 1px rgb(0, 255, 0, 0.2); color: forestgreen;}
-
-td > div > div > div {border: solid 1px rgb(255, 0, 0, 0.2); color: firebrick;}
-
-td > div > div > div > div {border: solid 1px rgb(255, 0, 255, 0.2); color: purple;}
-
-td > div > div > div > div > div {border: solid 1px rgb(255, 255, 255, 0.2); color: white;}
+td > span {color: orange;}
+td > span > span {color: forestgreen;}
+td > span > span > span {color: firebrick;}
+td > span > span > span > span {color: purple;}
+td > span > span > span > span > span {color: white;}
 
 div.limit-width {
     width: 600px;
