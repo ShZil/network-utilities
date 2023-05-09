@@ -2629,6 +2629,7 @@ I'd like to write myself a TODO, now that the _thing that drives the plot_ is go
 [22:33] I'm not using the exit code for a lot,
 but I just thought it'd look neat in the console output.
 So I upgraded `run.bat` to show it.
+Resource: Stack Overflow. https://stackoverflow.com/questions/334879/how-do-i-get-the-application-exit-code-from-a-windows-command-line
 
 [22:39] BUGFIX: `ValueError: embedded null character`, unescape all `\` characters.
 
@@ -2638,3 +2639,5 @@ I made new CSS for the Log Packets analysis.
 I looks wonderful. Heavily inspired by the OSI model visualisations.
 
 [23:37] BUGFIX: Analyses' highlight looks disgusting. Change it to blue.
+
+[23:47] Now doing dynamic CSS-getting for popup.

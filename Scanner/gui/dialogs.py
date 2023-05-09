@@ -21,10 +21,11 @@ class IconType(Enum):
     NOTHING = 0
 
 POPUP_WINDOW_SIZE = (1000, 600)
-try:
-    POPUP_CSS = f"<style>{open('./gui/popup_style.css', 'r').read()}</style>"
-except OSError:
-    POPUP_CSS = f"<style></style>"
+def get_CSS():
+    try:
+        return f"<style>{open('./gui/popup_style.css', 'r').read()}</style>"
+    except OSError:
+        return f"<style></style>"
 POPUP_WINDOW_LOOP_TIMEOUT_MS = 500
 
 
@@ -86,7 +87,7 @@ class PopupManager:
         message = '\n\n'.join(lines)
         # message = message.replace('\n', '\n\n')
         markdown_text = markdown2.markdown(message)
-        html_text = f"{POPUP_CSS}<div class=\"limit-width\">{markdown_text}</div>"
+        html_text = f"{get_CSS()}<div class=\"limit-width\">{markdown_text}</div>"
 
         layout = [[
             sg.Column(
