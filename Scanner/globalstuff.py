@@ -28,7 +28,7 @@ ANALYSIS_HIGHLIGHT = (0, 0.2, 0.8, 0.2)
 OPERATION_BUTTON_FONT_SIZE = 30  # int: px
 OPERATION_BUTTON_BACKGROUND = [0.8, 0.8, 0.8, 1]  # list[float]: rgba
 # int: px; the padding used by the kivy diagram from the top, to avoid
-# hiding the title.
+# hiding the title by overlapping it.
 TITLE_HEIGHT = 70
 DIAGRAM_SCALE = 1 / 2.3  # float
 PAGES_BACKGROUND = [0, 0, 0, 0]  # list[float]: rgba
