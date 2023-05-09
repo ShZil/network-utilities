@@ -2631,4 +2631,10 @@ but I just thought it'd look neat in the console output.
 So I upgraded `run.bat` to show it.
 
 [22:39] BUGFIX: `ValueError: embedded null character`, unescape all `\` characters.
+
+[23:32] Using https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic,
+and a lot of googling, and a tiny bit of ChatGPT,
+I made new CSS for the Log Packets analysis.
+I looks wonderful. Heavily inspired by the OSI model visualisations.
+
 [23:37] BUGFIX: Analyses' highlight looks disgusting. Change it to blue.

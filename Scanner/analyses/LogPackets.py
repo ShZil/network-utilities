@@ -4,8 +4,9 @@ from PacketSniffer import PacketSniffer
 def log_packets():
     from gui.dialogs import popup
     packets = [str(packet.summary()) for packet in PacketSniffer()]
-    packets = ['</td><td>'.join(packet.replace('>', '&gt;').replace('<', '&lt;').split('/')) for packet in packets]
-    packets = [f"<tr><td>{packet}</td></tr>" for packet in packets]
+    packets = [packet.replace('>', '&gt;').replace('<', '&lt;').split('/') for packet in packets]
+    packets = ['</div><div>'.join(layers) for layers in packets]
+    packets = [f"<tr><td><div>{packet}</div></td></tr>" for packet in packets]
     packets = '\n'.join(packets)
     packets = f"<table>{packets}</table>"
     popup("Packets", packets, info=True)
