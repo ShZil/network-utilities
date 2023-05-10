@@ -37,7 +37,8 @@ def scan_ARP(addresses: list[str]) -> list[str]:
 
     from scapy.error import Scapy_Exception as NoNpcap
     try:
-        sniffer.stop()
+        if sniffer.running:
+            sniffer.stop()
     except NoNpcap as e:
         if e.args[0] == "Unsupported (offline or unsupported socket)":
             print("Npcap / WinPcap aren't installed. Please install either one lol")

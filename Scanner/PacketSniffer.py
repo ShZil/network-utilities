@@ -191,7 +191,8 @@ class PacketSniffer:
 
     def stop(self):
         if self.sniff_thread:
-            self.sniff_thread.stop()
+            if self.sniff_thread.running:
+                self.sniff_thread.stop()
             self.sniff_thread = None
 
         self._flush_packets()

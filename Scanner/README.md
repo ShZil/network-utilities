@@ -2710,3 +2710,9 @@ in `NetworkEntity.tablestring`.
 
 [22:38] `TypeError: display_information() takes 0 positional arguments but 1 was given`.
 Just ignore all arguments.
+
+[22:49] Added more conditionals before stopping `AsyncSniffer`s.
+```py
+if sniffer.running:
+    sniffer.stop()
+```
