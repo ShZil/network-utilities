@@ -21,14 +21,12 @@ def _match_device(address):
 
 def _construct_content(info: dict) -> str:
     from NetworkStorage import nothing
-    
-    def _transform_item(item: tuple[Any, Any]) -> tuple[Any, Any]:
+
+    def _transform_item(item: tuple[str, str]) -> tuple[str, str]:
         key, value = item
 
         if key in ['mac', 'ipv6']:
             value = value.upper()
-        if len(value) > 30:
-            value = value[:27] + '...'
         
         if key in ['mac']:
             key = key.upper()

@@ -2695,3 +2695,7 @@ and can be terminated nicely with one function call.
 [21:15] Also, terminate OS-ID according to the `terminator: Event`.
 
 [21:16] I could summarise all this work to two topics: graceful termination & Device Profile format.
+
+[22:04] I don't actually wanna trim the long `value` strings,
+because Device Profile should have the full information.
+However, I do wanna trim it when displaying in the table.
