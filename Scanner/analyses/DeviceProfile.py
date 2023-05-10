@@ -10,11 +10,11 @@ def _match_device(address):
             if entity.equals(item):
                 return item
     except ValueError:
-        name = address
-        if name == "Unknown":
+        name = address.lower()
+        if name == "unknown":
             return None
         for item in NetworkStorage():
-            if item.name == name:
+            if item.name.lower() == name:
                 return item
     return None
 
@@ -24,6 +24,12 @@ def _construct_content(info: dict) -> str:
 
     def _transform_item(item: tuple[str, str]) -> tuple[str, str]:
         key, value = item
+
+        try:
+            if nothing[key] == value:
+                return '', ''
+        except TypeError:  # occurs on properties which `nothing` doesn't have, e.g. `os`. i.e. anything from Special Information.
+            pass
 
         if key in ['mac', 'ipv6']:
             value = value.upper()
@@ -44,7 +50,7 @@ def _construct_content(info: dict) -> str:
     markdowned = [
         f"### {key}:\n{value}"
         for key, value in info.items()
-        if nothing[key.lower()].lower() != value.lower()
+        if key != ''
     ]
     return '\n\n'.join(markdowned)
 

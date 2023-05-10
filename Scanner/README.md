@@ -2716,3 +2716,9 @@ Just ignore all arguments.
 if sniffer.running:
     sniffer.stop()
 ```
+
+[23:08] Compare `name`s in lowercase to avoid user typing mistakes.
+In `DeviceProfile.py:_match_device`.
+Also added a try-except around `if nothing[key] == value` to support `SpecialInformation`,
+which would raise a `TypeError` in `NetworkEntity.__get__`.
+Suggestion: it makes more sense to use a `KeyError` in such cases.
