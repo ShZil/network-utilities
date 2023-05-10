@@ -38,17 +38,14 @@ def _construct_content(info: dict) -> str:
             key = key.upper()
         elif key.startswith('ip'):
             key = 'IP' + key[2:]
-        else:
+        elif not key.isupper():
             key = key.title()
         
         return key, value
-    info = {
-        key: value.upper() if key in ['mac', 'ipv6'] else value
-        for key, value in info.items()
-    }
+
     info = dict(map(_transform_item, info.items()))
     markdowned = [
-        f"### {key}:\n{value}"
+        f"### {key}:\n`{value}`"
         for key, value in info.items()
         if key != ''
     ]
