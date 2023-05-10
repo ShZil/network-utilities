@@ -16,7 +16,8 @@ def operating_system_fingerprinting() -> None:
         return "Linux or Android" if packet.ttl <= 64 else "Windows"
 
     def _fingerprinter():
-        while True:
+        from globalstuff import terminator
+        while not terminator.is_set():
             # for each packet,
             for packet in PacketSniffer():
                 # if it originates at some other computer...
