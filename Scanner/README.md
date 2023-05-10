@@ -2705,3 +2705,8 @@ However, I do wanna trim it when displaying in the table.
 length = min(30, length)
 ```
 in `NetworkEntity.tablestring`.
+
+[22:35] The header of the table didn't align. Fixed.
+
+[22:38] `TypeError: display_information() takes 0 positional arguments but 1 was given`.
+Just ignore all arguments.
