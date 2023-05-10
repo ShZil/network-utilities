@@ -2685,3 +2685,13 @@ div.limit-width { width: 1200px; word-break: break-all;}
 ```
 
 I had to settle for a less pretty design, but it's fine too.
+
+[20:31] I got annoyed that some threads were not properly closing upon termination.
+Two of them were `AsyncSniffer`s, one for `Live ARP` and another for `PacketSniffer`.
+Therefore, I decided I want to extend `scapy`'s `AsyncSniffer`,
+and the new functionality will be a centralised location where references to all such threads are saved,
+and can be terminated nicely with one function call.
+
+[21:15] Also, terminate OS-ID according to the `terminator: Event`.
+
+[21:16] I could summarise all this work to two topics: graceful termination & Device Profile format.
