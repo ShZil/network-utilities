@@ -3,12 +3,13 @@ from import_handler import ImportDefence
 import sys
 
 with ImportDefence():
-    from scapy.sendrecv import sendp, AsyncSniffer
+    from scapy.sendrecv import sendp
     from scapy.layers.l2 import Ether, ARP
 
-    from util import threadify
-    from NetworkStorage import NetworkStorage
-    from ipconfig import ipconfig
+from util import threadify
+from NetworkStorage import NetworkStorage
+from ipconfig import ipconfig
+from Sniffer import Sniffer
 
 
 def scan_ARP(addresses: list[str]) -> list[str]:
@@ -26,7 +27,7 @@ def scan_ARP(addresses: list[str]) -> list[str]:
     results = []
     appender = lambda x: results.append((x[ARP].hwsrc, x[ARP].psrc))
     filter_is_at_ARP = lambda x: ARP in x and x[ARP].op == 2 and x[ARP].psrc != ipconfig()["IPv4 Address"]
-    sniffer = AsyncSniffer(prn=appender, lfilter=filter_is_at_ARP, store=False)
+    sniffer = Sniffer(prn=appender, lfilter=filter_is_at_ARP, store=False)
     sniffer.start()
 
     send_ARP = lambda packet: sendp(packet, verbose=0)
@@ -56,7 +57,7 @@ def scan_ARP_continuous():
     Detects and extracts information from both `ARP who-has` and `ARP is-at` packets.
     NetworkStorage handles duplicates.
 
-    Terminates quickly, since `scapy`'s `AsyncSniffer` opens its own thread.
+    Terminates quickly, since `scapy`'s `AsyncSniffer` (updated--inside `Sniffer.Sniffer`) opens its own thread.
     """
     # Stage 1
     from subprocess import CalledProcessError, check_output as read_command, DEVNULL
@@ -80,5 +81,5 @@ def scan_ARP_continuous():
         elif packet[ARP].op == 1:
             NetworkStorage().add(mac=packet[ARP].hwsrc, ip=packet[ARP].psrc)
 
-    sniffer = AsyncSniffer(prn=save_to_storage, lfilter=filter_ARP, store=False)
+    sniffer = Sniffer(prn=save_to_storage, lfilter=filter_ARP, store=False)
     sniffer.start()

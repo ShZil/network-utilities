@@ -4,11 +4,12 @@ import sys
 _T = TypeVar("_T")
 _S = TypeVar("_S")
 with ImportDefence():
-    from scapy.all import AsyncSniffer, IP
+    from scapy.all import IP
     import sqlite3
     import pickle
     from typing_extensions import Self, SupportsIndex
     from collections.abc import Callable, Iterable, Iterator
+from Sniffer import Sniffer
 
 
 class ListWithSQL:
@@ -176,7 +177,7 @@ class PacketSniffer:
             cls._instance = super().__new__(cls)
             cls._instance.max_packets = max_packets
             cls._instance.packets = []
-            cls._instance.sniff_thread = AsyncSniffer(prn=cls._instance._packet_handler, lfilter=cls._instance._ip_filter)
+            cls._instance.sniff_thread = Sniffer(prn=cls._instance._packet_handler, lfilter=cls._instance._ip_filter)
             cls._instance.sniff_thread.start()
             cls._instance.length = 0
         return cls._instance
