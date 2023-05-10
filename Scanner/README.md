@@ -2699,3 +2699,9 @@ and can be terminated nicely with one function call.
 [22:04] I don't actually wanna trim the long `value` strings,
 because Device Profile should have the full information.
 However, I do wanna trim it when displaying in the table.
+
+[22:13] Well that was really easy, just added
+```py
+length = min(30, length)
+```
+in `NetworkEntity.tablestring`.

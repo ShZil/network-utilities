@@ -163,6 +163,7 @@ class NetworkEntity:
         titles = ["mac", "ip", "ipv6", "name"]
         # longests = ["FF-FF-FF-FF-FF-FF", "255.255.255.255", "0000:0000:0000::0000:0000", "NamesShouldntBeThisLong"]
         for title, field, length in zip(titles, fields, lengths):
+            length = min(30, length)
             if field == nothing[title]:
                 padded.append(" " * length)
             else:
