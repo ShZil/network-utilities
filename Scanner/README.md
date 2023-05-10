@@ -2621,6 +2621,7 @@ I'd like to write myself a TODO, now that the _thing that drives the plot_ is go
 4. Go over the document and find stuff to implement.
 5. Use `icon` in popup (`_show_text`).
 6. `Ctrl+F` all "Suggestion"s in the `README.md`.
+7. Resolve attention grabbers (`*********`) placed throughout the code.
 
 [22:14] Added docstrings to `db.py`, and an entry about Device Discovery.
 
