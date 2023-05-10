@@ -1,3 +1,4 @@
+from typing import Any
 from gui.dialogs import get_string, popup
 
 
@@ -18,16 +19,34 @@ def _match_device(address):
     return None
 
 
-def _construct_content(info: dict):
+def _construct_content(info: dict) -> str:
     from NetworkStorage import nothing
+    
+    def _transform_item(item: tuple[Any, Any]) -> tuple[Any, Any]:
+        key, value = item
+
+        if key in ['mac', 'ipv6']:
+            value = value.upper()
+        if len(value) > 30:
+            value = value[:27] + '...'
+        
+        if key in ['mac']:
+            key = key.upper()
+        elif key.startswith('ip'):
+            key = 'IP' + key[2:]
+        else:
+            key = key.title()
+        
+        return key, value
     info = {
         key: value.upper() if key in ['mac', 'ipv6'] else value
         for key, value in info.items()
     }
+    info = dict(map(_transform_item, info.items()))
     markdowned = [
-        f"### {key.upper()}:\n{value}"
+        f"### {key}:\n{value}"
         for key, value in info.items()
-        if nothing[key] != value
+        if nothing[key.lower()].lower() != value.lower()
     ]
     return '\n\n'.join(markdowned)
 
