@@ -10,7 +10,7 @@ from gui.ScanClasses import DummyScan
 from gui.AppState import State
 
 
-def display_information():
+def display_information(*_):
     highlighted = State().highlighted_scan
     if highlighted is DummyScan() or highlighted is None:
         popup(f"General Information", general_information(), info=True)
