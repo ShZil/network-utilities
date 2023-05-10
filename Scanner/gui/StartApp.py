@@ -7,8 +7,6 @@ from datetime import datetime
 import traceback
 from gui.App import MyApp
 from gui.Diagrams import Diagrams, TKDiagram, PlotDiagram
-from gui.dialogs import PopupManager
-from globalstuff import terminator
 import threading
 
 
@@ -35,8 +33,14 @@ def start_kivy():
             pass
         root = TKDiagram().root
         root.after(1, root.destroy)
+        from globalstuff import terminator
         terminator.set()
+        from gui.dialogs import PopupManager
         PopupManager().stop()
+        from PacketSniffer import PacketSniffer
+        PacketSniffer().stop()
+        from Sniffer import Sniffer
+        Sniffer.stopall()
         print('\n'.join([str(thread) for thread in threading.enumerate()]))
 
         # sys.exit()
