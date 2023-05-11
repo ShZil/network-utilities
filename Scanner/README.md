@@ -2849,6 +2849,12 @@ This indeed was a merge issue, since `LockedNetworkEntity` disables merging.
 [22:40] "Remove analyses' confirmation popup!!!". Done under `Activation.py:activate`.
 
 [22:50] Using minor ChatGPT assistence, I wrote an alternative `str.title()` to ignore acronyms,
-because it was heavilty bothering me to see "Arp Cache..." instead of "ARP Cache".
+because it was heavilty bothering me to see "Arp Cache..." instead of "ARP Cache". Under Device Profile formatting.
 
 [22:54] `OS-ID` is now an analysis, not an active scan.
+
+[23:02] That's enough for today. I want to get some sleep.
+Next time, please:
+(1) add diagrams of the data structures to the portfolio,
+(2) and implement Device Discovery (both sides),
+(3) and finish going through the notes from Cyber class today, written above, and correcting the changes you (I) deem worthy.

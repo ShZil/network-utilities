@@ -147,6 +147,7 @@ class KnowScreenInfoLabel(ScrollView):
         else:
             try:
                 items = text.tablestring()
+                items = [f"There are {len(items) - 4} Network Entities known."] + items
                 # print('\n'.join(items))
             except AttributeError:
                 items = [str(x) for x in text]
