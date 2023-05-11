@@ -2845,3 +2845,5 @@ This indeed was a merge issue, since `LockedNetworkEntity` disables merging.
 [22:31] Move the `KnowScreenInfoLabel` appropriately downwards, using kivy (GUI) changes, not randomly sprinkled `\n`s.
 
 [22:34] Have `Configuration.py:display_configuration` ignore all position arguments.
+
+[22:40] "Remove analyses' confirmation popup!!!". Done under `Activation.py:activate`.

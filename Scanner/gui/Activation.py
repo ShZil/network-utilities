@@ -1,5 +1,5 @@
 from register import Register
-from gui.ScanClasses import DummyScan
+from gui.ScanClasses import DummyScan, Analysis, Scan
 from gui.dialogs import popup
 from gui.AppState import State
 
@@ -8,7 +8,7 @@ def activate(*x):
     if not State().ask_for_permission():
         return
 
-    s = State().highlighted_scan
+    s: Scan = State().highlighted_scan
     if Register().is_running(s.name) or s.is_running:
         import db
         from datetime import timedelta
@@ -33,14 +33,15 @@ def activate(*x):
     if s is DummyScan():
         popup("Cannot start scan", f"Select a scan first!\nYou can select a scan by left-clicking on a name in the right column of the screen.\n\
                 You can read all about each scan by clicking on it, and then on the Information button on top.", warning=True)
-    if popup("Start scan", f"Starting the scan: {s.name}", cancel=True):
-        Register().start(s.name, s.act, s.finished)
-    else:
-        popup(
-            "Canceled scan",
-            "The scan has been cancelled.\n\n<sub><sup>Cancel culture, I'm telling ya.</sup></sub>",
-            warning=True
-        )
+    if not isinstance(s, Analysis):
+        if not popup("Start scan", f"Starting the scan: {s.name}", cancel=True):
+            popup(
+                "Canceled scan",
+                "The scan has been cancelled.\n\n<sub><sup>Cancel culture, I'm telling ya.</sup></sub>",
+                warning=True
+            )
+            return
+    Register().start(s.name, s.act, s.finished)
 
 
 if __name__ == '__main__':

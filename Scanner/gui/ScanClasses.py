@@ -94,6 +94,9 @@ class Analysis(Scan):
     """This is identical to a scan, except for cosmetic changes.
     It's intended to be used under Know Screen.
 
+    Another difference, present in `Activation.py`, is that Analyses do not require confirmation popup;
+    just permission, which is half what other Scans need (permission + confirmation).
+
     Changes:
     - background colour is more blue.
     - highlight colour is ANALYSIS_HIGHLIGHT.
