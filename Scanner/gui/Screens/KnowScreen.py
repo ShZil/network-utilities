@@ -68,7 +68,7 @@ class KnowScreen(Screen):
         everything.add_widget(title)
 
         body = BoxLayout(orientation='horizontal')
-        body.add_widget(KnowScreenInfoLabel())
+        body.add_widget(KnowScreenInfoLabel(pos_hint={'top': .86}))
         body.add_widget(KnowScreenRightColumn())
         everything.add_widget(body)
         everything.add_widget(Pages())
@@ -128,7 +128,7 @@ class KnowScreenInfoLabel(ScrollView):
     def __init__(self, **kwargs):
         super().__init__(width=1200, **kwargs)
         self.label = Label(
-            text='\n\n\n\n\n\n\n\nLoading data...',
+            text='Loading data...',
             color=(1, 1, 1, 1),
             font_size=20,
             font_name="Monospace",
@@ -150,7 +150,7 @@ class KnowScreenInfoLabel(ScrollView):
                 # print('\n'.join(items))
             except AttributeError:
                 items = [str(x) for x in text]
-            self.label.text = '\n\n\n\n\n\n\n' + '\n'.join(items)
+            self.label.text = '\n'.join(items)
 
 
 if __name__ == '__main__':

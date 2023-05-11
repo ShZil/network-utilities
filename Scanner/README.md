@@ -2841,3 +2841,5 @@ This indeed was a merge issue, since `LockedNetworkEntity` disables merging.
 [21:43] In Device Profile, you can also choose by role, which enables quick access to important entities (here, router).
 
 [21:56] BUGFIX: replace `router` with `here`. Copied line and forgot to change.
+
+[22:31] Move the `KnowScreenInfoLabel` appropriately, using kivy (GUI) changes, not randomly sprinkled `\n`s.
