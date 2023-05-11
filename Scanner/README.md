@@ -2835,3 +2835,5 @@ Because it might not have been OS-ID’d, but could have other Special Informati
 Now, the new information flowing from, say, `ARP Live`, can get inside `router`,
 which fixes "BUG: Live ARP doesn’t seem to retrieve the MAC of the router, although it is registered (by `ipconfig`). Perhaps a merge issue?".
 This indeed was a merge issue, since `LockedNetworkEntity` disables merging.
+
+[21:35] Added `role`s to SpecialInformation for the router the the current device (here).

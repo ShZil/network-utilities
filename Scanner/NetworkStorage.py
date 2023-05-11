@@ -306,7 +306,8 @@ class NetworkStorage:
                     ipconfig()["Default Gateway"])[0],
                 ipv6=nothing.ipv6,
                 name="router"
-            )  # You sure you can't know the MAC and IPv6? + improve getting the default gateway's IPv4
+            )
+            SpecialInformation()[router, 'role'] = 'router'
 
             local_broadcast = LockedNetworkEntity(
                 mac=nothing.mac,
@@ -321,6 +322,7 @@ class NetworkStorage:
                 ipv6=ipconfig()["IPv6 Address"] if 'IPv6 Address' in ipconfig() else nothing.ipv6,
                 name=ipconfig()["Host Name"]
             )
+            SpecialInformation()[router, 'role'] = 'here'
 
             cls.instance.special_add(
                 localhost,
