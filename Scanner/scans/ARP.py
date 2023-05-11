@@ -7,7 +7,7 @@ with ImportDefence():
     from scapy.layers.l2 import Ether, ARP
 
 from util import threadify
-from NetworkStorage import NetworkStorage
+from NetworkStorage import NetworkStorage, NetworkEntity, SpecialInformation, nothing
 from ipconfig import ipconfig
 from Sniffer import Sniffer
 
@@ -68,6 +68,8 @@ def scan_ARP_continuous():
             if re.match(r'^ *[0-9.]* *[0-9A-Fa-f-]* *(dynamic|static)', line):
                 parts = [x for x in line.split(' ') if x not in ("", '\r')]
                 NetworkStorage().add(mac=parts[1], ip=parts[0])
+                entity = NetworkEntity(mac=parts[1], ip=parts[0], ipv6=nothing.ipv6, name="Unknown")
+                SpecialInformation()[entity, 'ARP cache entry type'] = parts[2]
     except CalledProcessError:
         pass
 

@@ -2828,3 +2828,10 @@ Because it might not have been OS-ID’d, but could have other Special Informati
 [20:53] Back home. Working on the project portfolio, specifically the Date Structures part, because you gotta start somewhere!
 
 [20:54] Adding changes from Cyber class today.
+
+[21:05] Save ARP cache entry type (static or dynamic) under Special Information.
+
+[21:17] Changed the `router` in special network entities from `Locked` to regular.
+Now, the new information flowing from, say, `ARP Live`, can get inside `router`,
+which fixes "BUG: Live ARP doesn’t seem to retrieve the MAC of the router, although it is registered (by `ipconfig`). Perhaps a merge issue?".
+This indeed was a merge issue, since `LockedNetworkEntity` disables merging.

@@ -251,7 +251,7 @@ nothing = LockedNetworkEntity(
     mac="00:00:00:00:00:00",
     ip="0.0.0.0",
     ipv6="::",
-    name="nothing"
+    name="Unknown"
 )
 localhost = None
 mDNS = None
@@ -300,7 +300,7 @@ class NetworkStorage:
                 name="broadcast"
             )
 
-            router = LockedNetworkEntity(
+            router = NetworkEntity(
                 mac=nothing.mac,
                 ip=filterIP(
                     ipconfig()["Default Gateway"])[0],
@@ -313,7 +313,7 @@ class NetworkStorage:
                 ip=get_all_possible_addresses()[-1],
                 ipv6=nothing.ipv6,
                 name="local broadcast"
-            )  # You sure you can't know the MAC and IPv6?
+            )
 
             here = LockedNetworkEntity(
                 mac=ipconfig()["Physical Address"],
