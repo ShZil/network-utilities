@@ -2847,3 +2847,5 @@ This indeed was a merge issue, since `LockedNetworkEntity` disables merging.
 [22:34] Have `Configuration.py:display_configuration` ignore all position arguments.
 
 [22:40] "Remove analyses' confirmation popup!!!". Done under `Activation.py:activate`.
+
+[22:54] `OS-ID` is now an analysis, not an active scan.

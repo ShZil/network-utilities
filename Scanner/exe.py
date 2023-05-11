@@ -23,11 +23,11 @@ from threading import Thread, enumerate as enumerate_threads
 from SimpleScan import simple_scan
 from CommandLineStyle import cmdcolor, cmdtitle, remove_scapy_warnings
 from scans.PublicAddress import public_address_action
-from scans.OS_ID import operating_system_fingerprinting
 from scans.ARP import scan_ARP, scan_ARP_continuous
 from scans.ICMP import scan_ICMP, scan_ICMP_continuous
 from scans.TCP import scan_TCP
 from scans.TraceRouter import traceroute
+from analyses.OS_ID import operating_system_fingerprinting
 from analyses.DeviceProfile import device_profile
 from analyses.LogPackets import log_packets
 from time import sleep
@@ -82,7 +82,7 @@ def main():
     print("Attempting to connect to an network-card interface...")
     ipconfig()
     cmdtitle(
-        "ShZil Network Scanner - ",
+        "Network Scanner - ",
         ipconfig()["Interface"],
         " at ",
         ipconfig()["IPv4 Address"]
