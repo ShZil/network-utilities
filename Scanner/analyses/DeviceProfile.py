@@ -44,7 +44,7 @@ def _construct_content(info: dict) -> str:
         elif key.startswith('ip'):
             key = 'IP' + key[2:]
         elif not key.isupper():
-            key = key.title()
+            key = ' '.join([word if word.isupper() else word.capitalize() for word in key.split(' ')])  # title case, but doesn't affect acronyms.
         
         return key, value
 

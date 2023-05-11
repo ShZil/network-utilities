@@ -2848,4 +2848,7 @@ This indeed was a merge issue, since `LockedNetworkEntity` disables merging.
 
 [22:40] "Remove analyses' confirmation popup!!!". Done under `Activation.py:activate`.
 
+[22:50] Using minor ChatGPT assistence, I wrote an alternative `str.title()` to ignore acronyms,
+because it was heavilty bothering me to see "Arp Cache..." instead of "ARP Cache".
+
 [22:54] `OS-ID` is now an analysis, not an active scan.
