@@ -2723,3 +2723,108 @@ In `DeviceProfile.py:_match_device`.
 Also added a try-except around `if nothing[key] == value` to support `SpecialInformation`,
 which would raise a `TypeError` in `NetworkEntity.__get__`.
 Suggestion: it makes more sense to use a `KeyError` in such cases.
+
+
+
+### 2023-05-11
+[12:59] In Cyber class, the last lesson possibly, working on the project, suggesting changes and reporting bugs:
+
+BUG: Live ARP doesn’t seem to retrieve the MAC of the router, although it is registered (by `ipconfig`). Perhaps a merge issue?
+
+BUG: When there are many entries in Know Screen’s table, you can scroll upwards and it’ll cover the title. Visual issue.
+
+Remove analyses’ confirmation popup!!!
+
+In Know Screen, add the length of the table (and other numerical values).
+
+In the Save Screen, add a green outline around the buttons?
+In the Save Screen, add loading ellipsis when saving a file.
+
+Log Packets – if no new packets, show “no new packets since last viewing”.
+
+[13:44] Wrote the Device Discovery scan. Using WireShark on another device, I was able to see the packets, which proves it works. This is the code (don’t forget to register):
+```py
+# under ./Scans/DeviceDiscovery.py
+from import_handler import ImportDefence
+with ImportDefence():
+    from scapy.sendrecv import send
+    from scapy.all import IP, UDP, Raw
+    
+    from time import sleep
+    from threading import Thread
+
+
+def device_discovery():
+    from gui.dialogs import get_string
+    name = get_string("Reveal Myself As", "Starting Device Discovery\nInsert the name you wish to reveal to others:")
+    from globalstuff import terminator
+    while not terminator.is_set():
+        packet = IP(dst="255.255.255.255")
+        packet /= UDP(dport=3581)
+        packet /= Raw(load="Hello there, sir " + name)
+        # print(packet.summary())
+        send(packet, verbose=0)
+        sleep(3)
+
+
+class DeviceDiscoveryListener:
+    _instance = None
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance.thread = Thread(target=self.loop)
+            cls._instance.thread.start()
+        return cls._instance
+
+    def __init__(self):
+        pass
+
+    def loop(self):
+        from globalstuff import terminator
+        from PacketSniffer import PacketSniffer
+        from NetworkStorage import broadcast, SpecialInformation
+        while not terminator.is_set():
+            for packet in PacketSniffer():
+                if UDP not in packet:
+                    continue
+                if packet[IP].dst != broadcast.ip:
+                    continue
+                if packet[UDP].dport != 3581:
+                    continue
+                SpecialInformation()[entity, 'discovery'] = packet[Raw]
+            sleep(10)
+
+       
+       
+if __name__ == '__main__':
+    print("This file is responsible for the Device Discovery scan,")
+    print("which reveals this computer to others that use this software")
+```
+
+
+[13:46] Change the popup colour scheme to something that matches the feel of the rest of the programme.
+
+[13:57] After a talk with Ran:
+Add ARP Spoofing/Poisoning as a scan – impersonate another IPv4 address.
+I need to add “Something Special”, he says, to my programme, to get a perfect score (100).
+A feature that others don't have, that's unique, not just executing some CMD command.
+
+[14:01] Please change OS-ID to an analysis.
+
+[14:15] Please make `PublicAddress` not create a new network entity, but insert Special Information about the router.
+
+[14:24] Remove this part from OS-ID:
+```py
+# ...that has not yet been OS-ID'd
+                if entity in SpecialInformation():
+                    continue
+```
+Because it might not have been OS-ID’d, but could have other Special Information.
+
+[14:25] Change PacketSniffer to reduce the use of `__iter__`s: have the ability to add listeners, i.e. Observer Pattern, that will do their own analyses on the information. This will also reduce the amount of threads!
+
+[14:29] Zvika suggested a motivation for adding ARP poison: to disconnect a computer from access to the Internet, remotely, because a student is using it for mischievous purposes. Also, add disclaimers.
+
+[20:53] Back home. Working on the project portfolio, specifically the Date Structures part, because you gotta start somewhere!
+
+[20:54] Adding changes from Cyber class today.
