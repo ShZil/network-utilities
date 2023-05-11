@@ -322,7 +322,7 @@ class NetworkStorage:
                 ipv6=ipconfig()["IPv6 Address"] if 'IPv6 Address' in ipconfig() else nothing.ipv6,
                 name=ipconfig()["Host Name"]
             )
-            SpecialInformation()[router, 'role'] = 'here'
+            SpecialInformation()[here, 'role'] = 'here'
 
             cls.instance.special_add(
                 localhost,
@@ -559,8 +559,14 @@ class SpecialInformation(dict):
                     merged.update(value)
             self[entity] = merged
             return merged[info_key]
+        elif isinstance(key, str):
+            entities = []
+            for entity, value in self.items():
+                if key in value:
+                    entities.append(entity)
+            return entities
         else:
-            raise TypeError("Key must be NetworkEntity or tuple.")
+            raise TypeError("Key must be NetworkEntity or tuple or key.")
 
     def __contains__(self, item):
         if isinstance(item, NetworkEntity):

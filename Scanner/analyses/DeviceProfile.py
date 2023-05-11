@@ -3,7 +3,7 @@ from gui.dialogs import get_string, popup
 
 
 def _match_device(address):
-    from NetworkStorage import NetworkStorage, match
+    from NetworkStorage import NetworkStorage, SpecialInformation, match
     try:
         entity = match(address)
         for item in NetworkStorage():
@@ -16,6 +16,11 @@ def _match_device(address):
         for item in NetworkStorage():
             if item.name.lower() == name:
                 return item
+    role = address.lower()
+    have_roles = SpecialInformation()['role']
+    for entity in have_roles:
+        if SpecialInformation()[entity, 'role'].lower() == role:
+            return entity
     return None
 
 
@@ -53,14 +58,14 @@ def _construct_content(info: dict) -> str:
 
 
 def device_profile(*_):
-    address = get_string("Device Profile", "Insert device's MAC / IP / IPv6 address or device name:")
+    address = get_string("Device Profile", "Insert device's MAC / IP / IPv6 Address, or Device Name, or Role:")
     entity = _match_device(address)
     if entity is None:
         popup("Device Profile", f"The device was not found.\nCheck whether you wrote the address correctly.\nThe address: `{address}`", warning=True)
         return
     regular_info = entity.to_dict()  # contains mac, ip, ipv6, and name.
     from NetworkStorage import SpecialInformation
-    special_info = SpecialInformation()[entity]  # contains possible additional information, like OS (from OS-ID), or Device Discovery status, or role (e.g. router, broadcast).
+    special_info = SpecialInformation()[entity]  # contains possible additional information, like OS (from OS-ID), or Device Discovery status, or role (e.g. router).
     information = {**regular_info, **special_info}  # merge all information to one dictionary
     popup("Device Profile", _construct_content(information), info=True)
 

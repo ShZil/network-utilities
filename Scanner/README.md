@@ -2837,3 +2837,7 @@ which fixes "BUG: Live ARP doesn’t seem to retrieve the MAC of the router, alt
 This indeed was a merge issue, since `LockedNetworkEntity` disables merging.
 
 [21:35] Added `role`s to SpecialInformation for the router the the current device (here).
+
+[21:43] In Device Profile, you can also choose by role, which enables quick access to important entities (here, router).
+
+[21:56] BUGFIX: replace `router` with `here`. Copied line and forgot to change.
