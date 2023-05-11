@@ -2842,4 +2842,6 @@ This indeed was a merge issue, since `LockedNetworkEntity` disables merging.
 
 [21:56] BUGFIX: replace `router` with `here`. Copied line and forgot to change.
 
-[22:31] Move the `KnowScreenInfoLabel` appropriately, using kivy (GUI) changes, not randomly sprinkled `\n`s.
+[22:31] Move the `KnowScreenInfoLabel` appropriately downwards, using kivy (GUI) changes, not randomly sprinkled `\n`s.
+
+[22:34] Have `Configuration.py:display_configuration` ignore all position arguments.

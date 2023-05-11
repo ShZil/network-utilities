@@ -3,7 +3,7 @@ from gui.ScanClasses import DummyScan
 from gui.dialogs import popup
 
 
-def display_configuration():
+def display_configuration(*_):
     if State().highlighted_scan is None:
         name = "scans"
     elif State().highlighted_scan is DummyScan():
