@@ -2892,3 +2892,5 @@ This won't be an issue because ObserverPublisher has no code under `__new__`.
 
 [01:40] Warn the user (in `run.bat`) if their Python version is not 3.10.
 
+[01:50] Changed the popup theme to `sg.theme('DarkGreen5')`, chosen manually from `sg.preview_all_look_and_feel_themes()`.
+As per "[13:46] Change the popup colour scheme to something that matches the feel of the rest of the programme.".

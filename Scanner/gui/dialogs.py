@@ -35,6 +35,7 @@ class PopupManager:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
+            sg.theme('DarkGreen5')
             cls._instance.waiting = queue.Queue()
             cls._instance.popup_thread = threading.Thread(target=cls._instance._popup_loop, name="Popup Thread")
             cls._instance._stop_thread = threading.Event()
