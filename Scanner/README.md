@@ -2869,6 +2869,7 @@ Next time, please:
 [23:59] Implementing the Observer Behavioural Design Pattern,
 because it's much more logical for Packet Sniffer.
 This shall also serve to minimise the amount of background active threads.
+Resource used: https://www.geeksforgeeks.org/observer-method-python-design-patterns/#
 
 
 
@@ -2888,3 +2889,6 @@ I have no one to blame but myself.
 [00:41] `Thread-12 (notify_all); Thread-13 (notify-all)`,
 Removed some code to make the thread only initialise once (removed the call to `__new__`).
 This won't be an issue because ObserverPublisher has no code under `__new__`.
+
+[01:40] Warn the user (in `run.bat`) if their Python version is not 3.10.
+
