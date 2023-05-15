@@ -2894,3 +2894,10 @@ This won't be an issue because ObserverPublisher has no code under `__new__`.
 
 [01:50] Changed the popup theme to `sg.theme('DarkGreen5')`, chosen manually from `sg.preview_all_look_and_feel_themes()`.
 As per "[13:46] Change the popup colour scheme to something that matches the feel of the rest of the programme.".
+
+[02:55] Loading times are really long when no packages are installed, Python 3.10 isn't installed, Npcap isn't installed,
+Qt refuses to function properly, and even after all that it doesn't work.
+Can you tell I'm slightly mad? Mostly tired, if I'm honest.
+I've tried running the programme on both computers downstairs, and it still doesn't see anything in Discovery.
+I'll do more testing -- in class, because that's where I'll be presenting.
+Plus, more things are already installed.
