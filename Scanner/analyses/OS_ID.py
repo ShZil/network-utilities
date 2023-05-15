@@ -24,7 +24,7 @@ def operating_system_fingerprinting() -> None:
         # Then guess what it's OS is, using `_determine_os`, and save it to `SpecialInformation`.
         SpecialInformation()[entity, 'OS'] = _determine_os(packet)
     
-    PacketSniffer.add_observer(fingerprint)
+    PacketSniffer().add_observer(fingerprint)
 
 
 

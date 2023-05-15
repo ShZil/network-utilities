@@ -223,6 +223,7 @@ class PacketSniffer(ObserverPublisher):
         return cls._instance
 
     def __init__(self, max_packets=100):
+        super().__init__()
         self.max_packets = max_packets
         with sqlite3.connect(self.DB_PATH) as conn:
             cursor = conn.cursor()

@@ -2876,3 +2876,11 @@ This shall also serve to minimise the amount of background active threads.
 [00:21] Alright, implemented the observing at OS-ID and Discovery.
 
 [00:29] Start some testing.
+
+[00:31] `TypeError: ObserverPublisher.add_observer() missing 1 required positional argument: 'observer'`
+I think the issue is that I used `PacketSniffer.add_observer(...`, not `PacketSniffer().add_observer(...`.
+Oops, my bad.
+
+[00:35] `AttributeError: 'PacketSniffer' object has no attribute 'data_queue'`
+I forgot to initialise ObserverPublisher from PacketSniffer's `__init__`.
+I have no one to blame but myself.
