@@ -198,7 +198,8 @@ class ObserverPublisher:
     def add_observer(self, observer: Callable) -> None:
         if not callable(observer):
             raise TypeError("Observer must be callable.")
-        self.observers.add(observer)
+        if observer not in self.observers:
+            self.observers.append(observer)
     
     def add_datum(self, datum):
         self.data_queue.put(datum)
