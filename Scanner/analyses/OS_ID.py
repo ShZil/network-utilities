@@ -1,7 +1,3 @@
-from time import sleep
-from threading import Thread
-
-
 def operating_system_fingerprinting() -> None:
     """This function does the OS-ID scan-like action.
     It's an infinite action, so this method starts a thread to run that action.
