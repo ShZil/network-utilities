@@ -27,29 +27,23 @@ class DeviceDiscoveryListener:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls._instance.thread = Thread(target=cls._instance.loop)
-            cls._instance.loop.__func__.__name__ = 'DeviceDiscoveryListener'
-            cls._instance.thread.start()
+            from PacketSniffer import PacketSniffer
+            PacketSniffer.add_observer(cls._instance.check_packet)
         return cls._instance
 
     def __init__(self):
         pass
 
-    def loop(self):
-        from globalstuff import terminator
-        from PacketSniffer import PacketSniffer
+    def check_packet(self, packet):
         from NetworkStorage import broadcast, SpecialInformation, NetworkEntity, nothing
-        while not terminator.is_set():
-            for packet in PacketSniffer():
-                if UDP not in packet:
-                    continue
-                if packet[IP].dst != broadcast.ip:
-                    continue
-                if packet[UDP].dport != DST_PORT:
-                    continue
-                entity = NetworkEntity(mac=nothing.mac, ip=packet[IP].src, ipv6=nothing.ip6, name=nothing.name)
-                SpecialInformation()[entity, 'discovery'] = packet[Raw]
-            sleep(10)
+        if UDP not in packet:
+            return
+        if packet[IP].dst != broadcast.ip:
+            return
+        if packet[UDP].dport != DST_PORT:
+            return
+        entity = NetworkEntity(mac=nothing.mac, ip=packet[IP].src, ipv6=nothing.ip6, name=nothing.name)
+        SpecialInformation()[entity, 'discovery'] = packet[Raw]
 
 
 if __name__ == '__main__':

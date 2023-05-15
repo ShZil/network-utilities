@@ -2622,6 +2622,9 @@ I'd like to write myself a TODO, now that the _thing that drives the plot_ is go
 5. Use `icon` in popup (`_show_text`).
 6. `Ctrl+F` all "Suggestion"s in the `README.md`.
 7. Resolve attention grabbers (`*********`) placed throughout the code.
+8. Find and TERMINATE all pesky magic numbers in my code.
+
+***************
 
 [22:14] Added docstrings to `db.py`, and an entry about Device Discovery.
 
@@ -2867,3 +2870,9 @@ Next time, please:
 because it's much more logical for Packet Sniffer.
 This shall also serve to minimise the amount of background active threads.
 
+
+
+### 2023-05-16
+[00:21] Alright, implemented the observing at OS-ID and Discovery.
+
+[00:26] Start testing.
