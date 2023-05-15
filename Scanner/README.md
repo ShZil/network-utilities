@@ -2884,3 +2884,7 @@ Oops, my bad.
 [00:35] `AttributeError: 'PacketSniffer' object has no attribute 'data_queue'`
 I forgot to initialise ObserverPublisher from PacketSniffer's `__init__`.
 I have no one to blame but myself.
+
+[00:41] `Thread-12 (notify_all); Thread-13 (notify-all)`,
+Removed some code to make the thread only initialise once (removed the call to `__new__`).
+This won't be an issue because ObserverPublisher has no code under `__new__`.

@@ -180,10 +180,11 @@ class ObserverPublisher:
     and you can use `add_observer` to attach observers!
     """
     def __init__(self):
-        self.data_queue = Queue()
-        self.observers = []
-        self.observer_thread = Thread(target=self.notify_all)
-        self.observer_thread.start()
+        if not hasattr(self, 'observer_thread'):
+            self.data_queue = Queue()
+            self.observers = []
+            self.observer_thread = Thread(target=self.notify_all)
+            self.observer_thread.start()
     
     def notify_all(self) -> None:
         from globalstuff import terminator

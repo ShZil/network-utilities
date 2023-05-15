@@ -27,12 +27,12 @@ class DeviceDiscoveryListener:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            from PacketSniffer import PacketSniffer
-            PacketSniffer().add_observer(cls._instance.check_packet)
+            
         return cls._instance
 
     def __init__(self):
-        pass
+        from PacketSniffer import PacketSniffer
+        PacketSniffer().add_observer(self.check_packet)
 
     def check_packet(self, packet):
         from NetworkStorage import broadcast, SpecialInformation, NetworkEntity, nothing
