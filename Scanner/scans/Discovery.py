@@ -28,6 +28,7 @@ class DeviceDiscoveryListener:
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             cls._instance.thread = Thread(target=cls._instance.loop)
+            cls._instance.loop.__func__.__name__ = 'DeviceDiscoveryListener'
             cls._instance.thread.start()
         return cls._instance
 

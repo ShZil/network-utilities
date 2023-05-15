@@ -2863,3 +2863,7 @@ Next time, please:
 ### 2023-05-15
 [23:17] Gonna implement Device Discovery and then go work on the portfolio.
 
+[23:59] Implementing the Observer Behavioural Design Pattern,
+because it's much more logical for Packet Sniffer.
+This shall also serve to minimise the amount of background active threads.
+

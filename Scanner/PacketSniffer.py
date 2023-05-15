@@ -7,8 +7,11 @@ with ImportDefence():
     from scapy.all import IP
     import sqlite3
     import pickle
-    from typing_extensions import Self, SupportsIndex
+    from typing_extensions import SupportsIndex
     from collections.abc import Callable, Iterable, Iterator
+    from queue import Queue
+    from threading import Thread
+    from time import sleep
 from Sniffer import Sniffer
 
 
@@ -165,7 +168,43 @@ class ListWithSQL:
                 yield pickle.loads(res[0])
 
 
-class PacketSniffer:
+class ObserverPublisher:
+    """This is the implementation of the Observer Behavioural Design Pattern,
+    which is used when a centralised source of data (the publisher) needs to send out updates (notifications)
+    to many code pieces (observers).
+
+    This specific implementation, being focused on not blocking the `add_datum` calls too much,
+    uses a separate thread to notify observers, and an internal queue to save the data in the meantime.
+
+    Just extend this class, make sure to call `.add_datum` when new data arrives,
+    and you can use `add_observer` to attach observers!
+    """
+    def __init__(self):
+        self.data_queue = Queue()
+        self.observers = []
+        self.observer_thread = Thread(target=self.notify_all)
+        self.observer_thread.start()
+    
+    def notify_all(self) -> None:
+        from globalstuff import terminator
+        while not terminator.is_set():
+            if self.data_queue.empty():
+                sleep(0.3)
+                continue
+            datum = self.data_queue.get()
+            for observer in self.observers:
+                observer(datum)
+    
+    def add_observer(self, observer: Callable) -> None:
+        if not callable(observer):
+            raise TypeError("Observer must be callable.")
+        self.observers.add(observer)
+    
+    def add_datum(self, datum):
+        self.data_queue.put(datum)
+
+
+class PacketSniffer(ObserverPublisher):
     _instance = None
     DB_PATH = 'packets.db'
     SQL_CREATE_TABLE = '''CREATE TABLE IF NOT EXISTS packets (id INTEGER PRIMARY KEY AUTOINCREMENT, packet BLOB, proto TEXT, src TEXT, dst TEXT, ttl INTEGER, flags TEXT, options BLOB, timestamp INTEGER)'''
@@ -210,6 +249,7 @@ class PacketSniffer:
             fields = packet[IP].fields
             self.packets.append({'packet': packet, **fields, 'timestamp': int(now())})
             self.length += 1
+            self.add_datum(packet)
             if len(self.packets) >= self.max_packets:
                 self._flush_packets()
 
