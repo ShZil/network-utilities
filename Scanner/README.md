@@ -2737,8 +2737,8 @@ Remove analyses’ confirmation popup!!!
 
 In Know Screen, add the length of the table (and other numerical values).
 
-In the Save Screen, add a green outline around the buttons?
-In the Save Screen, add loading ellipsis when saving a file.
+In the Save Screen, add a green outline around the buttons? **************
+In the Save Screen, add loading ellipsis when saving a file. *****************
 
 Log Packets – if no new packets, show “no new packets since last viewing”.
 
@@ -2795,7 +2795,6 @@ class DeviceDiscoveryListener:
             sleep(10)
 
        
-       
 if __name__ == '__main__':
     print("This file is responsible for the Device Discovery scan,")
     print("which reveals this computer to others that use this software")
@@ -2848,7 +2847,7 @@ This indeed was a merge issue, since `LockedNetworkEntity` disables merging.
 
 [22:40] "Remove analyses' confirmation popup!!!". Done under `Activation.py:activate`.
 
-[22:50] Using minor ChatGPT assistence, I wrote an alternative `str.title()` to ignore acronyms,
+[22:50] Using minor ChatGPT assistence, I wrote an alternative `str.title()` to ignore acronyms (i.e. uppercase letters in input string),
 because it was heavilty bothering me to see "Arp Cache..." instead of "ARP Cache". Under Device Profile formatting.
 
 [22:54] `OS-ID` is now an analysis, not an active scan.
@@ -2858,3 +2857,9 @@ Next time, please:
 (1) add diagrams of the data structures to the portfolio,
 (2) and implement Device Discovery (both sides),
 (3) and finish going through the notes from Cyber class today, written above, and correcting the changes you (I) deem worthy.
+
+
+
+### 2023-05-15
+[23:17] Gonna implement Device Discovery and then go work on the portfolio.
+

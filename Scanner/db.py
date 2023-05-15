@@ -32,7 +32,7 @@ INFORMATION_DATA = [
     ("woo!", "", 0.1, "", 0, 0, 1, True),
     ("Public Address", "Gets the outside IP address of the router, using `https://api.ipify.org`. <IP> <TCP> <HTTPS GET / HTTP/2 [Host: api.ipify.org]>", 1.3, "Public IP address of the router", 97, 90, 1, True),
     ("Traceroute", "Using ICMP and IP:ttl, find the route to a distant device.", 0.1, "IP addresses of all devices in the route", 0, 0, 1, True),
-    ("Device Discovery", "Allows other devices that are running this software to discover that I'm running it too.\nThis doesn't let me discover others, if they want to remain hidden, it just reveals myself.\nDiscovering other devices is automatically started when the software starts, and it doesn't damage your hiddenness.\nImplementation-wise, this sends out broadcast UDP packets, continuously. <Ether> <IP dst=broadcast> <UDP> <Raw: name, OS, other identifying information>", 0, "You gain nothing on this device, but you gain knowledge about 'Who's running this software?' on other devices.", 95, 0, 1, False),
+    ("Reveal Myself", "This is one side of the Device Discovery ability of this software. The other side, the listener, is active automatically. Allows other devices that are running this software to discover that I'm running it too.\nThis doesn't let me discover others, if they want to remain hidden, it just reveals myself.\nDiscovering other devices is automatically started when the software starts, and it doesn't damage your hiddenness.\nImplementation-wise, this sends out broadcast UDP packets, continuously. <Ether> <IP dst=broadcast> <UDP> <Raw: name, OS, other identifying information>", 0, "You gain nothing on this device, but you gain knowledge about 'Who's running this software?' on other devices.", 95, 0, 1, False),
     ("Log Packets", "Log all the packets that were silently sniffed.", 0, "The packets are already saved, you're just viewing them.", 99, 100, 0, True),
     ("Device Profile", "Log all the packets that were silently sniffed.", 0, "The packets are already saved, you're just viewing them.", 99, 100, 0, True)
 ]
@@ -129,6 +129,8 @@ def init():
     It is used only in `refresh_db.bat`,
     through this `.py` file's main clause.
     """
+    if len(INFORMATION_DATA) == 0:
+        raise ValueError("This is a distribution build, it cannot recreate the database. If you're stuggling, re-install the software.")
     connection = sqlite3.connect(PATH)
     cursor = connection.cursor()
     try:
@@ -146,5 +148,7 @@ def init():
 if __name__ == '__main__':
     init()
     print(get_information_about_scan('ICMP Sweep'))
-    print(get_scans())
-    print(get_analyses())
+    for scan in get_scans():
+        print(f"Scan: {scan}")
+    for analysis in get_analyses():
+        print(f"Analysis: {analysis}")

@@ -27,6 +27,7 @@ from scans.ARP import scan_ARP, scan_ARP_continuous
 from scans.ICMP import scan_ICMP, scan_ICMP_continuous
 from scans.TCP import scan_TCP
 from scans.TraceRouter import traceroute
+from scans.Discovery import DeviceDiscoveryListener, reveal_myself
 from analyses.OS_ID import operating_system_fingerprinting
 from analyses.DeviceProfile import device_profile
 from analyses.LogPackets import log_packets
@@ -72,6 +73,7 @@ def register_scans():
     r["Traceroute"] = lambda: traceroute('8.8.8.8')
     r["Log Packets"] = log_packets
     r["Device Profile"] = device_profile
+    r["Reveal Myself"] = reveal_myself
 
 
 def main():
@@ -102,6 +104,7 @@ def main():
     # GUI initialisation
     add_fonts()
     PopupManager()  # starts the popup thread
+    DeviceDiscoveryListener()  # starts the discovery thread
     
     # Start tk (on main thread) and kivy (on different thread) and
     # `NetworkStorage()._resolve` (on a third thread)
