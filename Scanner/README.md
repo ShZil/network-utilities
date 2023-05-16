@@ -2901,3 +2901,7 @@ Can you tell I'm slightly mad? Mostly tired, if I'm honest.
 I've tried running the programme on both computers downstairs, and it still doesn't see anything in Discovery.
 I'll do more testing -- in class, because that's where I'll be presenting.
 Plus, more things are already installed.
+
+[03:20] Added a diagram for `db.py`.
+
+[03:27] Added an incomplete diagram for `NetworkStorage.py`.
