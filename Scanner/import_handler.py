@@ -79,7 +79,7 @@ class ImportDefence:
 
             to_install = err.name
             # Some modules have `pip install X` and `import Y`, where `X != Y`.
-            # These have to be added manually.
+            # These have to be added manually, since there's no pattern.
             if 'win32' in to_install:
                 to_install = 'pywin32'
             if to_install == 'cv2':
@@ -88,6 +88,8 @@ class ImportDefence:
                 to_install = 'pycryptodome'
             if to_install == 'PIL':
                 to_install = 'pillow'
+            if to_install == '_curses':
+                to_install = 'windows-curses'
             to_install = to_install.split('.')[0]
 
             print(
