@@ -2905,3 +2905,9 @@ Plus, more things are already installed.
 [03:20] Added a diagram for `db.py`.
 
 [03:27] Added an incomplete diagram for `NetworkStorage.py`.
+
+
+
+### 2023-05-17
+[18:32] Did some work on the Portfolio, specifically the first section,
+today in Cyber class, without a teacher (we just asked for keys).
