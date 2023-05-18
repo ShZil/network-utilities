@@ -2929,3 +2929,7 @@ because I suspect that the `CLEAR_TABLE` call is what clears the packets upon `L
 This is problematic, so I ~~removed~~ conditioned it -- it'll only run on the first time.
 
 [22:04] Making `overview.drawio`.
+
+[22:19] I'm out of ideas on `overview.drawio`.
+It looks fine, just feels slightly empty.
+I'll find stuff to add, somewhen.
