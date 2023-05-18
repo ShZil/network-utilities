@@ -2911,3 +2911,10 @@ Plus, more things are already installed.
 ### 2023-05-17
 [18:32] Did some work on the Portfolio, specifically the first section,
 today in Cyber class, without a teacher (we just asked for keys).
+
+
+
+### 2023-05-18
+[14:17] Working on diagrams for the project portfolio.
+
+[14:23] Finished `db.drawio` diagram.

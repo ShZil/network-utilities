@@ -100,10 +100,13 @@ i = 2
 for f in files:
     i += 1
     G.add_node(name(f))
-    print(name(f))
+    # print(name(f))
     # print(f'<mxCell id="4mCQ5pcPBgcy5jRonQE--{i}" value="{name(f)}" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSize=16;" vertex="1" parent="1"><mxGeometry x="240" y="240" width="80" height="80" as="geometry" /></mxCell>')
     # print(find_import_statements(f))
-    G.add_edges_from([(name(f), v) for v in find_import_statements(f, allow_dynamic_imports=True) if v in file_names])
+    imported = [v for v in find_import_statements(f, allow_dynamic_imports=True) if v in file_names]
+    if 'db' in imported:
+        print(name(f))
+    G.add_edges_from([(name(f), v) for v in imported])
 
 print(G)
 G = distribute_weights(G)

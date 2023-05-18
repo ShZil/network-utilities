@@ -1,194 +1,241 @@
 <mxfile host="65bd71144e">
     <diagram id="sqh2nvEbb2Q2xoJa_0Ur" name="Page-1">
-        <mxGraphModel dx="1273" dy="971" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1652" dy="971" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
+                <mxCell id="11" value="External modules" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;verticalAlign=top;fontStyle=4" parent="1" vertex="1">
+                    <mxGeometry x="40" y="150" width="393" height="300" as="geometry"/>
+                </mxCell>
                 <mxCell id="7" value="" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="1" vertex="1">
-                    <mxGeometry x="155" y="150" width="285" height="460" as="geometry"/>
+                    <mxGeometry x="478" y="150" width="285" height="460" as="geometry"/>
                 </mxCell>
                 <mxCell id="2" value="&lt;p style=&quot;font-size: 16px;&quot;&gt;#get_information_about_scan&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;" parent="1" vertex="1">
-                    <mxGeometry x="175" y="190" width="240" height="50" as="geometry"/>
+                    <mxGeometry x="498" y="190" width="240" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="3" value="&lt;p style=&quot;font-size: 16px;&quot;&gt;#get_scans&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;" parent="1" vertex="1">
-                    <mxGeometry x="175" y="280" width="240" height="50" as="geometry"/>
+                    <mxGeometry x="498" y="280" width="240" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="4" value="&lt;p style=&quot;font-size: 16px;&quot;&gt;#get_analyses&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;" parent="1" vertex="1">
-                    <mxGeometry x="175" y="370" width="240" height="50" as="geometry"/>
+                    <mxGeometry x="498" y="370" width="240" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="5" value="&lt;p style=&quot;font-size: 16px;&quot;&gt;#init&lt;/p&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;" parent="1" vertex="1">
-                    <mxGeometry x="175" y="520" width="240" height="50" as="geometry"/>
+                    <mxGeometry x="498" y="520" width="240" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="6" value="scans.db" style="shape=datastore;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=23;verticalAlign=top;" parent="1" vertex="1">
-                    <mxGeometry x="980" y="280" width="210" height="260" as="geometry"/>
+                    <mxGeometry x="1303" y="280" width="210" height="260" as="geometry"/>
                 </mxCell>
-                <mxCell id="8" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.999;exitY=0.283;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="11" target="2" edge="1">
+                <mxCell id="8" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="45" target="2" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="125" y="215" as="sourcePoint"/>
-                        <mxPoint x="135" y="210" as="targetPoint"/>
+                        <mxPoint x="448" y="215" as="sourcePoint"/>
+                        <mxPoint x="458" y="210" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="9" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.527;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="11" target="3" edge="1">
+                <mxCell id="9" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="48" target="3" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="125" y="305" as="sourcePoint"/>
-                        <mxPoint x="165" y="290" as="targetPoint"/>
+                        <mxPoint x="448" y="305" as="sourcePoint"/>
+                        <mxPoint x="488" y="290" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="10" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.999;exitY=0.771;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="11" target="4" edge="1">
+                <mxCell id="10" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="47" target="4" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="135" y="395" as="sourcePoint"/>
-                        <mxPoint x="155" y="390" as="targetPoint"/>
+                        <mxPoint x="458" y="395" as="sourcePoint"/>
+                        <mxPoint x="478" y="390" as="targetPoint"/>
                     </mxGeometry>
-                </mxCell>
-                <mxCell id="11" value="Other modules" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;" parent="1" vertex="1">
-                    <mxGeometry x="20" y="150" width="90" height="300" as="geometry"/>
                 </mxCell>
                 <mxCell id="12" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;entryX=0;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="13" target="5" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="100" y="700" as="sourcePoint"/>
-                        <mxPoint x="210" y="690" as="targetPoint"/>
+                        <mxPoint x="423" y="700" as="sourcePoint"/>
+                        <mxPoint x="533" y="690" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="13" value="refresh_db.bat" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;" parent="1" vertex="1">
-                    <mxGeometry x="20" y="720" width="165" height="60" as="geometry"/>
+                    <mxGeometry x="268" y="710" width="165" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" value="&lt;font color=&quot;#0050ef&quot; data-font-src=&quot;https://fonts.googleapis.com/css?family=Consolas&quot; face=&quot;Consolas&quot; style=&quot;font-size: 21px;&quot;&gt;db.py&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=4" vertex="1" parent="1">
-                    <mxGeometry x="160" y="110" width="280" height="40" as="geometry"/>
+                <mxCell id="14" value="&lt;font color=&quot;#0050ef&quot; data-font-src=&quot;https://fonts.googleapis.com/css?family=Consolas&quot; face=&quot;Consolas&quot; style=&quot;font-size: 21px;&quot;&gt;db.py&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=4" parent="1" vertex="1">
+                    <mxGeometry x="483" y="110" width="280" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="15" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=23;fontColor=#0050ef;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="2" target="17">
+                <mxCell id="15" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=23;fontColor=#0050ef;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="2" target="17" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="460" y="190" as="sourcePoint"/>
-                        <mxPoint x="460" y="185" as="targetPoint"/>
+                        <mxPoint x="783" y="190" as="sourcePoint"/>
+                        <mxPoint x="783" y="185" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="17" value="SELECT * FROM information WHERE name=?" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;fontColor=#ffffff;fillColor=#6a00ff;strokeColor=#3700CC;" vertex="1" parent="1">
-                    <mxGeometry x="560" y="160" width="290" height="70" as="geometry"/>
+                <mxCell id="17" value="SELECT * FROM information WHERE name=?" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;fontColor=#ffffff;fillColor=#6a00ff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="883" y="160" width="290" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="18" value="&lt;font color=&quot;#6a00ff&quot; data-font-src=&quot;https://fonts.googleapis.com/css?family=Consolas&quot; face=&quot;Consolas&quot; style=&quot;font-size: 20px;&quot;&gt;Structured Query Language (SQL)&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=4;fontSize=20;" vertex="1" parent="1">
-                    <mxGeometry x="570" y="90" width="280" height="70" as="geometry"/>
+                <mxCell id="18" value="&lt;font color=&quot;#6a00ff&quot; data-font-src=&quot;https://fonts.googleapis.com/css?family=Consolas&quot; face=&quot;Consolas&quot; style=&quot;font-size: 20px;&quot;&gt;Structured Query Language (SQL)&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=4;fontSize=20;" parent="1" vertex="1">
+                    <mxGeometry x="893" y="90" width="280" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="19" value="SELECT name FROM information WHERE mode=1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;fontColor=#ffffff;fillColor=#6a00ff;strokeColor=#3700CC;" vertex="1" parent="1">
-                    <mxGeometry x="560" y="270" width="290" height="70" as="geometry"/>
+                <mxCell id="19" value="SELECT name FROM information WHERE mode=1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;fontColor=#ffffff;fillColor=#6a00ff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="883" y="270" width="290" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="20" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=23;fontColor=#0050ef;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="3" target="19">
+                <mxCell id="20" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=23;fontColor=#0050ef;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="3" target="19" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="440" y="310" as="sourcePoint"/>
-                        <mxPoint x="590" y="290" as="targetPoint"/>
+                        <mxPoint x="763" y="310" as="sourcePoint"/>
+                        <mxPoint x="913" y="290" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="21" value="SELECT name FROM information WHERE mode=0" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;fontColor=#ffffff;fillColor=#6a00ff;strokeColor=#3700CC;" vertex="1" parent="1">
-                    <mxGeometry x="560" y="380" width="290" height="70" as="geometry"/>
+                <mxCell id="21" value="SELECT name FROM information WHERE mode=0" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;fontColor=#ffffff;fillColor=#6a00ff;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="883" y="380" width="290" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="22" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=23;fontColor=#0050ef;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4" target="21">
+                <mxCell id="22" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=23;fontColor=#0050ef;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="4" target="21" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="425" y="315" as="sourcePoint"/>
-                        <mxPoint x="570" y="315" as="targetPoint"/>
+                        <mxPoint x="748" y="315" as="sourcePoint"/>
+                        <mxPoint x="893" y="315" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="23" value="CREATE TABLE IF NOT EXISTS ..." style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;fontColor=#ffffff;fillColor=#7A10FF;strokeColor=#3700CC;" vertex="1" parent="1">
-                    <mxGeometry x="560" y="540" width="290" height="70" as="geometry"/>
+                <mxCell id="23" value="CREATE TABLE IF NOT EXISTS ..." style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;fontColor=#ffffff;fillColor=#7A10FF;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="883" y="540" width="290" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="24" value="INSERT INTO ..." style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;fontColor=#ffffff;fillColor=#7A10FF;strokeColor=#3700CC;" vertex="1" parent="1">
-                    <mxGeometry x="560" y="630" width="290" height="70" as="geometry"/>
+                <mxCell id="24" value="INSERT INTO ..." style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=16;fontColor=#ffffff;fillColor=#7A10FF;strokeColor=#3700CC;" parent="1" vertex="1">
+                    <mxGeometry x="883" y="630" width="290" height="70" as="geometry"/>
                 </mxCell>
-                <mxCell id="25" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="5" target="23">
+                <mxCell id="25" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="5" target="23" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="480" y="590" as="sourcePoint"/>
-                        <mxPoint x="530" y="540" as="targetPoint"/>
+                        <mxPoint x="803" y="590" as="sourcePoint"/>
+                        <mxPoint x="853" y="540" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="26" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="5" target="24">
+                <mxCell id="26" value="" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="5" target="24" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="430" y="730" as="sourcePoint"/>
-                        <mxPoint x="480" y="680" as="targetPoint"/>
+                        <mxPoint x="753" y="730" as="sourcePoint"/>
+                        <mxPoint x="803" y="680" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="27" value="READ" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.002;entryY=0.121;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="17" target="6">
+                <mxCell id="27" value="READ" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.002;entryY=0.121;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="17" target="6" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="930" y="230" as="sourcePoint"/>
-                        <mxPoint x="980" y="180" as="targetPoint"/>
+                        <mxPoint x="1253" y="230" as="sourcePoint"/>
+                        <mxPoint x="1303" y="180" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="28" value="READ" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.003;entryY=0.262;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="19" target="6">
+                <mxCell id="28" value="READ" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.003;entryY=0.262;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="19" target="6" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="860" y="205" as="sourcePoint"/>
-                        <mxPoint x="987.9000000000001" y="319.1199999999999" as="targetPoint"/>
+                        <mxPoint x="1183" y="205" as="sourcePoint"/>
+                        <mxPoint x="1310.9" y="319.1199999999999" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="29" value="READ" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.003;entryY=0.403;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="21" target="6">
+                <mxCell id="29" value="READ" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.003;entryY=0.403;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="21" target="6" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="870" y="215" as="sourcePoint"/>
-                        <mxPoint x="997.9000000000001" y="329.1199999999999" as="targetPoint"/>
+                        <mxPoint x="1193" y="215" as="sourcePoint"/>
+                        <mxPoint x="1320.9" y="329.1199999999999" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="30" value="&lt;font color=&quot;#7a10ff&quot;&gt;WRITE&lt;/font&gt;" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.008;entryY=0.904;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="23" target="6">
+                <mxCell id="30" value="&lt;font color=&quot;#7a10ff&quot;&gt;WRITE&lt;/font&gt;" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.008;entryY=0.904;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="23" target="6" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="880" y="225" as="sourcePoint"/>
-                        <mxPoint x="1007.9000000000001" y="339.1199999999999" as="targetPoint"/>
+                        <mxPoint x="1203" y="225" as="sourcePoint"/>
+                        <mxPoint x="1330.9" y="339.1199999999999" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="31" value="&lt;font color=&quot;#7a10ff&quot;&gt;WRITE&lt;/font&gt;" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.053;entryY=0.938;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="24" target="6">
+                <mxCell id="31" value="&lt;font color=&quot;#7a10ff&quot;&gt;WRITE&lt;/font&gt;" style="endArrow=classic;html=1;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.053;entryY=0.938;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="24" target="6" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
-                        <mxPoint x="890" y="235" as="sourcePoint"/>
-                        <mxPoint x="1017.9000000000001" y="349.1199999999999" as="targetPoint"/>
+                        <mxPoint x="1213" y="235" as="sourcePoint"/>
+                        <mxPoint x="1340.9" y="349.1199999999999" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="32" value="information" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontStyle=1;align=center;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" vertex="1" parent="1">
-                    <mxGeometry x="994" y="410" width="180" height="90" as="geometry"/>
+                <mxCell id="57" style="edgeStyle=none;html=1;entryX=-0.006;entryY=0.163;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="32" target="58">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1650" y="430" as="targetPoint"/>
+                    </mxGeometry>
                 </mxCell>
-                <mxCell id="33" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" vertex="1" parent="32">
+                <mxCell id="32" value="information" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontStyle=1;align=center;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" parent="1" vertex="1">
+                    <mxGeometry x="1317" y="410" width="180" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" parent="32" vertex="1">
                     <mxGeometry y="30" width="180" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="34" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" vertex="1" parent="33">
+                <mxCell id="34" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" parent="33" vertex="1">
                     <mxGeometry width="60" height="20" as="geometry">
                         <mxRectangle width="60" height="20" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="35" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" vertex="1" parent="33">
+                <mxCell id="35" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" parent="33" vertex="1">
                     <mxGeometry x="60" width="60" height="20" as="geometry">
                         <mxRectangle width="60" height="20" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="36" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" vertex="1" parent="33">
+                <mxCell id="36" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" parent="33" vertex="1">
                     <mxGeometry x="120" width="60" height="20" as="geometry">
                         <mxRectangle width="60" height="20" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="37" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" vertex="1" parent="32">
+                <mxCell id="37" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" parent="32" vertex="1">
                     <mxGeometry y="50" width="180" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="38" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" vertex="1" parent="37">
+                <mxCell id="38" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" parent="37" vertex="1">
                     <mxGeometry width="60" height="20" as="geometry">
                         <mxRectangle width="60" height="20" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="39" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" vertex="1" parent="37">
+                <mxCell id="39" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" parent="37" vertex="1">
                     <mxGeometry x="60" width="60" height="20" as="geometry">
                         <mxRectangle width="60" height="20" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="40" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" vertex="1" parent="37">
+                <mxCell id="40" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" parent="37" vertex="1">
                     <mxGeometry x="120" width="60" height="20" as="geometry">
                         <mxRectangle width="60" height="20" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="41" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" vertex="1" parent="32">
+                <mxCell id="41" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" parent="32" vertex="1">
                     <mxGeometry y="70" width="180" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="42" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" vertex="1" parent="41">
+                <mxCell id="42" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" parent="41" vertex="1">
                     <mxGeometry width="60" height="20" as="geometry">
                         <mxRectangle width="60" height="20" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="43" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" vertex="1" parent="41">
+                <mxCell id="43" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" parent="41" vertex="1">
                     <mxGeometry x="60" width="60" height="20" as="geometry">
                         <mxRectangle width="60" height="20" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="44" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" vertex="1" parent="41">
+                <mxCell id="44" value="" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DConsolas;fontSize=20;fontColor=#6a00ff;" parent="41" vertex="1">
                     <mxGeometry x="120" width="60" height="20" as="geometry">
                         <mxRectangle width="60" height="20" as="alternateBounds"/>
                     </mxGeometry>
+                </mxCell>
+                <mxCell id="45" value="Activation" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSize=16;fillColor=#00CC00;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="220" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="Information" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSize=16;fillColor=#00CC00;shadow=1;" vertex="1" parent="1">
+                    <mxGeometry x="184" y="179" width="105" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="Know&lt;br&gt;Screen" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSize=16;fillColor=#99FF33;" vertex="1" parent="1">
+                    <mxGeometry x="345" y="360" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="Scan&lt;br&gt;Screen" style="ellipse;html=1;fontFamily=Consolas;fontSize=16;whiteSpace=wrap;fillColor=#99FF33;" vertex="1" parent="1">
+                    <mxGeometry x="209" y="330" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" value="testing.tests" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Consolas;fontSize=16;fillColor=#D3D3D3;strokeColor=#23445d;shadow=1;" vertex="1" parent="1">
+                    <mxGeometry x="113" y="290" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="&lt;font color=&quot;#6a00ff&quot;&gt;&lt;b&gt;Columns:&lt;/b&gt;&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="1">
+                    <mxGeometry x="1560" y="410" width="170" height="270" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="name: VARCHAR(49) PK" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="58">
+                    <mxGeometry y="30" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="Description: TEXT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="58">
+                    <mxGeometry y="60" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" value="Time: FLOAT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="58">
+                    <mxGeometry y="90" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="Reward: VARCHAR(100)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="58">
+                    <mxGeometry y="120" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="Certainty: TINYINT unsigned" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="58">
+                    <mxGeometry y="150" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="Safety: TINYINT unsigned" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="58">
+                    <mxGeometry y="180" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" value="Mode: INT" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="58">
+                    <mxGeometry y="210" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="repeats: BOOLEAN" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;shadow=1;" vertex="1" parent="58">
+                    <mxGeometry y="240" width="170" height="30" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
