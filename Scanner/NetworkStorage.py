@@ -575,3 +575,11 @@ class SpecialInformation(dict):
         if entity not in self:
             return False
         return info_key in self[entity]
+
+
+if __name__ == '__main__':
+    print("This module is responsible for the Network Storage data,")
+    print("and all the infrastructure that supports it.")
+    NetworkStorage()
+    print([str(entity) for entity in specials])
+    print(str(SpecialInformation()))

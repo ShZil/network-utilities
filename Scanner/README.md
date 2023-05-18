@@ -2918,3 +2918,5 @@ today in Cyber class, without a teacher (we just asked for keys).
 [14:17] Working on diagrams for the project portfolio.
 
 [14:23] Finished `db.drawio` diagram.
+
+[15:56] Finished `NetworkStorage.drawio`.
