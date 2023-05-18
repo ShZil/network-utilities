@@ -363,13 +363,13 @@ class NetworkStorage:
     def special_add(self, *entities):
         """Adds a special LockedNetworkEntity to the `specials` list.
         NOT THREAD-SAFE. Only use in non-parellel code.
+        Intended for LockedNetworkEntities but regular NetworkEntities are allowed too.
 
         Args:
-            entities (LockedNetworkEntity): the special entities to be added.
+            entities (list[NetworkEntity]): the special entities to be added.
         """
         for entity in entities:
-            if isinstance(entity, LockedNetworkEntity):
-                specials.append(entity)
+            specials.append(entity)
     
     def connect(self, ip1, ip2):
         self.connections.put((ip1, ip2))
