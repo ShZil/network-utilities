@@ -2920,3 +2920,12 @@ today in Cyber class, without a teacher (we just asked for keys).
 [14:23] Finished `db.drawio` diagram.
 
 [15:56] Finished `NetworkStorage.drawio`.
+
+[21:23] Started `PacketSniffer.drawio`.
+
+[21:55] Finished `PacketSniffer.drawio`.
+I add a `self.initialised: bool` in `PacketSniffer`,
+because I suspect that the `CLEAR_TABLE` call is what clears the packets upon `Log Packets` requests.
+This is problematic, so I ~~removed~~ conditioned it -- it'll only run on the first time.
+
+[22:04] Making `overview.drawio`.

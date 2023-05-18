@@ -221,15 +221,18 @@ class PacketSniffer(ObserverPublisher):
             cls._instance.sniff_thread = Sniffer(prn=cls._instance._packet_handler, lfilter=cls._instance._ip_filter)
             cls._instance.sniff_thread.start()
             cls._instance.length = 0
+            cls._instance.initialised = False
         return cls._instance
 
     def __init__(self, max_packets=100):
         super().__init__()
-        self.max_packets = max_packets
-        with sqlite3.connect(self.DB_PATH) as conn:
-            cursor = conn.cursor()
-            cursor.execute(self.SQL_CREATE_TABLE)
-            cursor.execute(self.CLEAR_TABLE)
+        if not self.initialised:
+            self.initialised = True
+            self.max_packets = max_packets
+            with sqlite3.connect(self.DB_PATH) as conn:
+                cursor = conn.cursor()
+                cursor.execute(self.SQL_CREATE_TABLE)
+                cursor.execute(self.CLEAR_TABLE)
 
     def stop(self):
         if self.sniff_thread:
@@ -244,7 +247,7 @@ class PacketSniffer(ObserverPublisher):
         with sqlite3.connect(self.DB_PATH) as conn:
             cursor = conn.cursor()
             packet_row = cursor.execute('SELECT packet FROM packets WHERE id = ?', (i,)).fetchone()
-        return pickle.loads(packet_row[0]) if packet_row else None
+        return pickle.loads(packet_row[0])
 
     def _packet_handler(self, packet):
         from time import time as now
@@ -281,7 +284,7 @@ class PacketSniffer(ObserverPublisher):
         for i in range(self.length - len(packets)):
             packet = self.get_packet(i)
             if packet is None:
-                break
+                continue
             yield packet
 
         # Yield all the packets from the `self.packets` (but `copy()`ied earlier).
