@@ -2933,3 +2933,17 @@ This is problematic, so I ~~removed~~ conditioned it -- it'll only run on the fi
 [22:19] I'm out of ideas on `overview.drawio`.
 It looks fine, just feels slightly empty.
 I'll find stuff to add, somewhen.
+
+
+
+### 2023-05-19
+[18:48] Investigating `hostify`.
+It uses two methods: `nslookup` and `socket.gethostbyaddr`.
+For `nslookup`, the communication looks like this:
+```
+(router.ip = 10.0.0.138)
+~> <Ether src=here.mac dst=router.mac> <IPv6> <UDP dst=53> <DNS questions=1> <DNS Query 138.0.0.10.in-addr.arpa PTR IN>
+
+<~ <Ether src=router.mac dst=here.mac> <IPv6> <UDP src=53> <DNS questions=1 answerRRs=1> <DNS Query (like above); DNS Answer Heights.local>
+```
+For `socket.gethostbyaddr`, I couldn't identify any packets.
