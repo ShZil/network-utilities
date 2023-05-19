@@ -28,6 +28,7 @@ def hostify(address: str):
 
     def use_hostify_base(address):
         try:
+            # print("Method: socket.gethostbyaddr", end=' -- ')
             return hostify_base(address)[0]
         except (hostify_error1, hostify_error2):
             return "Unknown"
@@ -41,11 +42,13 @@ def hostify(address: str):
         for line in lines:
             if line.strip().startswith('Name:'):
                 host = line[len("Name:"):].strip()
+                # print("Method: nslookup", end=' -- ')
                 break
         else:
             host = use_hostify_base(address)
     except CalledProcessError:
         host = use_hostify_base(address)
+    # print("Hostified:", host)
     return host
 
 
