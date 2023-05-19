@@ -2941,9 +2941,17 @@ I'll find stuff to add, somewhen.
 It uses two methods: `nslookup` and `socket.gethostbyaddr`.
 For `nslookup`, the communication looks like this:
 ```
-(router.ip = 10.0.0.138)
+(router.ip = 10.0.0.138, router.name = Heights.local)
+
 ~> <Ether src=here.mac dst=router.mac> <IPv6> <UDP dst=53> <DNS questions=1> <DNS Query 138.0.0.10.in-addr.arpa PTR IN>
 
 <~ <Ether src=router.mac dst=here.mac> <IPv6> <UDP src=53> <DNS questions=1 answerRRs=1> <DNS Query (like above); DNS Answer Heights.local>
 ```
 For `socket.gethostbyaddr`, I couldn't identify any packets.
+
+[22:11] Some googling has led me to suspect that `socket.gethostbyaddr` uses the [`hosts` file](https://en.wikipedia.org/wiki/Hosts_(file)),
+before querying DNS if not found. This is possible, and likely, but probably not the full story,
+seeing as my `hosts` file is almost empty, but the programme does still manage to get to get host names without sending a packet.
+My googling path: from inspecting the source code (no results),
+to https://stackoverflow.com/questions/45328873/how-does-socket-gethostbyname-work,
+to https://stackoverflow.com/questions/20284094/how-gethostbyname-or-getnameinfo-work-in-background.

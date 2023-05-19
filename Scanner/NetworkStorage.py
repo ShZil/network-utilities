@@ -276,7 +276,10 @@ class NetworkStorage:
             # Initialise special entities
             global nothing, localhost, mDNS, multicast, broadcast, router, local_broadcast, here
             localhost = LockedNetworkEntity(
-                mac=nothing.mac, ip="127.0.0.1", ipv6="::1", name="loopback"
+                mac=nothing.mac,
+                ip="127.0.0.1",
+                ipv6="::1",
+                name="loopback"
             )
 
             mDNS = LockedNetworkEntity(
