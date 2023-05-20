@@ -240,8 +240,8 @@ def threadify(f: Callable, silent=False):
         sys.stdout = real_stdout
 
         # If any exceptions happened, print them orderly and raise another.
-        if not fails.empty:
-            while not fails.empty:
+        if not fails.empty():
+            while not fails.empty():
                 err = fails.get()
                 print(type(err), err, sep="\n")
             raise Exception(

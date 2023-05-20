@@ -3004,3 +3004,5 @@ Actually, not an API, just reading the Company table row from the HTML page retu
 
 [21:18] BUGFIX: `sqlite3.OperationalError('no such column: text')`.
 I forgot to rename ALL occurrences of `text` to `vendor` in this file.
+
+[21:22] BUGFIX: In `@threadify`, I need parentheses there... oops.
