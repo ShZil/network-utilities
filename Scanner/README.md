@@ -2968,3 +2968,14 @@ to https://stackoverflow.com/questions/20284094/how-gethostbyname-or-getnameinfo
 [12:56] Suggestion: add analysis that takes MAC addresses and converts them into special information on the vendor of the MAC Network Card (according to the [first 3 bytes of the MAC address](https://en.wikipedia.org/wiki/Organizationally_unique_identifier)). Use an API here?
 
 [13:14] Options for suggestion above: https://www.macvendorlookup.com/api
+
+[18:55] Implementing the above suggestion.
+I added API access manually, basing off `PublicAddress.py`'s code,
+and now I wanna add SQLite integration, because I don't want to query the API too often,
+an SQLite DB will be a permanent cache, and the [API's website](https://www.macvendorlookup.com/api) warned me:
+`
+If you are querying too fast, in an inefficient or in an irresponsible way, we will initially throttle API requests coming from the specific IP address.
+If it continues, we will temporarily ban your IP block and any associated IP blocks registered through ARIN.
+`
+
+[19:05] Using ChatGPT to generate a class for this SQLite-DB MAC-Vendor cache file.
