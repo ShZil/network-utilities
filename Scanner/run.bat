@@ -1,6 +1,6 @@
 @echo off
 color 0A
-title Shzil Network Scanner
+title Network Scanner
 
 REM Check Python version
 python --version 2>NUL | findstr /C:"Python 3.10" >NUL
