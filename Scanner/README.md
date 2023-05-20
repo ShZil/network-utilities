@@ -2985,3 +2985,5 @@ If it continues, we will temporarily ban your IP block and any associated IP blo
 [19:26] Introduce threads with `@threadify` and 
 
 [19:29] Register this new analysis and add a database entry about it.
+
+[19:31] Refresh the database.
