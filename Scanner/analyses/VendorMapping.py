@@ -72,7 +72,7 @@ def mapper_wrapper(entity):
         return
     if vendor is None:
         return
-    MACVendorDict()[entity.mac] = vendor
+    MACVendorDict()[entity.mac] = vendor  # I could save just the first 3 bytes, but, sometimes the OUI extends further, so I'd rather save the entire MAC.
     SpecialInformation()[entity, 'Network Card Vendor'] = vendor
 
 
