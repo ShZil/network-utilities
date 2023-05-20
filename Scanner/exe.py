@@ -31,6 +31,7 @@ from scans.Discovery import DeviceDiscoveryListener, reveal_myself
 from analyses.OS_ID import operating_system_fingerprinting
 from analyses.DeviceProfile import device_profile
 from analyses.LogPackets import log_packets
+from analyses.VendorMapping import vendor_mapping
 from time import sleep
 import os
 import sys
@@ -74,6 +75,7 @@ def register_scans():
     r["Log Packets"] = log_packets
     r["Device Profile"] = device_profile
     r["Reveal Myself"] = reveal_myself
+    r["Vendor Mapping"] = vendor_mapping
 
 
 def main():

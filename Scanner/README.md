@@ -2979,3 +2979,9 @@ If it continues, we will temporarily ban your IP block and any associated IP blo
 `
 
 [19:05] Using ChatGPT to generate a class for this SQLite-DB MAC-Vendor cache file.
+
+[19:08] Introduce thread-safet with a `Lock`.
+
+[19:26] Introduce threads with `@threadify` and 
+
+[19:29] Register this new analysis and add a database entry about it.

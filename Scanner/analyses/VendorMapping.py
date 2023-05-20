@@ -1,56 +1,77 @@
+from util import threadify
 from import_handler import ImportDefence
 with ImportDefence():
+    import sqlite3
     import requests
+    from threading import Lock
 
-
-import sqlite3
-import requests
 
 class MACVendorDict:
     _instance = None
     _db_file = 'mac_vendors.db'
-    CREATE_QUERY = '''CREATE TABLE IF NOT EXISTS mac_vendor (mac TEXT PRIMARY KEY, text TEXT)'''
-    SELECT_QUERY = 'SELECT text FROM mac_vendor WHERE mac=?'
-    INSERT_QUERY = 'INSERT INTO mac_vendor (mac, text) VALUES (?, ?)'
+    CREATE_QUERY = '''CREATE TABLE IF NOT EXISTS mac_vendors (mac TEXT PRIMARY KEY, text TEXT)'''
+    SELECT_QUERY = 'SELECT text FROM mac_vendors WHERE mac=?'
+    INSERT_QUERY = 'INSERT INTO mac_vendors (mac, text) VALUES (?, ?)'
 
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls._instance.conn = sqlite3.connect(cls._db_file)
-            cls._instance.c = cls._instance.conn.cursor()
-            cls._instance.c.execute(cls.CREATE_QUERY)
+            cls._instance.lock = Lock()
+            cls._instance.connection = sqlite3.connect(cls._db_file)
+            cls._instance.cursor = cls._instance.connection.cursor()
+            cls._instance.cursor.execute(cls.CREATE_QUERY)
         return cls._instance
 
     def __contains__(self, mac):
-        self.c.execute(self.SELECT_QUERY, (mac,))
-        return self.c.fetchone() is not None
+        with self.lock:
+            self.cursor.execute(self.SELECT_QUERY, (mac,))
+            return self.cursor.fetchone() is not None
 
     def __setitem__(self, mac, text):
-        self.c.execute(self.INSERT_QUERY, (mac, text))
-        self.conn.commit()
+        with self.lock:
+            self.cursor.execute(self.INSERT_QUERY, (mac, text))
+            self.connection.commit()
 
     def __getitem__(self, mac):
-        self.c.execute(self.SELECT_QUERY, (mac,))
-        result = self.c.fetchone()
+        with self.lock:
+            self.cursor.execute(self.SELECT_QUERY, (mac,))
+            result = self.cursor.fetchone()
         return result[0] if result else None
 
     def get(self, mac, default=None):
         return self[mac] if mac in self else default
 
 
-def vendor_mapping(mac):
-    from NetworkStorage import SpecialInformation, match
+def vendor_mapper(mac):
     if mac in MACVendorDict():
-        return MACVendorDict()[mac]
+        return
     response = requests.get(f'https://www.macvendorlookup.com/api/v2/{mac}')
     if response.status_code != 200:
         return
     vendor = response.text
     MACVendorDict()[mac] = vendor
-    SpecialInformation()[match(mac), 'Network Card Vendor'] = vendor
+    return vendor
+
+
+@threadify
+def mapper_wrapper(entity):
+    from NetworkStorage import nothing, SpecialInformation
+    if entity.mac == nothing.mac:
+        return
+    vendor = vendor_mapper(entity.mac)
+    if vendor is None:
+        return
+    SpecialInformation()[entity, 'Network Card Vendor'] = vendor
+
+
+def vendor_mapping():
+    from NetworkStorage import NetworkStorage
+    MACVendorDict()
+    mapper_wrapper(list(NetworkStorage()))
 
 
 if __name__ == '__main__':
     print("This analysis uses an API to map MAC physical network card address,")
     print("to a vendor / manufacturer according to the organizationally unique identifier (OUI) found in the start of the MAC address,")
     print("using https://www.macvendorlookup.com/api/v2 API.")
+    print("Saves a cache using SQL to `mac_vendors.db`.")
