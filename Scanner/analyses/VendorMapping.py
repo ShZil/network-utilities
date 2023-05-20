@@ -10,7 +10,7 @@ class MACVendorDict:
     _instance = None
     path = 'mac_vendors.db'
     CREATE_QUERY = '''CREATE TABLE IF NOT EXISTS mac_vendors (mac TEXT PRIMARY KEY, vendor TEXT)'''
-    SELECT_QUERY = 'SELECT text FROM mac_vendors WHERE mac=?'
+    SELECT_QUERY = 'SELECT vendor FROM mac_vendors WHERE mac=?'
     INSERT_QUERY = 'INSERT INTO mac_vendors (mac, vendor) VALUES (?, ?)'
 
     def __new__(cls):
@@ -85,5 +85,5 @@ def vendor_mapping():
 if __name__ == '__main__':
     print("This analysis uses an API to map MAC physical network card address,")
     print("to a vendor / manufacturer according to the organizationally unique identifier (OUI) found in the start of the MAC address,")
-    print("using https://www.macvendorlookup.com/api/v2 API.")
+    print("using `hwaddress.com`.")
     print("Saves a cache using SQL to `mac_vendors.db`.")

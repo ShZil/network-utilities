@@ -3001,3 +3001,6 @@ Actually, not an API, just reading the Company table row from the HTML page retu
 `https://hwaddress.com/?q={mac}`
 
 [20:47] Functional build using both the new API, threadify, and the SQLite cache table!
+
+[21:18] BUGFIX: `sqlite3.OperationalError('no such column: text')`.
+I forgot to rename ALL occurrences of `text` to `vendor` in this file.
