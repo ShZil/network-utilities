@@ -15,7 +15,7 @@ set "KIVY_NO_CONSOLELOG=true"
 REM run the python file
 python exe.py
 
-REM log the error level of exiting
+REM rem log the error level of exiting
 echo.
 echo Process exited with code %errorlevel%.
 pause
