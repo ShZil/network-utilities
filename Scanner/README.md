@@ -3008,3 +3008,7 @@ I forgot to rename ALL occurrences of `text` to `vendor` in this file.
 [21:22] BUGFIX: In `@threadify`, I need parentheses there... oops.
 
 [21:28] I am very happy, this is working.
+
+[22:14] Created `ability.drawio`.
+
+[22:46] Created `ICMPSweep.drawio`.
