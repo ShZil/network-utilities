@@ -2987,3 +2987,8 @@ If it continues, we will temporarily ban your IP block and any associated IP blo
 [19:29] Register this new analysis and add a database entry about it.
 
 [19:31] Refresh the database.
+
+[19:43] BUGFIX: `SQLite objects created in a thread can only be used in that same thread. The object was created in thread id 3124 and this is thread id 14032.`
+Fixed by creating an SQLite cursor and connection for each method,
+inside that method, using context managers supplied by sqlite3.
+ChatGPT-assisted.

@@ -8,7 +8,7 @@ with ImportDefence():
 
 class MACVendorDict:
     _instance = None
-    _db_file = 'mac_vendors.db'
+    path = 'mac_vendors.db'
     CREATE_QUERY = '''CREATE TABLE IF NOT EXISTS mac_vendors (mac TEXT PRIMARY KEY, text TEXT)'''
     SELECT_QUERY = 'SELECT text FROM mac_vendors WHERE mac=?'
     INSERT_QUERY = 'INSERT INTO mac_vendors (mac, text) VALUES (?, ?)'
@@ -17,29 +17,33 @@ class MACVendorDict:
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             cls._instance.lock = Lock()
-            cls._instance.connection = sqlite3.connect(cls._db_file)
-            cls._instance.cursor = cls._instance.connection.cursor()
-            cls._instance.cursor.execute(cls.CREATE_QUERY)
+            with sqlite3.connect(cls.path) as conn:
+                cursor = conn.cursor()
+                cursor.execute(cls.CREATE_QUERY)
         return cls._instance
 
     def __contains__(self, mac):
-        with self.lock:
-            self.cursor.execute(self.SELECT_QUERY, (mac,))
-            return self.cursor.fetchone() is not None
+        with self.lock, sqlite3.connect(self.path) as conn:
+            cursor = conn.cursor()
+            cursor.execute(self.SELECT_QUERY, (mac,))
+            return cursor.fetchone() is not None
 
     def __setitem__(self, mac, text):
-        with self.lock:
-            self.cursor.execute(self.INSERT_QUERY, (mac, text))
-            self.connection.commit()
+        with self.lock, sqlite3.connect(self.path) as conn:
+            cursor = conn.cursor()
+            cursor.execute(self.INSERT_QUERY, (mac, text))
+            conn.commit()
 
     def __getitem__(self, mac):
-        with self.lock:
-            self.cursor.execute(self.SELECT_QUERY, (mac,))
-            result = self.cursor.fetchone()
+        with self.lock, sqlite3.connect(self.path) as conn:
+            cursor = conn.cursor()
+            cursor.execute(self.SELECT_QUERY, (mac,))
+            result = cursor.fetchone()
         return result[0] if result else None
 
     def get(self, mac, default=None):
         return self[mac] if mac in self else default
+
 
 
 def vendor_mapper(mac):
