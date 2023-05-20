@@ -2960,3 +2960,5 @@ to https://stackoverflow.com/questions/20284094/how-gethostbyname-or-getnameinfo
 
 ### 2023-05-20
 [11:03] Renamed `filterIP` to `filterIPv4` in `NetworkStorage.py`.
+
+[12:49] Shorten `can_connect_ICMP_base` while summarising it for the project portfolio.
