@@ -46,9 +46,8 @@ def scan_ARP(addresses: list[str]) -> list[str]:
         else:
             raise
 
-    lookup = NetworkStorage()
     for result in results:
-        lookup.add(mac=result[0], ip=result[1])
+        NetworkStorage().add(mac=result[0], ip=result[1])
 
     return [result[1] for result in results]
 

@@ -2962,3 +2962,7 @@ to https://stackoverflow.com/questions/20284094/how-gethostbyname-or-getnameinfo
 [11:03] Renamed `filterIP` to `filterIPv4` in `NetworkStorage.py`.
 
 [12:49] Shorten `can_connect_ICMP_base` while summarising it for the project portfolio.
+
+[12:49] Shorten `scan_ARP` while summarising it for the project portfolio.
+
+[12:56] Suggestion: add analysis that takes MAC addresses and converts them into special information on the vendor of the MAC Network Card (according to the [first 3 bytes of the MAC address](https://en.wikipedia.org/wiki/Organizationally_unique_identifier)). Use an API here?
