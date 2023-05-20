@@ -192,7 +192,7 @@ def check_ip(ip: str) -> str:
     return ip
 
 
-def filterIP(addresses: list[str]) -> list[str]:
+def filterIPv4(addresses: list[str]) -> list[str]:
     if isinstance(addresses, str):
         return [addresses]
 
@@ -305,7 +305,7 @@ class NetworkStorage:
 
             router = NetworkEntity(
                 mac=nothing.mac,
-                ip=filterIP(
+                ip=filterIPv4(
                     ipconfig()["Default Gateway"])[0],
                 ipv6=nothing.ipv6,
                 name="router"

@@ -2955,3 +2955,8 @@ seeing as my `hosts` file is almost empty, but the programme does still manage t
 My googling path: from inspecting the source code (no results),
 to https://stackoverflow.com/questions/45328873/how-does-socket-gethostbyname-work,
 to https://stackoverflow.com/questions/20284094/how-gethostbyname-or-getnameinfo-work-in-background.
+
+
+
+### 2023-05-20
+[11:03] Renamed `filterIP` to `filterIPv4` in `NetworkStorage.py`.
