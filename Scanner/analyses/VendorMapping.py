@@ -9,9 +9,9 @@ with ImportDefence():
 class MACVendorDict:
     _instance = None
     path = 'mac_vendors.db'
-    CREATE_QUERY = '''CREATE TABLE IF NOT EXISTS mac_vendors (mac TEXT PRIMARY KEY, text TEXT)'''
+    CREATE_QUERY = '''CREATE TABLE IF NOT EXISTS mac_vendors (mac TEXT PRIMARY KEY, vendor TEXT)'''
     SELECT_QUERY = 'SELECT text FROM mac_vendors WHERE mac=?'
-    INSERT_QUERY = 'INSERT INTO mac_vendors (mac, text) VALUES (?, ?)'
+    INSERT_QUERY = 'INSERT INTO mac_vendors (mac, vendor) VALUES (?, ?)'
 
     def __new__(cls):
         if cls._instance is None:
