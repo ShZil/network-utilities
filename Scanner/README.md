@@ -2966,3 +2966,5 @@ to https://stackoverflow.com/questions/20284094/how-gethostbyname-or-getnameinfo
 [12:49] Shorten `scan_ARP` while summarising it for the project portfolio.
 
 [12:56] Suggestion: add analysis that takes MAC addresses and converts them into special information on the vendor of the MAC Network Card (according to the [first 3 bytes of the MAC address](https://en.wikipedia.org/wiki/Organizationally_unique_identifier)). Use an API here?
+
+[13:14] Options for suggestion above: https://www.macvendorlookup.com/api
