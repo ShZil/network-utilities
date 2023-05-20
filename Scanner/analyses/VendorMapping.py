@@ -45,15 +45,17 @@ class MACVendorDict:
         return self[mac] if mac in self else default
 
 
-
 def vendor_mapper(mac):
-    if mac in MACVendorDict():
+    try:
+        url_mac = '%3A'.join(mac.replace(':', '-').split('-'))
+        response = requests.get(f'https://hwaddress.com/?q={url_mac}')
+    except requests.exceptions.ConnectTimeout:
         return
-    response = requests.get(f'https://www.macvendorlookup.com/api/v2/{mac}')
     if response.status_code != 200:
         return
-    vendor = response.text
-    MACVendorDict()[mac] = vendor
+    html = response.text
+    a_tag = html.split('<tr><th>Company</th><td>')[1].split('</td></tr>')[0]
+    vendor = a_tag.split('>')[1].split('<')[0]
     return vendor
 
 
@@ -62,9 +64,15 @@ def mapper_wrapper(entity):
     from NetworkStorage import nothing, SpecialInformation
     if entity.mac == nothing.mac:
         return
-    vendor = vendor_mapper(entity.mac)
+    if entity.mac in MACVendorDict():
+        return
+    try:
+        vendor = vendor_mapper(entity.mac)
+    except IndexError:
+        return
     if vendor is None:
         return
+    MACVendorDict()[entity.mac] = vendor
     SpecialInformation()[entity, 'Network Card Vendor'] = vendor
 
 

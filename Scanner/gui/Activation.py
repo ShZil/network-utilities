@@ -23,8 +23,8 @@ def activate(*x):
             f"**This scan is already running!**\n{s.name} \n\
             This scan is {indefinite_message}. \n\
             {time_message} \
-            **TIP:** You can see which scans are currently running according to the ellipsis (...)! \n\
-            [^1]: Might depend on your network size and scan configuration.",
+            \n\n**TIP:** You can see which scans are currently running according to the ellipsis (...)! \n\
+            \n\n**Note:** Time estimate might be off, depending on your network size and scan configuration.",
             error=True
         )
         return

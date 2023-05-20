@@ -2992,3 +2992,12 @@ If it continues, we will temporarily ban your IP block and any associated IP blo
 Fixed by creating an SQLite cursor and connection for each method,
 inside that method, using context managers supplied by sqlite3.
 ChatGPT-assisted.
+
+[20:10] This is too overcomplicated, now that I've found a list-based form of the API.
+I can give it a *list* of MAC addresses. This greatly reduces the number of API requests (to 1).
+
+[20:33] Use a different API because the previous one wanted payment after so few requests.
+Actually, not an API, just reading the Company table row from the HTML page returned.
+`https://hwaddress.com/?q={mac}`
+
+[20:47] Functional build using both the new API, threadify, and the SQLite cache table!
