@@ -3012,3 +3012,10 @@ I forgot to rename ALL occurrences of `text` to `vendor` in this file.
 [22:14] Created `ability.drawio`.
 
 [22:46] Created `ICMPSweep.drawio`.
+
+
+
+### 2023-05-21
+[14:11] Working on the project portfolio. The due date is so close.
+
+[14:17] Converted `overview.drawio` to PNG.
