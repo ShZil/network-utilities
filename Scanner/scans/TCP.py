@@ -3,9 +3,12 @@ from import_handler import ImportDefence
 with ImportDefence():
     from scapy.all import sr1, TCP, IP
     from random import randint
+    import ipaddress
 
     from util import threadify
     from PrintingContexts import InstantPrinting
+    from gui.dialogs import get_string, popup
+    from NetworkStorage import match, SpecialInformation
 
 
 # A range for the scanned ports.
@@ -47,8 +50,46 @@ def scan_TCP(ip: str, repeats: int) -> dict:
     return result
 
 
+def port_scan_TCP():
+    address = get_string("Choose IP", "Which IP address? ")
+
+    def is_ipv4(string):
+        try:
+            ipaddress.IPv4Network(string)
+            return True
+        except ValueError:
+            return False
+
+    while not is_ipv4(address):
+        popup("Invalid IP", "This does not appear to be a valid IPv4 address.", error=True)
+        address = get_string("Choose IP", "Which IP address? ")
+
+    try:
+        repeats = int(get_string("Repeats", "How many repeats? [default=3]"))
+    except ValueError:
+        repeats = 3
+
+    try:
+        minimum = int(get_string("Port Range - Minimum", "Choose min port [default=0 to 1024, min=0]: "))
+        maximum = int(get_string("Port Range - Maximum", "Choose max port [default=0 to 1024, max=65536]: "))
+        if maximum < minimum:
+            raise ValueError("Maximum can't be smaller than minimum.")
+        if minimum < 0:
+            minimum = 0
+        if maximum > 65536:
+            maximum = 65536
+        global PORT_RANGE
+        PORT_RANGE = list(range(minimum, maximum))
+    except ValueError:
+        pass
+
+    entity = match(address)
+    results = scan_TCP(address, repeats)
+    open_ports = [port for port, res in results.items() if res]
+    SpecialInformation()[entity, "Open TCP ports"] = open_ports
+
 # This is not supposed to be under an `if __name__ == '__main__`. It's called from ./Do TCP Scan.bat.
-# If one did execute it from this context, Python would be unable to import util for example, as that's an outside file.
+# If one did execute it from this context, Python would be unable to `import util` for example, as that's an outside file.
 def main(addr=''):
     import ipaddress
 

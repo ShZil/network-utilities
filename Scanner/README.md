@@ -3027,3 +3027,13 @@ I forgot to rename ALL occurrences of `text` to `vendor` in this file.
 [16:07] UDP Port Scan isn't done yet, so remove it, because it won't be done by the time for presenting.
 
 [16:20] Added `LiveICMP.drawio`, and converted to PNG.
+
+[18:23] Quickly implement `TCP Ports` scan.
+All the code is already there, just need to redirect I/O:
+Inputs -- from `gui.dialogs.get_string`, not `input`.
+Outputs -- to `NetworkStorage.SpecialInformation`, not `print`.
+
+[18:29] Suggestion: add the ability to run multiple TCP Port scans on different devices,
+in the same time.
+
+[18:38] Debugged `TCP Ports` and updated its DB entry.

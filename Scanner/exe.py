@@ -25,7 +25,7 @@ from CommandLineStyle import cmdcolor, cmdtitle, remove_scapy_warnings
 from scans.PublicAddress import public_address_action
 from scans.ARP import scan_ARP, scan_ARP_continuous
 from scans.ICMP import scan_ICMP, scan_ICMP_continuous
-from scans.TCP import scan_TCP
+from scans.TCP import port_scan_TCP
 from scans.TraceRouter import traceroute
 from scans.Discovery import DeviceDiscoveryListener, reveal_myself
 from analyses.OS_ID import operating_system_fingerprinting
@@ -37,7 +37,7 @@ import os
 import sys
 from gui.KivyFonts import add_fonts
 from gui.StartApp import start_tk, start_kivy
-from gui.dialogs import PopupManager
+from gui.dialogs import PopupManager, get_string
 
 
 def keep_resolving_storage():
@@ -69,6 +69,7 @@ def register_scans():
         compactness=2
     ), True
     r["Live ARP"] = scan_ARP_continuous, True
+    r["TCP Ports"] = port_scan_TCP
     r["OS-ID"] = operating_system_fingerprinting, True
     r["Public Address"] = public_address_action
     r["Traceroute"] = lambda: traceroute('8.8.8.8')
