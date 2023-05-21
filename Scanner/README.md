@@ -3046,3 +3046,5 @@ More Markdown formatting under `general_information`.
 [20:07] Adding `StartScreen`.
 
 [20:33] Adding `Screens.drawio`.
+
+[21:33] Making `register.drawio`.
