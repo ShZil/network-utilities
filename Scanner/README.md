@@ -3025,3 +3025,5 @@ I forgot to rename ALL occurrences of `text` to `vendor` in this file.
 [15:53] Added `ARPSweep.drawio`, and converted to PNG.
 
 [16:07] UDP Port Scan isn't done yet, so remove it, because it won't be done by the time for presenting.
+
+[16:20] Added `LiveICMP.drawio`, and converted to PNG.
