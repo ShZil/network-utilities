@@ -3040,3 +3040,9 @@ in the same time.
 
 [18:58] Renamed threads' names to be more uniform and concise.
 More Markdown formatting under `general_information`.
+
+[19:42] Finished `TCP-Ports.drawio`.
+
+[20:07] Adding `StartScreen`.
+
+[20:33] Adding `Screens.drawio`.

@@ -4,6 +4,7 @@ with ImportDefence():
     from kivy.uix.screenmanager import ScreenManager, FadeTransition
 
 from gui.AppState import State
+from gui.Screens.StartScreen import StartScreen
 from gui.Screens.ScanScreen import ScanScreen
 from gui.Screens.SaveScreen import SaveScreen
 from gui.Screens.KnowScreen import KnowScreen
@@ -17,7 +18,7 @@ class MyApp(App):
     1. ScanScreen
     2. SaveScreen
     3. KnowScreen
-    4. StartScreen (soon ******************)
+    4. StartScreen
     5. ViewScreen (only accessible through `SaveScreen.ImportButton`)
 
 
@@ -34,12 +35,13 @@ class MyApp(App):
         screens = ScreenManager(transition=FadeTransition())
         State().setScreenManager(screens)
 
+        screens.add_widget(StartScreen())
         screens.add_widget(ScanScreen())
         screens.add_widget(SaveScreen())
         screens.add_widget(KnowScreen())
         screens.add_widget(ViewScreen())
 
-        State().screen('Scan')
+        State().screen('Start')
 
         Hover.start()
 
