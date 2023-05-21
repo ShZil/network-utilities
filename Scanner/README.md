@@ -3023,3 +3023,5 @@ I forgot to rename ALL occurrences of `text` to `vendor` in this file.
 [14:38] Converted `modules.drawio` to PNG.
 
 [15:53] Added `ARPSweep.drawio`, and converted to PNG.
+
+[16:07] UDP Port Scan isn't done yet, so remove it, because it won't be done by the time for presenting.
