@@ -3039,3 +3039,4 @@ in the same time.
 [18:38] Debugged `TCP Ports` and updated its DB entry.
 
 [18:58] Renamed threads' names to be more uniform and concise.
+More Markdown formatting under `general_information`.

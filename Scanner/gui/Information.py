@@ -117,15 +117,15 @@ def general_information() -> str:
     return '\n\n'.join([
         f"# General Information",
         f"## This device",
-        f"IPv4 Address: {here.ip}",
-        f"Network Interface: {interface}",
+        f"IPv4 Address: `{here.ip}`",
+        f"Network Interface: `{interface}`",
         f"## Router (Gateway)",
-        f"IPv4 Address: {router.ip}",
+        f"IPv4 Address: `{router.ip}`",
         f"## Local Network",
-        f"Subnet mask: {mask}",
-        f"Possible IPv4 addresses: {computers_in_network} addresses",
+        f"Subnet mask: `{mask}`",
+        f"Possible IPv4 addresses: `{computers_in_network} addresses`",
         f"## Others",
-        f"Premission to scan: {State().permission}",
+        f"Premission to scan: `{State().permission}`",
         f"## Current Threads",
         *_get_readable_threads()
     ])
