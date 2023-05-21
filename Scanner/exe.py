@@ -54,7 +54,7 @@ def keep_resolving_storage():
             Diagrams().update()
         sys.exit()
 
-    _resolver.__name__ = '5-second interval repeat'
+    _resolver.__name__ = 'IntervalThread'
     Thread(target=_resolver).start()
 
 

@@ -197,7 +197,7 @@ def threadify(f: Callable, silent=False):
                     return
 
         # Rename `threadify_start_threads` to user-friendly name
-        threadify_start_threads.__name__ = f.__name__ + '_threadify_start_threads'
+        threadify_start_threads.__name__ = f.__name__ + '_threadify_master'
 
         starter = Thread(target=threadify_start_threads, args=(threads, ))
         starter.start()

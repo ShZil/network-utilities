@@ -46,7 +46,7 @@ def start_kivy():
         # sys.exit()
 
 
-start_kivy.__name__ = 'Main GUI Thread'
+start_kivy.__name__ = 'GUIThread'
 
 
 def start_tk():
