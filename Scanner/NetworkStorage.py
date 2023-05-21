@@ -498,7 +498,7 @@ class NetworkStorage:
     def tablestring(self):
         lengths = [max(map(lambda x: len(str(x)), self[field]), default=4)
                    for field in ["mac", "ip", "ipv6", "name"]]
-        lengths = [min(length, 30) for length in lengths]
+        lengths = [min(length, 23) for length in lengths]
         titles = ["MAC", "IPv4", "IPv6", "Name"]
         titles = "| " + ' | '.join([title.center(length)
                                    for title, length in zip(titles, lengths)]) + " |"
