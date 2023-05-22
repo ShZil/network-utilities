@@ -53,6 +53,8 @@ def extract_classes_from_files(directory):
 directory = "./Scanner"
 classes = extract_classes_from_files(directory)
 
+open('classes_diagram.py', 'w', encoding='utf-8').close()
+
 for class_data in classes:
     name, superclass, docstring, methods, fields = class_data['name'], class_data['superclass'], class_data['docstring'], '\n'.join(class_data['methods']), '\n'.join(class_data['fields'])
     superclass = f"({superclass})" if len(superclass) > 0 else ''
@@ -67,4 +69,4 @@ for class_data in classes:
         {methods}
         {fields}
     \n\n
-    """)
+    """, file=open('classes_diagram_result.py', 'a', encoding='utf-8'))
