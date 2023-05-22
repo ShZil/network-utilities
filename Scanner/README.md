@@ -3069,3 +3069,13 @@ I then debugged the result (using my _human_ intelligence) to add type hints.
 
 [18:02] Used GPT-3 again to add type hints for the return values.
 These are all tools. We are the ones who have to know which tool to use, and for which tasks.
+
+[23:27] I've been working on the portfolio for a few hours, and I'll keep going.
+It doesn't seem like I'll get much sleep tonight.
+
+
+
+### 2023-05-23
+[00:40] Still working on the portfolio.
+Joined a Discord VC with friends who also have to do it tonight.
+I've now finished section 2 of the Implementation part, currently 117 pages / 15186 words.

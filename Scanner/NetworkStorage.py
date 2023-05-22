@@ -349,12 +349,7 @@ class NetworkStorage:
                 except AttributeError:
                     continue
 
-    def add(self,
-            *args,
-            mac=nothing.mac,
-            ip=nothing.ip,
-            ipv6=nothing.ipv6,
-            name=nothing.name):
+    def add(self, *args, mac=nothing.mac, ip=nothing.ip, ipv6=nothing.ipv6, name=nothing.name):
         if len(args) == 0:
             self.waiting.put(NetworkEntity(mac, ip, ipv6, name))
         else:
@@ -517,7 +512,6 @@ class LAN:
 
 
 LAN = LAN()
-
 
 class SpecialInformation(dict):
     # singleton

@@ -80,7 +80,7 @@ def threadify(f: Callable, silent=False):
     Meaning, `returned[0] = f(args[0]); returned[1] = f(args(1))...`.
 
     **This function is blocking.**
-    Its internals run asyncronosly, but calling this will wait until all the tasks are done.
+    Its internals run asynchronously, but calling this will wait until all the tasks are done.
     **It will slurp up any printing done by other threads!**
     It will stop generating new threads if `globalstuff`'s `terminator` is set.
 
