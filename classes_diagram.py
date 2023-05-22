@@ -98,7 +98,8 @@ with open('classes_diagram_result.py', 'w', encoding='utf-8') as file:
                 method_docstring = f'        """\n        {method_docstring}\n        """'
 
             methods_code.append(f"{method_declaration}:")
-            methods_code.append(method_docstring)
+            if method_docstring:
+                methods_code.append(method_docstring)
             methods_code.append('        pass\n')
 
         fields_code = []
