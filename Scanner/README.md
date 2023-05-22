@@ -3062,4 +3062,4 @@ Weaknesses of my software? Ha ha, none! My project is the best and the strongest
 [17:13] With ChatGPT, created `classes_diagram.py`,
 to assist me when writing the Portfolio section about my classes.
 
-[17:24] ChatGPT finally has a "continue generating" button!!! Yes!
+[17:24] ChatGPT finally has a "⏩ Continue generating" button!!! Yes!
