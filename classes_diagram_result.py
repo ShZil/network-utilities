@@ -65,8 +65,8 @@ class Cipher_CBC:
         """
         This function initializes the cipherer.
 
-Args:
-    password (str): The password used to encrypt and decrypt the data.
+        Args:
+            password (str): The password used to encrypt and decrypt the data.
         """
         pass
 
@@ -74,11 +74,11 @@ Args:
         """
         This function encrypts the message.
 
-Args:
-    msg (bytes): The message to encrypt.
+        Args:
+            msg (bytes): The message to encrypt.
 
-Returns:
-    bytes: The encrypted message.
+        Returns:
+            bytes: The encrypted message.
         """
         pass
 
@@ -86,11 +86,11 @@ Returns:
         """
         This function decrypts the message.
 
-Args:
-    ciphertext (bytes): The ciphertext to decrypt.
+        Args:
+            ciphertext (bytes): The ciphertext to decrypt.
 
-Returns:
-    bytes: The decrypted message.
+        Returns:
+            bytes: The decrypted message.
         """
         pass
 
@@ -118,8 +118,7 @@ class ImportDefence:
     - print the failure
 
     ```py
-    print(f"Module `{err.name}` was not found. Attempting `pip install {err.name}`...
-")
+    print(f"Module `{err.name}` was not found. Attempting `pip install {err.name}`...")
     ```
 
     - try to pip install it
@@ -177,34 +176,34 @@ class NetworkEntity:
         """
         This method checks equality between `self` and `other`.
 
-Note: Transitive Property of Equality (A=B and B=C => A=C) doesn't necessarily apply here.
-There can be cases where A = B and B = C but A != C.
-This is because this method is based on (possibly) incomplete information in NetworkEntity-ies.
+        Note: Transitive Property of Equality (A=B and B=C => A=C) doesn't necessarily apply here.
+        There can be cases where A = B and B = C but A != C.
+        This is because this method is based on (possibly) incomplete information in NetworkEntity-ies.
 
-Examples:
-```
-    | MAC               | IPv4        | IPv6                                   |
-|---|-------------------|-------------|----------------------------------------|
-| A | 00:00:5E:00:53:AF | 192.168.0.5 | 2001:db8:3333:4444:CCCC:DDDD:EEEE:FFFF |
-| B |                   | 192.168.0.5 | 2001:db8:3333:4444:CCCC:DDDD:EEEE:FFFF |
-| C | 00:00:5E:11:90:B1 | 192.168.0.5 |                                        |
-| D |                   |             | 2001:db8:3333:4444:CCCC:DDDD:EEEE:FFFF |
-```
-Here, for example, `A` contains the full information,
-`B` contains only IPv4 and IPv6 addresses,
-`C` contains the true IPv4, a false MAC (maybe from an ARP poisoning attack), and no IPv6;
-and `D` contains only an IPv6 address.
-- Comparing `A == B` will compare the IPv4 and IPv6, and return `True`.
-- Comparing `B == C` will compare only the IPv4, and return `True`.
-- Comparing `A == C` will compare the MAC (doesn't match) and IPv4 (does match), and return `False`.
-- Comparing `D == C` will find no intersection between the address data, and return `False`.
-- Comparing `E == nothing` will return `False` for every `NetworkEntity E` (including `E = nothing`!).
+        Examples:
+        ```
+            | MAC               | IPv4        | IPv6                                   |
+        |---|-------------------|-------------|----------------------------------------|
+        | A | 00:00:5E:00:53:AF | 192.168.0.5 | 2001:db8:3333:4444:CCCC:DDDD:EEEE:FFFF |
+        | B |                   | 192.168.0.5 | 2001:db8:3333:4444:CCCC:DDDD:EEEE:FFFF |
+        | C | 00:00:5E:11:90:B1 | 192.168.0.5 |                                        |
+        | D |                   |             | 2001:db8:3333:4444:CCCC:DDDD:EEEE:FFFF |
+        ```
+        Here, for example, `A` contains the full information,
+        `B` contains only IPv4 and IPv6 addresses,
+        `C` contains the true IPv4, a false MAC (maybe from an ARP poisoning attack), and no IPv6;
+        and `D` contains only an IPv6 address.
+        - Comparing `A == B` will compare the IPv4 and IPv6, and return `True`.
+        - Comparing `B == C` will compare only the IPv4, and return `True`.
+        - Comparing `A == C` will compare the MAC (doesn't match) and IPv4 (does match), and return `False`.
+        - Comparing `D == C` will find no intersection between the address data, and return `False`.
+        - Comparing `E == nothing` will return `False` for every `NetworkEntity E` (including `E = nothing`!).
 
-Args:
-    other (object): the object to compare to.
+        Args:
+            other (object): the object to compare to.
 
-Returns:
-    bool: whether the NetworkEntity-ies are equal.
+        Returns:
+            bool: whether the NetworkEntity-ies are equal.
         """
         pass
 
@@ -227,20 +226,20 @@ Returns:
         """
         Turns the values of the Entity's fields into integers to be used in a comparison.
 
-Returns:
-    dict: field names as the keys, integers as the values.
+        Returns:
+            dict: field names as the keys, integers as the values.
         """
         pass
 
     def merge(self, other):
         """
         Merges the information from two equal NetworkEntity-ies.
-This method fills in any missing information in `self` with the information from `other`.
-Note: they must be equal.
-Note: merges right-into-left -- in `A.merge(B)`, A is full with information, and B is unchanged.
+        This method fills in any missing information in `self` with the information from `other`.
+        Note: they must be equal.
+        Note: merges right-into-left -- in `A.merge(B)`, A is full with information, and B is unchanged.
 
-Args:
-    other (NetworkEntity): the entity to be merged with.
+        Args:
+            other (NetworkEntity): the entity to be merged with.
         """
         pass
 
@@ -282,11 +281,11 @@ class NetworkStorage:
     def special_add(self):
         """
         Adds a special LockedNetworkEntity to the `specials` list.
-NOT THREAD-SAFE. Only use in non-parellel code.
-Intended for LockedNetworkEntities but regular NetworkEntities are allowed too.
+        NOT THREAD-SAFE. Only use in non-parellel code.
+        Intended for LockedNetworkEntities but regular NetworkEntities are allowed too.
 
-Args:
-    entities (list[NetworkEntity]): the special entities to be added.
+        Args:
+            entities (list[NetworkEntity]): the special entities to be added.
         """
         pass
 
@@ -302,24 +301,24 @@ Args:
     def organise(self, key):
         """
         Converts the storage into a dictionary, with the key being one of the fields, and the values -- the whole entity.
-Example:
-```
-data = [networkEntity1, networkEntity2, networkEntity3]
-organise('ip') = {
-    "1.1.1.1": networkEntity1,
-    "2.2.2.2": networkEntity2,
-    "1.0.0.3": networkEntity3
-}
-```
+        Example:
+        ```
+        data = [networkEntity1, networkEntity2, networkEntity3]
+        organise('ip') = {
+            "1.1.1.1": networkEntity1,
+            "2.2.2.2": networkEntity2,
+            "1.0.0.3": networkEntity3
+        }
+        ```
 
-Args:
-    key (str, optional): the key for the dictionary. Must be `mac`, `ip`, `ipv6`, or `name`. Defaults to `ip`.
+        Args:
+            key (str, optional): the key for the dictionary. Must be `mac`, `ip`, `ipv6`, or `name`. Defaults to `ip`.
 
-Returns:
-    dict: the dictionary as described above.
+        Returns:
+            dict: the dictionary as described above.
 
-Raises:
-    TypeError: if the key is invalid.
+        Raises:
+            TypeError: if the key is invalid.
         """
         pass
 
@@ -332,16 +331,16 @@ Raises:
     def __getitem__(self, key):
         """
         Gets a single "column" (key, property, field) as a list from all the NetworkEntity-ies stored.
-Note: this will not include empty values. E.g., asking for `lookup['ipv6']` will not return any data from entities without an IPv6 datum.
+        Note: this will not include empty values. E.g., asking for `lookup['ipv6']` will not return any data from entities without an IPv6 datum.
 
-Args:
-    key (str): the key to select from all the entities. Must be 'mac', 'ip', 'ipv6', or 'name'.
+        Args:
+            key (str): the key to select from all the entities. Must be 'mac', 'ip', 'ipv6', or 'name'.
 
-Raises:
-    TypeError: if the key is invalid.
+        Raises:
+            TypeError: if the key is invalid.
 
-Returns:
-    list: a list containing all the requested data.
+        Returns:
+            list: a list containing all the requested data.
         """
         pass
 
@@ -455,14 +454,14 @@ class ListWithSQL:
 class ObserverPublisher:
     """
     This is the implementation of the Observer Behavioural Design Pattern,
-which is used when a centralised source of data (the publisher) needs to send out updates (notifications)
-to many code pieces (observers).
+    which is used when a centralised source of data (the publisher) needs to send out updates (notifications)
+    to many code pieces (observers).
 
-This specific implementation, being focused on not blocking the `add_datum` calls too much,
-uses a separate thread to notify observers, and an internal queue to save the data in the meantime.
+    This specific implementation, being focused on not blocking the `add_datum` calls too much,
+    uses a separate thread to notify observers, and an internal queue to save the data in the meantime.
 
-Just extend this class, make sure to call `.add_datum` when new data arrives,
-and you can use `add_observer` to attach observers!
+    Just extend this class, make sure to call `.add_datum` when new data arrives,
+    and you can use `add_observer` to attach observers!
     """
 
     def __init__(self):
@@ -519,7 +518,7 @@ class PacketSniffer(ObserverPublisher):
 class _Printing:
     """
     This context manager delays and stores all outputs via `print`s.
-It is not meant to be used directly, but other classes can inherit it.
+    It is not meant to be used directly, but other classes can inherit it.
     """
 
     def __init__(self):
@@ -535,12 +534,12 @@ It is not meant to be used directly, but other classes can inherit it.
 class InstantPrinting(_Printing):
     """
     This context manager delays and stores all outputs via `print`s, and prints everything when closed.
-Usage:
-```py
-with InstantPrinting():
-    # do some stuff here including printing
-# Here, exiting the context, the printing will all happen immediately.
-```
+    Usage:
+    ```py
+    with InstantPrinting():
+        # do some stuff here including printing
+    # Here, exiting the context, the printing will all happen immediately.
+    ```
     """
 
     def __init__(self):
@@ -556,28 +555,28 @@ with InstantPrinting():
 class NoPrinting(_Printing):
     """
     This context manager prevents all output (through `sys.stdout`, e.g. normal `print` statements) from showing.
-Usage:
-```py
-with NoPrinting():
-    # do some stuff here including printing
-    # Nothing will actually display
-```
+    Usage:
+    ```py
+    with NoPrinting():
+        # do some stuff here including printing
+        # Nothing will actually display
+    ```
 
-Technical note: this just inherits `_Printing` with no additional behaviour.
+    Technical note: this just inherits `_Printing` with no additional behaviour.
     """
 
 
 class _SplitStringIO:
     """
     This class is like the io.StringIO, but it splits different `write` statements.
-Internally, this is a `list` of `StringIO`s.
-Not meant for use outside the `util` module.
+    Internally, this is a `list` of `StringIO`s.
+    Not meant for use outside the `util` module.
 
-Implements:
-`__init__`: initialises an empty list.
-`write`: adds a StringIO to the list, and writes the data into it.
-`getvalue`: returns a list of all the `.getvalue`s of the `StringIO`s.
-`flush`: does nothing.
+    Implements:
+    `__init__`: initialises an empty list.
+    `write`: adds a StringIO to the list, and writes the data into it.
+    `getvalue`: returns a list of all the `.getvalue`s of the `StringIO`s.
+    `flush`: does nothing.
     """
 
     def __init__(self):
@@ -596,18 +595,18 @@ Implements:
 class JustifyPrinting(InstantPrinting):
     """
     This context manager delays and stores all outputs via `print`s, and prints everything when closed,
-justifying every print statement to form a nice-looking block of text, where each line is centred and as widespread as is allowed.
+    justifying every print statement to form a nice-looking block of text, where each line is centred and as widespread as is allowed.
 
-Note: Messing with `print`'s default values (`sep=' ', end='\n'`) is not recommended,
-since this context manager treats space-separated strings as belonging to the same statement,
-and newline-separated string as belonging to different statements.
+    Note: Messing with `print`'s default values (`sep=' ', end='\n'`) is not recommended,
+    since this context manager treats space-separated strings as belonging to the same statement,
+    and newline-separated string as belonging to different statements.
 
-Usage:
-```py
-with JustifyPrinting():
-    # do some stuff here including printing
-# Here, exiting the context, the printing will all happen immediately and (hopefully) nicely.
-```
+    Usage:
+    ```py
+    with JustifyPrinting():
+        # do some stuff here including printing
+    # Here, exiting the context, the printing will all happen immediately and (hopefully) nicely.
+    ```
     """
 
     def __init__(self):
@@ -620,18 +619,18 @@ with JustifyPrinting():
 class TablePrinting(InstantPrinting):
     """
     This context manager delays and stores all outputs via `print`s, and prints everything when closed,
-justifying every print statement to form a nice-looking table.
+    justifying every print statement to form a nice-looking table.
 
-Note: Messing with `print`'s default values (`sep=' ', end='\n'`) is not recommended,
-since this context manager treats space-separated strings as belonging to the same statement,
-and newline-separated string as belonging to different statements.
+    Note: Messing with `print`'s default values (`sep=' ', end='\n'`) is not recommended,
+    since this context manager treats space-separated strings as belonging to the same statement,
+    and newline-separated string as belonging to different statements.
 
-Usage:
-```py
-with TablePrinting():
-    # do some stuff here including printing
-# Here, exiting the context, the printing will all happen immediately and (hopefully) nicely.
-```
+    Usage:
+    ```py
+    with TablePrinting():
+        # do some stuff here including printing
+    # Here, exiting the context, the printing will all happen immediately and (hopefully) nicely.
+    ```
     """
 
     def __init__(self, align):
@@ -646,20 +645,20 @@ with TablePrinting():
 class AutoLinebreaks(InstantPrinting):
     """
     This context manager delays and stores all outputs via `print`s, and prints everything when closed,
-wrapping lines only when nessessary to maintain integrity.
-In short: Applies CSS's `word-wrap: normal;` (whereas the console is usually `word-wrap: break-word;`).
+    wrapping lines only when nessessary to maintain integrity.
+    In short: Applies CSS's `word-wrap: normal;` (whereas the console is usually `word-wrap: break-word;`).
 
-Note: Messing with `print`'s default values (`sep=' ', end='\n'`) is not recommended,
-since this context manager treats space-separated strings as belonging to the same statement,
-and newline-separated string as belonging to different statements.
-You may do so after familiarising yourself with the code, in order to not induce annoying bugs.
+    Note: Messing with `print`'s default values (`sep=' ', end='\n'`) is not recommended,
+    since this context manager treats space-separated strings as belonging to the same statement,
+    and newline-separated string as belonging to different statements.
+    You may do so after familiarising yourself with the code, in order to not induce annoying bugs.
 
-Usage:
-```py
-with AutoLinebreaks():
-    # do some stuff here including printing
-# Here, exiting the context, the printing will all happen immediately and (hopefully) nicely.
-```
+    Usage:
+    ```py
+    with AutoLinebreaks():
+        # do some stuff here including printing
+    # Here, exiting the context, the printing will all happen immediately and (hopefully) nicely.
+    ```
     """
 
     def __init__(self):
@@ -672,17 +671,17 @@ with AutoLinebreaks():
 class Register(dict):
     """
     This class managers the connection between names (strings)* and python methods (or lambdas; any callables) that execute these scans.
-Usage (i.e. this is a dictionary):
-```
-Set: Register()["Scan Name"] = lambda: ...
-Set: Register()["Scan Name"] = execute_scan  # no parentheses
-Set: Register()["Scan Name"] = execute_infinite_scan, True
-Get: x = Register()["Scan Name"]
-```
+    Usage (i.e. this is a dictionary):
+    ```
+    Set: Register()["Scan Name"] = lambda: ...
+    Set: Register()["Scan Name"] = execute_scan  # no parentheses
+    Set: Register()["Scan Name"] = execute_infinite_scan, True
+    Get: x = Register()["Scan Name"]
+    ```
 
-This class implements the singleton pattern.
+    This class implements the singleton pattern.
 
-* formerly GUI Buttons, abstracted by `class Scan`.
+    * formerly GUI Buttons, abstracted by `class Scan`.
     """
     def __new__(cls):
         pass
@@ -753,16 +752,16 @@ class MACVendorDict:
 class MyApp(App):
     """
     The main application, using `kivy`.
-Includes five screens:
-1. ScanScreen
-2. SaveScreen
-3. KnowScreen
-4. StartScreen
-5. ViewScreen (only accessible through `SaveScreen.ImportButton`)
+    Includes five screens:
+    1. ScanScreen
+    2. SaveScreen
+    3. KnowScreen
+    4. StartScreen
+    5. ViewScreen (only accessible through `SaveScreen.ImportButton`)
 
 
-Args:
-    App (tk): the tkinter base app.
+    Args:
+        App (tk): the tkinter base app.
     """
 
     def build(self):
@@ -797,7 +796,7 @@ class State:
 class Diagrams:
     """
     This class handles all the Diagrams that present the network graph (`G`).
-To use, simply create an instance (uses Singleton), and do `.add` to your diagram.
+    To use, simply create an instance (uses Singleton), and do `.add` to your diagram.
     """
     def __new__(cls):
         """
@@ -845,13 +844,13 @@ class Diagram(ABC):
 class TKDiagram(Diagram):
     """
     A diagram under `tkinter` window.
-Uses tk.Canvas.
-Doesn't actually close until `is_kivy_running` is set to False, and another closing is attempted.
-Uses the Singleton pattern.
+    Uses tk.Canvas.
+    Doesn't actually close until `is_kivy_running` is set to False, and another closing is attempted.
+    Uses the Singleton pattern.
 
-Extends:
-    Diagram (abstract class): allows for this class to be used as a diagram.
-    ContextManager (type): allows for this class to be used as a context manager (for rendering).
+    Extends:
+        Diagram (abstract class): allows for this class to be used as a diagram.
+        ContextManager (type): allows for this class to be used as a context manager (for rendering).
     """
     def __new__(cls):
         pass
@@ -901,11 +900,11 @@ Extends:
 class PlotDiagram(Diagram):
     """
     A diagram in a `matplotlib.pyplot` window.
-Uses the Singleton pattern.
+    Uses the Singleton pattern.
 
-Extends:
-    Diagram (abstract class): allows for this class to be used as a diagram.
-    ContextManager (type): allows for this class to be used as a context manager (for rendering).
+    Extends:
+        Diagram (abstract class): allows for this class to be used as a diagram.
+        ContextManager (type): allows for this class to be used as a context manager (for rendering).
     """
     def __new__(cls):
         pass
@@ -949,15 +948,15 @@ Extends:
 class KivyDiagram(Diagram):
     """
     A diagram under `kivy` window, specifically the `Scan` screen, more specifically the `ScanScreenMiddleDiagram` widget.
-Uses kivy's widget.canvas.
-Linked to a kivy widget with `self.widget` and `.set_widget(widget)`.
-There has to be a widget set before rendering (entering the context manager)!
-You cannot change the widget once you set it.
-Uses the Singleton pattern.
+    Uses kivy's widget.canvas.
+    Linked to a kivy widget with `self.widget` and `.set_widget(widget)`.
+    There has to be a widget set before rendering (entering the context manager)!
+    You cannot change the widget once you set it.
+    Uses the Singleton pattern.
 
-Extends:
-    Diagram (abstract class): allows for this class to be used as a diagram.
-    ContextManager (type): allows for this class to be used as a context manager (for rendering).
+    Extends:
+        Diagram (abstract class): allows for this class to be used as a diagram.
+        ContextManager (type): allows for this class to be used as a context manager (for rendering).
     """
     def __new__(cls):
         pass
@@ -1032,7 +1031,7 @@ class PopupManager:
     def _popup_loop(self):
         """
         Private method that runs continuously as the popup thread.
-Waits for popups to arrive and displays them when available.
+    Waits for popups to arrive and displays them when available.
         """
         pass
 
@@ -1042,12 +1041,12 @@ Waits for popups to arrive and displays them when available.
 class Hover:
     """
     Enables hovering cursor and behaviours. Uses singleton structure (because it accesses a system function of changing cursor).
-Includes two lists: `items`, where each item can change the cursor to `pointer` if hovered (`item.collide_point(x, y) -> True`);
-and `behaviors`, where each item is a `HoverBehavior`, and they do more exotic stuff, abstracted by `.show()` and `.hide()`.
+    Includes two lists: `items`, where each item can change the cursor to `pointer` if hovered (`item.collide_point(x, y) -> True`);
+    and `behaviors`, where each item is a `HoverBehavior`, and they do more exotic stuff, abstracted by `.show()` and `.hide()`.
 
-Raises:
-    AttributeError: raised when `.add(item)` receives an `item` that has no method `.collide_point(int,int)`.
-    TypeError: raised when `.add_behavior(behavior)` receives a `behavior` that is not of type `HoverBehavior`.
+    Raises:
+        AttributeError: raised when `.add(item)` receives an `item` that has no method `.collide_point(int,int)`.
+        TypeError: raised when `.add_behavior(behavior)` receives a `behavior` that is not of type `HoverBehavior`.
     """
     def _bind():
         pass
@@ -1075,7 +1074,7 @@ Raises:
 class HoverBehavior:
     """
     Inherit from this class to create behaviours,
-and pass the instances to `Hover.add_behavior(...)`.
+    and pass the instances to `Hover.add_behavior(...)`.
     """
 
     def show(self):
@@ -1091,8 +1090,8 @@ and pass the instances to `Hover.add_behavior(...)`.
 class HoverReplace(HoverBehavior):
     """
     A `HoverBehavior` that replaces the text shown on a label.
-When hovered, it displays the string in `text`,
-otherwise, it displays the initial string.
+    When hovered, it displays the string in `text`,
+    otherwise, it displays the initial string.
     """
 
     def __init__(self, widget, text, font_size, font):
@@ -1111,8 +1110,8 @@ otherwise, it displays the initial string.
 class HoverReplaceBackground(HoverReplace):
     """
     A `HoverBehavior` that replaces the text shown on a label.
-When hovered, it displays the string in `text` (AND a different background colour),
-otherwise, it displays the initial string.
+    When hovered, it displays the string in `text` (AND a different background colour),
+    otherwise, it displays the initial string.
     """
 
     def __init__(self, widget, text, font_size, new_bg, font):
@@ -1129,8 +1128,8 @@ class ButtonColumn(GridLayout):
     """
     Organises buttons in a column
 
-Args:
-    GridLayout (tk): the superclass.
+    Args:
+        GridLayout (tk): the superclass.
     """
 
     def __init__(self, width: int):
@@ -1146,10 +1145,10 @@ Args:
 class MyPaintWidget(Widget):
     """
     Responsible for the middle diagram (object #9).
-It is the caller's responsibility to set this as the `KivyDiagram()`'s widget.
+    It is the caller's responsibility to set this as the `KivyDiagram()`'s widget.
 
-Args:
-    Widget (tkinter widget): the superclass.
+    Args:
+        Widget (tkinter widget): the superclass.
     """
 
     def init(self):
@@ -1232,14 +1231,14 @@ class DummyScan(Scan):
 class Analysis(Scan):
     """
     This is identical to a scan, except for cosmetic changes.
-It's intended to be used under Know Screen.
+    It's intended to be used under Know Screen.
 
-Another difference, present in `Activation.py`, is that Analyses do not require confirmation popup;
-just permission, which is half what other Scans need (permission + confirmation).
+    Another difference, present in `Activation.py`, is that Analyses do not require confirmation popup;
+    just permission, which is half what other Scans need (permission + confirmation).
 
-Changes:
-- background colour is more blue.
-- highlight colour is ANALYSIS_HIGHLIGHT.
+    Changes:
+    - background colour is more blue.
+    - highlight colour is ANALYSIS_HIGHLIGHT.
     """
 
     def __init__(self, name, action, parent):
@@ -1253,26 +1252,26 @@ class KnowScreen(Screen):
     """
     Builds an interface that looks like this:
 
-```md
-The Window (Unicode Box Art):
-    ┌────────────────────────────────────────────┐
-    │                  [#1 Title]                │
-    │  #4 Save.                                  │
-    │  #5 Scan.                                  │
-    │  #6 Know.                                  │
-    │             #3 Device Profile              │
-    │              #2 Data                       │
-    │     [_______________________]              │
-    │     [_______________________]              │
-    │     [_______________________]              │
-    │     [_______________________]              │
-    │                                            │
-    │                                            │
-    └────────────────────────────────────────────┘
-```
+    ```md
+    The Window (Unicode Box Art):
+        ┌────────────────────────────────────────────┐
+        │                  [#1 Title]                │
+        │  #4 Save.                                  │
+        │  #5 Scan.                                  │
+        │  #6 Know.                                  │
+        │             #3 Device Profile              │
+        │              #2 Data                       │
+        │     [_______________________]              │
+        │     [_______________________]              │
+        │     [_______________________]              │
+        │     [_______________________]              │
+        │                                            │
+        │                                            │
+        └────────────────────────────────────────────┘
+    ```
 
-Args:
-    Screen (kivy): the base class for a screen.
+    Args:
+        Screen (kivy): the base class for a screen.
     """
 
     def __init__(self):
@@ -1283,26 +1282,26 @@ class KnowScreenRightColumn(ButtonColumn):
     """
     Builds the right column used in the screen 'Know'.
 
-```md
-    Know Screen
-    . . . ─╥───────────────────────────┐
-           ║   [#2 Conf]   [#3 Info]   │
-           ╟───────────────────────────┤
-           ║        [#7 KnowA]         │
-           ║                           │
-           ║        [#8 KnowB]         │
-           ║                           │
-           ║        [#9 KnowC]         │
-           ║                           │
-           ║        [#10 KnowD]        │
-           ║                           │
-           ║           . . .           │
-           ║                           │
-    . . . ─╨───────────────────────────┘
-```
+    ```md
+        Know Screen
+        . . . ─╥───────────────────────────┐
+            ║   [#2 Conf]   [#3 Info]   │
+            ╟───────────────────────────┤
+            ║        [#7 KnowA]         │
+            ║                           │
+            ║        [#8 KnowB]         │
+            ║                           │
+            ║        [#9 KnowC]         │
+            ║                           │
+            ║        [#10 KnowD]        │
+            ║                           │
+            ║           . . .           │
+            ║                           │
+        . . . ─╨───────────────────────────┘
+    ```
 
-Args:
-    ButtonColumn (GridLayout): this inherits from ButtonColumn.
+    Args:
+        ButtonColumn (GridLayout): this inherits from ButtonColumn.
     """
 
     def __init__(self):
@@ -1312,10 +1311,10 @@ Args:
 class KnowScreenInfoLabel(ScrollView):
     """
     Holds the requested data in string format, displayed to the user.
-Has a scrolling mechanic.
+    Has a scrolling mechanic.
 
-Args:
-    Label (kivy): the base class from kivy.
+    Args:
+        Label (kivy): the base class from kivy.
     """
 
     def __init__(self):
@@ -1362,26 +1361,26 @@ class SaveScreen(Screen):
     """
     Builds an interface that looks like this:
 
-```md
-The Window (Unicode Box Art):
-    ┌────────────────────────────────────────────┐
-    │                  [#1 Title]                │
-    │  #4 Save.                                  │
-    │  #5 Scan.                                  │
-    │  #6 Know.                                  │
-    │                                            │
-    │       #2 Export            #3 Import       │
-    │                                            │
-    │                                            │
-    │                                            │
-    │                                            │
-    │                                            │
-    │                                            │
-    └────────────────────────────────────────────┘
-```
+    ```md
+    The Window (Unicode Box Art):
+        ┌────────────────────────────────────────────┐
+        │                  [#1 Title]                │
+        │  #4 Save.                                  │
+        │  #5 Scan.                                  │
+        │  #6 Know.                                  │
+        │                                            │
+        │       #2 Export            #3 Import       │
+        │                                            │
+        │                                            │
+        │                                            │
+        │                                            │
+        │                                            │
+        │                                            │
+        └────────────────────────────────────────────┘
+    ```
 
-Args:
-    Screen (kivy): the base class for a screen.
+    Args:
+        Screen (kivy): the base class for a screen.
     """
 
     def __init__(self):
@@ -1392,26 +1391,26 @@ class ScanScreenMiddleDiagram(RelativeLayout):
     """
     Builds the middle diagram used in the screen 'Scan'.
 
-```md
-    Scan Screen
-    ┌────────────────────────────────────────────╥─ . . .
-    │                  [#1 Title]                ║
-    │  #4 Save.                                  ║
-    │  #5 Scan.                                  ║
-    │  #6 Know.                                  ║
-    │           #9 D                             ║
-    │                I                           ║
-    │                  A                         ║
-    │                    G                       ║
-    │                      R                     ║
-    │                        A                   ║
-    │                          M                 ║
-    │    [#15 Play]            [#16 Fullscreen]  ║
-    └────────────────────────────────────────────╨─ . . .
-```
+    ```md
+        Scan Screen
+        ┌────────────────────────────────────────────╥─ . . .
+        │                  [#1 Title]                ║
+        │  #4 Save.                                  ║
+        │  #5 Scan.                                  ║
+        │  #6 Know.                                  ║
+        │           #9 D                             ║
+        │                I                           ║
+        │                  A                         ║
+        │                    G                       ║
+        │                      R                     ║
+        │                        A                   ║
+        │                          M                 ║
+        │    [#15 Play]            [#16 Fullscreen]  ║
+        └────────────────────────────────────────────╨─ . . .
+    ```
 
-Args:
-    RelativeLayout (kivy): the diagram is a type of a Relative Layout, since widgets are placed sporadically.
+    Args:
+        RelativeLayout (kivy): the diagram is a type of a Relative Layout, since widgets are placed sporadically.
     """
 
     def __init__(self):
@@ -1422,26 +1421,26 @@ class ScanScreenRightColumn(ButtonColumn):
     """
     Builds the right column used in the screen 'Scan'.
 
-```md
-    Scan Screen
-    . . . ─╥───────────────────────────┐
-           ║   [#2 Conf]   [#3 Info]   │
-           ╟───────────────────────────┤
-           ║        [#7 ScanA]         │
-           ║                           │
-           ║        [#8 ScanB]         │
-           ║                           │
-           ║        [#9 ScanC]         │
-           ║                           │
-           ║        [#10 ScanD]        │
-           ║                           │
-           ║           . . .           │
-           ║                           │
-    . . . ─╨───────────────────────────┘
-```
+    ```md
+        Scan Screen
+        . . . ─╥───────────────────────────┐
+            ║   [#2 Conf]   [#3 Info]   │
+            ╟───────────────────────────┤
+            ║        [#7 ScanA]         │
+            ║                           │
+            ║        [#8 ScanB]         │
+            ║                           │
+            ║        [#9 ScanC]         │
+            ║                           │
+            ║        [#10 ScanD]        │
+            ║                           │
+            ║           . . .           │
+            ║                           │
+        . . . ─╨───────────────────────────┘
+    ```
 
-Args:
-    ButtonColumn (GridLayout): this inherits from ButtonColumn.
+    Args:
+        ButtonColumn (GridLayout): this inherits from ButtonColumn.
     """
 
     def __init__(self):
@@ -1452,26 +1451,26 @@ class ScanScreen(Screen):
     """
     Builds an interface that looks like this:
 
-```md
-The Window (Unicode Box Art):
-    ┌────────────────────────────────────────────╥───────────────────────────┐
-    │                  [#1 Title]                ║   [#2 Conf]   [#3 Info]   │
-    │  #4 Save.                                  ╟───────────────────────────┤
-    │  #5 Scan.                                  ║        [#7 ScanA]         │
-    │  #6 Know.                                  ║                           │
-    │           #9 D                             ║        [#8 ScanB]         │
-    │                I                           ║                           │
-    │                  A                         ║        [#9 ScanC]         │
-    │                    G                       ║                           │
-    │                      R                     ║        [#10 ScanD]        │
-    │                        A                   ║                           │
-    │                          M                 ║           . . .           │
-    │    [#15 Play]            [#16 Fullscreen]  ║                           │
-    └────────────────────────────────────────────╨───────────────────────────┘
-```
+    ```md
+    The Window (Unicode Box Art):
+        ┌────────────────────────────────────────────╥───────────────────────────┐
+        │                  [#1 Title]                ║   [#2 Conf]   [#3 Info]   │
+        │  #4 Save.                                  ╟───────────────────────────┤
+        │  #5 Scan.                                  ║        [#7 ScanA]         │
+        │  #6 Know.                                  ║                           │
+        │           #9 D                             ║        [#8 ScanB]         │
+        │                I                           ║                           │
+        │                  A                         ║        [#9 ScanC]         │
+        │                    G                       ║                           │
+        │                      R                     ║        [#10 ScanD]        │
+        │                        A                   ║                           │
+        │                          M                 ║           . . .           │
+        │    [#15 Play]            [#16 Fullscreen]  ║                           │
+        └────────────────────────────────────────────╨───────────────────────────┘
+    ```
 
-Args:
-    Screen (kivy): the base class for a screen.
+    Args:
+        Screen (kivy): the base class for a screen.
     """
 
     def __init__(self):
@@ -1482,26 +1481,26 @@ class StartScreen(Screen):
     """
     Builds an interface that looks like this:
 
-```md
-The Window (Unicode Box Art):
-    ┌────────────────────────────────────────────╥───────────────────────────┐
-    │                  [#1 Title]                ║   [#2 Conf]   [#3 Info]   │
-    │  #4 Save.                                  ╟───────────────────────────┤
-    │  #5 Scan.                                  ║        [#7 ScanA]         │
-    │  #6 Know.                                  ║                           │
-    │           #9 D                             ║        [#8 ScanB]         │
-    │                I                           ║                           │
-    │                  A                         ║        [#9 ScanC]         │
-    │                    G                       ║                           │
-    │                      R                     ║        [#10 ScanD]        │
-    │                        A                   ║                           │
-    │                          M                 ║           . . .           │
-    │    [#15 Play]            [#16 Fullscreen]  ║                           │
-    └────────────────────────────────────────────╨───────────────────────────┘
-```
+    ```md
+    The Window (Unicode Box Art):
+        ┌────────────────────────────────────────────╥───────────────────────────┐
+        │                  [#1 Title]                ║   [#2 Conf]   [#3 Info]   │
+        │  #4 Save.                                  ╟───────────────────────────┤
+        │  #5 Scan.                                  ║        [#7 ScanA]         │
+        │  #6 Know.                                  ║                           │
+        │           #9 D                             ║        [#8 ScanB]         │
+        │                I                           ║                           │
+        │                  A                         ║        [#9 ScanC]         │
+        │                    G                       ║                           │
+        │                      R                     ║        [#10 ScanD]        │
+        │                        A                   ║                           │
+        │                          M                 ║           . . .           │
+        │    [#15 Play]            [#16 Fullscreen]  ║                           │
+        └────────────────────────────────────────────╨───────────────────────────┘
+    ```
 
-Args:
-    Screen (kivy): the base class for a screen.
+    Args:
+        Screen (kivy): the base class for a screen.
     """
 
     def __init__(self):
@@ -1511,10 +1510,10 @@ Args:
 class ViewScreenInfo(ScrollView):
     """
     Holds the requested data in string format, displayed to the user.
-Has a scrolling mechanic.
+    Has a scrolling mechanic.
 
-Args:
-    Label (kivy): the base class from kivy.
+    Args:
+        Label (kivy): the base class from kivy.
     """
 
     def __init__(self):
@@ -1528,26 +1527,26 @@ class ViewScreen(Screen):
     """
     Builds an interface that looks like this:
 
-```md
-The Window (Unicode Box Art):
-    ┌────────────────────────────────────────────┐
-    │                  [#1 Title]                │
-    │  #3 Know.                                  │
-    │  #4 Scan.                                  │
-    │  #5 Know.                                  │
-    │                                            │
-    │                   #2 Data                  │
-    │          [_______________________]         │
-    │          [_______________________]         │
-    │          [_______________________]         │
-    │          [_______________________]         │
-    │                                            │
-    │                                            │
-    └────────────────────────────────────────────┘
-```
+    ```md
+    The Window (Unicode Box Art):
+        ┌────────────────────────────────────────────┐
+        │                  [#1 Title]                │
+        │  #3 Know.                                  │
+        │  #4 Scan.                                  │
+        │  #5 Know.                                  │
+        │                                            │
+        │                   #2 Data                  │
+        │          [_______________________]         │
+        │          [_______________________]         │
+        │          [_______________________]         │
+        │          [_______________________]         │
+        │                                            │
+        │                                            │
+        └────────────────────────────────────────────┘
+    ```
 
-Args:
-    Screen (kivy): the base class for a screen.
+    Args:
+        Screen (kivy): the base class for a screen.
     """
 
     def __init__(self):
