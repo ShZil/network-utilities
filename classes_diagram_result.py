@@ -66,7 +66,7 @@ Args:
         """
         pass
 
-    def encrypt(self, msg: bytes):
+    def encrypt(self, msg: bytes) -> bytes:
         """
         This function encrypts the message.
 
@@ -78,7 +78,7 @@ Returns:
         """
         pass
 
-    def decrypt(self, ciphertext: bytes):
+    def decrypt(self, ciphertext: bytes) -> bytes:
         """
         This function decrypts the message.
 
@@ -167,7 +167,7 @@ class NetworkEntity:
     def __init__(self, mac, ip, ipv6, name):
         pass
 
-    def equals(self, other: object):
+    def equals(self, other: object) -> bool:
         """
         This method checks equality between `self` and `other`.
 
@@ -387,52 +387,52 @@ class ListWithSQL:
     def copy(self):
         pass
 
-    def append(self, __object: _T):
+    def append(self, __object: _T) -> None:
         pass
 
-    def _flush_to_sql(self):
+    def _flush_to_sql(self) -> None:
         pass
 
-    def extend(self, __iterable: Iterable[_T]):
+    def extend(self, __iterable: Iterable[_T]) -> None:
         pass
 
-    def pop(self, __index: SupportsIndex):
+    def pop(self, __index: SupportsIndex) -> _T:
         pass
 
-    def index(self, __value: _T, __start: SupportsIndex, __stop: SupportsIndex):
+    def index(self, __value: _T, __start: SupportsIndex, __stop: SupportsIndex) -> int:
         pass
 
-    def count(self, __value: _T):
+    def count(self, __value: _T) -> int:
         pass
 
-    def insert(self, __index: SupportsIndex, __object: _T):
+    def insert(self, __index: SupportsIndex, __object: _T) -> None:
         pass
 
-    def remove(self, __value: _T):
+    def remove(self, __value: _T) -> None:
         pass
 
-    def sort(self: list):
+    def sort(self: list) -> None:
         pass
 
-    def __len__(self):
+    def __len__(self) -> int:
         pass
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[_T]:
         pass
 
-    def __getitem__(self, __i: SupportsIndex | slice):
+    def __getitem__(self, __i: SupportsIndex | slice) -> _T:
         pass
 
-    def __setitem__(self, __key: SupportsIndex, __value: _T):
+    def __setitem__(self, __key: SupportsIndex, __value: _T) -> None:
         pass
 
-    def __delitem__(self, __key: SupportsIndex | slice):
+    def __delitem__(self, __key: SupportsIndex | slice) -> None:
         pass
 
-    def __contains__(self, __key: object):
+    def __contains__(self, __key: object) -> bool:
         pass
 
-    def __reversed__(self):
+    def __reversed__(self) -> Iterator[_T]:
         pass
 
     CREATE = ...
@@ -455,10 +455,10 @@ and you can use `add_observer` to attach observers!
     def __init__(self):
         pass
 
-    def notify_all(self):
+    def notify_all(self) -> None:
         pass
 
-    def add_observer(self, observer: Callable):
+    def add_observer(self, observer: Callable) -> None:
         pass
 
     def add_datum(self, datum):
@@ -671,10 +671,10 @@ This class implements the singleton pattern.
     def __getitem__(self, key: str):
         pass
 
-    def start(self, name: str, action, callback):
+    def start(self, name: str, action, callback) -> None:
         pass
 
-    def is_running(self, name: str):
+    def is_running(self, name: str) -> bool:
         pass
 
     def is_infinite_scan(self, name: str):
@@ -691,7 +691,7 @@ class Sniffer(AsyncSniffer):
     """
     
     """
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     def stopall():
