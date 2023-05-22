@@ -3058,3 +3058,6 @@ More Markdown formatting under `general_information`.
 Weaknesses of my software? Ha ha, none! My project is the best and the strongest! XD lol
 
 [16:26] Created `modules extended.drawio`.
+
+[17:13] With ChatGPT, created `classes_diagram.py`,
+to assist me when writing the Portfolio section about my classes.

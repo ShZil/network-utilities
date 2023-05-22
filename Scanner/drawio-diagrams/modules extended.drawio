@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Page-1" id="a8F7jJg699dGcDbAWTl5">
-        <mxGraphModel dx="1242" dy="1486" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="2985" dy="2819" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -761,7 +761,7 @@
                 <mxCell id="47" value="PyWin32" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#1e1a1a;strokeWidth=2;fontFamily=Consolas;fontSize=25;fillColor=#66ff66;size=40;" vertex="1" parent="1">
                     <mxGeometry x="-280" width="150" height="75" as="geometry"/>
                 </mxCell>
-                <mxCell id="48" value="io" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#1e1a1a;strokeWidth=2;fontFamily=Consolas;fontSize=25;fillColor=#18141d;size=20;fontColor=#736D6D;" vertex="1" parent="1">
+                <mxCell id="48" value="io" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#1e1a1a;strokeWidth=2;fontFamily=Consolas;fontSize=25;fillColor=#FCF5F5;size=20;fontColor=#4A4646;" vertex="1" parent="1">
                     <mxGeometry x="1700" y="655" width="90" height="75" as="geometry"/>
                 </mxCell>
                 <mxCell id="50" value="tkinter" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#1e1a1a;strokeWidth=2;fontFamily=Consolas;fontSize=25;fillColor=#00cc00;size=40;gradientColor=#66ff66;gradientDirection=west;" vertex="1" parent="1">
