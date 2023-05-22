@@ -27,10 +27,12 @@ class Colors:
     CROSSED = ...
     END = ...
 
+
 class ScanFileBuilder:
     """
-    
+
     """
+
     def __init__(self):
         pass
 
@@ -53,10 +55,12 @@ class ScanFileBuilder:
     SEP = ...
     COMMA = ...
 
+
 class Cipher_CBC:
     """
-    
+
     """
+
     def __init__(self, password: str):
         """
         This function initializes the cipherer.
@@ -148,8 +152,9 @@ class ImportDefence:
         import module1
         from module2 import some_function
     ```
-    
+
     """
+
     def __init__(self):
         pass
 
@@ -162,8 +167,9 @@ class ImportDefence:
 
 class NetworkEntity:
     """
-    
+
     """
+
     def __init__(self, mac, ip, ipv6, name):
         pass
 
@@ -250,8 +256,9 @@ Args:
 
 class LockedNetworkEntity(NetworkEntity):
     """
-    
+
     """
+
     def __setitem__(self, key, value):
         pass
 
@@ -261,7 +268,7 @@ class LockedNetworkEntity(NetworkEntity):
 
 class NetworkStorage:
     """
-    
+
     """
     def __new__(cls):
         pass
@@ -348,17 +355,19 @@ Returns:
     waiting = ...
     connections = ...
 
+
 class LAN:
     """
-    
+
     """
+
     def __contains__(self, entity):
         pass
 
 
 class SpecialInformation(dict):
     """
-    
+
     """
     def __new__(cls):
         pass
@@ -377,10 +386,12 @@ class SpecialInformation(dict):
 
     _instance = ...
 
+
 class ListWithSQL:
     """
-    
+
     """
+
     def __init__(self, path: str, maxram: int):
         pass
 
@@ -440,6 +451,7 @@ class ListWithSQL:
     CLEAR = ...
     RESET_AUTOINCREMENT = ...
 
+
 class ObserverPublisher:
     """
     This is the implementation of the Observer Behavioural Design Pattern,
@@ -452,6 +464,7 @@ uses a separate thread to notify observers, and an internal queue to save the da
 Just extend this class, make sure to call `.add_datum` when new data arrives,
 and you can use `add_observer` to attach observers!
     """
+
     def __init__(self):
         pass
 
@@ -467,7 +480,7 @@ and you can use `add_observer` to attach observers!
 
 class PacketSniffer(ObserverPublisher):
     """
-    
+
     """
     def __new__(cls, max_packets):
         pass
@@ -502,11 +515,13 @@ class PacketSniffer(ObserverPublisher):
     INSERT_STATEMENT = ...
     CLEAR_TABLE = ...
 
+
 class _Printing:
     """
     This context manager delays and stores all outputs via `print`s.
 It is not meant to be used directly, but other classes can inherit it.
     """
+
     def __init__(self):
         pass
 
@@ -527,6 +542,7 @@ with InstantPrinting():
 # Here, exiting the context, the printing will all happen immediately.
 ```
     """
+
     def __init__(self):
         pass
 
@@ -550,6 +566,7 @@ with NoPrinting():
 Technical note: this just inherits `_Printing` with no additional behaviour.
     """
 
+
 class _SplitStringIO:
     """
     This class is like the io.StringIO, but it splits different `write` statements.
@@ -562,6 +579,7 @@ Implements:
 `getvalue`: returns a list of all the `.getvalue`s of the `StringIO`s.
 `flush`: does nothing.
     """
+
     def __init__(self):
         pass
 
@@ -591,6 +609,7 @@ with JustifyPrinting():
 # Here, exiting the context, the printing will all happen immediately and (hopefully) nicely.
 ```
     """
+
     def __init__(self):
         pass
 
@@ -614,6 +633,7 @@ with TablePrinting():
 # Here, exiting the context, the printing will all happen immediately and (hopefully) nicely.
 ```
     """
+
     def __init__(self, align):
         pass
 
@@ -621,6 +641,7 @@ with TablePrinting():
         pass
 
     aligns = ...
+
 
 class AutoLinebreaks(InstantPrinting):
     """
@@ -640,6 +661,7 @@ with AutoLinebreaks():
 # Here, exiting the context, the printing will all happen immediately and (hopefully) nicely.
 ```
     """
+
     def __init__(self):
         pass
 
@@ -687,10 +709,12 @@ This class implements the singleton pattern.
     infinites = ...
     history = ...
 
+
 class Sniffer(AsyncSniffer):
     """
-    
+
     """
+
     def __init__(self) -> None:
         pass
 
@@ -699,9 +723,10 @@ class Sniffer(AsyncSniffer):
 
     references = ...
 
+
 class MACVendorDict:
     """
-    
+
     """
     def __new__(cls):
         pass
@@ -724,6 +749,7 @@ class MACVendorDict:
     SELECT_QUERY = ...
     INSERT_QUERY = ...
 
+
 class MyApp(App):
     """
     The main application, using `kivy`.
@@ -738,13 +764,14 @@ Includes five screens:
 Args:
     App (tk): the tkinter base app.
     """
+
     def build(self):
         pass
 
 
 class State:
     """
-    
+
     """
     def __new__(cls):
         pass
@@ -766,6 +793,7 @@ class State:
 
     _instance = ...
 
+
 class Diagrams:
     """
     This class handles all the Diagrams that present the network graph (`G`).
@@ -785,11 +813,13 @@ To use, simply create an instance (uses Singleton), and do `.add` to your diagra
 
     _instance = ...
 
+
 class Diagram(ABC):
     """
     This is an abstarct base class for diagrams that render the network.
-    
+
     """
+
     def __init__(self):
         pass
 
@@ -867,6 +897,7 @@ Extends:
 
     _instance = ...
 
+
 class PlotDiagram(Diagram):
     """
     A diagram in a `matplotlib.pyplot` window.
@@ -913,6 +944,7 @@ Extends:
         pass
 
     _instance = ...
+
 
 class KivyDiagram(Diagram):
     """
@@ -962,9 +994,10 @@ Extends:
 
     _instance = ...
 
+
 class IconType(Enum):
     """
-    
+
     """
     INPUT = ...
     ERROR = ...
@@ -973,9 +1006,10 @@ class IconType(Enum):
     INFO = ...
     NOTHING = ...
 
+
 class PopupManager:
     """
-    
+
     """
     def __new__(cls):
         pass
@@ -1003,6 +1037,7 @@ Waits for popups to arrive and displays them when available.
         pass
 
     _instance = ...
+
 
 class Hover:
     """
@@ -1036,11 +1071,13 @@ Raises:
     behaviors = ...
     current_screen = ...
 
+
 class HoverBehavior:
     """
     Inherit from this class to create behaviours,
 and pass the instances to `Hover.add_behavior(...)`.
     """
+
     def show(self):
         pass
 
@@ -1057,6 +1094,7 @@ class HoverReplace(HoverBehavior):
 When hovered, it displays the string in `text`,
 otherwise, it displays the initial string.
     """
+
     def __init__(self, widget, text, font_size, font):
         pass
 
@@ -1076,6 +1114,7 @@ class HoverReplaceBackground(HoverReplace):
 When hovered, it displays the string in `text` (AND a different background colour),
 otherwise, it displays the initial string.
     """
+
     def __init__(self, widget, text, font_size, new_bg, font):
         pass
 
@@ -1093,6 +1132,7 @@ class ButtonColumn(GridLayout):
 Args:
     GridLayout (tk): the superclass.
     """
+
     def __init__(self, width: int):
         pass
 
@@ -1111,6 +1151,7 @@ It is the caller's responsibility to set this as the `KivyDiagram()`'s widget.
 Args:
     Widget (tkinter widget): the superclass.
     """
+
     def init(self):
         pass
 
@@ -1122,6 +1163,7 @@ class GreenButton(Button):
     """
     A button that has green background, and also adds itself to `Hover`.
     """
+
     def __init__(self, text):
         pass
 
@@ -1130,14 +1172,16 @@ class OperationButton(Button):
     """
     A button that has grey background, adds itself to `Hover`, defines a `HoverReplace` on itself, and uses font `Symbols`.
     """
+
     def __init__(self, text, long_text, onclick):
         pass
 
 
 class Scan:
     """
-    
+
     """
+
     def __init__(self, name, action, parent):
         pass
 
@@ -1159,9 +1203,10 @@ class Scan:
     font_size = ...
     background_color = ...
 
+
 class DummyScan(Scan):
     """
-    
+
     """
     def __new__(cls):
         pass
@@ -1183,6 +1228,7 @@ class DummyScan(Scan):
 
     _instance = ...
 
+
 class Analysis(Scan):
     """
     This is identical to a scan, except for cosmetic changes.
@@ -1195,6 +1241,7 @@ Changes:
 - background colour is more blue.
 - highlight colour is ANALYSIS_HIGHLIGHT.
     """
+
     def __init__(self, name, action, parent):
         pass
 
@@ -1227,6 +1274,7 @@ The Window (Unicode Box Art):
 Args:
     Screen (kivy): the base class for a screen.
     """
+
     def __init__(self):
         pass
 
@@ -1256,6 +1304,7 @@ class KnowScreenRightColumn(ButtonColumn):
 Args:
     ButtonColumn (GridLayout): this inherits from ButtonColumn.
     """
+
     def __init__(self):
         pass
 
@@ -1268,6 +1317,7 @@ Has a scrolling mechanic.
 Args:
     Label (kivy): the base class from kivy.
     """
+
     def __init__(self):
         pass
 
@@ -1277,16 +1327,18 @@ Args:
 
 class Pages(BoxLayout):
     """
-    
+
     """
+
     def __init__(self):
         pass
 
 
 class SaveScreenExportButton(GreenButton):
     """
-    
+
     """
+
     def __init__(self):
         pass
 
@@ -1296,8 +1348,9 @@ class SaveScreenExportButton(GreenButton):
 
 class SaveScreenImportButton(GreenButton):
     """
-    
+
     """
+
     def __init__(self):
         pass
 
@@ -1330,6 +1383,7 @@ The Window (Unicode Box Art):
 Args:
     Screen (kivy): the base class for a screen.
     """
+
     def __init__(self):
         pass
 
@@ -1359,6 +1413,7 @@ class ScanScreenMiddleDiagram(RelativeLayout):
 Args:
     RelativeLayout (kivy): the diagram is a type of a Relative Layout, since widgets are placed sporadically.
     """
+
     def __init__(self):
         pass
 
@@ -1388,6 +1443,7 @@ class ScanScreenRightColumn(ButtonColumn):
 Args:
     ButtonColumn (GridLayout): this inherits from ButtonColumn.
     """
+
     def __init__(self):
         pass
 
@@ -1417,6 +1473,7 @@ The Window (Unicode Box Art):
 Args:
     Screen (kivy): the base class for a screen.
     """
+
     def __init__(self):
         pass
 
@@ -1446,6 +1503,7 @@ The Window (Unicode Box Art):
 Args:
     Screen (kivy): the base class for a screen.
     """
+
     def __init__(self):
         pass
 
@@ -1458,6 +1516,7 @@ Has a scrolling mechanic.
 Args:
     Label (kivy): the base class from kivy.
     """
+
     def __init__(self):
         pass
 
@@ -1490,13 +1549,14 @@ The Window (Unicode Box Art):
 Args:
     Screen (kivy): the base class for a screen.
     """
+
     def __init__(self):
         pass
 
 
 class DeviceDiscoveryListener:
     """
-    
+
     """
     def __new__(cls):
         pass
@@ -1508,4 +1568,3 @@ class DeviceDiscoveryListener:
         pass
 
     _instance = ...
-
