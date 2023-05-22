@@ -34,19 +34,19 @@ class ScanFileBuilder:
     def __init__(self):
         pass
 
-    def add(self, part):
+    def add(self, part: bytes):
         pass
 
     def add_many(self, parts):
         pass
 
-    def write_to(self, path):
+    def write_to(self, path: str):
         pass
 
-    def set_password(self, password):
+    def set_password(self, password: str):
         pass
 
-    def parse(self, path):
+    def parse(self, path: str):
         pass
 
     HEADER = ...
@@ -57,7 +57,7 @@ class Cipher_CBC:
     """
     
     """
-    def __init__(self, password):
+    def __init__(self, password: str):
         """
         This function initializes the cipherer.
 
@@ -66,7 +66,7 @@ Args:
         """
         pass
 
-    def encrypt(self, msg):
+    def encrypt(self, msg: bytes):
         """
         This function encrypts the message.
 
@@ -78,7 +78,7 @@ Returns:
         """
         pass
 
-    def decrypt(self, ciphertext):
+    def decrypt(self, ciphertext: bytes):
         """
         This function decrypts the message.
 
@@ -167,7 +167,7 @@ class NetworkEntity:
     def __init__(self, mac, ip, ipv6, name):
         pass
 
-    def equals(self, other):
+    def equals(self, other: object):
         """
         This method checks equality between `self` and `other`.
 
@@ -366,7 +366,7 @@ class SpecialInformation(dict):
     def __init__(self):
         pass
 
-    def __setitem__(self, keys, value):
+    def __setitem__(self, keys: tuple[NetworkEntity, str], value):
         pass
 
     def __getitem__(self, key):
@@ -381,37 +381,37 @@ class ListWithSQL:
     """
     
     """
-    def __init__(self, path, maxram):
+    def __init__(self, path: str, maxram: int):
         pass
 
     def copy(self):
         pass
 
-    def append(self, __object):
+    def append(self, __object: _T):
         pass
 
     def _flush_to_sql(self):
         pass
 
-    def extend(self, __iterable):
+    def extend(self, __iterable: Iterable[_T]):
         pass
 
-    def pop(self, __index):
+    def pop(self, __index: SupportsIndex):
         pass
 
-    def index(self, __value, __start, __stop):
+    def index(self, __value: _T, __start: SupportsIndex, __stop: SupportsIndex):
         pass
 
-    def count(self, __value):
+    def count(self, __value: _T):
         pass
 
-    def insert(self, __index, __object):
+    def insert(self, __index: SupportsIndex, __object: _T):
         pass
 
-    def remove(self, __value):
+    def remove(self, __value: _T):
         pass
 
-    def sort(self):
+    def sort(self: list):
         pass
 
     def __len__(self):
@@ -420,16 +420,16 @@ class ListWithSQL:
     def __iter__(self):
         pass
 
-    def __getitem__(self, __i):
+    def __getitem__(self, __i: SupportsIndex | slice):
         pass
 
-    def __setitem__(self, __key, __value):
+    def __setitem__(self, __key: SupportsIndex, __value: _T):
         pass
 
-    def __delitem__(self, __key):
+    def __delitem__(self, __key: SupportsIndex | slice):
         pass
 
-    def __contains__(self, __key):
+    def __contains__(self, __key: object):
         pass
 
     def __reversed__(self):
@@ -458,7 +458,7 @@ and you can use `add_observer` to attach observers!
     def notify_all(self):
         pass
 
-    def add_observer(self, observer):
+    def add_observer(self, observer: Callable):
         pass
 
     def add_datum(self, datum):
@@ -478,7 +478,7 @@ class PacketSniffer(ObserverPublisher):
     def stop(self):
         pass
 
-    def get_packet(self, i):
+    def get_packet(self, i: int):
         pass
 
     def _packet_handler(self, packet):
@@ -668,16 +668,16 @@ This class implements the singleton pattern.
     def __setitem__(self, key, value):
         pass
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: str):
         pass
 
-    def start(self, name, action, callback):
+    def start(self, name: str, action, callback):
         pass
 
-    def is_running(self, name):
+    def is_running(self, name: str):
         pass
 
-    def is_infinite_scan(self, name):
+    def is_infinite_scan(self, name: str):
         pass
 
     def get_history(self):
@@ -986,10 +986,10 @@ class PopupManager:
     def render_popup(self, popup):
         pass
 
-    def _get_input(self, title, message):
+    def _get_input(self, title: str, message: str):
         pass
 
-    def _show_text(self, title, message, icon):
+    def _show_text(self, title: str, message: str, icon: IconType):
         pass
 
     def stop(self):
@@ -1026,7 +1026,7 @@ Raises:
     def update(window, pos):
         pass
 
-    def enter(screen):
+    def enter(screen: str):
         pass
 
     def start():
@@ -1093,10 +1093,10 @@ class ButtonColumn(GridLayout):
 Args:
     GridLayout (tk): the superclass.
     """
-    def __init__(self, width):
+    def __init__(self, width: int):
         pass
 
-    def add(self, text, callback):
+    def add(self, text: str, callback):
         pass
 
     def add_raw(self, button):

@@ -22,7 +22,7 @@ def extract_classes(file_path):
                     method_name = subnode.name
                     method_docstring = ast.get_docstring(subnode) or ''
                     method_args = []
-                    method_type_hints = []
+                    method_type_hints = dict()
 
                     for arg in subnode.args.args:
                         arg_name = arg.arg
@@ -30,7 +30,7 @@ def extract_classes(file_path):
 
                         if arg.annotation:
                             arg_type_hint = ast.unparse(arg.annotation).strip()
-                            method_type_hints.append((arg_name, arg_type_hint))
+                            method_type_hints[arg_name] = arg_type_hint
 
                     method_data = {
                         'name': method_name,
