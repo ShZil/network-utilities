@@ -1,5 +1,5 @@
 from ipconfig import ipconfig
-from CacheDecorators import memorise
+from CacheDecorators import one_cache
 
 __author__ = 'Shaked Dan Zilberman'
 
@@ -185,7 +185,7 @@ def subnet_slash_notation(subnet_mask: str, router: str) -> str:
     return f"{router}/{count}"
 
 
-@memorise
+@one_cache
 def get_all_possible_addresses() -> list[str]:
     """This method calculates all the possible IPv4 addresses in the current subnet,
     according to this device's IP address and the Subnet Mask, both from `ipconfig()`.

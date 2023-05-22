@@ -30,6 +30,7 @@ def hop(ttl, dst):
         return 'Undefined'
     return results.pop()
 
+
 def traceroute(dst):
     ROUTE_MAX = 20
     path = []
