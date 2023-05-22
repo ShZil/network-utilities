@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Page-1" id="a8F7jJg699dGcDbAWTl5">
-        <mxGraphModel dx="2985" dy="2143" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1242" dy="1486" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -731,9 +731,6 @@
                 <mxCell id="35" value="&amp;nbsp; &amp;nbsp; __download_from_git.bat" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fontFamily=Consolas;fontSize=24;fillColor=#832291;arcSize=26;verticalAlign=middle;" vertex="1" parent="1">
                     <mxGeometry x="1720" y="1020" width="370" height="85" as="geometry"/>
                 </mxCell>
-                <mxCell id="36" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Github-desktop-logo-symbol.svg/1200px-Github-desktop-logo-symbol.svg.png;" vertex="1" parent="1">
-                    <mxGeometry x="1728" y="1038" width="50" height="50" as="geometry"/>
-                </mxCell>
                 <mxCell id="38" style="edgeStyle=none;html=1;strokeWidth=4;fontFamily=Consolas;fontSize=22;" edge="1" parent="1" source="37" target="2">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
@@ -764,7 +761,7 @@
                 <mxCell id="47" value="PyWin32" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#1e1a1a;strokeWidth=2;fontFamily=Consolas;fontSize=25;fillColor=#66ff66;size=40;" vertex="1" parent="1">
                     <mxGeometry x="-280" width="150" height="75" as="geometry"/>
                 </mxCell>
-                <mxCell id="48" value="io" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#1e1a1a;strokeWidth=2;fontFamily=Consolas;fontSize=25;fillColor=#18141d;size=20;" vertex="1" parent="1">
+                <mxCell id="48" value="io" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#1e1a1a;strokeWidth=2;fontFamily=Consolas;fontSize=25;fillColor=#18141d;size=20;fontColor=#736D6D;" vertex="1" parent="1">
                     <mxGeometry x="1700" y="655" width="90" height="75" as="geometry"/>
                 </mxCell>
                 <mxCell id="50" value="tkinter" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;strokeColor=#1e1a1a;strokeWidth=2;fontFamily=Consolas;fontSize=25;fillColor=#00cc00;size=40;gradientColor=#66ff66;gradientDirection=west;" vertex="1" parent="1">
@@ -793,6 +790,9 @@
                 </mxCell>
                 <mxCell id="59" value="scans.db" style="shape=datastore;whiteSpace=wrap;html=1;strokeColor=#1e1a1a;strokeWidth=2;fontFamily=Consolas;fontSize=38;fillColor=#2174ef;gradientColor=none;gradientDirection=west;" vertex="1" parent="1">
                     <mxGeometry x="-533" y="640" width="203" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#0e1010;shape=mxgraph.azure.github_code;pointerEvents=1;strokeWidth=2;fontFamily=Consolas;fontSize=38;fontColor=#736D6D;" vertex="1" parent="1">
+                    <mxGeometry x="1727" y="1035" width="50" height="50" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
