@@ -89,18 +89,13 @@ with open('classes_diagram_result.py', 'w', encoding='utf-8') as file:
         for method_data in methods:
             method_name = method_data['name']
             method_docstring = method_data['docstring']
-            method_args = ', '.join(method_data['args'])
-            method_type_hints = []
+            method_args = [f"{arg}: {method_data['type_hints'][arg]}" if arg in method_data['type_hints'] else arg for arg in method_data['args']]
+            method_args = ', '.join(method_args)
 
-            for arg_name, type_hint in method_data['type_hints']:
-                if type_hint:
-                    method_type_hints.append(f"{arg_name}: {type_hint}")
 
             method_declaration = f"    def {method_name}({method_args})"
-            method_docstring = f'        """\n        {method_docstring}\n        """'
-
-            if method_type_hints:
-                method_declaration += f" -> {', '.join(method_type_hints)}"
+            if method_docstring != '':
+                method_docstring = f'        """\n        {method_docstring}\n        """'
 
             methods_code.append(f"{method_declaration}:")
             methods_code.append(method_docstring)
@@ -108,7 +103,7 @@ with open('classes_diagram_result.py', 'w', encoding='utf-8') as file:
 
         fields_code = []
         for field in fields:
-            fields_code.append(f"    {field} = ...\n")
+            fields_code.append(f"    {field} = ...")
 
         class_code = '\n'.join([class_declaration, docstring] + methods_code + fields_code)
         file.write(class_code + '\n\n')

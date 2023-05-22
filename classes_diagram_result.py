@@ -3,106 +3,67 @@ class Colors:
     ANSI color codes 
     """
     BLACK = ...
-
     RED = ...
-
     GREEN = ...
-
     BROWN = ...
-
     BLUE = ...
-
     PURPLE = ...
-
     CYAN = ...
-
     LIGHT_GRAY = ...
-
     DARK_GRAY = ...
-
     LIGHT_RED = ...
-
     LIGHT_GREEN = ...
-
     YELLOW = ...
-
     LIGHT_BLUE = ...
-
     LIGHT_PURPLE = ...
-
     LIGHT_CYAN = ...
-
     LIGHT_WHITE = ...
-
     BOLD = ...
-
     FAINT = ...
-
     ITALIC = ...
-
     UNDERLINE = ...
-
     BLINK = ...
-
     NEGATIVE = ...
-
     CROSSED = ...
-
     END = ...
-
 
 class ScanFileBuilder:
     """
     
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
-    def add(self, part) -> part: bytes:
-        """
-        
-        """
+    def add(self, part):
+
         pass
 
     def add_many(self, parts):
-        """
-        
-        """
+
         pass
 
-    def write_to(self, path) -> path: str:
-        """
-        
-        """
+    def write_to(self, path):
+
         pass
 
-    def set_password(self, password) -> password: str:
-        """
-        
-        """
+    def set_password(self, password):
+
         pass
 
-    def parse(self, path) -> path: str:
-        """
-        
-        """
+    def parse(self, path):
+
         pass
 
     HEADER = ...
-
     SEP = ...
-
     COMMA = ...
-
 
 class Cipher_CBC:
     """
     
     """
-    def __init__(self, password) -> password: str:
+    def __init__(self, password):
         """
         This function initializes the cipherer.
 
@@ -111,7 +72,7 @@ Args:
         """
         pass
 
-    def encrypt(self, msg) -> msg: bytes:
+    def encrypt(self, msg):
         """
         This function encrypts the message.
 
@@ -123,7 +84,7 @@ Returns:
         """
         pass
 
-    def decrypt(self, ciphertext) -> ciphertext: bytes:
+    def decrypt(self, ciphertext):
         """
         This function decrypts the message.
 
@@ -196,21 +157,15 @@ class ImportDefence:
     
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def __enter__(self):
-        """
-        
-        """
+
         pass
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """
-        
-        """
+
         pass
 
 
@@ -219,12 +174,10 @@ class NetworkEntity:
     
     """
     def __init__(self, mac, ip, ipv6, name):
-        """
-        
-        """
+
         pass
 
-    def equals(self, other) -> other: object:
+    def equals(self, other):
         """
         This method checks equality between `self` and `other`.
 
@@ -260,33 +213,23 @@ Returns:
         pass
 
     def __getitem__(self, key):
-        """
-        
-        """
+
         pass
 
     def __setitem__(self, key, value):
-        """
-        
-        """
+
         pass
 
     def __str__(self):
-        """
-        
-        """
+
         pass
 
     def to_string(self, sep):
-        """
-        
-        """
+
         pass
 
     def to_dict(self):
-        """
-        
-        """
+
         pass
 
     def compare(self):
@@ -311,21 +254,15 @@ Args:
         pass
 
     def __hash__(self):
-        """
-        
-        """
+
         pass
 
     def __eq__(self, other):
-        """
-        
-        """
+
         pass
 
     def tablestring(self, lengths):
-        """
-        
-        """
+
         pass
 
 
@@ -334,15 +271,11 @@ class LockedNetworkEntity(NetworkEntity):
     
     """
     def __setitem__(self, key, value):
-        """
-        
-        """
+
         pass
 
     def merge(self, other):
-        """
-        
-        """
+
         pass
 
 
@@ -351,21 +284,15 @@ class NetworkStorage:
     
     """
     def __new__(cls):
-        """
-        
-        """
+
         pass
 
     def _give_names(self):
-        """
-        
-        """
+
         pass
 
     def add(self):
-        """
-        
-        """
+
         pass
 
     def special_add(self):
@@ -380,21 +307,15 @@ Args:
         pass
 
     def connect(self, ip1, ip2):
-        """
-        
-        """
+
         pass
 
     def _resolve(self):
-        """
-        
-        """
+
         pass
 
     def sort(self, key):
-        """
-        
-        """
+
         pass
 
     def organise(self, key):
@@ -422,15 +343,11 @@ Raises:
         pass
 
     def __iter__(self):
-        """
-        
-        """
+
         pass
 
     def __len__(self):
-        """
-        
-        """
+
         pass
 
     def __getitem__(self, key):
@@ -450,32 +367,23 @@ Returns:
         pass
 
     def print(self):
-        """
-        
-        """
+
         pass
 
     def tablestring(self):
-        """
-        
-        """
+
         pass
 
     data = ...
-
     waiting = ...
-
     connections = ...
-
 
 class LAN:
     """
     
     """
     def __contains__(self, entity):
-        """
-        
-        """
+
         pass
 
 
@@ -484,158 +392,107 @@ class SpecialInformation(dict):
     
     """
     def __new__(cls):
-        """
-        
-        """
+
         pass
 
     def __init__(self):
-        """
-        
-        """
+
         pass
 
-    def __setitem__(self, keys, value) -> keys: tuple[NetworkEntity, str]:
-        """
-        
-        """
+    def __setitem__(self, keys, value):
+
         pass
 
     def __getitem__(self, key):
-        """
-        
-        """
+
         pass
 
     def __contains__(self, item):
-        """
-        
-        """
+
         pass
 
     _instance = ...
-
 
 class ListWithSQL:
     """
     
     """
-    def __init__(self, path, maxram) -> path: str, maxram: int:
-        """
-        
-        """
+    def __init__(self, path, maxram):
+
         pass
 
     def copy(self):
-        """
-        
-        """
+
         pass
 
-    def append(self, __object) -> __object: _T:
-        """
-        
-        """
+    def append(self, __object):
+
         pass
 
     def _flush_to_sql(self):
-        """
-        
-        """
+
         pass
 
-    def extend(self, __iterable) -> __iterable: Iterable[_T]:
-        """
-        
-        """
+    def extend(self, __iterable):
+
         pass
 
-    def pop(self, __index) -> __index: SupportsIndex:
-        """
-        
-        """
+    def pop(self, __index):
+
         pass
 
-    def index(self, __value, __start, __stop) -> __value: _T, __start: SupportsIndex, __stop: SupportsIndex:
-        """
-        
-        """
+    def index(self, __value, __start, __stop):
+
         pass
 
-    def count(self, __value) -> __value: _T:
-        """
-        
-        """
+    def count(self, __value):
+
         pass
 
-    def insert(self, __index, __object) -> __index: SupportsIndex, __object: _T:
-        """
-        
-        """
+    def insert(self, __index, __object):
+
         pass
 
-    def remove(self, __value) -> __value: _T:
-        """
-        
-        """
+    def remove(self, __value):
+
         pass
 
-    def sort(self) -> self: list:
-        """
-        
-        """
+    def sort(self):
+
         pass
 
     def __len__(self):
-        """
-        
-        """
+
         pass
 
     def __iter__(self):
-        """
-        
-        """
+
         pass
 
-    def __getitem__(self, __i) -> __i: SupportsIndex | slice:
-        """
-        
-        """
+    def __getitem__(self, __i):
+
         pass
 
-    def __setitem__(self, __key, __value) -> __key: SupportsIndex, __value: _T:
-        """
-        
-        """
+    def __setitem__(self, __key, __value):
+
         pass
 
-    def __delitem__(self, __key) -> __key: SupportsIndex | slice:
-        """
-        
-        """
+    def __delitem__(self, __key):
+
         pass
 
-    def __contains__(self, __key) -> __key: object:
-        """
-        
-        """
+    def __contains__(self, __key):
+
         pass
 
     def __reversed__(self):
-        """
-        
-        """
+
         pass
 
     CREATE = ...
-
     INSERT = ...
-
     CLEAR = ...
-
     RESET_AUTOINCREMENT = ...
-
 
 class ObserverPublisher:
     """
@@ -650,27 +507,19 @@ Just extend this class, make sure to call `.add_datum` when new data arrives,
 and you can use `add_observer` to attach observers!
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def notify_all(self):
-        """
-        
-        """
+
         pass
 
-    def add_observer(self, observer) -> observer: Callable:
-        """
-        
-        """
+    def add_observer(self, observer):
+
         pass
 
     def add_datum(self, datum):
-        """
-        
-        """
+
         pass
 
 
@@ -679,69 +528,46 @@ class PacketSniffer(ObserverPublisher):
     
     """
     def __new__(cls, max_packets):
-        """
-        
-        """
+
         pass
 
     def __init__(self, max_packets):
-        """
-        
-        """
+
         pass
 
     def stop(self):
-        """
-        
-        """
+
         pass
 
-    def get_packet(self, i) -> i: int:
-        """
-        
-        """
+    def get_packet(self, i):
+
         pass
 
     def _packet_handler(self, packet):
-        """
-        
-        """
+
         pass
 
     def __len__(self):
-        """
-        
-        """
+
         pass
 
     def _flush_packets(self):
-        """
-        
-        """
+
         pass
 
     def _ip_filter(self, packet):
-        """
-        
-        """
+
         pass
 
     def __iter__(self):
-        """
-        
-        """
+
         pass
 
     _instance = ...
-
     DB_PATH = ...
-
     SQL_CREATE_TABLE = ...
-
     INSERT_STATEMENT = ...
-
     CLEAR_TABLE = ...
-
 
 class _Printing:
     """
@@ -749,21 +575,15 @@ class _Printing:
 It is not meant to be used directly, but other classes can inherit it.
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def __enter__(self):
-        """
-        
-        """
+
         pass
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """
-        
-        """
+
         pass
 
 
@@ -778,21 +598,15 @@ with InstantPrinting():
 ```
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def __enter__(self):
-        """
-        
-        """
+
         pass
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """
-        
-        """
+
         pass
 
 
@@ -822,27 +636,19 @@ Implements:
 `flush`: does nothing.
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def write(self, data):
-        """
-        
-        """
+
         pass
 
     def getvalue(self):
-        """
-        
-        """
+
         pass
 
     def flush():
-        """
-        
-        """
+
         pass
 
 
@@ -863,15 +669,11 @@ with JustifyPrinting():
 ```
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """
-        
-        """
+
         pass
 
 
@@ -892,19 +694,14 @@ with TablePrinting():
 ```
     """
     def __init__(self, align):
-        """
-        
-        """
+
         pass
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """
-        
-        """
+
         pass
 
     aligns = ...
-
 
 class AutoLinebreaks(InstantPrinting):
     """
@@ -925,15 +722,11 @@ with AutoLinebreaks():
 ```
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """
-        
-        """
+
         pass
 
 
@@ -953,117 +746,80 @@ This class implements the singleton pattern.
 * formerly GUI Buttons, abstracted by `class Scan`.
     """
     def __new__(cls):
-        """
-        
-        """
+
         pass
 
     def __setitem__(self, key, value):
-        """
-        
-        """
+
         pass
 
-    def __getitem__(self, key) -> key: str:
-        """
-        
-        """
+    def __getitem__(self, key):
+
         pass
 
-    def start(self, name, action, callback) -> name: str:
-        """
-        
-        """
+    def start(self, name, action, callback):
+
         pass
 
-    def is_running(self, name) -> name: str:
-        """
-        
-        """
+    def is_running(self, name):
+
         pass
 
-    def is_infinite_scan(self, name) -> name: str:
-        """
-        
-        """
+    def is_infinite_scan(self, name):
+
         pass
 
     def get_history(self):
-        """
-        
-        """
+
         pass
 
     _instance = ...
-
     infinites = ...
-
     history = ...
-
 
 class Sniffer(AsyncSniffer):
     """
     
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def stopall():
-        """
-        
-        """
+
         pass
 
     references = ...
-
 
 class MACVendorDict:
     """
     
     """
     def __new__(cls):
-        """
-        
-        """
+
         pass
 
     def __contains__(self, mac):
-        """
-        
-        """
+
         pass
 
     def __setitem__(self, mac, text):
-        """
-        
-        """
+
         pass
 
     def __getitem__(self, mac):
-        """
-        
-        """
+
         pass
 
     def get(self, mac, default):
-        """
-        
-        """
+
         pass
 
     _instance = ...
-
     path = ...
-
     CREATE_QUERY = ...
-
     SELECT_QUERY = ...
-
     INSERT_QUERY = ...
-
 
 class MyApp(App):
     """
@@ -1080,9 +836,7 @@ Args:
     App (tk): the tkinter base app.
     """
     def build(self):
-        """
-        
-        """
+
         pass
 
 
@@ -1091,43 +845,30 @@ class State:
     
     """
     def __new__(cls):
-        """
-        
-        """
+
         pass
 
     def setScreenManager(self, screens):
-        """
-        
-        """
+
         pass
 
     def screen(self, name):
-        """
-        
-        """
+
         pass
 
     def resize_callback(self):
-        """
-        
-        """
+
         pass
 
     def scan(self, scan):
-        """
-        
-        """
+
         pass
 
     def ask_for_permission(self):
-        """
-        
-        """
+
         pass
 
     _instance = ...
-
 
 class Diagrams:
     """
@@ -1141,19 +882,14 @@ To use, simply create an instance (uses Singleton), and do `.add` to your diagra
         pass
 
     def add(self, diagram):
-        """
-        
-        """
+
         pass
 
     def update(self):
-        """
-        
-        """
+
         pass
 
     _instance = ...
-
 
 class Diagram(ABC):
     """
@@ -1161,45 +897,31 @@ class Diagram(ABC):
     
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def update(self):
-        """
-        
-        """
+
         pass
 
     def color(self, r, g, b):
-        """
-        
-        """
+
         pass
 
     def rectangle(self, x, y, w, h):
-        """
-        
-        """
+
         pass
 
     def circle(self, x, y, node):
-        """
-        
-        """
+
         pass
 
     def line(self, x0, y0, x1, y1, stroke):
-        """
-        
-        """
+
         pass
 
     def __contains__(self, pos):
-        """
-        
-        """
+
         pass
 
 
@@ -1215,51 +937,35 @@ Extends:
     ContextManager (type): allows for this class to be used as a context manager (for rendering).
     """
     def __new__(cls):
-        """
-        
-        """
+
         pass
 
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
-        """
-        
-        """
+
         pass
 
     def color(self, r, g, b):
-        """
-        
-        """
+
         pass
 
     def rectangle(self, x, y, w, h):
-        """
-        
-        """
+
         pass
 
     def circle(self, x, y, node):
-        """
-        
-        """
+
         pass
 
     def line(self, x0, y0, x1, y1, stroke):
-        """
-        
-        """
+
         pass
 
     def __contains__(self, pos):
-        """
-        
-        """
+
         pass
 
     def try_close(self):
@@ -1269,31 +975,22 @@ Extends:
         pass
 
     def hide(self):
-        """
-        
-        """
+
         pass
 
     def show(self):
-        """
-        
-        """
+
         pass
 
     def resize(self, event):
-        """
-        
-        """
+
         pass
 
     def update(self):
-        """
-        
-        """
+
         pass
 
     _instance = ...
-
 
 class PlotDiagram(Diagram):
     """
@@ -1305,79 +1002,54 @@ Extends:
     ContextManager (type): allows for this class to be used as a context manager (for rendering).
     """
     def __new__(cls):
-        """
-        
-        """
+
         pass
 
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def __enter__(self):
-        """
-        
-        """
+
         pass
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
-        """
-        
-        """
+
         pass
 
     def color(self, r, g, b):
-        """
-        
-        """
+
         pass
 
     def rectangle(self, x, y, w, h):
-        """
-        
-        """
+
         pass
 
     def circle(self, x, y, node):
-        """
-        
-        """
+
         pass
 
     def line(self, x0, y0, x1, y1, stroke):
-        """
-        
-        """
+
         pass
 
     def __contains__(self, pos):
-        """
-        
-        """
+
         pass
 
     def update(self):
-        """
-        
-        """
+
         pass
 
     def show(self):
-        """
-        
-        """
+
         pass
 
     def hide(self):
-        """
-        
-        """
+
         pass
 
     _instance = ...
-
 
 class KivyDiagram(Diagram):
     """
@@ -1393,129 +1065,88 @@ Extends:
     ContextManager (type): allows for this class to be used as a context manager (for rendering).
     """
     def __new__(cls):
-        """
-        
-        """
+
         pass
 
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def set_widget(self, widget):
-        """
-        
-        """
+
         pass
 
     def __enter__(self):
-        """
-        
-        """
+
         pass
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
-        """
-        
-        """
+
         pass
 
     def color(self, r, g, b):
-        """
-        
-        """
+
         pass
 
     def rectangle(self, x, y, w, h):
-        """
-        
-        """
+
         pass
 
     def circle(self, x, y, node):
-        """
-        
-        """
+
         pass
 
     def line(self, x0, y0, x1, y1, stroke):
-        """
-        
-        """
+
         pass
 
     def __contains__(self, pos):
-        """
-        
-        """
+
         pass
 
     def update(self):
-        """
-        
-        """
+
         pass
 
     _instance = ...
-
 
 class IconType(Enum):
     """
     
     """
     INPUT = ...
-
     ERROR = ...
-
     WARNING = ...
-
     QUESTION = ...
-
     INFO = ...
-
     NOTHING = ...
-
 
 class PopupManager:
     """
     
     """
     def __new__(cls):
-        """
-        
-        """
+
         pass
 
     def add(self, popup):
-        """
-        
-        """
+
         pass
 
     def render_popup(self, popup):
-        """
-        
-        """
+
         pass
 
-    def _get_input(self, title, message) -> title: str, message: str:
-        """
-        
-        """
+    def _get_input(self, title, message):
+
         pass
 
-    def _show_text(self, title, message, icon) -> title: str, message: str, icon: IconType:
-        """
-        
-        """
+    def _show_text(self, title, message, icon):
+
         pass
 
     def stop(self):
-        """
-        
-        """
+
         pass
 
     def _popup_loop(self):
@@ -1526,7 +1157,6 @@ Waits for popups to arrive and displays them when available.
         pass
 
     _instance = ...
-
 
 class Hover:
     """
@@ -1539,47 +1169,32 @@ Raises:
     TypeError: raised when `.add_behavior(behavior)` receives a `behavior` that is not of type `HoverBehavior`.
     """
     def _bind():
-        """
-        
-        """
+
         pass
 
     def add(instance):
-        """
-        
-        """
+
         pass
 
     def add_behavior(behavior):
-        """
-        
-        """
+
         pass
 
     def update(window, pos):
-        """
-        
-        """
+
         pass
 
-    def enter(screen) -> screen: str:
-        """
-        
-        """
+    def enter(screen):
+
         pass
 
     def start():
-        """
-        
-        """
+
         pass
 
     items = ...
-
     behaviors = ...
-
     current_screen = ...
-
 
 class HoverBehavior:
     """
@@ -1587,21 +1202,15 @@ class HoverBehavior:
 and pass the instances to `Hover.add_behavior(...)`.
     """
     def show(self):
-        """
-        
-        """
+
         pass
 
     def hide(self):
-        """
-        
-        """
+
         pass
 
     def collide_point(self, x, y):
-        """
-        
-        """
+
         pass
 
 
@@ -1612,27 +1221,19 @@ When hovered, it displays the string in `text`,
 otherwise, it displays the initial string.
     """
     def __init__(self, widget, text, font_size, font):
-        """
-        
-        """
+
         pass
 
     def show(self):
-        """
-        
-        """
+
         pass
 
     def hide(self):
-        """
-        
-        """
+
         pass
 
     def collide_point(self, x, y):
-        """
-        
-        """
+
         pass
 
 
@@ -1643,21 +1244,15 @@ When hovered, it displays the string in `text` (AND a different background colou
 otherwise, it displays the initial string.
     """
     def __init__(self, widget, text, font_size, new_bg, font):
-        """
-        
-        """
+
         pass
 
     def show(self):
-        """
-        
-        """
+
         pass
 
     def hide(self):
-        """
-        
-        """
+
         pass
 
 
@@ -1668,22 +1263,16 @@ class ButtonColumn(GridLayout):
 Args:
     GridLayout (tk): the superclass.
     """
-    def __init__(self, width) -> width: int:
-        """
-        
-        """
+    def __init__(self, width):
+
         pass
 
-    def add(self, text, callback) -> text: str:
-        """
-        
-        """
+    def add(self, text, callback):
+
         pass
 
     def add_raw(self, button):
-        """
-        
-        """
+
         pass
 
 
@@ -1696,15 +1285,11 @@ Args:
     Widget (tkinter widget): the superclass.
     """
     def init(self):
-        """
-        
-        """
+
         pass
 
     def on_touch_down(self, touch):
-        """
-        
-        """
+
         pass
 
 
@@ -1713,9 +1298,7 @@ class GreenButton(Button):
     A button that has green background, and also adds itself to `Hover`.
     """
     def __init__(self, text):
-        """
-        
-        """
+
         pass
 
 
@@ -1724,9 +1307,7 @@ class OperationButton(Button):
     A button that has grey background, adds itself to `Hover`, defines a `HoverReplace` on itself, and uses font `Symbols`.
     """
     def __init__(self, text, long_text, onclick):
-        """
-        
-        """
+
         pass
 
 
@@ -1735,88 +1316,61 @@ class Scan:
     
     """
     def __init__(self, name, action, parent):
-        """
-        
-        """
+
         pass
 
     def select(self, x):
-        """
-        
-        """
+
         pass
 
     def paint_highligh(self):
-        """
-        
-        """
+
         pass
 
     def deselect(self):
-        """
-        
-        """
+
         pass
 
     def act(self):
-        """
-        
-        """
+
         pass
 
     def finished(self):
-        """
-        
-        """
+
         pass
 
     font_size = ...
-
     background_color = ...
-
 
 class DummyScan(Scan):
     """
     
     """
     def __new__(cls):
-        """
-        
-        """
+
         pass
 
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def select(self, x):
-        """
-        
-        """
+
         pass
 
     def deselect(self):
-        """
-        
-        """
+
         pass
 
     def act(self):
-        """
-        
-        """
+
         pass
 
     def finished(self):
-        """
-        
-        """
+
         pass
 
     _instance = ...
-
 
 class Analysis(Scan):
     """
@@ -1831,15 +1385,11 @@ Changes:
 - highlight colour is ANALYSIS_HIGHLIGHT.
     """
     def __init__(self, name, action, parent):
-        """
-        
-        """
+
         pass
 
     def paint_highligh(self):
-        """
-        
-        """
+
         pass
 
 
@@ -1869,9 +1419,7 @@ Args:
     Screen (kivy): the base class for a screen.
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
 
@@ -1901,9 +1449,7 @@ Args:
     ButtonColumn (GridLayout): this inherits from ButtonColumn.
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
 
@@ -1916,15 +1462,11 @@ Args:
     Label (kivy): the base class from kivy.
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def data(self, text):
-        """
-        
-        """
+
         pass
 
 
@@ -1933,9 +1475,7 @@ class Pages(BoxLayout):
     
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
 
@@ -1944,15 +1484,11 @@ class SaveScreenExportButton(GreenButton):
     
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def export(self, _):
-        """
-        
-        """
+
         pass
 
 
@@ -1961,15 +1497,11 @@ class SaveScreenImportButton(GreenButton):
     
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def do_import(self, _):
-        """
-        
-        """
+
         pass
 
 
@@ -1999,9 +1531,7 @@ Args:
     Screen (kivy): the base class for a screen.
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
 
@@ -2031,9 +1561,7 @@ Args:
     RelativeLayout (kivy): the diagram is a type of a Relative Layout, since widgets are placed sporadically.
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
 
@@ -2063,9 +1591,7 @@ Args:
     ButtonColumn (GridLayout): this inherits from ButtonColumn.
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
 
@@ -2095,9 +1621,7 @@ Args:
     Screen (kivy): the base class for a screen.
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
 
@@ -2127,9 +1651,7 @@ Args:
     Screen (kivy): the base class for a screen.
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
 
@@ -2142,15 +1664,11 @@ Args:
     Label (kivy): the base class from kivy.
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def data(self, text):
-        """
-        
-        """
+
         pass
 
 
@@ -2180,9 +1698,7 @@ Args:
     Screen (kivy): the base class for a screen.
     """
     def __init__(self):
-        """
-        
-        """
+
         pass
 
 
@@ -2191,23 +1707,16 @@ class DeviceDiscoveryListener:
     
     """
     def __new__(cls):
-        """
-        
-        """
+
         pass
 
     def __init__(self):
-        """
-        
-        """
+
         pass
 
     def check_packet(self, packet):
-        """
-        
-        """
+
         pass
 
     _instance = ...
-
 
