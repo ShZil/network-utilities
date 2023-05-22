@@ -3063,3 +3063,9 @@ Weaknesses of my software? Ha ha, none! My project is the best and the strongest
 to assist me when writing the Portfolio section about my classes.
 
 [17:24] ChatGPT finally has a "⏩ Continue generating" button!!! Yes!
+
+[17:59] A friend with Copilot X GPT-4 access helped me debug the GPT-3 classes_diagram code.
+I then debugged the result (using my _human_ intelligence) to add type hints.
+
+[18:02] Used GPT-3 again to add type hints for the return values.
+These are all tools. We are the ones who have to know which tool to use, and for which tasks.

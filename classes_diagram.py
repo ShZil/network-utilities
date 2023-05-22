@@ -23,6 +23,7 @@ def extract_classes(file_path):
                     method_docstring = ast.get_docstring(subnode) or ''
                     method_args = []
                     method_type_hints = dict()
+                    method_return_type_hint = ''
 
                     for arg in subnode.args.args:
                         arg_name = arg.arg
@@ -32,11 +33,15 @@ def extract_classes(file_path):
                             arg_type_hint = ast.unparse(arg.annotation).strip()
                             method_type_hints[arg_name] = arg_type_hint
 
+                    if subnode.returns:
+                        method_return_type_hint = ast.unparse(subnode.returns).strip()
+
                     method_data = {
                         'name': method_name,
                         'docstring': method_docstring,
                         'args': method_args,
-                        'type_hints': method_type_hints
+                        'type_hints': method_type_hints,
+                        'return_type_hint': method_return_type_hint
                     }
 
                     methods.append(method_data)
@@ -92,10 +97,13 @@ with open('classes_diagram_result.py', 'w', encoding='utf-8') as file:
             method_args = [f"{arg}: {method_data['type_hints'][arg]}" if arg in method_data['type_hints'] else arg for arg in method_data['args']]
             method_args = ', '.join(method_args)
 
-
             method_declaration = f"    def {method_name}({method_args})"
             if method_docstring != '':
                 method_docstring = f'        """\n        {method_docstring}\n        """'
+
+            method_return_type_hint = method_data['return_type_hint']
+            if method_return_type_hint:
+                method_declaration += f" -> {method_return_type_hint}"
 
             methods_code.append(f"{method_declaration}:")
             if method_docstring:
