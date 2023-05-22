@@ -19,7 +19,27 @@ def extract_classes(file_path):
 
             for subnode in node.body:
                 if isinstance(subnode, ast.FunctionDef):
-                    methods.append(subnode.name)
+                    method_name = subnode.name
+                    method_docstring = ast.get_docstring(subnode) or ''
+                    method_args = []
+                    method_type_hints = []
+
+                    for arg in subnode.args.args:
+                        arg_name = arg.arg
+                        method_args.append(arg_name)
+
+                        if arg.annotation:
+                            arg_type_hint = ast.unparse(arg.annotation).strip()
+                            method_type_hints.append(f'{arg_name}: {arg_type_hint}')
+
+                    method_data = {
+                        'name': method_name,
+                        'docstring': method_docstring,
+                        'args': method_args,
+                        'type_hints': method_type_hints
+                    }
+
+                    methods.append(method_data)
                 elif isinstance(subnode, ast.Assign):
                     field_name = subnode.targets[0].id
                     fields.append(field_name)
@@ -53,20 +73,38 @@ def extract_classes_from_files(directory):
 directory = "./Scanner"
 classes = extract_classes_from_files(directory)
 
-open('classes_diagram.py', 'w', encoding='utf-8').close()
+with open('classes_diagram_result.py', 'w', encoding='utf-8') as file:
+    for class_data in classes:
+        name = class_data['name']
+        superclass = class_data['superclass']
+        docstring = class_data['docstring']
+        methods = class_data['methods']
+        fields = class_data['fields']
 
-for class_data in classes:
-    name, superclass, docstring, methods, fields = class_data['name'], class_data['superclass'], class_data['docstring'], '\n'.join(class_data['methods']), '\n'.join(class_data['fields'])
-    superclass = f"({superclass})" if len(superclass) > 0 else ''
-    methods = "# Methods:\n" + methods if len(methods) > 0 else ''
-    fields = "# Fields:\n" + fields if len(fields) > 0 else ''
-    print(f"""
-    class {name}{superclass}:
-        \"\"\"
-        {docstring}
-        \"\"\"
+        superclass = f"({superclass})" if superclass else ''
+        class_declaration = f"class {name}{superclass}:"
+        docstring = f'    """\n    {docstring}\n    """'
 
-        {methods}
-        {fields}
-    \n\n
-    """, file=open('classes_diagram_result.py', 'a', encoding='utf-8'))
+        methods_code = []
+        for method_data in methods:
+            method_name = method_data['name']
+            method_docstring = method_data['docstring']
+            method_args = ', '.join(method_data['args'])
+            method_type_hints = ', '.join(method_data['type_hints'])
+
+            method_declaration = f"    def {method_name}({method_args})"
+            method_docstring = f'        """\n        {method_docstring}\n        """'
+
+            if method_type_hints:
+                method_declaration += f" -> {method_type_hints}"
+
+            methods_code.append(f"{method_declaration}:")
+            methods_code.append(method_docstring)
+            methods_code.append('        pass\n')
+
+        fields_code = []
+        for field in fields:
+            fields_code.append(f"    {field} = ...\n")
+
+        class_code = '\n'.join([class_declaration, docstring] + methods_code + fields_code)
+        file.write(class_code + '\n\n')
