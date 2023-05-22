@@ -15,7 +15,7 @@ class ButtonColumn(GridLayout):
     """Organises buttons in a column
 
     Args:
-        GridLayout (tk): the superclass.
+        GridLayout (kivy): the superclass.
     """
 
     def __init__(self, width: int):
@@ -49,7 +49,7 @@ class MyPaintWidget(Widget):
     It is the caller's responsibility to set this as the `KivyDiagram()`'s widget.
 
     Args:
-        Widget (tkinter widget): the superclass.
+        Widget (kivy widget): the superclass.
     """
 
     def init(self):

@@ -23,7 +23,7 @@ class MyApp(App):
 
 
     Args:
-        App (tk): the tkinter base app.
+        App (kivy): the kivy base app.
     """
 
     def build(self):
