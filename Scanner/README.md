@@ -3050,3 +3050,11 @@ More Markdown formatting under `general_information`.
 [21:33] Making `register.drawio`.
 
 [22:03] Update `modules.drawio`.
+
+
+
+### 2023-05-22
+[15:32] Working on the project portfolio. One day.
+Weaknesses of my software? Ha ha, none! My project is the best and the strongest! XD lol
+
+[16:26] Created `modules extended.drawio`.
