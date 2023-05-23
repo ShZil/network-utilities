@@ -152,7 +152,7 @@ def test_append_and_getitem():
 
 def test() -> None:
     os.system("")  # Enables ANSI colouring
-    # get all funcstions defined in this module (tests.py)
+    # get all functions defined in this module (tests.py)
     tests = inspect.getmembers(sys.modules[__name__], inspect.isfunction)
     # extract the functions, if they're defined here (i.e. not imported),
     # and exclude `test` (because that'll cause some infinite recursion issues.)
@@ -161,10 +161,10 @@ def test() -> None:
     tests.sort(key=lambda func: func.__name__)
     # Each element is a boolean function. False means the test failed.
     results = [not run() for run in tests]
-    # Log all tests, both successful and unsucessful.
+    # Log all tests, both successful and unsuccessful.
     with open('tests_log.txt', 'w') as log:
         log.write('\n'.join([
-            test.__name__ + " " + ("Successful" if not result else "Unsucessful")
+            test.__name__ + " " + ("Successful" if not result else "Unsuccessful")
             for test, result in zip(tests, results)
         ]))
         if not any(results):
@@ -180,7 +180,7 @@ def test() -> None:
     else:
         print("All tests were successful.")
         print(sys.version)
-    print("\033[0m")  # End colors
+    print("\033[0m")  # End colours
 
 
 if __name__ == '__main__':
