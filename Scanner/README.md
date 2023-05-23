@@ -3079,3 +3079,13 @@ It doesn't seem like I'll get much sleep tonight.
 [00:40] Still working on the portfolio.
 Joined a Discord VC with friends who also have to do it tonight.
 I've now finished section 2 of the Implementation part, currently 117 pages / 15186 words.
+
+[05:50] I did not sleep tonight.
+The project portfolio is nearly done, but it's gonna be close.
+
+[06:31] Copying the journal over to the Portfolio,
+this is the last you'll see of me,
+unless you open the dynamic version on GitHub.
+I hope you've had a great time reading this,
+I certainly had the best type constructing and programming this.
+Goodbye, and lastly, goodnight!
