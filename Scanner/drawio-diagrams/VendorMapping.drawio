@@ -1,0 +1,43 @@
+<mxfile host="65bd71144e">
+    <diagram id="TCHf-nLSuzGwJajsvg1c" name="Page-1">
+        <mxGraphModel dx="1104" dy="1925" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="&lt;font face=&quot;Consolas&quot; style=&quot;font-size: 18px;&quot; color=&quot;#f5f5f5&quot;&gt;https://hwaddress.com/?q={mac}&lt;br&gt;&lt;/font&gt;" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=none;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.cloud;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="110" width="270" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" style="edgeStyle=none;html=1;fontFamily=Consolas;fontSize=18;fontColor=#f5f5f5;" parent="1" source="10" target="2" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="570" y="110"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="5" style="edgeStyle=none;html=1;fontFamily=Consolas;fontSize=18;fontColor=#f5f5f5;" parent="1" source="2" target="9" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="560" y="250"/>
+                        </Array>
+                        <mxPoint x="603.59375" y="340" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="12" style="edgeStyle=none;html=1;fontSize=22;strokeWidth=4;startArrow=classic;startFill=1;" edge="1" parent="1" source="3" target="11">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Vendor Mapping" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontFamily=Consolas;fontSize=35;fontColor=#f5f5f5;" parent="1" vertex="1">
+                    <mxGeometry x="560" y="110" width="210" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Special Information" style="shape=datastore;whiteSpace=wrap;html=1;strokeWidth=2;fontFamily=Consolas;fontSize=32;gradientDirection=radial;fillColor=#C056F5;" vertex="1" parent="1">
+                    <mxGeometry x="580" y="340" width="200" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Network Storage" style="shape=datastore;whiteSpace=wrap;html=1;strokeWidth=2;fontFamily=Consolas;fontSize=32;gradientDirection=radial;fillColor=#C056F5;" vertex="1" parent="1">
+                    <mxGeometry x="570" y="-140" width="200" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="Cache&lt;br&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;mac_vendors.db&lt;/font&gt;" style="shape=datastore;whiteSpace=wrap;html=1;strokeWidth=2;fontFamily=Consolas;fontSize=32;gradientDirection=radial;fillColor=#883DAD;fontColor=#ffffff;strokeColor=default;" vertex="1" parent="1">
+                    <mxGeometry x="890" y="95" width="180" height="180" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -3089,3 +3089,9 @@ unless you open the dynamic version on GitHub.
 I hope you've had a great time reading this,
 I certainly had the best type constructing and programming this.
 Goodbye, and lastly, goodnight!
+
+[07:59] Added more diagrams to complete the portfolio.
+My guesses as to page count (200 before code, 350 with code) turned out pretty accurate (197 without, 351 with).
+Gonna slightly off that with the diagrams but it's still impressive.
+
+[08:12] Added the diagrams.

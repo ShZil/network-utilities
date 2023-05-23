@@ -1,0 +1,40 @@
+<mxfile host="65bd71144e">
+    <diagram id="fEH0jCM9jVXo35o1cyl-" name="Page-1">
+        <mxGraphModel dx="1104" dy="825" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="110" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="75" target="106" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="75" value="&amp;nbsp; &amp;nbsp; G (Graph)" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fillColor=#030303;fontColor=#ffffff;strokeColor=#005700;gradientColor=none;gradientDirection=radial;fontSize=40;" parent="1" vertex="1">
+                    <mxGeometry x="129" y="320" width="300" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="106" value="" style="sketch=0;aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=#005700;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#008a00;shape=mxgraph.azure.computer;labelBackgroundColor=none;fontFamily=Consolas;fontSize=50;fontColor=#ffffff;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="520" width="204" height="183.6" as="geometry"/>
+                </mxCell>
+                <mxCell id="107" value="&lt;font face=&quot;Consolas&quot; style=&quot;font-size: 60px;&quot;&gt;User&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeWidth=5;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="780" width="140" height="300" as="geometry"/>
+                </mxCell>
+                <mxCell id="108" value="&lt;font face=&quot;Consolas&quot; color=&quot;#00ff00&quot; style=&quot;font-size: 97px;&quot;&gt;GUI&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=97;" parent="1" vertex="1">
+                    <mxGeometry x="192" y="530" width="180" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="109" value="" style="endArrow=classic;startArrow=classic;html=1;fontFamily=Consolas;fontSize=97;fontColor=#00FF00;strokeWidth=3;" parent="1" source="107" target="106" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="434" y="1172" as="sourcePoint"/>
+                        <mxPoint x="474" y="734.7945205479452" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="113" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="112" target="75">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="112" value="Network Storage" style="shape=datastore;whiteSpace=wrap;html=1;strokeWidth=2;fontFamily=Consolas;fontSize=32;gradientDirection=radial;fillColor=#C056F5;" vertex="1" parent="1">
+                    <mxGeometry x="174" y="10" width="210" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="115" value="" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/management_governance/Resource_Graph_Explorer.svg;" vertex="1" parent="1">
+                    <mxGeometry x="140" y="333" width="67" height="64" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

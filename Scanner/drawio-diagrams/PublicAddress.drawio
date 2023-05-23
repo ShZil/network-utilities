@@ -1,0 +1,29 @@
+<mxfile host="65bd71144e">
+    <diagram id="TCHf-nLSuzGwJajsvg1c" name="Page-1">
+        <mxGraphModel dx="1104" dy="825" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="&lt;font face=&quot;Consolas&quot; style=&quot;font-size: 18px;&quot; color=&quot;#f5f5f5&quot;&gt;https://api.ipify.org&lt;br&gt;&lt;/font&gt;&lt;span style=&quot;color: rgb(245, 245, 245); font-family: Consolas; font-size: 18px;&quot;&gt;https://api64.ipify.org&lt;/span&gt;&lt;font face=&quot;Consolas&quot; style=&quot;font-size: 18px;&quot; color=&quot;#f5f5f5&quot;&gt;&lt;br&gt;&lt;/font&gt;" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=none;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.cloud;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="110" width="270" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" style="edgeStyle=none;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;fontFamily=Consolas;fontSize=18;fontColor=#f5f5f5;" edge="1" parent="1" source="3" target="2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" style="edgeStyle=none;html=1;fontFamily=Consolas;fontSize=18;fontColor=#f5f5f5;" edge="1" parent="1" source="2" target="8">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="560" y="250"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="3" value="Public Address" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontFamily=Consolas;fontSize=35;fontColor=#f5f5f5;" vertex="1" parent="1">
+                    <mxGeometry x="560" y="110" width="210" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Network Storage" style="shape=datastore;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontFamily=Consolas;fontSize=18;fontColor=#f5f5f5;" vertex="1" parent="1">
+                    <mxGeometry x="570" y="340" width="135" height="140" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
