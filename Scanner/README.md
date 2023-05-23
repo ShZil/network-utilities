@@ -3095,3 +3095,7 @@ My guesses as to page count (200 before code, 350 with code) turned out pretty a
 Gonna slightly off that with the diagrams but it's still impressive.
 
 [08:12] Added the diagrams.
+
+[08:22] Converting it to the teacher's desired format and turning it in.
+
+[08:25] Whoo!
