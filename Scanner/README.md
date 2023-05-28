@@ -3150,3 +3150,5 @@ to avoid edge-cases like `125.4` being interpreted as a valid int but resulting 
 
 [20:31] `TypeError: unsupported operand type(s) for *: 'float' and 'types.GenericAlias'`
 It's always the parentheses.
+
+[20:36] Forgot spreading operator.
