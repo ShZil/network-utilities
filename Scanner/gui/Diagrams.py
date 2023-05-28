@@ -9,6 +9,7 @@ with ImportDefence():
 from globalstuff import *
 from util import color_to_hex
 from CacheDecorators import one_cache
+from NetworkStorage import SpecialInformation
 
 from abc import ABC, abstractmethod
 from typing import ContextManager
@@ -309,7 +310,7 @@ class KivyDiagram(Diagram, ContextManager):
 
 def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
     """An abstract representation of the algorithm used to render the diagram.
-    To interface with ~reality~ the screen, it uses the `draw` argument,
+    To interface with ~~reality~~ the screen, it uses the `draw` argument,
     which is a context manager supporting various methods.
     Currently, there are two implementations: `KivyDiagram` and `TKDiagram`.
     """
@@ -318,6 +319,17 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
     H = G.copy()
 
     pos = nx.kamada_kawai_layout(H, center=(x + w / 2, y + h / 2), scale=scale)
+    
+    discovered = SpecialInformation()['discovery']
+    highlights = set()
+    for node in pos.keys():
+        for entity in discovered:
+            if node.equals(entity):
+                highlights.add(node)
+                discovered.remove(entity)
+                break
+        if len(discovered) == 0:
+            break
 
     with draw:
         draw.color(*bg)
@@ -326,6 +338,9 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
         draw.color(*fg)
         for node, (x0, y0) in pos.items():
             if (x0, y0) in draw:
+                draw.color(*fg)
+                if node in highlights:
+                    draw.color(*fg_highlight)
                 draw.circle(x0, y0, node)
 
         for edge in H.edges:

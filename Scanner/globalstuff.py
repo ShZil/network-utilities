@@ -14,6 +14,7 @@ is_kivy_running = True
 # --- Design Settings ---
 bg_color = (0, 0, .01)  # tuple[float]: rgb
 fg_color = (0.023, 0.92, 0.125)  # tuple[float]: rgb
+fg_highlight = (0.92, 0.823, 0.125)  # tuple[float]: rgb
 button_column_background = [0.1, 1, 0.3, 1]  # list[float]: rgba
 DIAGRAM_DIMENSIONS = (300, 300)  # tuple[int]: width, height
 # float; under `HoverReplace`, `new_text_size = HOVER_REPLACE_FACTOR *

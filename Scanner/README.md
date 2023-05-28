@@ -3114,3 +3114,7 @@ Gonna slightly off that with the diagrams but it's still impressive.
 This is by an instruction in the Docs document.
 
 [16:42] Added code from the Docs to `Discovery.py`: now `check_packet` actually works.
+
+[17:36] Implemented discovery highlights in the diagrams.
+I tried to make this as efficient as I could, but I can't get down to Worst-Case O(n).
+Currently highly-optimised O(n²).
