@@ -6,6 +6,8 @@ from ipconfig import ipconfig
 def _match_device(address):
     from NetworkStorage import NetworkStorage, SpecialInformation, match
     # Quality of life: `16` would mean `10.0.0.16` if the subnet is `10.0.0.*`.
+    # Note, this assumes the subnet mask is `255.255.255.0`.
+    # This is usually the case, and can be used with other subnet masks.
     subnet_start = ipconfig()["IPv4 Address"]  # e.g. `10.0.0.1`
     subnet_start = subnet_start.split('.')[:3]  # e.g. `['10', '0', '0']`
     subnet_start = '.'.join(subnet_start) + '.'  # e.g. `10.0.0.`
