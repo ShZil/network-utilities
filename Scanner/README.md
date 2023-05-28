@@ -3147,3 +3147,6 @@ Using `str(int(address))` instead of just `address`,
 to avoid edge-cases like `125.4` being interpreted as a valid int but resulting in a horrendous IPv4 address like `192.168.0.152.4`.
 
 [18:38] Added comments to explain `_match_device`.
+
+[20:31] `TypeError: unsupported operand type(s) for *: 'float' and 'types.GenericAlias'`
+It's always the parentheses.

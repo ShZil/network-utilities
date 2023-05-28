@@ -108,7 +108,7 @@ def main():
     add_fonts()
     PopupManager()  # starts the popup thread
     DeviceDiscoveryListener()  # starts the discovery thread
-    
+
     # Start tk (on main thread) and kivy (on different thread) and
     # `NetworkStorage()._resolve` (on a third thread)
     PacketSniffer()

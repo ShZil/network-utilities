@@ -345,7 +345,11 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
 
         for node, (x0, y0) in pos.items():
             if (x0, y0) in draw:
-                draw.color(*fg)
+                try:
+                    opacity = SpecialInformation()[node, 'opacity']
+                except KeyError:
+                    opacity = 1
+                draw.color(tuple(c * opacity for c in fg))
                 if node in highlights:
                     draw.color(*fg_highlight)
                 if node is router:

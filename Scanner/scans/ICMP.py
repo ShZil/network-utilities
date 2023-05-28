@@ -279,6 +279,12 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
                     continue
                 color = opacities[index]
                 print(f"{color}{address} ({hostify(address)}){Colors.END}  ")
+    
+    def update_opacities(table):
+        from NetworkStorage import SpecialInformation, match
+        for entity, connections in table.items():
+            opacity = calculate_opacity(connections)
+            SpecialInformation()[match(entity), 'opacity'] = opacity
 
     while True:
         sleep(continuous_pause_seconds)
@@ -288,6 +294,8 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
 
         hostify_sync(list(table.keys()))
         # os.system("cls")
+
+        update_opacities(table)
 
         # sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
 
