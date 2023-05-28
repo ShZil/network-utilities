@@ -66,7 +66,7 @@ def register_scans():
     r["Live ICMP"] = lambda: scan_ICMP_continuous(
         NetworkStorage()['ip'],
         ipconfig()["All Possible Addresses"],
-        compactness=2
+        compactness=0
     ), True
     r["Live ARP"] = scan_ARP_continuous, True
     r["TCP Ports"] = port_scan_TCP

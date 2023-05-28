@@ -7,7 +7,7 @@ with ImportDefence():
     from matplotlib import pyplot as plt
 
 from globalstuff import *
-from util import color_to_hex
+from util import color_to_hex, hex_to_rgb01
 from CacheDecorators import one_cache
 from NetworkStorage import SpecialInformation
 
@@ -122,6 +122,13 @@ class TKDiagram(Diagram, ContextManager):
         self.canvas.create_rectangle(x, y, w, h, fill=self.color_cache)
 
     def circle(self, x, y, node):
+        from NetworkStorage import here, router, SpecialInformation
+        try:
+            opacity = SpecialInformation()[node, 'opacity']
+        except KeyError:
+            opacity = 1
+        if node is here or node is router:
+            opacity = 1
         r = self.radius
         x0 = x - r
         y0 = y - r
@@ -135,8 +142,9 @@ class TKDiagram(Diagram, ContextManager):
             font=("Consolas", 10),
             justify=tk.CENTER
         )
-        return self.canvas.create_oval(
-            x0, y0, x1, y1, fill=self.color_cache)
+        transparent = tuple(c * opacity for c in hex_to_rgb01(self.color_cache))
+        self.canvas.create_oval(x0, y0, x1, y1, fill=color_to_hex(transparent))
+        self.canvas.create_oval(x0, y0, x1, y1, outline=self.color_cache)
 
     def line(self, x0, y0, x1, y1, stroke):
         self.canvas.create_line(
@@ -345,11 +353,7 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
 
         for node, (x0, y0) in pos.items():
             if (x0, y0) in draw:
-                try:
-                    opacity = SpecialInformation()[node, 'opacity']
-                except KeyError:
-                    opacity = 1
-                draw.color(*tuple(c * opacity for c in fg))
+                draw.color(*fg)
                 if node in highlights:
                     draw.color(*fg_highlight)
                 if node is router:

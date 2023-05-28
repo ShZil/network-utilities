@@ -543,7 +543,7 @@ class SpecialInformation(dict):
         # and merges all their information to a single dict that is returned.
         if isinstance(key, NetworkEntity):
             merged = {}
-            for entity, value in self.items():
+            for entity, value in list(self.items()):
                 if key.equals(entity):
                     merged.update(value)
             self[key] = merged

@@ -1,14 +1,6 @@
 from import_handler import ImportDefence
 
 with ImportDefence():
-    from util import threadify, barstyle
-    from PrintingContexts import InstantPrinting, TablePrinting, JustifyPrinting, AutoLinebreaks
-    from ipconfig import ipconfig
-    from NetworkStorage import NetworkStorage
-    from colors import Colors
-    from hostify import hostify, hostify_sync
-    from ip_handler import subnet_address_range
-
     from queue import Queue
     from threading import Thread
     from time import sleep
@@ -18,6 +10,14 @@ with ImportDefence():
     from scapy.sendrecv import sr1
     from scapy.layers.inet import IP, ICMP
 
+from util import threadify, barstyle
+from PrintingContexts import InstantPrinting, TablePrinting, JustifyPrinting, AutoLinebreaks
+from ipconfig import ipconfig
+from NetworkStorage import NetworkStorage
+from colors import Colors
+from hostify import hostify, hostify_sync
+from ip_handler import subnet_address_range
+from globalstuff import terminator
 
 continuous_pause_seconds = 1.1
 save_count = 60
@@ -199,7 +199,7 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
 
         def ICMP_live_device_discovery(order: int):
             all_addresses = shift(all_possible_addresses, 71 * order)
-            while True:
+            while not terminator.is_set():
                 for address in all_addresses:
                     if address in table.keys():
                         continue
@@ -286,7 +286,7 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
             opacity = calculate_opacity(connections)
             SpecialInformation()[match(entity), 'opacity'] = opacity
 
-    while True:
+    while not terminator.is_set():
         sleep(continuous_pause_seconds)
 
         resolve_queue()
@@ -297,9 +297,9 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
 
         update_opacities(table)
 
-        # sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
+        sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
 
-        # try:
-        #     [print0, print1, print2][compactness](sorted_table)
-        # except KeyError:
-        #     print3()
+        try:
+            [print0, print1, print2][compactness](sorted_table)
+        except KeyError:
+            print3()

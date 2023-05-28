@@ -3152,3 +3152,8 @@ to avoid edge-cases like `125.4` being interpreted as a valid int but resulting 
 It's always the parentheses.
 
 [20:36] Forgot spreading operator.
+
+[20:58] Stitched together an `hex_to_rgb01` function with help from ChatGPT.
+
+[21:13] In `SpecialInformation`: `RuntimeError: dictionary changed size during iteration`.
+Fixed by casting to a list before iterating.

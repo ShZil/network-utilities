@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Iterable
 from import_handler import ImportDefence
 with ImportDefence():
     from io import StringIO
@@ -15,7 +15,7 @@ __author__ = 'Shaked Dan Zilberman'
 MAX_THREADS: int = 50
 
 
-def color_to_hex(rgb) -> str:
+def color_to_hex(rgb: Iterable) -> str:
     """This function converts between two common representations of RGB colours.
     It takes in a tuple or list (any iterable) that has 3 items, floats between 0 and 1,
     and converts it into a hex string with hash symbol, like #00FF00 (green).
@@ -27,6 +27,25 @@ def color_to_hex(rgb) -> str:
         str: a hex representation of an RGB colour, with 7 characters (#RRGGBB).
     """
     return '#%02x%02x%02x' % tuple([int(c * 255) for c in rgb])
+
+
+def hex_to_rgb01(hex_code: str) -> tuple[float, float, float]:
+    """This function converts between two common representations of RGB colours.
+    It takes in a hex string with hash symbol, like #00FF00 (green),
+    and converts it into a tuple that has 3 items, floats between 0 and 1,
+
+    Args:
+        hex_code (str): the input colour, as a valid RGB (no A) hex 7-chrarcter string.
+
+    Returns:
+        tuple[float, float, float]: a tuple RGB01 representation of a previously HEX colour, with 3 items (R, G, B).
+    """
+    hex_code = hex_code.lstrip('#')  # Remove the leading '#' if present
+    r = int(hex_code[0:2], 16) / 255.0
+    g = int(hex_code[2:4], 16) / 255.0
+    b = int(hex_code[4:6], 16) / 255.0
+    return (r, g, b)
+
 
 
 def barstyle(name: str) -> str:
