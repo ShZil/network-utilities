@@ -3113,4 +3113,4 @@ Gonna slightly off that with the diagrams but it's still impressive.
 [16:38] Added a ratio of 1.6 to scale the `StartScreen` background image.
 This is by an instruction in the Docs document.
 
-
+[16:42] Added code from the Docs to `Discovery.py`: now `check_packet` actually works.

@@ -35,15 +35,18 @@ class DeviceDiscoveryListener:
         PacketSniffer().add_observer(self.check_packet)
 
     def check_packet(self, packet):
-        from NetworkStorage import broadcast, SpecialInformation, NetworkEntity, nothing
+        from NetworkStorage import broadcast, SpecialInformation, NetworkStorage, match
         if UDP not in packet:
             return
         if packet[IP].dst != broadcast.ip:
             return
         if packet[UDP].dport != DST_PORT:
             return
-        entity = NetworkEntity(mac=nothing.mac, ip=packet[IP].src, ipv6=nothing.ip6, name=nothing.name)
-        SpecialInformation()[entity, 'discovery'] = packet[Raw]
+        entity = match(packet[IP].src)
+        load = packet[UDP].payload.load.decode()
+        load = load.split("sir ", 1)[1]
+        SpecialInformation()[entity, 'discovery'] = load
+        NetworkStorage().add(entity)
 
 
 if __name__ == '__main__':
