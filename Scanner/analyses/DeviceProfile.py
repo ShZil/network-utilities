@@ -6,9 +6,12 @@ from ipconfig import ipconfig
 def _match_device(address):
     from NetworkStorage import NetworkStorage, SpecialInformation, match
     # Quality of life: `16` would mean `10.0.0.16` if the subnet is `10.0.0.*`.
+    subnet_start = ipconfig()["IPv4 Address"]  # e.g. `10.0.0.1`
+    subnet_start = subnet_start.split('.')[:3]  # e.g. `['10', '0', '0']`
+    subnet_start = '.'.join(subnet_start) + '.'  # e.g. `10.0.0.`
     try:
         if 0 <= int(address) <= 255:
-            address = '.'.join(ipconfig()["IPv4 Address"].split('.')[:3]) + '.' + str(int(address))
+            address = subnet_start + str(int(address))
     except ValueError:
         pass
     # Try to match the address to a MAC/IPv4/IPv6, if it exists in `NetworkStorage`.
