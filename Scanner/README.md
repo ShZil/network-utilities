@@ -3116,7 +3116,9 @@ Gonna slightly off that with the diagrams but it's still impressive.
 
 [12:56] Need to work on rendering opacity given by `Live ICMP`.
 
-[12:57] Add Configuration, mostly for TCP Ports and Trace Route, but also for the Sweeps’ repeats. Centeralised data structure to store Configuration data? Export that data into the saved `.scan` files as well.
+[12:57] Add Configuration, mostly for TCP Ports and Trace Route, but also for the Sweeps' repeats.
+Centeralised data structure to store Configuration data?
+Export that data into the saved `.scan` files as well.
 
 [12:58] Rename `Traceroute` to `Trace Route`.
 

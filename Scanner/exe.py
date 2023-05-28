@@ -72,7 +72,7 @@ def register_scans():
     r["TCP Ports"] = port_scan_TCP
     r["OS-ID"] = operating_system_fingerprinting, True
     r["Public Address"] = public_address_action
-    r["Traceroute"] = lambda: traceroute(get_string("IP Destination", "Select the IP address:"))
+    r["Trace Route"] = lambda: traceroute(get_string("IP Destination", "Select the IP address:"))
     r["Log Packets"] = log_packets
     r["Device Profile"] = device_profile
     r["Reveal Myself"] = reveal_myself
