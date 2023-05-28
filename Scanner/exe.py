@@ -59,7 +59,7 @@ def keep_resolving_storage():
 
 
 def register_scans():
-    """Registers the scans into `Register()` dictionary."""
+    """Registers the scans & analyses into `Register()` dictionary."""
     r = Register()
     r["ICMP Sweep"] = simple_scan(scan_ICMP, 3)
     r["ARP Sweep"] = simple_scan(scan_ARP, 3)

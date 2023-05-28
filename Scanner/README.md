@@ -3138,3 +3138,12 @@ Currently highly-optimised O(n²).
 [17:49] Finished adding `here` and `router` highlights.
 
 [18:08] (About `render_diagram`) Some further brainstroming; this seems like the most optimal reasonable way to go about this.
+
+[18:32] Implemented this request from today:
+```
+[12:49] Suggestion: Quality of Life, add the option to enter partial IPv4 addresses to Device Profile. So I could just write 16 for `10.0.0.16`.
+```
+Using `str(int(address))` instead of just `address`,
+to avoid edge-cases like `125.4` being interpreted as a valid int but resulting in a horrendous IPv4 address like `192.168.0.152.4`.
+
+[18:38] Added comments to explain `_match_device`.

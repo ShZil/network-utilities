@@ -1,14 +1,23 @@
 from typing import Any
 from gui.dialogs import get_string, popup
+from ipconfig import ipconfig
 
 
 def _match_device(address):
     from NetworkStorage import NetworkStorage, SpecialInformation, match
+    # Quality of life: `16` would mean `10.0.0.16` if the subnet is `10.0.0.*`.
+    try:
+        if 0 <= int(address) <= 255:
+            address = '.'.join(ipconfig()["IPv4 Address"].split('.')[:3]) + '.' + str(int(address))
+    except ValueError:
+        pass
+    # Try to match the address to a MAC/IPv4/IPv6, if it exists in `NetworkStorage`.
     try:
         entity = match(address)
         for item in NetworkStorage():
             if entity.equals(item):
                 return item
+    # Try to use the address as a name, if it exists on some entity in `NetworkStorage`.
     except ValueError:
         name = address.lower()
         if name == "unknown":
@@ -16,11 +25,13 @@ def _match_device(address):
         for item in NetworkStorage():
             if item.name.lower() == name:
                 return item
+    # Try to use the address as a role, if any entity has that role.
     role = address.lower()
     have_roles = SpecialInformation()['role']
     for entity in have_roles:
         if SpecialInformation()[entity, 'role'].lower() == role:
             return entity
+    # If nothing hit, the address' meaning was not understood / the entity was not found.
     return None
 
 
