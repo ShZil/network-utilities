@@ -74,7 +74,7 @@ def _construct_content(info: dict) -> str:
 
 
 def device_profile(*_):
-    address = get_string("Device Profile", "Insert device's MAC / IP / IPv6 Address, or Device Name, or Role:")
+    address = get_string("Device Profile", "Insert device's MAC / IPv4 / IPv6 Address, or Device Name, or Role:")
     entity = _match_device(address)
     if entity is None:
         popup("Device Profile", f"The device was not found.\nCheck whether you wrote the address correctly.\nThe address: `{address}`", warning=True)
