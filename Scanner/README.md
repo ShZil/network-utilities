@@ -3110,7 +3110,19 @@ Gonna slightly off that with the diagrams but it's still impressive.
 - Also have a special information entry for Reveal Myself (on the recv side) that would also affect rendering.
 - Do more testing on Reveal Myself.
 
-[16:38] Added a ratio of 1.6 to scale the `StartScreen` background image.
+[12:36] Iמ Cyber class, Working on the project, from 11:30 to 13:20. Implemented successfully the Discovery on the recv side: saving to both `NetworkStorage` and `SpecialInformation`, as well as rendering newly. 
+
+[12:49] Suggestion: Quality of Life, add the option to enter partial IPv4 addresses to Device Profile. So I could just write 16 for `10.0.0.16`.
+
+[12:56] Need to work on rendering opacity given by `Live ICMP`.
+
+[12:57] Add Configuration, mostly for TCP Ports and Trace Route, but also for the Sweeps’ repeats. Centeralised data structure to store Configuration data? Export that data into the saved `.scan` files as well.
+
+[12:58] Rename `Traceroute` to `Trace Route`.
+
+[13:00] Recolour `here` and `router` as well in the diagrams in different colours.
+
+[16:38] Back home. Added a ratio of 1.6 to scale the `StartScreen` background image.
 This is by an instruction in the Docs document.
 
 [16:42] Added code from the Docs to `Discovery.py`: now `check_packet` actually works.
@@ -3122,3 +3134,5 @@ Currently highly-optimised O(n²).
 [17:41] Used https://rgbcolorpicker.com/0-1 to pick colours for `here` and `router` which are also highlighted now.
 
 [17:49] Finished adding `here` and `router` highlights.
+
+[18:08] (About `render_diagram`) Some further brainstroming; this seems like the most optimal reasonable way to go about this.

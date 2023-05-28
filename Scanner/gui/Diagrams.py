@@ -320,7 +320,7 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
     H = G.copy()
 
     pos = nx.kamada_kawai_layout(H, center=(x + w / 2, y + h / 2), scale=scale)
-    
+
     discovered = SpecialInformation()['discovery']
     highlights = set()
     for node in pos.keys():
@@ -335,7 +335,7 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
     with draw:
         draw.color(*bg)
         draw.rectangle(x, y, w, h)
-        
+
         draw.color(*fg)
         for edge in H.edges:
             x0, y0 = pos[edge[0]]
