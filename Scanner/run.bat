@@ -9,7 +9,7 @@ if %errorlevel% neq 0 (
     pause
 )
 
-REM Reduce console output from kivy (graphical library)
+REM Suppress console output from kivy (graphical library)
 set "KIVY_NO_CONSOLELOG=true"
 
 REM run the python file
