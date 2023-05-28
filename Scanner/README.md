@@ -3099,3 +3099,13 @@ Gonna slightly off that with the diagrams but it's still impressive.
 [08:22] Converting it to the teacher's desired format and turning it in.
 
 [08:25] Whoo!
+
+
+
+### 2023-05-28
+[06:47] To hopefully do today in Cyber class, after the Physics semifinal:
+- Add, under Device Profile's Information, an explanation of all the special keys of `SpecialInformation`.
+- Save the opacity in Live ICMP to `SpecialInformation`.
+- Before rendering a diagram, create a dictionary of `SpecialInformation["ping opacity"]`, and use it to determine the opacity with which to render the node.
+- Also have a special information entry for Reveal Myself (on the recv side) that would also affect rendering.
+- Do more testing on Reveal Myself.
