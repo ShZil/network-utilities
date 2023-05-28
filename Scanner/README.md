@@ -3109,3 +3109,8 @@ Gonna slightly off that with the diagrams but it's still impressive.
 - Before rendering a diagram, create a dictionary of `SpecialInformation["ping opacity"]`, and use it to determine the opacity with which to render the node.
 - Also have a special information entry for Reveal Myself (on the recv side) that would also affect rendering.
 - Do more testing on Reveal Myself.
+
+[16:38] Added a ratio of 1.6 to scale the `StartScreen` background image.
+This is by an instruction in the Docs document.
+
+

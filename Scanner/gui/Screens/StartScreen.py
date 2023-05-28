@@ -38,11 +38,12 @@ class StartScreen(Screen):
         everything = RelativeLayout()
 
         from kivy.core.window import Window
+        ratio = 1.6
         background = Image(
             source='background.png',
             pos_hint={'center_x': .5, 'center_y': .5},
             size_hint=(None, None),
-            size=Window.size,
+            size=tuple(s * ratio for s in Window.size),
             allow_stretch=True,
             keep_ratio=False
         )
