@@ -314,6 +314,7 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
     which is a context manager supporting various methods.
     Currently, there are two implementations: `KivyDiagram` and `TKDiagram`.
     """
+    from NetworkStorage import here, router
     scale = min(w, h + dh) * DIAGRAM_SCALE
     stroke = 1
     H = G.copy()
@@ -334,20 +335,25 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
     with draw:
         draw.color(*bg)
         draw.rectangle(x, y, w, h)
-
+        
         draw.color(*fg)
-        for node, (x0, y0) in pos.items():
-            if (x0, y0) in draw:
-                draw.color(*fg)
-                if node in highlights:
-                    draw.color(*fg_highlight)
-                draw.circle(x0, y0, node)
-
         for edge in H.edges:
             x0, y0 = pos[edge[0]]
             x1, y1 = pos[edge[1]]
             if (x0, y0) in draw and (x1, y1) in draw:
                 draw.line(x0, y0, x1, y1, stroke)
+
+        for node, (x0, y0) in pos.items():
+            if (x0, y0) in draw:
+                draw.color(*fg)
+                if node in highlights:
+                    draw.color(*fg_highlight)
+                if node is router:
+                    draw.color(*router_highlight)
+                if node is here:
+                    draw.color(*here_highlight)
+                draw.circle(x0, y0, node)
+
 
 
 if __name__ == '__main__':

@@ -3118,3 +3118,7 @@ This is by an instruction in the Docs document.
 [17:36] Implemented discovery highlights in the diagrams.
 I tried to make this as efficient as I could, but I can't get down to Worst-Case O(n).
 Currently highly-optimised O(n²).
+
+[17:41] Used https://rgbcolorpicker.com/0-1 to pick colours for `here` and `router` which are also highlighted now.
+
+[17:49] Finished adding `here` and `router` highlights.
