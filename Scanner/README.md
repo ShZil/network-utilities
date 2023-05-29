@@ -3157,3 +3157,14 @@ It's always the parentheses.
 
 [21:13] In `SpecialInformation`: `RuntimeError: dictionary changed size during iteration`.
 Fixed by casting to a list before iterating.
+
+
+
+### 2023-05-29
+[14:05] Suggestion: make the colour of the popups from Know Screen -- blue.
+Replace `General Information` with information about `SpecialInformation`, specifically the keys' meanings.
+
+[14:19] Successful test with Live ICMP -- saw a device disconnect and reconnect!
+`[True, True, True, False, False, False, False, False, False, False, False, False, False, False, ... True, True, True...]`
+
+

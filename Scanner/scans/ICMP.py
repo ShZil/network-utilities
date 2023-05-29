@@ -297,9 +297,9 @@ def scan_ICMP_continuous(addresses, all_possible_addresses, parallel_device_disc
 
         update_opacities(table)
 
-        sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
+        # sorted_table = sorted(table.keys(), key=lambda x: int(''.join(x.split('.'))))
 
-        try:
-            [print0, print1, print2][compactness](sorted_table)
-        except KeyError:
-            print3()
+        # try:
+        #     [print0, print1, print2][compactness](sorted_table)
+        # except KeyError:
+        #     print3()
