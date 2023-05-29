@@ -3168,3 +3168,6 @@ Replace `General Information` with information about `SpecialInformation`, speci
 `[True, True, True, False, False, False, False, False, False, False, False, False, False, False, ... True, True, True...]`
 
 
+[16:25] Added `Knowledge Information` for Know Screen.
+A lot of research, mostly summarising what I already know.
+This took a long time lol.

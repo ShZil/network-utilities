@@ -13,7 +13,7 @@ from gui.Screens.Pages import Pages
 from gui.KivyExtensions import ButtonColumn, OperationButton
 from gui.dialogs import get_string, popup
 from gui.Configuration import display_configuration
-from gui.Information import display_information
+from gui.Information import display_information_knowledge
 from gui.Activation import activate
 from gui.ScanClasses import Analysis
 from register import Register
@@ -108,7 +108,7 @@ class KnowScreenRightColumn(ButtonColumn):
         operations = BoxLayout(orientation='horizontal', spacing=-3, size_hint=(0.3, None))
         operations.add_widget(OperationButton('⏻', "Analyse", activate))
         operations.add_widget(OperationButton('⚙', "Config", display_configuration))
-        operations.add_widget(OperationButton('ℹ', "Info", display_information))
+        operations.add_widget(OperationButton('ℹ', "Info", display_information_knowledge))
 
         self.add_widget(operations)
 
