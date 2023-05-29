@@ -239,7 +239,7 @@ def general_knowledge() -> str:
         f"#### TCP Ports",
         f"A _port_ is a (usually 16-bit) number assigned to uniquely identify a connection endpoint and to direct data to a specific service.",
         f"At the software level, within an OS, a port is a logical construct to indentify a specific process or a type of network service.",
-        f"#### Open / Closed TCP Ports"
+        f"#### Open / Closed TCP Ports",
         f"The term _open port_ is used to mean a TCP or UDP port number that is configured to accept packets.",
         f"In contrast, a port which rejects connections or ignores all packets directed at it is called a closed port."
     ])
