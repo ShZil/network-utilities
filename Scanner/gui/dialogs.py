@@ -1,6 +1,7 @@
 from time import sleep
 from typing import Callable
 from import_handler import ImportDefence
+from globalstuff import terminator
 with ImportDefence():
     import win32api
     import win32con
@@ -61,7 +62,7 @@ class PopupManager:
 
         window = sg.Window(title, layout)
 
-        while True:
+        while not terminator.is_set():
             event, values = window.read()
             if event == sg.WINDOW_CLOSED:
                 return ''
@@ -101,7 +102,7 @@ class PopupManager:
         window['_HTML_'].update(html_text.replace('\x00', '\\0'))  # remove null characters
         # window['_HTML_'].Widget.setOpenExternalLinks(True) # Allow links to be clicked
 
-        while True:
+        while not terminator.is_set():
             event, values = window.read(timeout=POPUP_WINDOW_LOOP_TIMEOUT_MS)
             if event == sg.WIN_CLOSED:
                 break

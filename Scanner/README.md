@@ -3167,6 +3167,7 @@ Replace `General Information` with information about `SpecialInformation`, speci
 [14:19] Successful test with Live ICMP -- saw a device disconnect and reconnect!
 `[True, True, True, False, False, False, False, False, False, False, False, False, False, False, ... True, True, True...]`
 
+[16:23] Eradicate `while True`'s from `gui.dialogs`.
 
 [16:25] Added `Knowledge Information` for Know Screen.
 A lot of research, mostly summarising what I already know.
