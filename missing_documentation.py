@@ -25,33 +25,31 @@ def extract_missing_docstrings(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         tree = ast.parse(file.read())
 
-    for node in ast.walk(tree):
-        if isinstance(node, (ast.FunctionDef, ast.ClassDef)):
-            if not ast.get_docstring(node):
-                place = get_place(file_path, node)
-                places.append(place)
+    current_class = None
 
-        elif isinstance(node, ast.Module):
-            for item in node.body:
-                if isinstance(item, ast.FunctionDef) and not ast.get_docstring(item):
-                    place = get_place(file_path, item)
-                    places.append(place)
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ClassDef):
+            current_class = node.name
+        elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            if not ast.get_docstring(node):
+                place = get_place(file_path, node, current_class)
+                places.append(place)
 
     return set(places)
 
 
-def get_place(file_path, node):
+def get_place(file_path, node, current_class):
     file_name = os.path.basename(file_path)
-    module_name = file_name.split(".")[0]
     module_path = os.path.dirname(file_path)
-    place = os.path.join(module_path, file_name)[len(directory)+1:]
+    place = os.path.join(module_path, file_name)[len(directory) + 1:]
 
-    if isinstance(node, ast.FunctionDef):
+    if current_class:
+        place += f":{current_class}:{node.name}"
+    else:
         place += f":{node.name}"
-    elif isinstance(node, ast.ClassDef):
-        place += f":{node.name}:{node.name}"
 
     return place
+
 
 while True:
     sleep(10)
