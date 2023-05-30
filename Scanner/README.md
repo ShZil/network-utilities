@@ -3195,3 +3195,7 @@ while True:
             print(result, file=f)
 ```
 
+[16:22] To eradicate:
+- Magic numbers
+- Missing documentation
+- Comment-low areas

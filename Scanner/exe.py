@@ -41,7 +41,18 @@ from gui.dialogs import PopupManager, get_string
 
 
 def keep_resolving_storage():
+    """This function allocates a thread for `IntervalThread`,
+    which executes a few essential actions in a set time interval, repeating.
+    """
     def _resolver():
+        """This function maintains a while loop,
+        that executes the following tasks in the background every 5 seconds:
+        * Resolving `NetworkStorage` (i.e. putting everything from the internal queue into internal `data`)
+        * Updates the Know Screen with data from `NetworkStorage`.
+        * Updates the diagrams.
+
+        Also, after `terminator` is set, it calls `sys.exit()` to attempt to force closing.
+        """
         from globalstuff import terminator
         sleep(7)
         while not terminator.is_set():
@@ -80,11 +91,33 @@ def register_scans():
 
 
 def main():
+    """The entry point of the software.
+
+    Setup and execution:
+    - removes scapy warnings
+    - clears the console
+    - sets console color to green with black background. Programming-y
+    - connects to a network-card interface and caches `ipconfig` results
+    - changes the console title
+    - runs unit tests
+    - initialises `NetworkStorage`
+    - caches all possible network addresses
+    - adds the `router` and `here` entities to the NetworkStorage (which is why you see a line between two points before running a scan)
+    - adds the `router` entity to the G (Graph) (which is why, before updating, you see a single dot)
+    - registers the scans
+    - uploads the fonts to the GUI
+    - initialises `PopupManager`
+    - initialises the Disocvery Listener thread
+    - initialises the `PacketSniffer` thread
+    - initialises the `IntervalThread`
+    - starts the Kivy GUI
+    - starts the TK diagram (blocking)
+    """
     print("Loading...")
     remove_scapy_warnings()
     os.system('cls')
     cmdcolor("0A")
-    print("Attempting to connect to an network-card interface...")
+    print("Attempting to connect to a network-card interface...")
     ipconfig()
     cmdtitle(
         "Network Scanner - ",

@@ -1,6 +1,3 @@
-exe.py:main
-exe.py:keep_resolving_storage
-exe.py:_resolver
 files.py:parse
 files.py:write_to
 files.py:format_timestamp
