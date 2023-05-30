@@ -42,11 +42,12 @@ def get_place(file_path, node, current_class):
     file_name = os.path.basename(file_path)
     module_path = os.path.dirname(file_path)
     place = os.path.join(module_path, file_name)[len(directory) + 1:]
+    place += f":{node.lineno} "
 
     if current_class:
-        place += f":{current_class}:{node.name}"
+        place += f"{current_class}:{node.name}"
     else:
-        place += f":{node.name}"
+        place += node.name
 
     return place
 

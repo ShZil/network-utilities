@@ -3200,5 +3200,7 @@ while True:
 - Missing documentation
 - Comment-low areas
 
-[16:47] ChatGPT and manual debugging to add a class behind a method name,
+[16:53] ChatGPT and manual debugging to add a class behind a method name,
 when showing missing documentation.
+
+[17:11] Also show line number.
