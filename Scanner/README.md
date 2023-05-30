@@ -3177,3 +3177,9 @@ This took a long time lol.
 
 ### 2023-05-30
 [15:35] Making some code to go through my Python files and alert me when documentation is missing.
+
+[15:37] Used the previous file `classes_diagram.py` and ChatGPT to create this code with minimal effort from me.
+
+[15:38] Gonna go and add documentation to the code, using `autoDocstring` extension and the `missing_documentation.py` I made.
+
+[15:41] Improved `missing_documentation.py` to make the format better.
