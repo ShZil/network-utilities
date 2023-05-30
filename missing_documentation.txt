@@ -1,9 +1,3 @@
-files_cryptography.py:8 password_encrypt
-files_cryptography.py:12 password_decrypt
-hostify.py:29 use_hostify_base
-import_handler.py:58 ImportDefence:__init__
-import_handler.py:61 ImportDefence:__enter__
-import_handler.py:64 ImportDefence:__exit__
 ipconfig.py:195 get_interface_safe
 ip_handler.py:111 bits
 ip_handler.py:170 bits

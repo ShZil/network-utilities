@@ -12,7 +12,7 @@ from util import threadify
 
 
 @memorise
-def hostify(address: str):
+def hostify(address: str) -> str:
     """This function turns an IPv4 address to a host name using one of these methods:
     1. Calling `>nslookup` with that address. If that fails,
     2. Using `socket.gethostbyaddr` function. If that fails,
@@ -26,7 +26,16 @@ def hostify(address: str):
     """
     host = "Unknown"
 
-    def use_hostify_base(address):
+    def use_hostify_base(address: str) -> str:
+        """Uses `socket.gethostbyaddr` to resolve a name.
+        If errors occur, returns "Unknown".
+
+        Args:
+            address (str): an IP address.
+
+        Returns:
+            str: the host name for that address.
+        """
         try:
             # print("Method: socket.gethostbyaddr", end=' -- ')
             return hostify_base(address)[0]

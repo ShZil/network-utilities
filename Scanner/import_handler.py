@@ -54,14 +54,26 @@ class ImportDefence:
         from module2 import some_function
     ```
     """
-
-    def __init__(self):
-        pass
-
     def __enter__(self):
+        """To be a context manager, needs an `__enter__` method.
+
+        Returns:
+            Self@ImportDefence: the `self` object.
+        """
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        """Handles exiting the context.
+        Pip-installs the requested packages and reboots the code.
+
+        Args:
+            exc_type (type | NoneType): the type of error.
+            exc_val (Exception | NoneType): the exception raised.
+            exc_tb (traceback | NoneType): a traceback object of the exception.
+
+        Raises:
+            exc_val: the exception, if it's not `ModuleNotFoundError`.
+        """
         import os
         # If no ModuleNotFoundError occured, clear the screen and print and
         # return to original script.

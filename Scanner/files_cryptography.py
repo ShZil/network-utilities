@@ -6,10 +6,28 @@ with ImportDefence():
 
 
 def password_encrypt(message: bytes, password: str) -> bytes:
+    """Interfaces with the CBC encryption.
+
+    Args:
+        message (bytes): the message to encrypt.
+        password (str): the key to use.
+
+    Returns:
+        bytes: the encrypted message
+    """
     return Cipher_CBC(password).encrypt(message)
 
 
 def password_decrypt(token: bytes, password: str) -> bytes:
+    """Interfaces with the CBC decryption.
+
+    Args:
+        token (bytes): the message to decrypt.
+        password (str): the key to use.
+
+    Returns:
+        bytes: the decrypted message, or `b''` if there's a ValueError.
+    """
     try:
         return Cipher_CBC(password).decrypt(token)
     except ValueError as e:
