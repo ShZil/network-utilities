@@ -11,10 +11,36 @@ with ImportDefence():
 
 
 def cmdtitle(*s, sep=''):
+    """Changes the title of the Command Line window.
+
+    Args:
+        *s (str): strings to display as the title of the CMD window.
+        sep (str, optional): a separator between the title arguments, like print. Defaults to ''.
+    """
     os.system(f'title {sep.join(s)}')
 
 
 def cmdcolor(c):
+    """Changes the colour of the text printed in the Command Line.
+    The `c` argument specifies the colour, with the first character being the background, and the second -- the foreground.
+    There cannot be an identical foreground and background.
+
+    Refer to this table for colours:
+
+    | Number | Colour         | Number | Colour           |
+    |--------|----------------|--------|------------------|
+    | 0      | Black          | 8      | Gray             |
+    | 1      | Blue           | 9      | Light Blue       |
+    | 2      | Green          | A      | Light Green      |
+    | 3      | Aqua           | B      | Light Aqua       |
+    | 4      | Red            | C      | Light Red        |
+    | 5      | Purple         | D      | Light Purple     |
+    | 6      | Yellow         | E      | Light Yellow     |
+    | 7      | White          | F      | Bright White     |
+
+    Args:
+        c (str): a colour string consisting of two characters.
+    """
     os.system(f'color {str(c).zfill(2)}')
 
 
