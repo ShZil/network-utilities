@@ -185,6 +185,17 @@ class NetworkEntity:
 
 
 def standard_mac(mac: str) -> str:
+    """Checks that the MAC address is valid, and standardises it.
+
+    Args:
+        mac (str): the MAC address.
+
+    Raises:
+        ValueError: if the address is invalid.
+
+    Returns:
+        str: the standardised MAC address.
+    """
     MAC_REGEX = r'^([0-9A-F]{2}-){5}([0-9A-F]{2})$'
     # using the IEEE Std 802-2014 definition.
     mac = mac.replace(':', '-').upper()
