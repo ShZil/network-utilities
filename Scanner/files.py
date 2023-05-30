@@ -1,4 +1,5 @@
 from time import sleep
+from typing import Iterable
 from import_handler import ImportDefence
 with ImportDefence():
     import tkinter.filedialog as dialogs
@@ -94,9 +95,25 @@ def importer():
     from datetime import datetime
 
     def format_timestamp(t: int) -> str:
+        """Formats a timestamp (Unix; seconds since 00:00:00 UTC on 1 January 1970 epoch) to YYYY-MM-DD HH:MM:SS.
+
+        Args:
+            t (int): the timestamp.
+
+        Returns:
+            str: the formatted date and time.
+        """
         return datetime.fromtimestamp(t).strftime('%Y-%m-%d %H:%M:%S')
 
     def format_duration(t: int) -> str:
+        """Formats a duration (seconds) to "34[s]" (example) or "indefinitely" for negative values.
+
+        Args:
+            t (int): the duration in seconds.
+
+        Returns:
+            str: the human-readable meaning.
+        """
         return f'for {t}[s]' if t > -1 else f'indefinitely'
     history = [format_timestamp(timestamp) + f' {name} {format_duration(duration)}.' for (timestamp, name, duration) in history if name != '']
     history = '\n'.join(history)
@@ -139,16 +156,35 @@ class ScanFileBuilder:
     COMMA = b","
 
     def __init__(self):
+        """Initialises a ScanFileBuilder,
+        with just the HEADER in a parts list,
+        and the password set to None.
+        """
         self.parts = [self.HEADER]
         self.password = None
 
     def add(self, part: bytes):
+        """adds a part to the part list.
+
+        Args:
+            part (bytes): the part to add.
+        """
         self.parts.append(part)
 
-    def add_many(self, parts):
+    def add_many(self, parts: Iterable[bytes]):
+        """adds a few parts to the part list.
+
+        Args:
+            parts (Iterable[bytes]): the parts to extend.
+        """
         self.parts.append(self.COMMA.join(parts))
 
     def write_to(self, path: str):
+        """Writes the file contents to the part, encrypted.
+
+        Args:
+            path (str): the path to save the file to.
+        """
         assert self.password is not None
         with open(path, "xb") as f:
             content = self.SEP.join(self.parts)
@@ -156,9 +192,28 @@ class ScanFileBuilder:
             f.write(content)
 
     def set_password(self, password: str):
+        """sets the password.
+
+        Args:
+            password (str): the password.
+        """
         self.password = password
 
-    def parse(self, path: str):
+    def parse(self, path: str) -> dict[str, str|list]:
+        """decrypts and parses a `.scan` file.
+
+        Args:
+            path (str): the path from which to read the file.
+
+        Raises:
+            ValueError: if the password is wrong.
+            ValueError: if the file is invalid and the extension is wrong.
+            ValueError: if the file is invalid or the password is wrong.
+            ValueError: if the file has more parts then it should.
+
+        Returns:
+            dict[str, str|list]: the parsed file.
+        """
         assert self.password is not None
         self.parts = [b""] * 3
         with open(path, "rb") as f:
@@ -180,7 +235,17 @@ class ScanFileBuilder:
             self.parts = content[1:]
         scan_id, entities, history, *rest = self.parts
         if len(rest) > 0:
-            def _decode_bytes(b):
+            def _decode_bytes(b: bytes) -> str:
+                """Attempts to decode bytes using utf-8,
+                and if it fails (UnicodeDecodeError),
+                returns them as HEX.
+
+                Args:
+                    b (bytes): the bytes to decode.
+
+                Returns:
+                    str: the decoded bytes.
+                """
                 try:
                     return b.decode('utf-8')
                 except UnicodeDecodeError:
