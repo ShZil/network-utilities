@@ -3172,3 +3172,8 @@ Replace `General Information` with information about `SpecialInformation`, speci
 [16:25] Added `Knowledge Information` for Know Screen.
 A lot of research, mostly summarising what I already know.
 This took a long time lol.
+
+
+
+### 2023-05-30
+[15:35] Making some code to go through my Python files and alert me when documentation is missing.
