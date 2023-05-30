@@ -3206,3 +3206,9 @@ when showing missing documentation.
 [17:11] Also show line number.
 
 [17:31] Use a unique ordered collection instead of `set`.
+
+[17:35] My setup includes:
+- file tree on the left.
+- code in middle.
+- updating list of missing imports on top right corner(`missing_documentation.txt` displayed; `missing_documentation.py` running in background)
+- `README.md` on the bottom right corner.
