@@ -23,6 +23,12 @@ def memorise(f: Callable) -> Callable:
     TIME_LIMIT: int = 180  # in seconds
 
     def wrapper(*args):
+        """A wrapper function that transforms the behaviour of the input function.
+        See the docstring of the decorator for explanation.
+
+        Returns:
+            function: the function with altered behaviour.
+        """
         try:
             # Do I have the cached result of these arguments?
             if args in memory:
@@ -72,6 +78,15 @@ def one_cache(f: Callable) -> Callable:
     memory = [None]
 
     def wrapper(*args):
+        """A wrapper function that transforms the behaviour of the input function.
+        See the docstring of the decorator for explanation.
+
+        Raises:
+            ValueError: if a @one_cache'd function returns None, which is an illegal value.
+
+        Returns:
+            function: the function with altered behaviour.
+        """
         # If I have cache, return it.
         if memory[0] is not None:
             return memory[0]
