@@ -11,7 +11,17 @@ from globalstuff import G
 
 
 class NetworkEntity:
+    """An entity in the network, a connected device, the atom of information about the network.
+    """
     def __init__(self, mac, ip, ipv6, name):
+        """Each NetworkEntity has 4 main fields, listed below.
+
+        Args:
+            mac (str): the MAC address.
+            ip (str): the IPv4 address.
+            ipv6 (str): the IPv6 address.
+            name (str): the host name.
+        """
         self.mac = standard_mac(mac)
         self.ip = check_ip(ip)
         self.ipv6 = extend_ipv6(ipv6)

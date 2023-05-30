@@ -34,6 +34,18 @@ def bitify(address: str) -> str:
     return result
 
 
+def bits(address: str) -> int:
+    """A wrapper around `bitify` that converts the result into a number.
+
+    Args:
+        address (str): the address to convert.
+
+    Returns:
+        int: the integer representation of the address.
+    """
+    return int(bitify(address), base=2)
+
+
 def unbitify(binary: str) -> str:
     """This method turns an IPv4 address represented as a string of binary digits to the regular representation.
     Each part in the address turns from 8 binary digits to 1-3 decimal digits.
@@ -108,8 +120,6 @@ def subnet_address_range(subnet_mask: str, *some_addresses: tuple[str]):
     Returns:
         str: the address range. Note: this is not a valid IPv4 address, it uses (*)s and (-)s in the Device ID portion.
     """
-    def bits(address):
-        return int(bitify(address), base=2)
     mask = bits(subnet_mask)
     base = [bits(address) & mask for address in some_addresses]
     base = list(set(base))
@@ -167,8 +177,6 @@ def base_subnet_address(subnet_mask: str, *some_addresses: tuple[str]) -> str:
     Returns:
         str: the base address. Note: this is a valid IPv4 address, the lowest in the network.
     """
-    def bits(address):
-        return int(bitify(address), base=2)
     mask = bits(subnet_mask)
     base = [bits(address) & mask for address in some_addresses]
     base = list(set(base))
@@ -180,6 +188,15 @@ def base_subnet_address(subnet_mask: str, *some_addresses: tuple[str]) -> str:
 
 
 def subnet_slash_notation(subnet_mask: str, router: str) -> str:
+    """Creates a slash-notation represntation of the subnet.
+
+    Args:
+        subnet_mask (str): the subnet mask.
+        router (str): the address of the router.
+
+    Returns:
+        str: the slash notation representation.
+    """
     subnet_mask = bitify(subnet_mask)
     count = subnet_mask.count('1')
     return f"{router}/{count}"
@@ -201,7 +218,15 @@ def get_all_possible_addresses() -> list[str]:
 
     base = this_device_ip[:mutual]
 
-    def binary(number):
+    def binary(number: int) -> str:
+        """shows a number in binary.
+
+        Args:
+            number (int): the number.
+
+        Returns:
+            str: the binary represntation.
+        """
         return bin(number)[2:].zfill(unique)
 
     # All possible addresses in binary look like `[mutual part to all in network][special identifier]`,

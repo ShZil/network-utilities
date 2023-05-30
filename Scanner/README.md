@@ -3204,3 +3204,5 @@ while True:
 when showing missing documentation.
 
 [17:11] Also show line number.
+
+[17:31] Use a unique ordered collection instead of `set`.

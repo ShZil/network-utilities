@@ -193,6 +193,14 @@ def ipconfig() -> dict:
 
 @one_cache
 def get_interface_safe(possible):
+    """Asks the user which interface they wanna use if there's a choice.
+
+    Args:
+        possible (list[Interface]): the list of possible interfaces.
+
+    Returns:
+        Interface: the interface to use.
+    """
     while True:
         try:
             num = int(input("Select: "))

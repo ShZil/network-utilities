@@ -35,7 +35,7 @@ def extract_missing_docstrings(file_path):
                 place = get_place(file_path, node, current_class)
                 places.append(place)
 
-    return set(places)
+    return list(dict.fromkeys(places))
 
 
 def get_place(file_path, node, current_class):
