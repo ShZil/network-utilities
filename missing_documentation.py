@@ -37,7 +37,7 @@ def extract_missing_docstrings(file_path):
                     place = get_place(file_path, item)
                     places.append(place)
 
-    return places
+    return set(places)
 
 
 def get_place(file_path, node):
@@ -55,7 +55,6 @@ def get_place(file_path, node):
 
 while True:
     sleep(10)
-    print("writing")
     with open('missing_documentation.txt', 'w', encoding='utf-8') as f:
         for result in extract_from_files(directory):
             print(result, file=f)

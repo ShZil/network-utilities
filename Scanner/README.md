@@ -3194,3 +3194,4 @@ while True:
         for result in extract_from_files(directory):
             print(result, file=f)
 ```
+
