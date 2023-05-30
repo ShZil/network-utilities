@@ -1,5 +1,6 @@
 import ast
 import os
+from time import sleep
 
 directory = "./Scanner"
 
@@ -52,6 +53,9 @@ def get_place(file_path, node):
 
     return place
 
-
-for result in extract_from_files(directory):
-    print(result)
+while True:
+    sleep(10)
+    print("writing")
+    with open('missing_documentation.txt', 'w', encoding='utf-8') as f:
+        for result in extract_from_files(directory):
+            print(result, file=f)

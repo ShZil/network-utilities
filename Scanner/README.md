@@ -3183,3 +3183,14 @@ This took a long time lol.
 [15:38] Gonna go and add documentation to the code, using `autoDocstring` extension and the `missing_documentation.py` I made.
 
 [15:41] Improved `missing_documentation.py` to make the format better.
+
+[16:05] Implemented a system that rewrites (live updates) the file of missing documentation.
+And by "a system" I mean a while loop:
+```py
+while True:
+    sleep(10)
+    print("writing")
+    with open('missing_documentation.txt', 'w', encoding='utf-8') as f:
+        for result in extract_from_files(directory):
+            print(result, file=f)
+```
