@@ -7,11 +7,26 @@ import files_cryptography
 
 
 def get_password():
+    """Gets the password for the file from the user.
+
+    Returns:
+        str: the password.
+    """
     from gui.dialogs import get_string
     return get_string("File Password", "Enter password:")
 
 
 def exporter():
+    """Exports a file.
+    - First chooses a path (user)
+    - Then gets all the information (software),
+    - and constructs the file (ScanFileBuilder)
+    - Requests a password (user)
+    - Saves the file (OS)
+
+    Returns:
+        str: the path to the saved file.
+    """
     filename = dialogs.asksaveasfilename(
         title="Save As",
         defaultextension=".scan",
@@ -44,6 +59,16 @@ def exporter():
 
 
 def importer():
+    """Imports a `.scan` file.
+    - First selects the path (user)
+    - Then gets the password (user)
+    - Deconstructs the file (ScanFileBuilder)
+    - And parses it into human-readable (code)
+    - Finally bundles it all together and returns, to be displayed on the GUI
+
+    Returns:
+        str: the textual decoded parsed content of the file.
+    """
     filename = dialogs.askopenfilename(
         title="Open",
         filetypes=(("Scan files", "*.scan"), ("All files", "*.*")),
@@ -80,10 +105,28 @@ def importer():
 
 
 def encrypt(message: bytes, password: str) -> bytes:
+    """Interfaces with the encryption of `files_cryptography`.
+
+    Args:
+        message (bytes): the message to encode.
+        password (str): the key to use.
+
+    Returns:
+        bytes: the encoded message.
+    """
     return files_cryptography.password_encrypt(message, password)
 
 
 def decrypt(token: bytes, password: str) -> bytes:
+    """Interfaces with the decryption of `files_cryptograph`.
+
+    Args:
+        token (bytes): the message to decode.
+        password (str): the key to use.
+
+    Returns:
+        bytes: the decoded message.
+    """
     # decrypter_with_timeout = SetTimeout(files_cryptography.password_decrypt, timeout=10)
     # is_done, is_timeout, erro_message, results = decrypter_with_timeout(token, password)
     # return results if is_done else ""

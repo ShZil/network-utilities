@@ -1,16 +1,11 @@
 files.py:parse
 files.py:write_to
 files.py:format_timestamp
-files.py:set_password
 files.py:add_many
-files.py:decrypt
 files.py:add
 files.py:_decode_bytes
-files.py:encrypt
-files.py:exporter
 files.py:ScanFileBuilder:ScanFileBuilder
-files.py:importer
-files.py:get_password
+files.py:set_password
 files.py:format_duration
 files.py:__init__
 files_cryptography.py:password_encrypt
