@@ -3267,3 +3267,9 @@ Working on the `icon`s in `popup`.
 [00:16] The icons in popup are now working,
 using `ERROR.html`, `WARNING.html`, and `QUESTION.html`.
 This also updates dynamically without reopening the programme, like the CSS.
+
+[00:29] Documented some more GUI modules.
+Down to 57 functions missing documentation.
+For reference, when I started doing this "formally"
+(in a structured and organised manner),
+it was around 200-300 missing docu.

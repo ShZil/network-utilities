@@ -1,16 +1,3 @@
-gui\Hover.py:28 HoverReplaceBackground:add
-gui\Hover.py:40 HoverReplaceBackground:add_behavior
-gui\Hover.py:52 HoverReplaceBackground:update
-gui\Hover.py:65 HoverReplaceBackground:enter
-gui\Hover.py:73 HoverReplaceBackground:start
-gui\Hover.py:88 HoverReplaceBackground:show
-gui\Hover.py:91 HoverReplaceBackground:hide
-gui\Hover.py:94 HoverReplaceBackground:collide_point
-gui\Hover.py:113 HoverReplaceBackground:show
-gui\Hover.py:118 HoverReplaceBackground:hide
-gui\Hover.py:123 HoverReplaceBackground:collide_point
-gui\Hover.py:138 HoverReplaceBackground:show
-gui\Hover.py:142 HoverReplaceBackground:hide
 gui\Information.py:13 display_information
 gui\Information.py:24 display_information_knowledge
 gui\Information.py:35 information_about
