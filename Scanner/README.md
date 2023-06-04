@@ -3216,4 +3216,9 @@ when showing missing documentation.
 
 
 ### 2023-06-04
-[16:02] Installing an AI-powered extension to hasten the process of writing docstrings. Name: "pyDocGenAI", for VSCode.
+[16:02] Installing an AI-powered extension to hasten the process of writing docstrings.
+Name: "pyDocGenAI", for VSCode.
+
+[16:20] Some more buffling around with different extensions,
+I'm trying to find one that just works --
+no server, no complex installation, no api keys etc.
