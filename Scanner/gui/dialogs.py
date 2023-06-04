@@ -26,7 +26,7 @@ def get_CSS():
     """
     The get_CSS function is used to retrieve the CSS code from a file.
     The result will then be inserted into the HTML code.
-    This allows for dynamic debugging of the syle --
+    This allows for dynamic debugging of the style --
     not having to close and reopen the software makes designing much faster.
     """
     try:
@@ -36,6 +36,13 @@ def get_CSS():
 POPUP_WINDOW_LOOP_TIMEOUT_MS = 500
 
 def get_icon_html(icon: IconType):
+    """
+    The get_icon_html function takes an IconType number and returns the HTML code for that icon.
+    If no such file exists, it returns an empty string.
+    This allows for dynamic debugging of the style --
+    not having to close and reopen the software makes designing much faster.
+    The icon is displayed as a header to the rest of the HTML.
+    """
     try:
         print("Opening", f'./gui/{icon.name}.html')
         return open(f'./gui/{icon.name}.html', 'r', encoding="utf-8").read()
@@ -147,6 +154,9 @@ class PopupManager:
         return -1
     
     def stop(self):
+        """
+        The stop function sets the stop_thread event to true, which will cause the _popup_loop function to exit.
+        """
         self._stop_thread.set()
 
     def _popup_loop(self):
