@@ -1,7 +1,3 @@
-register.py:49 Register:start
-register.py:62 Register:is_running
-register.py:70 Register:is_infinite_scan
-register.py:74 Register:get_history
 SimpleScan.py:38 get_new
 SimpleScan.py:97 does_simple_scan
 SimpleScan.py:126 result
