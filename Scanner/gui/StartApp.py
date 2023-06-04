@@ -6,7 +6,7 @@ import sys
 from datetime import datetime
 import traceback
 from gui.App import MyApp
-from gui.Diagrams import Diagrams, TKDiagram, PlotDiagram
+from gui.Diagrams import Diagrams, TKDiagram
 import threading
 
 

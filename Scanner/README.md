@@ -3254,3 +3254,16 @@ Tomorrow, in Cyber class,
 I wanna finish the `RecommendProbabilities` algorithm in code.
 
 [23:21] Cleansed `ask_for_permission` of magic numbers.
+With some ChatGPT, yeah.
+
+[23:42] Improved `missing_documentation.py` to catch `SyntaxError`s.
+
+[23:59] More documentation on the GUI modules.
+Working on the `icon`s in `popup`.
+
+
+
+### 2023-06-05
+[00:16] The icons in popup are now working,
+using `ERROR.html`, `WARNING.html`, and `QUESTION.html`.
+This also updates dynamically without reopening the programme, like the CSS.

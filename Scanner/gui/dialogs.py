@@ -23,11 +23,24 @@ class IconType(Enum):
 
 POPUP_WINDOW_SIZE = (1000, 600)
 def get_CSS():
+    """
+    The get_CSS function is used to retrieve the CSS code from a file.
+    The result will then be inserted into the HTML code.
+    This allows for dynamic debugging of the syle --
+    not having to close and reopen the software makes designing much faster.
+    """
     try:
         return f"<style>{open('./gui/popup_style.css', 'r').read()}</style>"
     except OSError:
         return f"<style></style>"
 POPUP_WINDOW_LOOP_TIMEOUT_MS = 500
+
+def get_icon_html(icon: IconType):
+    try:
+        print("Opening", f'./gui/{icon.name}.html')
+        return open(f'./gui/{icon.name}.html', 'r', encoding="utf-8").read()
+    except OSError:
+        return ""
 
 
 class PopupManager:
@@ -44,9 +57,17 @@ class PopupManager:
         return cls._instance
 
     def add(self, popup):
+        """The add function adds a waiting popup to the queue."""
         self.waiting.put(popup)
 
     def render_popup(self, popup):
+        """
+        The render_popup function is called by the main loop when a popup needs to be displayed.
+        It takes a tuple of (title, message, icon_type) and displays it in the appropriate way.
+        The title and message are strings that will be displayed on screen.
+        The icon_type is an integer value that determines what kind of popup this is (see IconType).
+        """
+
         title, message, icon, *_ = popup
         icon = IconType(int(icon))
         if icon == IconType.INPUT:
@@ -56,6 +77,7 @@ class PopupManager:
             self._show_text(title, message, icon)
 
     def _get_input(self, title: str, message: str):
+        """Render a popup using `PySimpleGUIQt`, that has a textual user input."""
         layout = [[sg.Text(message)],
               [sg.Input(key='-IN-')],
               [sg.Button('Submit')]]
@@ -72,6 +94,19 @@ class PopupManager:
                 return result
 
     def _show_text(self, title: str, message: str, icon: IconType):
+        """Shows a popup using `PySimpleGUIQt`,
+        that displays markdown and CSS (combined via HTML),
+        onto the popup.
+        Also, trims lines on `. ` and `, ` if they are too long.
+
+        Args:
+            title (str): the title of the window.
+            message (str): the contents of the popup (markdown syntax).
+            icon (IconType): the icon type to use.
+
+        Returns:
+            Literal[-1]: terminates and returns -1 when the popup is closed.
+        """
         lines = message.split('\n')
         lines = [
             item for line in lines
@@ -89,7 +124,8 @@ class PopupManager:
         message = '\n\n'.join(lines)
         # message = message.replace('\n', '\n\n')
         markdown_text = markdown2.markdown(message)
-        html_text = f"{get_CSS()}<div class=\"limit-width\">{markdown_text}</div>"
+        icon_html = get_icon_html(icon)
+        html_text = f"{get_CSS()}{icon_html}<div class=\"limit-width\">{markdown_text}</div>"
 
         layout = [[
             sg.Column(

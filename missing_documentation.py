@@ -23,7 +23,10 @@ def extract_missing_docstrings(file_path):
     places = []
 
     with open(file_path, 'r', encoding='utf-8') as file:
-        tree = ast.parse(file.read())
+        try:
+            tree = ast.parse(file.read())
+        except SyntaxError:
+            return ["[!!!] Syntax Error on " + file_path]
 
     current_class = None
 
