@@ -1,17 +1,3 @@
-PacketSniffer.py:37 PacketSniffer:copy
-PacketSniffer.py:43 PacketSniffer:append
-PacketSniffer.py:57 PacketSniffer:extend
-PacketSniffer.py:61 PacketSniffer:pop
-PacketSniffer.py:64 PacketSniffer:index
-PacketSniffer.py:81 PacketSniffer:count
-PacketSniffer.py:89 PacketSniffer:insert
-PacketSniffer.py:92 PacketSniffer:remove
-PacketSniffer.py:95 PacketSniffer:sort
-PacketSniffer.py:189 PacketSniffer:notify_all
-PacketSniffer.py:199 PacketSniffer:add_observer
-PacketSniffer.py:205 PacketSniffer:add_datum
-PacketSniffer.py:237 PacketSniffer:stop
-PacketSniffer.py:245 PacketSniffer:get_packet
 PrintingContexts.py:76 AutoLinebreaks:write
 PrintingContexts.py:80 AutoLinebreaks:getvalue
 PrintingContexts.py:83 AutoLinebreaks:flush
@@ -149,5 +135,4 @@ testing\tests.py:37 unbitify_examples
 testing\tests.py:43 valid_subnet_mask
 testing\tests.py:60 threadify_echo_test
 testing\tests.py:66 shift_list_test
-testing\tests.py:118 test_append_and_getitem
-testing\tests.py:153 test
+testing\tests.py:154 test

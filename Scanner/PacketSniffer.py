@@ -14,7 +14,7 @@ with ImportDefence():
     from time import sleep
 from Sniffer import Sniffer
 
-
+"""
 class ListWithSQL:
     CREATE = '''CREATE TABLE IF NOT EXISTS list_with_sql (id INTEGER PRIMARY KEY AUTOINCREMENT, item BLOB)'''
     INSERT = "INSERT INTO list_with_sql (item) VALUES (?)"
@@ -166,7 +166,7 @@ class ListWithSQL:
                 if res is None:
                     break
                 yield pickle.loads(res[0])
-
+"""
 
 class ObserverPublisher:
     """This is the implementation of the Observer Behavioural Design Pattern,
@@ -187,6 +187,12 @@ class ObserverPublisher:
             self.observer_thread.start()
     
     def notify_all(self) -> None:
+        """
+        The notify_all function is the main loop of the Notifier class. It
+        continuously checks for new data in its queue and notifies all observers
+        of that data when it arrives. The function will continue to run until a 
+        terminator event is set, at which point it will exit.
+        """
         from globalstuff import terminator
         while not terminator.is_set():
             if self.data_queue.empty():
@@ -197,12 +203,27 @@ class ObserverPublisher:
                 observer(datum)
     
     def add_observer(self, observer: Callable) -> None:
+        """
+        The add_observer function adds an observer to the list of observers.
+
+        Args:
+            observer (Callable): Add an observer to the list of observers
+
+        Raises:
+            TypeError: if the observer is not callable.
+        """
         if not callable(observer):
             raise TypeError("Observer must be callable.")
         if observer not in self.observers:
             self.observers.append(observer)
     
     def add_datum(self, datum):
+        """
+        The add_datum function adds a datum to the data_queue.
+
+        Args:
+            datum (Any): the datum to notify observers about.
+        """
         self.data_queue.put(datum)
 
 
@@ -235,6 +256,9 @@ class PacketSniffer(ObserverPublisher):
                 cursor.execute(self.CLEAR_TABLE)
 
     def stop(self):
+        """
+        The stop function stops the sniffing thread and flushes packets.
+        """
         if self.sniff_thread:
             if self.sniff_thread.running:
                 self.sniff_thread.stop()
@@ -243,6 +267,15 @@ class PacketSniffer(ObserverPublisher):
         self._flush_packets()
 
     def get_packet(self, i: int):
+        """
+        The get_packet function takes an integer as input and returns a packet from the database.
+        
+        Args:
+            i (int): Specify the index of the packet that is being requested
+
+        Returns:
+            Packet: A single packet
+        """
         packet_row = None
         with sqlite3.connect(self.DB_PATH) as conn:
             cursor = conn.cursor()

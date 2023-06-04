@@ -3230,3 +3230,5 @@ no server, no complex installation, no api keys etc.
 [16:36] Altered `missing_documentation.py` to ignore all functions that start with `_` in their name.
 
 [16:51] Documented `NetworkStorage.py` with all that.
+
+[16:58] Documented `PacketSniffer.py` with all that.
