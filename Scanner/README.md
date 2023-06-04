@@ -3224,6 +3224,7 @@ I'm trying to find one that just works --
 no server, no complex installation, no api keys etc.
 
 [16:27] Settled on `Trelent`, which works, but not in the same style I've used (Google Style) for docstrings already.
+Using `Alt+D` to use the AI.
 
 [16:29] Using it together with my old friend, the `autoDocstring` extension, makes writing and restyling easier.
 
@@ -3246,3 +3247,10 @@ no server, no complex installation, no api keys etc.
 [18:00] Documented the analyses with blazing Work÷Time.
 
 [18:17] Documented the start of the GUI.
+
+[23:13] Back from the movies,
+gonna continue working on that.
+Tomorrow, in Cyber class,
+I wanna finish the `RecommendProbabilities` algorithm in code.
+
+[23:21] Cleansed `ask_for_permission` of magic numbers.

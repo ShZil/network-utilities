@@ -1,6 +1,7 @@
 from import_handler import ImportDefence
 with ImportDefence():
     import win32api
+    import win32con
     from kivy.clock import Clock
 
 from gui.ScanClasses import DummyScan
@@ -73,18 +74,18 @@ class State:
         If the answer is Yes, it will only ask once, and then store their answer in memory for future use.
         Otherwise, it will keep asking each time, until permission is given.
 
-        Returns: 
+        Returns:
             True or False depending on whether or not they have permission
         """
         if not self.permission:
+            confirm_flags = win32con.MB_YESNO | win32con.MB_ICONQUESTION | win32con.MB_DEFBUTTON2
             self.permission = win32api.MessageBox(
                 0,
                 'Do you have legal permission to execute scans on this network?',
                 'Confirm permission',
-                0x00000004
-            ) == 6
+                confirm_flags
+            ) == win32con.IDYES
         return self.permission
-
 
 if __name__ == '__main__':
     print("This file is responsible for the State class/object (Singleton Pattern).")
