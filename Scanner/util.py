@@ -166,6 +166,21 @@ def threadify(f: Callable, silent=False):
         options["printing"] = False
 
     def wrapper(args: list[tuple] | list) -> list | str | tuple[list, str]:
+        """
+        The wrapper function is a wrapper around the function to be executed.
+        It takes care of catching any exception and adding it to the `fails` queue,
+        and saving the result in `values`.
+
+        Args:
+            args (list[tuple] | list): Specify that the function can receive a list of tuples (multiple arguments per call) or a list of arguments (just one per call).
+
+        Raises:
+            TypeError: if the `args` is not a list.
+            Exception: if an inner task raised any caught exception.
+
+        Returns:
+            list | str | tuple[list, str]: A list of the return values from each function call, or the printed output, or both as tuples.
+        """
         if not isinstance(args, list):
             raise TypeError(
                 "Threadify-ied functions must receive a single argument of type list."
@@ -178,6 +193,16 @@ def threadify(f: Callable, silent=False):
 
         # Define a task inner wrapper for `f`
         def task(func, arg, index):
+            """
+            The task function is a wrapper around the function to be executed.
+            It takes care of catching any exception and adding it to the `fails` queue,
+            and saving the result in `values`.
+
+            Args:
+                func (callable): Pass the function to be executed
+                arg (Any | tuple): Pass the arguments to the function
+                index (int): Store the result of each function call in the `values` list
+            """            
             # Convert arg to tuple if needed ("If the function receives a
             # single not-tuple argument,..." in docstring)
             args = arg if isinstance(arg, tuple) else (arg, )
@@ -203,6 +228,14 @@ def threadify(f: Callable, silent=False):
                    for i, x in enumerate(args)]
 
         def threadify_start_threads(threads: list):
+            """
+            The threadify_start_threads function starts the tasks' threads.
+            It waits for threads to be freed, if MAX_THREADS is exceeded.
+            It terminates alongside the programme when `terminator` is set.
+            
+            Args:
+                threads (list): Store the threads in a list
+            """
             from globalstuff import terminator
             # Activate the threads, waiting for threads to be freed if needed.
             for thread in threads:

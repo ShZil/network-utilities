@@ -1,6 +1,3 @@
-util.py:168 wrapper
-util.py:180 task
-util.py:205 threadify_start_threads
 analyses\DeviceProfile.py:76 device_profile
 analyses\LogPackets.py:4 log_packets
 analyses\OS_ID.py:15 fingerprint

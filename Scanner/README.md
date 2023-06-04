@@ -3240,3 +3240,5 @@ no server, no complex installation, no api keys etc.
 [17:40] Documented `SimpleScan.py` quickly.
 
 [17:40] Documented `Sniffer.py` lightningly.
+
+[17:40] Documented `util.py` with smokin' speed.
