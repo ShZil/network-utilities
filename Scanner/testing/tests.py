@@ -116,7 +116,7 @@ def is_sqlite_table_information_present():
 
 
 def test_append_and_getitem():
-    """DISABLE"""
+    """DISABLED"""
     from PacketSniffer import ListWithSQL
     db_path = "test.db"
     try:
@@ -157,7 +157,7 @@ def test() -> None:
     tests = inspect.getmembers(sys.modules[__name__], inspect.isfunction)
     # extract the functions, if they're defined here (i.e. not imported),
     # and exclude `test` (because that'll cause some infinite recursion issues.)
-    tests = [func for name, func in tests if func.__module__ == __name__ and name != 'test' and not func.__doct__.startswith("DISABLE")]
+    tests = [func for name, func in tests if func.__module__ == __name__ and name != 'test' and func.__doc__ != "DISABLED"]
     # sort by alphabetical order
     tests.sort(key=lambda func: func.__name__)
     # Each element is a boolean function. False means the test failed.
@@ -189,3 +189,4 @@ if __name__ == '__main__':
     print("You can define additional tests here according to these guidelines:")
     print("    - the return value is boolean: True means all good, False means the test failed.")
     print("    - You can define a docstring as a custom error message, otherwise, the function name will be displayed.")
+    print("    - Use the docstring \"DISABLED\" to disable a test.")

@@ -74,13 +74,24 @@ class _SplitStringIO:
         self.content = []
 
     def write(self, data):
+        """
+        The write function is called to write the data into the IO.
+        """
         self.content.append(StringIO())
         self.content[-1].write(data)
 
     def getvalue(self):
+        """
+        The getvalue function returns a list of strings, one for each string in the content attribute.
+        The getvalue function is called by the write method to return a list of strings that can be written to file or console.
+
+        Returns:
+            list[str]: A list of strings contained in the IO.
+        """
         return [string.getvalue() for string in self.content]
 
     def flush():
+        """For compatibility with the IO interface that is expected."""
         pass
 
 

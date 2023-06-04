@@ -8,6 +8,14 @@ probabilities = {}
 
 
 def construct_graph():
+    """
+    The construct_graph function is used to construct the graph that will be used for the Markov Chain.
+    The graph has 7 nodes: ARP Sweep, ICMP Sweep, ARP Live, ICMP Live, OS-ID and Public Address.
+    Each node represents a step in our attack process. The edges represent probabilities of going from one step to another.
+    
+    :return: A graph with nodes and edges
+    """
+    
     global probabilities, G
     G.add_nodes_from(["ARP Sweep", "ICMP Sweep", "ARP Live", "ICMP Live", "OS-ID", "Public Address"])
     G.add_weighted_edges_from([
@@ -27,12 +35,28 @@ def construct_graph():
 
 
 def normalise():
+    """
+    The normalise function takes the dictionary of probabilities and divides each value by the sum of all values.
+    This is done to ensure that all probabilities add up to 1.
+    
+    :return: A dictionary of the probabilities for each node
+    """
     global probabilities
     s = sum(probabilities.values())
     probabilities = {node: float(i) / s for node, i in probabilities.items()}
 
 
 def render_ax1(fig, ax1):
+    """
+    The render_ax1 function takes a figure and an axis as arguments.
+    It then uses the networkx library to draw the graph G on that axis,
+    using a circular layout. The node colors are determined by their probabilities,
+    and the edge colors are determined by their weights.
+    
+    :param fig: Pass the figure to the function
+    :param ax1: Specify which axis to draw the graph on
+    """
+    
     pos = nx.circular_layout(G)
     node_values = list(probabilities.values())
 
@@ -80,6 +104,15 @@ def render_ax1(fig, ax1):
 
 
 def render_ax2(fig, ax2):
+    """
+    The render_ax2 function takes a figure and an axis as arguments.
+    It then creates an adjacency matrix from the graph G, which is defined in the global scope.
+    The adjacency matrix is converted to a numpy array, and then plotted using imshow().
+    The title of the plot is set to &quot;Presented as Adjacency Matrix&quot;.  The colorbar() function was commented out because it was not working properly for me (it would only show up if I called plt.show() after calling render_ax2(), but that would also cause both plots to be displayed at once).  The node names are extracted
+    
+    :param fig: Pass in the figure object that we created earlier
+    :param ax2: Specify the axis that we want to draw on
+    """
     adj_matrix = nx.adjacency_matrix(G)
     adj_array = adj_matrix.toarray()
 
@@ -99,6 +132,11 @@ def render_ax2(fig, ax2):
 
 
 def render_graph():
+    """
+    The render_graph function renders the graph in two parts:
+        1. The left side of the graph, which is a bar chart showing how many times each word appears in the text.
+        2. The right side of the graph, which is a scatter plot showing where each word appears in relation to other words.
+    """
     fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(17, 7), gridspec_kw={'width_ratios': [1.5, 1]})
 
     render_ax1(fig, ax1)
@@ -109,6 +147,13 @@ def render_graph():
 
 
 def step(node):
+    """
+    The step function takes a node as input and updates the probabilities of all nodes in the graph.
+    It does this by iterating over all edges connected to that node, and adding a weighted amount of probability to each destination.
+    The weight is determined by the edge's weight attribute.
+    
+    :param node: Specify which node to start from
+    """
     edges = G.edges(node, data=True)
     edges = [(dst, data['weight']) for src, dst, data in edges]
     print(edges)
@@ -120,6 +165,10 @@ def step(node):
 
 
 def main():
+    """
+    The main function is the entry point for this script.
+    It constructs a graph, normalises it and then renders it.
+    """
     construct_graph()
     normalise()
     render_graph()
