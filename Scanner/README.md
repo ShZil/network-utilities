@@ -3212,3 +3212,8 @@ when showing missing documentation.
 - code in middle.
 - updating list of missing imports on top right corner(`missing_documentation.txt` displayed; `missing_documentation.py` running in background)
 - `README.md` on the bottom right corner.
+
+
+
+### 2023-06-04
+[16:02] Installing an AI-powered extension to hasten the process of writing docstrings. Name: "pyDocGenAI", for VSCode.
