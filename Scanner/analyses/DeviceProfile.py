@@ -74,6 +74,14 @@ def _construct_content(info: dict) -> str:
 
 
 def device_profile(*_):
+    """
+    The device_profile function is a function that allows you to view the profile of a device.
+    The profile contains information about the device, such as its MAC address, IPv4 and IPv6 addresses (if available), name (if available), and role (e.g. router).
+    It also contains additional information about the device if it's available, like OS version or Device Discovery status or Vendor.
+    
+    Args:
+        *_: Ignore the arguments passed to the function
+    """
     address = get_string("Device Profile", "Insert device's MAC / IPv4 / IPv6 Address, or Device Name, or Role:")
     entity = _match_device(address)
     if entity is None:

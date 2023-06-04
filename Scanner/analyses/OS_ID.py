@@ -13,6 +13,15 @@ def operating_system_fingerprinting() -> None:
         return "Linux or Android" if packet.ttl <= 64 else "Windows"
 
     def fingerprint(packet):
+        """The fingerprint function is called for every packet that arrives at the computer.
+        It checks to see if the packet originated from a different computer, and if so,
+        it guesses what OS it's running using `_determine_os`, and saves that information in `SpecialInformation`.
+        
+        This is an observer of PacketSniffer.
+
+        Args:
+            packet (Packet): the packet to try and find the OS of.
+        """
         # for each packet,
         # if it originates at some other computer...
         if packet.src == here.ip:

@@ -42,10 +42,29 @@ class MACVendorDict:
         return result[0] if result else None
 
     def get(self, mac, default=None):
+        """Get a vendor without KeyError (use `default` if the key is not found).
+
+        Args:
+            mac (str): the MAC address to map.
+            default (str, optional): the value to return if the key is not found. Defaults to None.
+
+        Returns:
+            str | NoneType: the vendor if it is found.
+        """
         return self[mac] if mac in self else default
 
 
 def vendor_mapper(mac):
+    """
+    The vendor_mapper function takes a MAC address as an argument and returns the vendor of that MAC address.
+    The function uses the requests library to make a GET request to hwaddress.com.
+
+    Args:
+        mac (str): the MAC address to map to a vendor.
+
+    Returns:
+        str: the vendor
+    """
     try:
         url_mac = '%3A'.join(mac.replace(':', '-').split('-'))
         response = requests.get(f'https://hwaddress.com/?q={url_mac}')
@@ -61,6 +80,14 @@ def vendor_mapper(mac):
 
 @threadify
 def mapper_wrapper(entity):
+    """
+    The mapper_wrapper function is a wrapper for the vendor_mapper function.
+    It takes an entity as input, and returns nothing.
+    The purpose of this function is to map MAC addresses to vendors, and store that information in the SpecialInformation dictionary.
+
+    Args:
+        entity (NetworkEntity): the entity to map the MAC address thereof.
+    """
     from NetworkStorage import nothing, SpecialInformation
     if entity.mac == nothing.mac:
         return
@@ -77,6 +104,14 @@ def mapper_wrapper(entity):
 
 
 def vendor_mapping():
+    """
+    The vendor_mapping function is a wrapper for the mapper_wrapper function.
+    It takes no arguments, but it does call the MACVendorDict and NetworkStorage classes (which are both Singletons).
+    The MACVendorDict creates a dictionary of all known vendors and their associated OUI's (Organizationally Unique Identifiers) -- this is a cache.
+    The NetworkStorage function returns a list of all devices on your network that have been detected.
+
+    This is the entry point of the Vendor Mapping analysis.
+    """
     from NetworkStorage import NetworkStorage
     MACVendorDict()
     mapper_wrapper(list(NetworkStorage()))
