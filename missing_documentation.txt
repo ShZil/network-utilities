@@ -1,10 +1,3 @@
-gui\Activation.py:7 activate
-gui\App.py:29 MyApp:build
-gui\AppState.py:22 State:setScreenManager
-gui\AppState.py:25 State:screen
-gui\AppState.py:33 State:resize_callback
-gui\AppState.py:41 State:scan
-gui\AppState.py:48 State:ask_for_permission
 gui\Configuration.py:6 display_configuration
 gui\Diagrams.py:31 KivyDiagram:add
 gui\Diagrams.py:36 KivyDiagram:update

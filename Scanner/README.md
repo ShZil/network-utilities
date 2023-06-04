@@ -3244,3 +3244,5 @@ no server, no complex installation, no api keys etc.
 [17:50] Documented `util.py` with smokin' speed.
 
 [18:00] Documented the analyses with blazing Work÷Time.
+
+[18:17] Documented the start of the GUI.

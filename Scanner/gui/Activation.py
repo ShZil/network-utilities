@@ -5,6 +5,9 @@ from gui.AppState import State
 
 
 def activate(*x):
+    """Activates a scan.
+    If the scan cannot be activated,
+    pops a relevant error message"""
     if not State().ask_for_permission():
         return
 

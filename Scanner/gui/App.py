@@ -27,6 +27,12 @@ class MyApp(App):
     """
 
     def build(self):
+        """Construct the GUI of the application.
+        This is the entry point of creating the structure of the kivy GUI.
+
+        Returns:
+            ScreenManager: the base widget of the app.
+        """
         self.title = 'Local Network Scanner'
         self.icon = 'favicon.png'
         from kivy.core.window import Window
