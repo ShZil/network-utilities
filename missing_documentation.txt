@@ -1,4 +1,3 @@
-Sniffer.py:13 Sniffer:stopall
 util.py:168 wrapper
 util.py:180 task
 util.py:205 threadify_start_threads

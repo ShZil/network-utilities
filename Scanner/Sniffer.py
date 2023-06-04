@@ -11,6 +11,15 @@ class Sniffer(AsyncSniffer):
     
     @staticmethod
     def stopall():
+        """
+        The stopall function stops all running sniffers.
+        This is the main purpose of the Sniffer class --
+        to keep a list of running sniffers and terminate them,
+        when the software closes.
+        Technically reusable indefinitely,
+        but indended usage is to call just once when the software is closed.
+        """
+
         for sniffer in Sniffer.references:
             if sniffer.running:
                 sniffer.stop()
