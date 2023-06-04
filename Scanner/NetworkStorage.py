@@ -108,10 +108,29 @@ class NetworkEntity:
                                  "ipv6", "name"] if self[field] != nothing[field]]) + " >"
 
     def to_string(self, sep=' '):
+        """The to_string function takes a single argument, sep, which is the separator between fields.
+        It returns a string containing all of the non-empty fields in the order mac, ipv4 address, ipv6 address and name.
+        If any field is missing, it will just skip over it.
+        The default value for sep is ' ',
+        so that if you call to_string with no arguments it will return a space-separated list of values.
+        
+
+        Args:
+            sep (str, optional): Separate the fields in the string. Defaults to ' '.
+
+        Returns:
+            str: A string that looks like: `00-11-22-33-44-55 100.0.0.0 SomeWeirdDevice`.
+        """        
         return sep.join([self[field] for field in ["mac", "ip",
                         "ipv6", "name"] if self[field] != nothing[field]])
 
     def to_dict(self):
+        """
+        The to_dict function returns a dictionary of the entity's attributes.
+
+        Returns:
+            dict: A dictionary with the following keys: `mac`, `ip`, `ipv6`, `name`.
+        """
         return {field: self[field] for field in ["mac", "ip", "ipv6", "name"]}
 
     def compare(self):
@@ -163,6 +182,15 @@ class NetworkEntity:
         return self.mac == other.mac and self.ip == other.ip and self.ipv6 == other.ipv6 and self.name == other.name
 
     def tablestring(self, lengths):
+        """
+        The tablestring function takes a list of lengths and returns a string that is formatted to fit into the table.
+
+        Args:
+            lengths (list[int]): Determine the length of each column in the table
+
+        Returns:
+            str: A string of the object's attributes, with each attribute padded to a certain length
+        """
         padded = []
         fields = [
             self.mac,
@@ -205,6 +233,17 @@ def standard_mac(mac: str) -> str:
 
 
 def check_ip(ip: str) -> str:
+    """The check_ip function takes a string as an argument and checks if it is a valid IP address.
+    If the input is not of type str, or does not match the regex pattern for an IP address, 
+    a ValueError will be raised. Otherwise, the function returns the input.
+
+    Raises:
+        ValueError: the argument is not a string.
+        ValueError: the argument is not a valid IPv4 address.
+
+    Returns:
+        str: the same address, if valid.
+    """
     IP_REGEX = r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
     if not isinstance(ip, str):
         raise ValueError(f"Invalid IP address type: \"{ip}\"")
@@ -214,10 +253,27 @@ def check_ip(ip: str) -> str:
 
 
 def filterIPv4(addresses: list[str]) -> list[str]:
+    """The filterIPv4 function takes a list of strings and returns only those that are valid IPv4 addresses.
+
+    Args:
+        addresses (list[str]): the input addresses.
+
+    Returns:
+        list[str]: A list of ipv4 addresses
+    """
     if isinstance(addresses, str):
         return [addresses]
 
     def isip(ip: str) -> bool:
+        """
+        The isip function checks if a string is an IP address.
+
+        Args:
+            ip (str): the function that it will be receiving a string
+
+        Returns:
+            bool: A boolean value indicating whether the string is an IP address.
+        """
         try:
             return check_ip(ip) == ip
         except ValueError:
@@ -227,6 +283,18 @@ def filterIPv4(addresses: list[str]) -> list[str]:
 
 
 def extend_ipv6(ipv6: str) -> str:
+    """
+    The extend_ipv6 function takes an IPv6 address and returns the fully expanded version of that address.
+
+    Args:
+        ipv6 (str): Pass in the ipv6 address to be extended
+
+    Raises:
+        ValueError: in case the input is not a valid IPv6 address
+
+    Returns:
+        str: The ipv6 address in expanded form
+    """
     IPV6_REGEX = r'(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))'
     ipv6 = ipv6.lower()
     if not re.match(IPV6_REGEX, ipv6):
@@ -235,6 +303,21 @@ def extend_ipv6(ipv6: str) -> str:
 
 
 def match(address: str) -> NetworkEntity:
+    """
+    The match function takes an address and returns a NetworkEntity.
+    The entity will have exactly one field set,
+    depending on the type of the input,
+    which is automatically detected (MAC / IPv4 / IPv6 / Error).
+
+    Args:
+        address (str): the address to categorise and insert.
+
+    Raises:
+        ValueError: if it's not a MAC, not an IPv4, and not an IPv6 address.
+
+    Returns:
+        NetworkEntity: A NetworkEntity object with one field.
+    """
     try:
         standard_mac(address)
         return NetworkEntity(mac=address, ip=nothing.ip, ipv6=nothing.ipv6, name="Unknown")
@@ -257,13 +340,22 @@ def match(address: str) -> NetworkEntity:
 
 
 class LockedNetworkEntity(NetworkEntity):
+    """A LockedNetworkEntity is a NetworkEntity that has complete and total information,
+    and so won't be changed (thus, locked).
+    Code-wise, this means that `__setitem__` and `merge` are disabled;
+    the former will raise an exception and the latter will just ignore calls.
+    """
     def __setitem__(self, key, value):
         raise TypeError(
             f"Item assignment in NetworkEntity cannot be done on a locked entity.")
 
     def merge(self, other):
-        # Since we know LockedNetworkEntities will have complete information,
-        # there's no need to merge additions into them (plus it causes errors).
+        """Since we know LockedNetworkEntities will have complete information,
+        there's no need to merge additions into them (plus it causes errors).
+
+        Args:
+            other (NetworkEntity): the entity to NOT merge with. For compatibility with `NetworkEntity.merge`.
+        """
         pass
 
 
@@ -371,6 +463,16 @@ class NetworkStorage:
                     continue
 
     def add(self, *args, mac=nothing.mac, ip=nothing.ip, ipv6=nothing.ipv6, name=nothing.name):
+        """
+        The add function adds a NetworkEntity to the waiting queue.
+
+        Args:
+            *args (list, optional): Pass a variable number of NetworkEntities to the function; OR:
+            mac (str, optional): Set the mac address of a network entity. Defaults to nothing.mac.
+            ip (str, optional): Set the ip address of a network entity. Defaults to nothing.ip.
+            ipv6 (str, optional): Add an ipv6 address to the networkentity. Defaults to nothing.ipv6.
+            name (str, optional): Give the entity a name. Defaults to nothing.name.
+        """
         if len(args) == 0:
             self.waiting.put(NetworkEntity(mac, ip, ipv6, name))
         else:
@@ -391,10 +493,33 @@ class NetworkStorage:
             specials.append(entity)
     
     def connect(self, ip1, ip2):
+        """
+        The connect function takes two IP addresses as arguments and adds them to the connections queue.
+        Later on, they will be connected by an edge in the G (Graph).
+
+        Args:
+            ip1 (str): Identify the first node in the connection
+            ip2 (str): Connect the ip2 to the ip1
+        """
         self.connections.put((ip1, ip2))
 
     def _resolve(self):
         def append(entity):
+            """
+            The append function is used to add a new entity to the network.
+            It loops through all the other entities,
+            checking whether the entity is already present.
+            If another entity is found that is "closly enough related",
+            they will be merged.
+            If it's not a LockedNetworkEntity, it will also be compared with the `specials`.
+            If a match is found, the entity will be "inspired" by the special entity,
+            and take its knowledge.
+            Finally, the entity is added to `self.data` and `G`.
+            If it's in the LAN, an edge to the router is also added.
+            
+            Args:
+                entity (NetworkEntity): Add a new entity to the network
+            """
             for other in self.data:
                 if entity is other:
                     return
@@ -430,6 +555,21 @@ class NetworkStorage:
             
 
     def sort(self, key="ip"):
+        """
+        The sort function takes a key argument, which is either 'ip', 'mac', or
+        'ipv6'. It then sorts the data list by that key. If there are no entries in
+        the data list, it returns an empty list. Otherwise, it returns a sorted version of the 
+        data list.
+
+        Args:
+            key (str, optional): Specify the field to sort by. Defaults to "ip".
+
+        Raises:
+            ValueError: for invalid keys.
+
+        Returns:
+            list: the entities sorted by the chosen key.
+        """
         self._resolve()
         try:
             others = ['ip', 'mac', 'ipv6']
@@ -506,12 +646,24 @@ class NetworkStorage:
         raise TypeError(f"Subscripting in NetworkStorage must be `mac`, `ip`, `ipv6`, or `name`; got `{key}`")
 
     def print(self):
+        """
+        The print function is used to print the contents of the NetworkStorage structure.
+        Uses JustifyPrinting for its style.
+        """
         self._resolve()
         with JustifyPrinting():
             for entity in self:
                 print(entity)
 
     def tablestring(self):
+        """
+        The tablestring function is used to create a table of the hosts in the network.
+        It returns a list of strings, each string being one line of the table, representing one entity.
+        The first and last lines are borders, with titles in between them, and the data.
+
+        Returns:
+            list[str]: the data structure, presented as a tidy table.
+        """
         lengths = [max(map(lambda x: len(str(x)), self[field]), default=4)
                    for field in ["mac", "ip", "ipv6", "name"]]
         lengths = [min(length, 23) for length in lengths]

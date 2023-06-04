@@ -3222,3 +3222,11 @@ Name: "pyDocGenAI", for VSCode.
 [16:20] Some more buffling around with different extensions,
 I'm trying to find one that just works --
 no server, no complex installation, no api keys etc.
+
+[16:27] Settled on `Trelent`, which works, but not in the same style I've used (Google Style) for docstrings already.
+
+[16:29] Using it together with my old friend, the `autoDocstring` extension, makes writing and restyling easier.
+
+[16:36] Altered `missing_documentation.py` to ignore all functions that start with `_` in their name.
+
+[16:51] Documented `NetworkStorage.py` with all that.

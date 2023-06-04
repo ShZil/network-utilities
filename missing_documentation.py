@@ -32,6 +32,7 @@ def extract_missing_docstrings(file_path):
             current_class = node.name
         elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             if not ast.get_docstring(node):
+                if node.name.startswith('_'): continue
                 place = get_place(file_path, node, current_class)
                 places.append(place)
 
