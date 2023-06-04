@@ -1,6 +1,3 @@
-SimpleScan.py:38 get_new
-SimpleScan.py:97 does_simple_scan
-SimpleScan.py:126 result
 Sniffer.py:13 Sniffer:stopall
 util.py:168 wrapper
 util.py:180 task

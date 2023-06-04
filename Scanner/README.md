@@ -3236,3 +3236,5 @@ no server, no complex installation, no api keys etc.
 [17:30] Documented `RecommendProbabilitiesPrimitive.py` and `PrintingContexts.py` with all that.
 
 [17:35] Documented `register.py` speedily.
+
+[17:40] Documented `SimpleScan.py` quickly.

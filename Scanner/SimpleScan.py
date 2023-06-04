@@ -36,6 +36,14 @@ def do_simple_scan(scan: Callable, all_possible_addresses: list[str], *, results
 
     # Define a <lambda> that returns a list[str] of connectable addresses.
     def get_new():
+        """
+        The get_new function scans all possible addresses and returns a list of
+        addresses that are online.
+        This is a wrapper around `scan`.
+
+        Returns:
+            list[str]: A list of addresses that are online
+        """
         return [
             address for address, online
             in zip(all_possible_addresses, scan(all_possible_addresses))
@@ -95,6 +103,16 @@ def standardise_simple_scans(scans: list[Union[tuple[Callable, int], Callable]])
 
     # Wrapper around `do_simple_scan`, that provides the wanted arguments and returns a <lambda>.
     def does_simple_scan(scan):
+        """
+        The does_simple_scan function takes a scan and returns a function that will perform the scan.
+        This is a wrapper around `do_simple_scan` that provides the wanted arguments.
+
+        Args:
+            scan (callable): the scan to wrap.
+
+        Returns:
+            callable: the wrapped function.
+        """
         scan, repeats = scan
         return (
             lambda: do_simple_scan(
@@ -124,6 +142,14 @@ def simple_scan(scan: Callable, repeats: int) -> Callable:
         Callable: a standardised simple scan.
     """
     def result():
+        """
+        The result function is a wrapper for the do_simple_scan function.
+        It takes in the scan function, and all possible addresses from ipconfig().
+        The result is returned by `do_simple_scan`, so this is a wrapper around it.
+
+        Returns:
+            list[tuple]: A list of tuples containing the sacns and repeats.
+        """
         return do_simple_scan(scan,
                               ipconfig()["All Possible Addresses"],
                               repeats=repeats)
