@@ -25,8 +25,8 @@ gui\Screens\SaveScreen.py:62 SaveScreen:do_import
 gui\Screens\ViewScreen.py:13 update_view_screen
 gui\Screens\ViewScreen.py:41 ViewScreen:data
 scans\ARP.py:78 save_to_storage
-scans\Discovery.py:12 reveal_myself
-scans\Discovery.py:37 DeviceDiscoveryListener:check_packet
+scans\Discovery.py:14 reveal_myself
+scans\Discovery.py:39 DeviceDiscoveryListener:check_packet
 scans\ICMP.py:179 scan_ICMP_continuous
 scans\ICMP.py:214 resolve_queue
 scans\ICMP.py:223 sweep_scan

@@ -3273,3 +3273,5 @@ Down to 57 functions missing documentation.
 For reference, when I started doing this "formally"
 (in a structured and organised manner),
 it was around 200-300 missing docu.
+
+[23:21] Moved hardcoded string in `Discovery.py` to top scope.

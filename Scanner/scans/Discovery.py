@@ -8,6 +8,8 @@ with ImportDefence():
 
 
 DST_PORT = 3581
+padding = "Hello there, sir "
+ending = padding[-4:]
 
 def reveal_myself():
     from gui.dialogs import get_string
@@ -17,7 +19,7 @@ def reveal_myself():
     while not terminator.is_set():
         packet = IP(dst=broadcast.ip)
         packet /= UDP(dport=DST_PORT)
-        packet /= Raw(load="Hello there, sir " + name)
+        packet /= Raw(load=padding + name)
         send(packet, verbose=0)
         sleep(3)
 
@@ -44,7 +46,10 @@ class DeviceDiscoveryListener:
             return
         entity = match(packet[IP].src)
         load = packet[UDP].payload.load.decode()
-        load = load.split("sir ", 1)[1]
+        try:
+            load = load.split(ending, 1)[1]
+        except IndexError:
+            return
         SpecialInformation()[entity, 'discovery'] = load
         NetworkStorage().add(entity)
 
