@@ -32,6 +32,7 @@ from analyses.OS_ID import operating_system_fingerprinting
 from analyses.DeviceProfile import device_profile
 from analyses.LogPackets import log_packets
 from analyses.VendorMapping import vendor_mapping
+from RecommendProbabilities import construct_graph, render_graph
 from time import sleep
 import os
 import sys
@@ -89,6 +90,7 @@ def register_scans():
     r["Reveal Myself"] = reveal_myself
     r["Vendor Mapping"] = vendor_mapping
     r["All Revealed"] = show_all_revealed
+    r["Recommended Scan Algorithm"] = render_graph
 
 
 def main():
@@ -137,6 +139,9 @@ def main():
     G.add_node(router)
 
     register_scans()
+
+    # Recommend Probabilities
+    construct_graph()
 
     # GUI initialisation
     add_fonts()

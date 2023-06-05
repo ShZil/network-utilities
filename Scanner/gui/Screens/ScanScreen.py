@@ -14,7 +14,7 @@ from gui.Diagrams import *
 from gui.KivyExtensions import GreenButton, MyPaintWidget, OperationButton, ButtonColumn
 from gui.Configuration import display_configuration
 from gui.Hover import Hover
-from gui.ScanClasses import Scan
+from gui.ScanClasses import Scan, RecommendedScan
 from gui.Information import display_information
 
 
@@ -141,6 +141,8 @@ class ScanScreenRightColumn(ButtonColumn):
         # Objects #7 - #10
         for name in db.get_scans():
             Scan(name, Register()[name], self)
+        
+        RecommendedScan(self)
             # print(name)
         # Scan('ICMP Sweep', lambda: print("ICMP!!!"), self)
         # Scan('ARP Sweep', lambda: print("ARP!!!"), self)

@@ -3312,3 +3312,11 @@ It looked like:
 [00:44] Worked on `RecommendProbabilities` in Cyber class today; uploaded the progress.
 Also, made the weights vary according to the behaviour,
 so now it "learns" the patterns of the user.
+
+[00:58] Integrating Recommend Probabilities with the rest of the software.
+
+[01:22] Finished integrating. Affected modules: 
+    - `ScanClasses` - Added the class `RecommendedScan`, global function `update_recommendation`, and saving the scans to a dictionary `Scan.scans`.
+    - `ScanScreen` - Added a `RecommendedScan` button at the bottom
+    - `RecommendProbabilities` - tidied up
+    - `register` - calls `step` and `update_recommendation` each time a scan is called.

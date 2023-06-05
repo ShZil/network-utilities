@@ -65,6 +65,10 @@ class Register(dict):
             if not self.is_infinite_scan(name):
                 entry[2] = int(now()) - entry[1]
 
+        from RecommendProbabilities import step
+        step(name)
+        from gui.Screens.ScanScreen import update_recommendation
+        update_recommendation()
         _add_callback.__name__ = action.__name__ + "_with_callback"
         self.threads[name] = t = Thread(target=_add_callback, args=(action, callback))
         t.start()

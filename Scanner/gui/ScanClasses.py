@@ -8,10 +8,13 @@ from globalstuff import *
 from register import Register
 from gui.Hover import Hover
 
+update_recommendation = lambda x: print(x)
+
 
 class Scan:
     font_size = BUTTON_COLUMN_FONT_SIZE
     background_color = button_column_background
+    scans = {}
 
     def __init__(self, name, action, parent):
         self.name = name
@@ -29,16 +32,18 @@ class Scan:
         parent.add_raw(self.button)
         Hover.add(self.button)
 
+        Scan.scans[name] = self
+
     def select(self, x):
         from gui.AppState import State
         if State().highlighted_scan == self:
             State().scan(DummyScan())
             return
         State().scan(self)
-        self.paint_highligh()
+        self.paint_highlight()
         self.x = x
     
-    def paint_highligh(self):
+    def paint_highlight(self):
         with self.button.canvas.after:
             self.highlight = Color(*SCAN_HIGHLIGHT)
             self.highlight_rect = Rectangle(
@@ -105,10 +110,33 @@ class Analysis(Scan):
         super().__init__(name, action, parent)
         self.button.background_color = [0.2, 0.4, 1, 1]
     
-    def paint_highligh(self):
+    def paint_highlight(self):
         with self.button.canvas.after:
             self.highlight = Color(*ANALYSIS_HIGHLIGHT)
             self.highlight_rect = Rectangle(
                 pos=(self.button.x, self.button.y),
                 size=(self.button.width, self.button.height)
             )
+
+
+class RecommendedScan(Scan):
+    """This is a Scan button, that is the GUI side of the Recommend Probabilities ability.
+    It shows the current recommendation, and allows the user to activate it.
+    """
+    def __init__(self, parent):
+        super.__init__('★', lambda x: x, parent)
+        self.recommend = DummyScan()
+        global update_recommendation
+        update_recommendation = self.update
+    
+    def update(self):
+        from RecommendProbabilities import random_picker
+        self.recommended_scan = random_picker()
+        self.recommend = Scan.scans[self.recommended_scan]
+        self.button.text = '★ ' + self.recommended_scan
+
+    def act(self):
+        self.recommend.act()
+
+    def finished(self):
+        self.recommend.finished()

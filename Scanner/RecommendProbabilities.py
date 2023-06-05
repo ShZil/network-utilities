@@ -1,16 +1,24 @@
-import networkx as nx
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-import matplotlib.cm as cm
-import random
+from import_handler import ImportDefence
+with ImportDefence():
+    import networkx as nx
+    import matplotlib.pyplot as plt
+    import matplotlib.colors as mcolors
+    import matplotlib.cm as cm
+    import random
+from db import get_scans
 
 R = nx.DiGraph()
 probabilities = {}
 
+# For `step(node)`
+dp = 0.09  # change the `prev`-`node` link by this amount
+maxp = 0.99  # however, if it's gotten greater than `maxp`,
+reduction_factor = 0.9  # reduce it by multiplying it by `reduction_factor`.
+
 
 def construct_graph():
     """
-    The construct_graph function is used to construct the graph that will be used for the Markov Chain.
+    The construct_graph function is used to construct the graph that will be used for the "Markov Chain".
     The graph has some nodes: "ARP Sweep", "ICMP Sweep", "ARP Live", "ICMP Live", "TCP Ports", "Public Address", "Trace Route", and "Reveal Myself".
     Each node represents a step in our attack process. The edges represent probabilities of going from one step to another.
     
@@ -18,7 +26,7 @@ def construct_graph():
     """
     
     global probabilities, R
-    R.add_nodes_from(["ARP Sweep", "ICMP Sweep", "ARP Live", "ICMP Live", "TCP Ports", "Public Address", "Trace Route", "Reveal Myself"])
+    R.add_nodes_from(get_scans())
     R.add_weighted_edges_from([
         # (v, u, w: float)
         ("ARP Sweep", "ARP Live", 0.4),
@@ -32,9 +40,9 @@ def construct_graph():
         ("ICMP Live", "TCP Ports", 0.2),
         ("Trace Route", "TCP Ports", 0.5)
     ])
-    R.add_weighted_edges_from(list((n, n, -0.5) for n in R.nodes))
+    R.add_weighted_edges_from(list((n, n, -0.5) for n in R.nodes))  # negative diagonal
     # positive values are "Yeah, if you executed `v`, consider executing `u`".
-    # negative values are "If you executed `v` please do not execute `u`".
+    # negative values are "If you executed `v`, please do not execute `u`".
     probabilities = {node: 1 for node in R}
 
 
@@ -151,29 +159,24 @@ def render_graph():
     plt.show()
 
 
-prev = None  # do more "prev"s and have the effect of each one drop off exponentially
+prev = None  # Suggestion: do more "prev"s and have the effect of each one drop off exponentially
 def step(node):
     """
     The step function takes a node as input and updates the probabilities of all nodes in the graph.
     It does this by iterating over all edges connected to that node, and adding a weighted amount of probability to each destination.
-    The weight is determined by the edge's weight attribute.
+    The weight is determined by the edge's weight attribute and the node's current probability.
+    Therefore, it simulates a "flow" of probability.
     
-    :param node: Specify which node to start from
+    :param node: Specify which node to step on
     """
     edges = R.edges(node, data=True)
     edges = [(dst, data['weight']) for src, dst, data in edges]
-    # print(edges)
     p = probabilities[node]
     for scan, weight in edges:
         probabilities[scan] += weight * p
-        # print(f"Changed {scan} by {weight * p}")
     global prev
-    dp = 0.09
-    maxp = 0.99
-    reduction_factor = 0.9
     if prev is not None:
         if R.has_edge(prev, node):
-            # print(R[prev][node])
             R[prev][node]['weight'] += dp * random.uniform(0.8, 1.2)
             if R[prev][node]['weight'] > maxp:
                 R[prev][node]['weight'] *= reduction_factor
@@ -184,10 +187,8 @@ def step(node):
 
 
 def random_picker():
-    # print(probabilities)
-    chosen = random.choices(list(probabilities.keys()), weights=probabilities.values())[0]
-    print(chosen)
-    return chosen
+    normalise()
+    return random.choices(list(probabilities.keys()), weights=probabilities.values())[0]
 
 
 def main():
@@ -200,7 +201,9 @@ def main():
     for _ in range(250):
         render_graph()
         # step("ICMP Sweep")
-        step(random_picker())
+        picked = random_picker()
+        print(picked)
+        step(picked)
 
 
 if __name__ == '__main__':

@@ -37,6 +37,7 @@ INFORMATION_DATA = [
     # ("Log Packets", "Log all the packets that were silently sniffed.", 0, "The packets are already saved, you're just viewing them.", 99, 100, 0, True),
     ("Vendor Mapping", "Maps each currently known MAC address of other devices in the network,\nto a vendor or manufacturer, using a website (like an API): `hwaddress.com`.\nAn organizationally unique identifier (OUI) is a 24-bit number that uniquely identifies a vendor, manufacturer, or other organization, bought from IEEE;\ncan be found in the MAC address in the first 3 octets.\nIf a new MAC address is found, run the analysis again. <IP> <TCP> <HTTP GET /q=mac>", 5, "The manufacturer's name for each network card.", 97, 90, 0, True),
     ("All Revealed", "Shows all devices that executed Reveal Myself and were discovered. This just shows some of the internally-stored data, doesn't send any packets.", 4, "Seeing an internal list of the entities and chosen names", 99, 100, 0, True)
+    ("Recommended Scan Algorithm", "See a visualisation explaining the Recommend Scan feature, and the learnt behaviour of the current user (as graph weights).", 1, "Understanding the Algorithm", 100, 100, 0, True)
 ]
 
 
