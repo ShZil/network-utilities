@@ -1,6 +1,7 @@
 from import_handler import ImportDefence
 with ImportDefence():
     from kivy.uix.button import Button
+    from kivy.uix.label import Label
     from kivy.graphics import Color, Rectangle
 
 from gui.dialogs import popup
@@ -123,17 +124,26 @@ class RecommendedScan(Scan):
     """This is a Scan button, that is the GUI side of the Recommend Probabilities ability.
     It shows the current recommendation, and allows the user to activate it.
     """
+    star = '★'
     def __init__(self, parent):
-        super().__init__('★', lambda x: x, parent)
+        super().__init__('', lambda x: x, parent)
         self.recommend = DummyScan()
+        self.label = Label(
+            text=RecommendedScan.star,
+            font_size=Scan.font_size,
+            font_name="Symbols",
+            pos_hint={'center_x': 0.5, 'center_y': 0.5}
+        )
+        self.button.add_widget(self.label)
+
         global update_recommendation
         update_recommendation = self.update
     
     def update(self):
         from RecommendProbabilities import random_picker
         self.recommended_scan = random_picker()
-        self.recommend = Scan.scans[self.recommended_scan]
-        self.button.text = '★ ' + self.recommended_scan
+        self.recommend: Scan = Scan.scans[self.recommended_scan]
+        self.name = self.button.text = self.recommended_scan
 
     def act(self):
         self.recommend.act()

@@ -3320,3 +3320,13 @@ so now it "learns" the patterns of the user.
     - `ScanScreen` - Added a `RecommendedScan` button at the bottom
     - `RecommendProbabilities` - tidied up
     - `register` - calls `step` and `update_recommendation` each time a scan is called.
+
+[02:14] Some debugging later (which is much more fun than writing documentation),
+the recommended scans are now clickable and usable.
+
+[02:19] BUG: the recommended scan updates so quickly,
+that the scan that's executed is the next in the series and not what the user intends.
+
+[02:23] BUGFIX: fixed that bug listed above, using some _brain thinking_ and a `sleep(0.4)` statement.
+
+[02:29] More bug-fixing later, and now it seems to be working!

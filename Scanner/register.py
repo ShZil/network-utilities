@@ -1,4 +1,4 @@
-from time import time as now
+from time import sleep, time as now
 from threading import Thread
 
 from gui.dialogs import popup
@@ -65,13 +65,17 @@ class Register(dict):
             if not self.is_infinite_scan(name):
                 entry[2] = int(now()) - entry[1]
 
+        if name == '':
+            popup("Cannot Start Scan", "A nameless scan cannot be started.", error=True)
+            return
         from RecommendProbabilities import step
         step(name)
-        from gui.Screens.ScanScreen import update_recommendation
-        update_recommendation()
         _add_callback.__name__ = action.__name__ + "_with_callback"
         self.threads[name] = t = Thread(target=_add_callback, args=(action, callback))
         t.start()
+        sleep(0.4)  # don't update the recommendation before the previous one is executed.
+        from gui.ScanClasses import update_recommendation
+        update_recommendation()
 
     def is_running(self, name: str) -> bool:
         """

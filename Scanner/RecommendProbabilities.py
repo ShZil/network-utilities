@@ -19,7 +19,7 @@ reduction_factor = 0.9  # reduce it by multiplying it by `reduction_factor`.
 def construct_graph():
     """
     The construct_graph function is used to construct the graph that will be used for the "Markov Chain".
-    The graph has some nodes: "ARP Sweep", "ICMP Sweep", "ARP Live", "ICMP Live", "TCP Ports", "Public Address", "Trace Route", and "Reveal Myself".
+    The graph has some nodes: "ARP Sweep", "ICMP Sweep", "Live ARP", "Live ICMP", "TCP Ports", "Public Address", "Trace Route", and "Reveal Myself".
     Each node represents a step in our attack process. The edges represent probabilities of going from one step to another.
     
     :return: A graph with nodes and edges
@@ -29,18 +29,18 @@ def construct_graph():
     R.add_nodes_from(get_scans())
     R.add_weighted_edges_from([
         # (v, u, w: float)
-        ("ARP Sweep", "ARP Live", 0.4),
-        ("ICMP Sweep", "ICMP Live", 0.4),
+        ("ARP Sweep", "Live ARP", 0.4),
+        ("ICMP Sweep", "Live ICMP", 0.4),
         ("ARP Sweep", "ICMP Sweep", 0.2),
         ("ICMP Sweep", "ARP Sweep", 0.3),
-        ("ARP Live", "ICMP Live", 0.05),
+        ("Live ARP", "Live ICMP", 0.05),
         ("ARP Sweep", "TCP Ports", 0.2),
         ("ICMP Sweep", "TCP Ports", 0.2),
-        ("ARP Live", "TCP Ports", 0.2),
-        ("ICMP Live", "TCP Ports", 0.2),
+        ("Live ARP", "TCP Ports", 0.2),
+        ("Live ICMP", "TCP Ports", 0.2),
         ("Trace Route", "TCP Ports", 0.5)
     ])
-    R.add_weighted_edges_from(list((n, n, -0.5) for n in R.nodes))  # negative diagonal
+    R.add_weighted_edges_from(list((n, n, -1 if n.startswith("Live") else -0.5) for n in R.nodes))  # negative diagonal
     # positive values are "Yeah, if you executed `v`, consider executing `u`".
     # negative values are "If you executed `v`, please do not execute `u`".
     probabilities = {node: 1 for node in R}
@@ -171,7 +171,11 @@ def step(node):
     """
     edges = R.edges(node, data=True)
     edges = [(dst, data['weight']) for src, dst, data in edges]
-    p = probabilities[node]
+    try:
+        p = probabilities[node]
+    except KeyError:
+        # Analyses will land here and be ignored
+        return
     for scan, weight in edges:
         probabilities[scan] += weight * p
     global prev

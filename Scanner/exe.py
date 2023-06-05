@@ -56,6 +56,8 @@ def keep_resolving_storage():
         """
         from globalstuff import terminator
         sleep(7)
+        from gui.ScanClasses import update_recommendation
+        update_recommendation()
         while not terminator.is_set():
             sleep(5)
             NetworkStorage()._resolve()
