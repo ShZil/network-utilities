@@ -124,7 +124,7 @@ class RecommendedScan(Scan):
     It shows the current recommendation, and allows the user to activate it.
     """
     def __init__(self, parent):
-        super.__init__('★', lambda x: x, parent)
+        super().__init__('★', lambda x: x, parent)
         self.recommend = DummyScan()
         global update_recommendation
         update_recommendation = self.update
