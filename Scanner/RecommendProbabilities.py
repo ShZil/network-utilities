@@ -2,6 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import matplotlib.cm as cm
+import random
 
 G = nx.DiGraph()
 probabilities = {}
@@ -10,14 +11,14 @@ probabilities = {}
 def construct_graph():
     """
     The construct_graph function is used to construct the graph that will be used for the Markov Chain.
-    The graph has 7 nodes: ARP Sweep, ICMP Sweep, ARP Live, ICMP Live, OS-ID and Public Address.
+    The graph has some nodes: "ARP Sweep", "ICMP Sweep", "ARP Live", "ICMP Live", "TCP Ports", "Public Address", "Trace Route", and "Reveal Myself".
     Each node represents a step in our attack process. The edges represent probabilities of going from one step to another.
     
     :return: A graph with nodes and edges
     """
     
     global probabilities, G
-    G.add_nodes_from(["ARP Sweep", "ICMP Sweep", "ARP Live", "ICMP Live", "OS-ID", "Public Address"])
+    G.add_nodes_from(["ARP Sweep", "ICMP Sweep", "ARP Live", "ICMP Live", "TCP Ports", "Public Address", "Trace Route", "Reveal Myself"])
     G.add_weighted_edges_from([
         # (v, u, w: float)
         ("ARP Sweep", "ARP Live", 0.4),
@@ -25,10 +26,13 @@ def construct_graph():
         ("ARP Sweep", "ICMP Sweep", 0.2),
         ("ICMP Sweep", "ARP Sweep", 0.3),
         ("ARP Live", "ICMP Live", 0.05),
-        ("ICMP Sweep", "OS-ID", 0.5),
-        ("ICMP Live", "OS-ID", 0.6)
+        ("ARP Sweep", "TCP Ports", 0.2),
+        ("ICMP Sweep", "TCP Ports", 0.2),
+        ("ARP Live", "TCP Ports", 0.2),
+        ("ICMP Live", "TCP Ports", 0.2),
+        ("Trace Route", "TCP Ports", 0.5)
     ])
-    G.add_weighted_edges_from(list((n, n, -0.9) for n in G.nodes))
+    G.add_weighted_edges_from(list((n, n, -0.5) for n in G.nodes))
     # positive values are "Yeah, if you executed `v`, consider executing `u`".
     # negative values are "If you executed `v` please do not execute `u`".
     probabilities = {node: 1 for node in G}
@@ -85,6 +89,7 @@ def render_ax1(fig, ax1):
         edge_cmap=cmap_edges,
         edge_vmin=min(colors),
         edge_vmax=max(colors),
+        alpha=[min(abs(c) * 2, 1) for c in colors],
         width=2,
         arrows=True,
         ax=ax1
@@ -146,6 +151,7 @@ def render_graph():
     plt.show()
 
 
+prev = None  # do more "prev"s and have the effect of each one drop off exponentially
 def step(node):
     """
     The step function takes a node as input and updates the probabilities of all nodes in the graph.
@@ -156,12 +162,32 @@ def step(node):
     """
     edges = G.edges(node, data=True)
     edges = [(dst, data['weight']) for src, dst, data in edges]
-    print(edges)
+    # print(edges)
     p = probabilities[node]
     for scan, weight in edges:
         probabilities[scan] += weight * p
-        print(f"Changed {scan} by {weight * p}")
+        # print(f"Changed {scan} by {weight * p}")
+    global prev
+    dp = 0.09
+    maxp = 0.99
+    reduction_factor = 0.9
+    if prev is not None:
+        if G.has_edge(prev, node):
+            # print(G[prev][node])
+            G[prev][node]['weight'] += dp * random.uniform(0.8, 1.2)
+            if G[prev][node]['weight'] > maxp:
+                G[prev][node]['weight'] *= reduction_factor
+        else:
+            G.add_edge(prev, node, weight=random.uniform(dp/2, dp))
+    prev = node
     normalise()
+
+
+def random_picker():
+    # print(probabilities)
+    chosen = random.choices(list(probabilities.keys()), weights=probabilities.values())[0]
+    print(chosen)
+    return chosen
 
 
 def main():
@@ -171,9 +197,10 @@ def main():
     """
     construct_graph()
     normalise()
-    render_graph()
-    step("ICMP Sweep")
-    render_graph()
+    for _ in range(250):
+        render_graph()
+        # step("ICMP Sweep")
+        step(random_picker())
 
 
 if __name__ == '__main__':

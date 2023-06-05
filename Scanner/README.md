@@ -3292,3 +3292,23 @@ but it still was super quick.
 
 [00:12] It's quite difficult to examine and measure the functionality of All Revealed from within a single computer without a simulated LAN.
 Therefore, I recommend (to myself lol) to test it out in class.
+
+[00:37] Today in Cyber class I presented my project to the previous year's students. I asked them to find the packets that were sent, using WireShark. One of them found the packets of `hostify`!!! Which I wasn't able to find for so long. Thank you, random student!
+It looked like:
+```
+<Ether src=[REAL MAC] dst=00:00:00:00:00:00>
+<IP src=[HOSTIFIED DEVICE] dst=[RUNNING THE SOFTWARE]>
+<UDP src=137 dst=137>
+<NetBIOS Name Service:>
+    transation_id,
+    flags=0x8400:
+        Response
+        Opcode=Name query
+        Authoritative
+        Reply code=no error
+        Answer RRs=1
+```
+
+[00:44] Worked on `RecommendProbabilities` in Cyber class today; uploaded the progress.
+Also, made the weights vary according to the behaviour,
+so now it "learns" the patterns of the user.
