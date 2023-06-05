@@ -27,7 +27,7 @@ from scans.ARP import scan_ARP, scan_ARP_continuous
 from scans.ICMP import scan_ICMP, scan_ICMP_continuous
 from scans.TCP import port_scan_TCP
 from scans.TraceRouter import traceroute
-from scans.Discovery import DeviceDiscoveryListener, reveal_myself
+from scans.Discovery import DeviceDiscoveryListener, reveal_myself, show_all_revealed
 from analyses.OS_ID import operating_system_fingerprinting
 from analyses.DeviceProfile import device_profile
 from analyses.LogPackets import log_packets
@@ -88,6 +88,7 @@ def register_scans():
     r["Device Profile"] = device_profile
     r["Reveal Myself"] = reveal_myself
     r["Vendor Mapping"] = vendor_mapping
+    r["All Revealed"] = show_all_revealed
 
 
 def main():

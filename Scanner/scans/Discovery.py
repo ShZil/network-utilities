@@ -54,6 +54,25 @@ class DeviceDiscoveryListener:
         NetworkStorage().add(entity)
 
 
+def show_all_revealed():
+    from gui.dialogs import popup
+    from NetworkStorage import SpecialInformation
+    entities = SpecialInformation()['discovery']
+    
+    uniques = []
+    for entity in entities:
+        for other in uniques:
+            if entity.equals(other):
+                other.merge(entity)
+                break
+        else:
+            uniques.append(entity)
+    
+    lengths = [23, 23, 23, 23]
+    uniques = [entity.tablestring(lengths) + ':' + SpecialInformation()[entity, 'discovery'] for entity in uniques]
+    popup("Revealed Devices", '\n'.join(uniques), info=True)
+
+
 if __name__ == '__main__':
     print("This file is responsible for the Device Discovery scan,")
     print("which reveals this computer to others that use this software")

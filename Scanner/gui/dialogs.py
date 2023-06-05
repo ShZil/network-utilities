@@ -44,7 +44,6 @@ def get_icon_html(icon: IconType):
     The icon is displayed as a header to the rest of the HTML.
     """
     try:
-        print("Opening", f'./gui/{icon.name}.html')
         return open(f'./gui/{icon.name}.html', 'r', encoding="utf-8").read()
     except OSError:
         return ""

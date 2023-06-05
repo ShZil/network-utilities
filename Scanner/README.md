@@ -3275,3 +3275,17 @@ For reference, when I started doing this "formally"
 it was around 200-300 missing docu.
 
 [23:21] Moved hardcoded string in `Discovery.py` to top scope.
+Also, added `except IndexError:`, for UDP broadcast packets that somehow are directed at exactly the right port, but not from my software.
+
+[23:38] Took me 12m28s to implement `All Revealed`.
+This is blazing speed for coding stuff.
+This is incredibly easy with the infrastructure I've set up.
+Admittedly, it's not too complicated an analysis,
+but it still was super quick.
+
+
+
+### 2023-06-06
+[00:02] Remove printing statement.
+
+[00:03] Updated the database entries.
