@@ -15,9 +15,9 @@ def reveal_myself():
     from gui.dialogs import get_string
     name = get_string("Reveal Myself As", "Starting Device Discovery\nInsert the name you wish to reveal to others:")
     from globalstuff import terminator
-    from NetworkStorage import broadcast
+    from NetworkStorage import broadcast, here
     while not terminator.is_set():
-        packet = IP(dst=broadcast.ip)
+        packet = IP(src=here.ip, dst=broadcast.ip)
         packet /= UDP(dport=DST_PORT)
         packet /= Raw(load=padding + name)
         send(packet, verbose=0)

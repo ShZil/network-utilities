@@ -3289,3 +3289,6 @@ but it still was super quick.
 [00:02] Remove printing statement.
 
 [00:03] Updated the database entries.
+
+[00:12] It's quite difficult to examine and measure the functionality of All Revealed from within a single computer without a simulated LAN.
+Therefore, I recommend (to myself lol) to test it out in class.
