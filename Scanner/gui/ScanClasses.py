@@ -17,17 +17,17 @@ class Scan:
     background_color = button_column_background
     scans = {}
 
-    def __init__(self, name, action, parent):
+    def __init__(self, name, action, parent, font_name="Roboto"):
         self.name = name
         self.action = action
         self.x = 0
         self.is_running = False
 
         self.button = Button(
-            text=name,
+            text=name if len(name) < 20 else name.replace(' ', '\n'),
             font_size=Scan.font_size,
             background_color=Scan.background_color,
-            font_name="Roboto"
+            font_name=font_name
         )
         self.button.bind(on_press=lambda x: self.select(x))
         parent.add_raw(self.button)
@@ -126,15 +126,8 @@ class RecommendedScan(Scan):
     """
     star = '★'
     def __init__(self, parent):
-        super().__init__('', lambda x: x, parent)
+        super().__init__('', lambda x: x, parent, font_name="Symbols")
         self.recommend = DummyScan()
-        self.label = Label(
-            text=RecommendedScan.star,
-            font_size=Scan.font_size,
-            font_name="Symbols",
-            pos_hint={'center_x': 0.5, 'center_y': 0.5}
-        )
-        self.button.add_widget(self.label)
 
         global update_recommendation
         update_recommendation = self.update
@@ -143,7 +136,8 @@ class RecommendedScan(Scan):
         from RecommendProbabilities import random_picker
         self.recommended_scan = random_picker()
         self.recommend: Scan = Scan.scans[self.recommended_scan]
-        self.name = self.button.text = self.recommended_scan
+        self.name = self.recommended_scan
+        self.button.text = RecommendedScan.star + ' ' + self.name
 
     def act(self):
         self.recommend.act()

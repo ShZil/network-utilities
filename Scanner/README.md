@@ -3330,3 +3330,5 @@ that the scan that's executed is the next in the series and not what the user in
 [02:23] BUGFIX: fixed that bug listed above, using some _brain thinking_ and a `sleep(0.4)` statement.
 
 [02:29] More bug-fixing later, and now it seems to be working!
+
+[02:48] I think I'm done for tonight. GN!

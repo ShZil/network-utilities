@@ -19,9 +19,9 @@ gui\ScanClasses.py:87 RecommendedScan:deselect
 gui\ScanClasses.py:90 RecommendedScan:act
 gui\ScanClasses.py:95 RecommendedScan:finished
 gui\ScanClasses.py:114 RecommendedScan:paint_highlight
-gui\ScanClasses.py:142 RecommendedScan:update
-gui\ScanClasses.py:148 RecommendedScan:act
-gui\ScanClasses.py:151 RecommendedScan:finished
+gui\ScanClasses.py:135 RecommendedScan:update
+gui\ScanClasses.py:142 RecommendedScan:act
+gui\ScanClasses.py:145 RecommendedScan:finished
 gui\Screens\KnowScreen.py:24 update_know_screen
 gui\Screens\KnowScreen.py:144 KnowScreenInfoLabel:data
 gui\Screens\SaveScreen.py:29 SaveScreen:export
