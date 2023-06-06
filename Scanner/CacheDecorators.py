@@ -67,6 +67,7 @@ def one_cache(f: Callable) -> Callable:
     3. The function is expected to be called with the same arguments.
 
     The function must return some non-None value.
+    If it returns None, the next time it is called, it will execute again.
 
     Args:
         f (function): the function to decorate and add a cache to.
@@ -92,8 +93,6 @@ def one_cache(f: Callable) -> Callable:
             return memory[0]
         # If I don't have cache, call the function.
         memory[0] = f(*args)
-        if memory[0] is None:
-            raise ValueError("A @one_cache function cannot return None!")
         return memory[0]
 
     # Make `wrapper` inherit `f`'s properties.

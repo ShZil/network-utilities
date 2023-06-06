@@ -11,7 +11,7 @@ from globalstuff import *
 from register import Register
 from gui.Hover import Hover
 
-update_recommendation = lambda x: print(x)
+update_recommendation = lambda *x: print(*x)
 
 
 class Scan:
@@ -37,7 +37,7 @@ class Scan:
         Hover.add(self.button)
 
         Scan.scans[name] = self
-        if Scan._thread == None:
+        if Scan._thread is None:
             Scan._thread = Thread(target=Scan.animate)
             Scan._thread.name = "EllipsisAnimation"
             Scan._thread.start()
@@ -72,21 +72,22 @@ class Scan:
 
     def finished(self):
         self.is_running = False
-        if self.button.text.endswith('...') and not Register().is_infinite_scan(self.button.text):
-            self.button.text = self.button.text[:-3]
+        if self.button.text.endswith('.') and not Register().is_infinite_scan(self.button.text):
+            self.button.text = self.button.text.strip('.')
     
     @staticmethod
     def animate():
-        for name, scan in Scan.scans.items():
-            if not scan.is_running:
-                continue
-            text = scan.button.text
-            trimmed = text.strip('.')
-            if text.endswith('...'):
-                scan.button.text = trimmed + '.'
-            elif text.endswith('..') or text.endswith('.'):
-                scan.button.text += '.'
-        sleep(2)
+        sleep(10)
+        while not terminator.is_set():
+            for name, scan in list(Scan.scans.items()):
+                if not hasattr(scan, 'button'):
+                    continue
+                text = scan.button.text
+                if text.endswith('...'):
+                    scan.button.text = text.strip('.') + '.'
+                elif text.endswith('..') or text.endswith('.'):
+                    scan.button.text += '.'
+            sleep(1)
 
 
 class DummyScan(Scan):

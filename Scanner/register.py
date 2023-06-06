@@ -105,7 +105,7 @@ class Register(dict):
             bool: whether the scan is infinite.
         """
         # `name` may contain '...' in the end.
-        return name in self.infinites or name[:-3] in self.infinites
+        return name.strip('.') in self.infinites
 
     def get_history(self):
         """Gets the history as a list of tuples.

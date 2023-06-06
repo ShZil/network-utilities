@@ -13,8 +13,11 @@ def public_address_action():
 @one_cache
 def get_public_ip():
     from NetworkStorage import nothing, NetworkStorage, LockedNetworkEntity
-    ip = requests.get('https://api.ipify.org').text
-    ipv6 = requests.get('https://api64.ipify.org').text
+    try:
+        ip = requests.get('https://api.ipify.org').text
+        ipv6 = requests.get('https://api64.ipify.org').text
+    except (TimeoutError, requests.exceptions.ConnectTimeout):
+        return None
     ipv6 = ipv6 if ipv6 != ip else nothing.ipv6
     try:
         outside = LockedNetworkEntity(

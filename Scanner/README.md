@@ -3414,3 +3414,14 @@ Fixed.
 
 [16:24] Implementing `EllipsisAnimation`.
 Forgot `.items()`.
+
+[16:37] `Size changed during iteration` or whatever,
+fixed by wrapping inside `list()`.
+Also added a `while` loop and some `sleep` statements.
+
+[16:47] Got a `TimeoutError` from Public Address.
+Added a try-except block,
+and changed the behaviour of `one_cache` to treat `None` return value somewhat differently:
+instead of raising an exception, don't save a value, and recalculate.
+
+[16:51] BUGFIX: forgot `.text`.
