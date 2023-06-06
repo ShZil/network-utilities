@@ -1,3 +1,4 @@
+from gui.Configuration import Configuration
 from import_handler import ImportDefence
 
 with ImportDefence():
@@ -51,37 +52,12 @@ def scan_TCP(ip: str, repeats: int) -> dict:
 
 
 def port_scan_TCP():
-    address = get_string("Choose IP", "Which IP address? ")
-
-    def is_ipv4(string):
-        try:
-            ipaddress.IPv4Network(string)
-            return True
-        except ValueError:
-            return False
-
-    while not is_ipv4(address):
-        popup("Invalid IP", "This does not appear to be a valid IPv4 address.", error=True)
-        address = get_string("Choose IP", "Which IP address? ")
-
-    try:
-        repeats = int(get_string("Repeats", "How many repeats? [default=3]"))
-    except ValueError:
-        repeats = 3
-
-    try:
-        minimum = int(get_string("Port Range - Minimum", "Choose min port [default=0 to 1024, min=0]: "))
-        maximum = int(get_string("Port Range - Maximum", "Choose max port [default=0 to 1024, max=65536]: "))
-        if maximum < minimum:
-            raise ValueError("Maximum can't be smaller than minimum.")
-        if minimum < 0:
-            minimum = 0
-        if maximum > 65536:
-            maximum = 65536
-        global PORT_RANGE
-        PORT_RANGE = list(range(minimum, maximum))
-    except ValueError:
-        pass
+    address = Configuration()["TCP Ports"]["IP Address"]
+    repeats = int(Configuration()["TCP Ports"]["Repeats"])
+    minimum = int(Configuration()["TCP Ports"]["Minimum Port"])
+    maximum = int(Configuration()["TCP Ports"]["Maximum Port"])
+    global PORT_RANGE
+    PORT_RANGE = list(range(minimum, maximum))
 
     entity = match(address)
     results = scan_TCP(address, repeats)
