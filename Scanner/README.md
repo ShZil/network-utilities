@@ -3338,3 +3338,18 @@ the `RecommenededScan` shouldn't show an empty string, but a "loading" message o
 I chose "★ Recommendation...", because it makes sense, it's a reasonable text,
 and it combines two elements: the `★` meaning recommendation and the `...` meaning "loading".
 Plus it ain't too long.
+
+[14:17] Adding the configuration ability in `gui/Configuration.py`.
+Plan:
+- Make a singleton class like Register
+- Save a dict for each scan/analysis
+- Have `get` and `set` methods, through popups
+- Use the configuration when executing a scan
+
+[14:26] Stole some code from other files: `register.py` and `analyses/DeviceProfile.py`.
+
+[14:43] This is using up a lot of brain power,
+but I'm steadily (and faster than I expected) coding it. It's a new data structure!
+
+[14:57] Wrote enough code for this to work.
+Now it's time to test it out, and debug the inevitable bugs.

@@ -1,4 +1,7 @@
 RecommendProbabilities.py:193 random_picker
+gui\Configuration.py:78 Configuration:get
+gui\Configuration.py:91 Configuration:is_valid
+gui\Configuration.py:101 Configuration:add_validity_check
 gui\Information.py:13 display_information
 gui\Information.py:24 display_information_knowledge
 gui\Information.py:35 information_about
@@ -43,12 +46,11 @@ scans\ICMP.py:283 update_opacities
 scans\ICMP.py:200 ICMP_live_device_discovery
 scans\PublicAddress.py:9 public_address_action
 scans\PublicAddress.py:14 get_public_ip
-scans\TCP.py:23 scan_port
-scans\TCP.py:40 scan_TCP
-scans\TCP.py:53 port_scan_TCP
-scans\TCP.py:93 main
-scans\TCP.py:56 is_ipv4
-scans\TCP.py:101 is_ipv4
+scans\TCP.py:24 scan_port
+scans\TCP.py:41 scan_TCP
+scans\TCP.py:54 port_scan_TCP
+scans\TCP.py:69 main
+scans\TCP.py:77 is_ipv4
 scans\TraceRouter.py:14 hop
 scans\TraceRouter.py:34 traceroute
 testing\tests.py:12 dictify_example1
