@@ -126,7 +126,7 @@ class RecommendedScan(Scan):
     """
     star = '★'
     def __init__(self, parent):
-        super().__init__('', lambda x: x, parent, font_name="Symbols")
+        super().__init__('★ Recommendation...', lambda x: x, parent, font_name="Symbols")
         self.recommend = DummyScan()
 
         global update_recommendation

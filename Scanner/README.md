@@ -3332,3 +3332,9 @@ that the scan that's executed is the next in the series and not what the user in
 [02:29] More bug-fixing later, and now it seems to be working!
 
 [02:48] I think I'm done for tonight. GN!
+
+[14:13] For the first 7 seconds,
+the `RecommenededScan` shouldn't show an empty string, but a "loading" message of some sort.
+I chose "★ Recommendation...", because it makes sense, it's a reasonable text,
+and it combines two elements: the `★` meaning recommendation and the `...` meaning "loading".
+Plus it ain't too long.
