@@ -52,10 +52,11 @@ def scan_TCP(ip: str, repeats: int) -> dict:
 
 
 def port_scan_TCP():
-    address = Configuration()["TCP Ports"]["IP Address"]
-    repeats = int(Configuration()["TCP Ports"]["Repeats"])
-    minimum = int(Configuration()["TCP Ports"]["Minimum Port"])
-    maximum = int(Configuration()["TCP Ports"]["Maximum Port"])
+    config = Configuration().get("TCP Ports")
+    address = config["IP Address"]
+    repeats = int(config["Repeats"])
+    minimum = int(config["Minimum Port"])
+    maximum = int(config["Maximum Port"])
     global PORT_RANGE
     PORT_RANGE = list(range(minimum, maximum))
 
