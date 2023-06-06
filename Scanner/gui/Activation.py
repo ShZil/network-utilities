@@ -20,7 +20,7 @@ def activate(*x):
         if time == 0:
             time_message = f"The datebase lists this scan's time estimation as infinite."
         else:
-            time_message = f"The database lists this scan at roughly {time} second(s). So it'll probably be done in {str(timedelta(seconds=time))}[^1]"
+            time_message = f"The database lists this scan at roughly {time} second(s). So it'll probably be done in {str(timedelta(seconds=time))}"
         popup(
             "Cannot run scan",
             f"**This scan is already running!**\n{s.name} \n\

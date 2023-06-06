@@ -5,9 +5,9 @@ gui\Configuration.py:110 Configuration:add_validity_check
 gui\Information.py:13 display_information
 gui\Information.py:24 display_information_knowledge
 gui\Information.py:35 information_about
-gui\Information.py:101 general_information
-gui\Information.py:145 general_knowledge
-gui\Information.py:107 find_between
+gui\Information.py:103 general_information
+gui\Information.py:147 general_knowledge
+gui\Information.py:109 find_between
 gui\KivyExtensions.py:28 OperationButton:add
 gui\KivyExtensions.py:42 OperationButton:add_raw
 gui\KivyExtensions.py:55 OperationButton:init

@@ -69,6 +69,8 @@ def information_about(name: str) -> str:
         
         return new_string
     description = _html_from_osi_model(description)
+
+    time_estimate = f"{time}s{perrepeat}" if time > 0 else f"Infinite{perrepeat}"
     # description = re.sub(
     #     "<[^<>]+>",
     #     "<br>```\\g<0>```",
@@ -82,7 +84,7 @@ def information_about(name: str) -> str:
         f"## Description",
         f"{description}",
         f"## Time estimate",
-        f"{time}s{perrepeat}",
+        f"{time_estimate}",
         f"## Risk and Reward",
         f"### What you get",
         f"{reward}",

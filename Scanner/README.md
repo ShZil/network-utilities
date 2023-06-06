@@ -3215,6 +3215,17 @@ when showing missing documentation.
 
 
 
+### 2023-06-01
+[11:51] Time Estimate under Information popup is not updated for infinite scans.
+
+[12:00] Add animated ellipsis when scans/analyses load.
+
+[12:03] Make the tkinter diagram rotate. Simply use a map on the `pos` dictionary, which uses sine and cosine.
+
+[12:13] If you try to run Device Profile while it’s already running, it says the time estimation is listed as infinite.
+
+
+
 ### 2023-06-04
 [16:02] Installing an AI-powered extension to hasten the process of writing docstrings.
 Name: "pyDocGenAI", for VSCode.
@@ -3372,3 +3383,31 @@ I could divert it to another thread, but I believe it's fine;
 the user should finish configuring and then return to the application.
 
 [15:48] Added the ability to do Device Profile on entities that appear not in the `NetworkStorage`, but do appear in the `SpecialInformation`.
+
+[16:08] I found a journal entry from 2023-06-01, in the temporary Docs document.
+
+```
+[11:51] Time Estimate under Information popup is not updated for infinite scans.
+```
+Fixed that now.
+
+```
+[12:00] Add animated ellipsis when scans/analyses load.
+```
+Plan:
+- Internal background thread in `Scan`
+- That loops over the scan buttons
+- If it detects a `.`, it changes it to `..`.
+- If it detects `..`, it changes them to `...`.
+- If it detects `...`, it changes them back to `.`.
+This shall lead to a neat animation.
+
+```
+[12:03] Make the tkinter diagram rotate. Simply use a map on the `pos` dictionary, which uses sine and cosine.
+```
+Suggestion: do that.
+
+```
+[12:13] If you try to run Device Profile while it’s already running, it says the time estimation is listed as infinite.
+```
+Fixed.
