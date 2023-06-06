@@ -244,7 +244,7 @@ def popup(title: str, message: str, *, error=False, warning=False, question=Fals
     PopupManager().add((title, message, icon.value))
 
 
-def get_string(title: str, prompt: str) -> None:
+def get_string(title: str, prompt: str) -> str:
     """This function prompts the user to give a string input.
     It's basically like `input` in plain Python,
     but with a GUI.
@@ -254,6 +254,9 @@ def get_string(title: str, prompt: str) -> None:
     Args:
         title (str): the title of the small window.
         prompt (str): the question to ask the user.
+    
+    Returns:
+        str: the string that the user has entered.
     """
     l = []  # Python has lists as reference type, so they can store data in just the way I need
     def _save(l ,x):  # used as callback, to store the result in the list.
