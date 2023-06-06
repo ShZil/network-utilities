@@ -3361,3 +3361,6 @@ Now it's time to test it out, and debug the inevitable bugs.
 [15:05] Thirdly, forgot to use `.items` when iterating over a dictionary.
 
 [15:07] Fourthly, forgot a return statement; a lack of it leads to a double popup.
+
+[15:12] Fifthly, `TypeError: Key must be of type str` on `Configuration.__setitem__`,
+because there are many use cases for it and I didn't think of them all when implementing this method.

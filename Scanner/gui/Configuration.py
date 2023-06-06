@@ -64,12 +64,16 @@ class Configuration(dict):
         return cls._instance
 
     def __setitem__(self, key, value):
+        if isinstance(key, tuple):
+            key, prop = key
+            self[key][prop] = value
+            return
         if not isinstance(key, str):
-            raise TypeError(f"Key must be of type str")
+            raise TypeError(f"Key must be of type str or tuple")
         if isinstance(value, tuple):
             value = {value[0]: value[1]}
         if not isinstance(value, dict):
-            raise TypeError(f"Value must be dictionary or tuple")
+            raise TypeError(f"Value must be dictionary or tuple since key is str and not tuple")
         super().__setitem__(key, value)
 
     def __getitem__(self, key: str) -> dict:
