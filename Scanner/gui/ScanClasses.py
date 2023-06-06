@@ -1,8 +1,10 @@
+from time import sleep
 from import_handler import ImportDefence
 with ImportDefence():
     from kivy.uix.button import Button
     from kivy.uix.label import Label
     from kivy.graphics import Color, Rectangle
+    from threading import Thread
 
 from gui.dialogs import popup
 from globalstuff import *
@@ -16,6 +18,7 @@ class Scan:
     font_size = BUTTON_COLUMN_FONT_SIZE
     background_color = button_column_background
     scans = {}
+    _thread = None
 
     def __init__(self, name, action, parent, font_name="Roboto"):
         self.name = name
@@ -34,6 +37,10 @@ class Scan:
         Hover.add(self.button)
 
         Scan.scans[name] = self
+        if Scan._thread == None:
+            Scan._thread = Thread(target=Scan.animate)
+            Scan._thread.name = "EllipsisAnimation"
+            Scan._thread.start()
 
     def select(self, x):
         from gui.AppState import State
@@ -67,6 +74,19 @@ class Scan:
         self.is_running = False
         if self.button.text.endswith('...') and not Register().is_infinite_scan(self.button.text):
             self.button.text = self.button.text[:-3]
+    
+    @staticmethod
+    def animate():
+        for name, scan in Scan.scans.items():
+            if not scan.is_running:
+                continue
+            text = scan.button.text
+            trimmed = text.strip('.')
+            if text.endswith('...'):
+                scan.button.text = trimmed + '.'
+            elif text.endswith('..') or text.endswith('.'):
+                scan.button.text += '.'
+        sleep(2)
 
 
 class DummyScan(Scan):

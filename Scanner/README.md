@@ -3411,3 +3411,6 @@ Suggestion: do that.
 [12:13] If you try to run Device Profile while it’s already running, it says the time estimation is listed as infinite.
 ```
 Fixed.
+
+[16:24] Implementing `EllipsisAnimation`.
+Forgot `.items()`.
