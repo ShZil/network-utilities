@@ -33,6 +33,7 @@ from analyses.DeviceProfile import device_profile
 from analyses.LogPackets import log_packets
 from analyses.VendorMapping import vendor_mapping
 from RecommendProbabilities import construct_graph, render_graph
+from gui.Configuration import Configuration
 from time import sleep
 import os
 import sys
@@ -95,6 +96,16 @@ def register_scans():
     r["Recommended Scan Algorithm"] = render_graph
 
 
+def register_configuration():
+    """Registers the scans customisable properties (configuration) into `Configuration()` dictionary."""
+    c = Configuration()
+    c["TCP Ports"] = {"IP Address": None, "Repeats": 3, "Minimum Port": 0, "Maximum Port": 1024}
+    c.add_validity_check("IP Address", ipaddress.IPv4Network)
+    c.add_validity_check("Repeats", int)
+    c.add_validity_check("Minimum Port", lambda x: 65536 >= int(x) >= 0)
+    c.add_validity_check("Maximum Port", lambda x: 65536 >= int(x) >= Configuration()['TCP Ports']['Minimum Port'])
+
+
 def main():
     """The entry point of the software.
 
@@ -141,6 +152,7 @@ def main():
     G.add_node(router)
 
     register_scans()
+    register_configuration()
 
     # Recommend Probabilities
     construct_graph()
