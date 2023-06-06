@@ -17,7 +17,35 @@ def display_configuration(*_):
         name = "scans"
     else:
         name = State().highlighted_scan.name
-    popup(f"Configuration of {name}", "Coming soon.")
+    
+    def _construct_content(info: dict) -> str:
+        def _transform_item(item: tuple[str, Any]) -> tuple[str, Any]:
+            key, value = item
+            # title case, but doesn't affect acronyms.
+            key = ' '.join([word if word.isupper() else word.capitalize() for word in key.split(' ')])
+            return key, value
+
+        if len(info) == 0:
+            return "## No configurable customisable properties."
+
+        info = dict(map(_transform_item, info.items()))
+        markdowned = [
+            f"### {key}:\n`{value}`"
+            for key, value in info.items()
+            if key != ''
+        ]
+        return '\n\n'.join(markdowned)
+
+    title = f"Configuration of {name}"
+    do_edit = popup(title, "Configure the scan (OK) or view the current configuration (Cancel)?")
+    if do_edit:
+        for key, value in Configuration()[name]:
+            result = get_string(title, f"Enter new value for '{key}' [currently '{value}']:")
+            if result.strip() == '':
+                continue
+            Configuration()[name, key] = result
+    else:
+        popup(title, _construct_content(Configuration()[name]), info=True)
 
 
 class Configuration(dict):
