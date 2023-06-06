@@ -3353,3 +3353,5 @@ but I'm steadily (and faster than I expected) coding it. It's a new data structu
 
 [14:57] Wrote enough code for this to work.
 Now it's time to test it out, and debug the inevitable bugs.
+
+[15:01] First up, forgot to add the boolean argument to `popup`.

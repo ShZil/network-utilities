@@ -37,7 +37,7 @@ def display_configuration(*_):
         return '\n\n'.join(markdowned)
 
     title = f"Configuration of {name}"
-    do_edit = popup(title, "Configure the scan (OK) or view the current configuration (Cancel)?")
+    do_edit = popup(title, "Configure the scan (OK) or view the current configuration (Cancel)?", cancel=True)
     if do_edit:
         for key, value in Configuration()[name]:
             result = get_string(title, f"Enter new value for '{key}' [currently '{value}']:")
