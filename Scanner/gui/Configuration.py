@@ -49,6 +49,7 @@ def display_configuration(*_):
     else:
         if len(Configuration()[name]) == 0:
             popup(title, "## No configurable customisable properties.", warning=True)
+            return
         popup(title, _construct_content(Configuration()[name]), info=True)
 
 

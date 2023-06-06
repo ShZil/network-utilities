@@ -3357,3 +3357,7 @@ Now it's time to test it out, and debug the inevitable bugs.
 [15:01] First up, forgot to add the boolean argument to `popup`.
 
 [15:03] Secondly, configuring a configurationless scan doesn't show a warning.
+
+[15:05] Thirdly, forgot to use `.items` when iterating over a dictionary.
+
+[15:07] Fourthly, forgot a return statement; a lack of it leads to a double popup.
