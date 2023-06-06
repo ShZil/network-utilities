@@ -41,7 +41,7 @@ def display_configuration(*_):
     if do_edit:
         if len(Configuration()[name]) == 0:
             popup(title, "## No configurable customisable properties.", warning=True)
-        for key, value in Configuration()[name]:
+        for key, value in Configuration()[name].items():
             result = get_string(title, f"Enter new value for '{key}' [currently '{value}']:")
             if result.strip() == '':
                 continue
@@ -83,7 +83,7 @@ class Configuration(dict):
         if not isinstance(name, str):
             raise TypeError(f"Key must be of type str")
         
-        for key, value in Configuration()[name]:
+        for key, value in Configuration()[name].items():
             if value != None:
                 continue
             result = None
