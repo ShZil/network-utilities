@@ -1,3 +1,4 @@
+import math
 from import_handler import ImportDefence
 with ImportDefence():
     import networkx as nx
@@ -420,6 +421,15 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
     H = G.copy()
 
     pos = nx.kamada_kawai_layout(H, center=(x + w / 2, y + h / 2), scale=scale)
+    from globalstuff import diagram_tilt
+    theta = diagram_tilt[0]  # angle to rotate by
+    ox, oy = x + w / 2, y + h / 2  # centre point
+    sin, cos = math.sin, math.cos  # trig functions
+    for node, position in pos.items():
+        px, py = position
+        new_x = cos(theta) * (px-ox) - sin(theta) * (py-oy) + ox
+        new_y = sin(theta) * (px-ox) + cos(theta) * (py-oy) + oy
+        pos[node] = (new_x, new_y)
 
     discovered = SpecialInformation()['discovery']
     highlights = set()

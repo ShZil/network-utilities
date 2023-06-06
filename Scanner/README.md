@@ -3425,3 +3425,9 @@ and changed the behaviour of `one_cache` to treat `None` return value somewhat d
 instead of raising an exception, don't save a value, and recalculate.
 
 [16:51] BUGFIX: forgot `.text`.
+
+[17:06] Took some pseudo code from here:
+https://stackoverflow.com/a/15109215
+To enable diagram rotation which could look quite cool
+
+[17:08] Added animation: the diagram now slowly rotates.

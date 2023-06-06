@@ -67,6 +67,8 @@ def keep_resolving_storage():
             update_know_screen(NetworkStorage())
             from gui.Diagrams import Diagrams
             Diagrams().update()
+            from globalstuff import diagram_tilt
+            diagram_tilt[0] += diagram_tilt[1]
         sys.exit()
 
     _resolver.__name__ = 'IntervalThread'
