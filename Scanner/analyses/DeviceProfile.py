@@ -36,6 +36,13 @@ def _match_device(address):
     for entity in have_roles:
         if SpecialInformation()[entity, 'role'].lower() == role:
             return entity
+    
+    try:
+        entity = match(address)
+        if entity in SpecialInformation():
+            return entity
+    except ValueError:
+        return None
     # If nothing hit, the address' meaning was not understood / the entity was not found.
     return None
 

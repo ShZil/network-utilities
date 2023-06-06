@@ -3364,3 +3364,4 @@ Now it's time to test it out, and debug the inevitable bugs.
 
 [15:12] Fifthly, `TypeError: Key must be of type str` on `Configuration.__setitem__`,
 because there are many use cases for it and I didn't think of them all when implementing this method.
+[15:48] Added the ability to do Device Profile on entities that appear not in the `NetworkStorage`, but do appear in the `SpecialInformation`.
