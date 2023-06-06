@@ -3431,3 +3431,14 @@ https://stackoverflow.com/a/15109215
 To enable diagram rotation which could look quite cool
 
 [17:08] Added animation: the diagram now slowly rotates.
+
+[17:13] Debugging `Vendor Mapping`.
+
+[17:18] Alright I just forgot to iterate over the entities.
+And don't `threadify` it.
+
+[17:29] Okay. Solved that. The problem was that the cache is saved between runs,
+but if SpecialInformation doesn't contain a vendor, it would be ignroed (since it's in the cache).
+Utilising the fact that setting an item on SpecialInformation is fast, I just added a set statement there.
+
+[17:31] Cosmetics: format, design, and db-entries changes.

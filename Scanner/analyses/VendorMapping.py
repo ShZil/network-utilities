@@ -78,7 +78,6 @@ def vendor_mapper(mac):
     return vendor
 
 
-@threadify
 def mapper_wrapper(entity):
     """
     The mapper_wrapper function is a wrapper for the vendor_mapper function.
@@ -92,6 +91,7 @@ def mapper_wrapper(entity):
     if entity.mac == nothing.mac:
         return
     if entity.mac in MACVendorDict():
+        SpecialInformation()[entity, 'Network Card Vendor'] = MACVendorDict()[entity.mac]
         return
     try:
         vendor = vendor_mapper(entity.mac)
@@ -103,7 +103,7 @@ def mapper_wrapper(entity):
     SpecialInformation()[entity, 'Network Card Vendor'] = vendor
 
 
-def vendor_mapping():
+def vendor_mapping(*_):
     """
     The vendor_mapping function is a wrapper for the mapper_wrapper function.
     It takes no arguments, but it does call the MACVendorDict and NetworkStorage classes (which are both Singletons).
@@ -114,7 +114,8 @@ def vendor_mapping():
     """
     from NetworkStorage import NetworkStorage
     MACVendorDict()
-    mapper_wrapper(list(NetworkStorage()))
+    for entity in list(NetworkStorage()):
+        mapper_wrapper(entity)
 
 
 if __name__ == '__main__':

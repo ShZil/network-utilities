@@ -9,7 +9,7 @@ terminator = Event()
 
 # --- GUI Global Values ---
 is_kivy_running = True
-diagram_tilt = [0, 0.02]  # starting_value, delta
+diagram_tilt = [0, 0.01]  # starting_value, delta
 
 
 # --- Design Settings ---

@@ -68,6 +68,10 @@ def show_all_revealed():
         else:
             uniques.append(entity)
     
+    if len(uniques) == 0:
+        popup("Revealed Devices", '## No devices were revealed.\n\nTry running the `Reveal Myself` scan from another device!', info=True)
+        return
+
     lengths = [23, 23, 23, 23]
     uniques = [entity.tablestring(lengths) + ':' + SpecialInformation()[entity, 'discovery'] for entity in uniques]
     popup("Revealed Devices", '\n'.join(uniques), info=True)
