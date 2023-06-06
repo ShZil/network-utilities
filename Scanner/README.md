@@ -3355,3 +3355,5 @@ but I'm steadily (and faster than I expected) coding it. It's a new data structu
 Now it's time to test it out, and debug the inevitable bugs.
 
 [15:01] First up, forgot to add the boolean argument to `popup`.
+
+[15:03] Secondly, configuring a configurationless scan doesn't show a warning.

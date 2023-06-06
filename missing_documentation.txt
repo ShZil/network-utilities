@@ -1,7 +1,7 @@
 RecommendProbabilities.py:193 random_picker
-gui\Configuration.py:78 Configuration:get
-gui\Configuration.py:91 Configuration:is_valid
-gui\Configuration.py:101 Configuration:add_validity_check
+gui\Configuration.py:82 Configuration:get
+gui\Configuration.py:95 Configuration:is_valid
+gui\Configuration.py:105 Configuration:add_validity_check
 gui\Information.py:13 display_information
 gui\Information.py:24 display_information_knowledge
 gui\Information.py:35 information_about

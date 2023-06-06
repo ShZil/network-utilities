@@ -26,7 +26,7 @@ def display_configuration(*_):
             return key, value
 
         if len(info) == 0:
-            return "## No configurable customisable properties."
+            return "## No configurable customisable properties!"
 
         info = dict(map(_transform_item, info.items()))
         markdowned = [
@@ -39,12 +39,16 @@ def display_configuration(*_):
     title = f"Configuration of {name}"
     do_edit = popup(title, "Configure the scan (OK) or view the current configuration (Cancel)?", cancel=True)
     if do_edit:
+        if len(Configuration()[name]) == 0:
+            popup(title, "## No configurable customisable properties.", warning=True)
         for key, value in Configuration()[name]:
             result = get_string(title, f"Enter new value for '{key}' [currently '{value}']:")
             if result.strip() == '':
                 continue
             Configuration()[name, key] = result
     else:
+        if len(Configuration()[name]) == 0:
+            popup(title, "## No configurable customisable properties.", warning=True)
         popup(title, _construct_content(Configuration()[name]), info=True)
 
 
