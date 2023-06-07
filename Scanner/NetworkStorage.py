@@ -541,7 +541,7 @@ class NetworkStorage:
                         entity.merge(special)
             self.data.append(entity)
             G.add_node(entity)
-            if entity in LAN:
+            if entity in LAN or isinstance(entity, PublicAddressNetworkEntity):
                 G.add_edge(router, entity)
 
         from hostify import hostify_sync, hostify

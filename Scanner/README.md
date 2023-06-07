@@ -3481,3 +3481,5 @@ and colour it according to the notes.
 [22:51] Used the `Configuration` module to "add more tests on the input to Trace Route",
 simply by registering some validity checks under `exe.py:register_configuration`,
 and using the configuration values in the scan.
+
+[22:55] The Public Address node should also have an edge connecting it to the router.
