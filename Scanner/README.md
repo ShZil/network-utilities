@@ -3442,3 +3442,23 @@ but if SpecialInformation doesn't contain a vendor, it would be ignroed (since i
 Utilising the fact that setting an item on SpecialInformation is fast, I just added a set statement there.
 
 [17:31] Cosmetics: format, design, and db-entries changes.
+
+
+
+### 2023-06-07
+[10:49] In Cyber class; via Gmail to self:
+```
+"Reveal All" -- Format is a bit off.
+Use a monospace font.
+Space after the colons
+Maybe replace the colons with another character?
+
+Also put qutation marks around the chosen name
+```
+
+[22:32] Recorded and edited the project video requested by the teacher.
+Going through notes from Cyber class today (Gmail to self), resolving them:
+
+[22:33] Done, new format: ```py
+[f"`{entity.tablestring(lengths)}` ⇒ \"`{SpecialInformation()[entity, 'discovery']}`\"" for entity in uniques]
+```

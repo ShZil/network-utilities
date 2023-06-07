@@ -73,7 +73,7 @@ def show_all_revealed():
         return
 
     lengths = [23, 23, 23, 23]
-    uniques = [entity.tablestring(lengths) + ':' + SpecialInformation()[entity, 'discovery'] for entity in uniques]
+    uniques = [f"`{entity.tablestring(lengths)}` ⇒ \"`{SpecialInformation()[entity, 'discovery']}`\"" for entity in uniques]
     popup("Revealed Devices", '\n'.join(uniques), info=True)
 
 
