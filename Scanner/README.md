@@ -3466,6 +3466,13 @@ Make the colour of the Public Address entity node in the graph, the same as the 
 Add more tests on the input to Trace Route.
 ```
 
+[12:55] BUGFIX: I ran the software on the remote desktop;
+that's the first time I've used it.
+Solved kivy error regarding OpenGL version!
+Add this to the batch file (env var):
+    REM Prevent "OpenGL 1.1 is not good, need OpenGL 2" errors
+    set KIVY_GL_BACKEND=angle_sdl2
+
 [22:32] Recorded and edited the project video requested by the teacher.
 Going through notes from Cyber class today (Gmail to self), resolving them:
 
