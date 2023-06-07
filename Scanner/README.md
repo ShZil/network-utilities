@@ -3473,7 +3473,10 @@ Add this to the batch file (env var):
     REM Prevent "OpenGL 1.1 is not good, need OpenGL 2" errors
     set KIVY_GL_BACKEND=angle_sdl2
 
-[22:32] Recorded and edited the project video requested by the teacher.
+[13:17] In Cyber class; via Gmail to self:
+```Also show the Public Address in the router's Device Profile```
+
+[22:32] At home. Recorded and edited the project video requested by the teacher.
 Going through notes from Cyber class today (Gmail to self), resolving them:
 
 [22:33] Done, new format:
@@ -3490,3 +3493,7 @@ simply by registering some validity checks under `exe.py:register_configuration`
 and using the configuration values in the scan.
 
 [22:55] The Public Address node should also have an edge connecting it to the router.
+
+[23:03] I decided against shoing the Public Address in the router's Device Profile,
+because the Public Address is its own entity,
+and it already has a device profile.
