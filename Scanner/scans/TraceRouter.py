@@ -5,9 +5,8 @@ with ImportDefence():
     from scapy.sendrecv import sr1
     from scapy.layers.inet import IP, ICMP
 
-    from util import threadify
-    from NetworkStorage import NetworkStorage
-    from ipconfig import ipconfig
+from NetworkStorage import NetworkStorage
+from gui.Configuration import Configuration
 
 # This is intentionally not @threadify-ied.
 # The ICMP echoes in each hop are supposed to be temporally separated.
@@ -31,8 +30,10 @@ def hop(ttl, dst):
     return results.pop()
 
 
-def traceroute(dst):
-    ROUTE_MAX = 20
+def traceroute():
+    config = Configuration().get("Trace Route")
+    dst = config["IP Address"]
+    ROUTE_MAX = config["Maximum Hop Count"]
     path = []
     for ttl in range(1, ROUTE_MAX):
         path.append(hop(ttl, dst))

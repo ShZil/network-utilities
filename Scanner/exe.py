@@ -89,7 +89,7 @@ def register_scans():
     r["TCP Ports"] = port_scan_TCP
     r["OS-ID"] = operating_system_fingerprinting, True
     r["Public Address"] = public_address_action
-    r["Trace Route"] = lambda: traceroute(get_string("IP Destination", "Select the IP address:"))
+    r["Trace Route"] = traceroute
     r["Log Packets"] = log_packets
     r["Device Profile"] = device_profile
     r["Reveal Myself"] = reveal_myself
@@ -102,8 +102,10 @@ def register_configuration():
     """Registers the scans customisable properties (configuration) into `Configuration()` dictionary."""
     c = Configuration()
     c["TCP Ports"] = {"IP Address": None, "Repeats": 3, "Minimum Port": 0, "Maximum Port": 1024}
+    c["Trace Route"] = {"IP Address": None, "Maximum Hop Count": 20}
     c.add_validity_check("IP Address", ipaddress.IPv4Network)
     c.add_validity_check("Repeats", int)
+    c.add_validity_check("Maximum Hop Count", int)
     c.add_validity_check("Minimum Port", lambda x: 65536 >= int(x) >= 0)
     c.add_validity_check("Maximum Port", lambda x: 65536 >= int(x) >= Configuration()['TCP Ports']['Minimum Port'])
 
