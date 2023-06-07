@@ -415,7 +415,7 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
     which is a context manager supporting various methods.
     Currently, there are two implementations: `KivyDiagram` and `TKDiagram`.
     """
-    from NetworkStorage import here, router
+    from NetworkStorage import here, router, PublicAddressNetworkEntity
     scale = min(w, h + dh) * DIAGRAM_SCALE
     stroke = 1
     H = G.copy()
@@ -458,7 +458,7 @@ def render_diagram(draw, x, y, w, h, bg, fg, dh=0):
                 draw.color(*fg)
                 if node in highlights:
                     draw.color(*fg_highlight)
-                if node is router:
+                if node is router or isinstance(node, PublicAddressNetworkEntity):
                     draw.color(*router_highlight)
                 if node is here:
                     draw.color(*here_highlight)

@@ -359,6 +359,15 @@ class LockedNetworkEntity(NetworkEntity):
         pass
 
 
+
+class PublicAddressNetworkEntity(LockedNetworkEntity):
+    """A PublicAddressNetworkEntity is a LockedNetworkEntity that represents the "outer" side of the router,
+    i.e. its external address.
+    Code-wise, this is just used for type-checking. The class overrides no methods.
+    """
+    pass
+
+
 # Special Entities: LockedNetworkEntity
 nothing = LockedNetworkEntity(
     mac="00:00:00:00:00:00",

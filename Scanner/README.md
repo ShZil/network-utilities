@@ -3456,9 +3456,18 @@ Maybe replace the colons with another character?
 Also put qutation marks around the chosen name
 ```
 
+[10:51] In Cyber class; via Gmail to self:
+```
+Make the colour of the Public Address entity node in the graph, the same as the router.
+```
+
 [22:32] Recorded and edited the project video requested by the teacher.
 Going through notes from Cyber class today (Gmail to self), resolving them:
 
 [22:33] Done, new format: ```py
 [f"`{entity.tablestring(lengths)}` ⇒ \"`{SpecialInformation()[entity, 'discovery']}`\"" for entity in uniques]
 ```
+
+[22:44] Added the class `PublicAddressNetworkEntity`,
+to allow the diagram to easily see whether a specific node is the public address,
+and colour it according to the notes.

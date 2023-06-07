@@ -12,7 +12,7 @@ def public_address_action():
 
 @one_cache
 def get_public_ip():
-    from NetworkStorage import nothing, NetworkStorage, LockedNetworkEntity
+    from NetworkStorage import nothing, NetworkStorage, PublicAddressNetworkEntity
     try:
         ip = requests.get('https://api.ipify.org').text
         ipv6 = requests.get('https://api64.ipify.org').text
@@ -20,14 +20,14 @@ def get_public_ip():
         return None
     ipv6 = ipv6 if ipv6 != ip else nothing.ipv6
     try:
-        outside = LockedNetworkEntity(
+        outside = PublicAddressNetworkEntity(
             mac=nothing.mac,
             ip=ip,
             ipv6=ipv6,
             name="Public Address"
         )
     except ValueError:  # api64.ipify.org might not return the IPv6, and instead say "gateway timeout"
-        outside = LockedNetworkEntity(
+        outside = PublicAddressNetworkEntity(
             mac=nothing.mac,
             ip=ip,
             ipv6=nothing.ipv6,
