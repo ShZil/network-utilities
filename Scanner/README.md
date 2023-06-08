@@ -3551,6 +3551,7 @@ Computer 1 -- the programme running.
 Computer 2 -- the code on VSCode*, and a Reveal Myself agent, and the repos on github.com.
 Computer 3 -- diagrams (MS Paint) and portfolio (Docs).
 Physical -- "Choices" and "Changes Since Portfolio".
+Set the wallpaper of the desktop to some cyber-y images.
 
 * Extensions:
 Atom One Dark Syntax Theme
