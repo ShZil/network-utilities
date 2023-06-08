@@ -3548,5 +3548,9 @@ Gonna upload some changes now.
 
 [20:31] For tomorrow:
 Computer 1 -- the programme running.
-Computer 2 -- the code on VSCode, and a Reveal Myself agent.
+Computer 2 -- the code on VSCode, and a Reveal Myself agent, and the repos on github.com.
 Computer 3 -- diagrams (MS Paint) and portfolio (Docs).
+
+[20:36] First get a password, then build the file.
+Because building the file can be quite long (if NetworkStorage has thousands of entities to resolve),
+I don't wanna keep the user waiting for too long.

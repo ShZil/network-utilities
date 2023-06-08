@@ -37,6 +37,7 @@ def exporter():
     if filename == "":
         return
     builder = ScanFileBuilder()
+    builder.set_password(get_password())
 
     from ScanID import get_scan_id
     scan_id = get_scan_id().encode()
@@ -53,7 +54,6 @@ def exporter():
     ]
     builder.add_many(scan_history)
 
-    builder.set_password(get_password())
     builder.write_to(filename)
     print("Done writing")
     return filename
