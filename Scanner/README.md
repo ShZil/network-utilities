@@ -3563,3 +3563,6 @@ It's fine.
 
 [20:42] Changed the colour of Save Screen's buttons (when hovered) to reddish,
 to fit with the RGB theme of the project.
+
+[20:46] "The View screen should have a well-positioned Pages widget."
+It does now.

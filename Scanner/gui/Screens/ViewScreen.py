@@ -4,6 +4,7 @@ with ImportDefence():
     from kivy.uix.label import Label
     from kivy.uix.screenmanager import Screen
     from kivy.uix.boxlayout import BoxLayout
+    from kivy.uix.relativelayout import RelativeLayout
 
 from gui.Hover import Hover
 from globalstuff import *
@@ -75,7 +76,10 @@ class ViewScreen(Screen):
         super().__init__(name=name, **kw)
         Hover.enter(name)
 
-        everything = BoxLayout(orientation='vertical')
+        everything = RelativeLayout()
+        everything.add_widget(Pages())
+
+        body = BoxLayout(orientation='vertical')
         title = title = Label(
             text=f"[color={GREEN}]View Past Scan[/color]",
             size=(0, TITLE_HEIGHT),
@@ -85,9 +89,9 @@ class ViewScreen(Screen):
             pos_hint={'center_x': .5, 'top': 1},
             markup=True
         )
-        everything.add_widget(title)
-        everything.add_widget(Pages())
-        everything.add_widget(ViewScreenInfo())
+        body.add_widget(title)
+        body.add_widget(ViewScreenInfo())
+        everything.add(body)
 
         self.add_widget(everything)
 
