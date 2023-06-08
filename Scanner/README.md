@@ -3559,4 +3559,7 @@ I don't wanna keep the user waiting for too long.
 Not gonna mess with this algorithm the day before.
 It's fine.
 
-[20:38] 
+[20:38] `format_timestamp` and `format_duration` now allow bytes as input.
+
+[20:42] Changed the colour of Save Screen's buttons (when hovered) to reddish,
+to fit with the RGB theme of the project.

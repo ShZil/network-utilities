@@ -40,7 +40,7 @@ TITLE_FONT_SIZE = 30  # int: px
 GREEN = '00ff00'  # str: hex color
 UNDER_DIAGRAM_FONT_SIZE = 30  # int: px
 RIGHT_COLUMN_WIDTH = 300  # int: px; in Scan screen.
-SAVE_BUTTONS_HOVER_BACKGROUND = [0, 0, 1, 1]  # list[tuple]: rgba
+SAVE_BUTTONS_HOVER_BACKGROUND = [0.871, 0.216, 0, 1]  # list[tuple]: rgba
 SAVE_BUTTONS_FONT_SIZE = 50  # int: px
 
 
