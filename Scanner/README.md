@@ -3556,6 +3556,7 @@ Atom One Dark Syntax Theme
 Draw.io Integration
 Hex Editor
 indent-rainbow
+SQLite
 
 
 [20:36] First get a password, then build the file.
@@ -3575,3 +3576,14 @@ to fit with the RGB theme of the project.
 It does now.
 
 [20:58] Uploading the `files.py` debugging I did today in Cyber class.
+
+[21:19] Moved
+```py
+if len(Configuration()[name]) == 0:
+        popup(title, "## No configurable customisable properties.", warning=True)
+        return
+```
+outside the `if do_edit` block,
+because it's called by both branches and expresses the same behaviour.
+
+[21:29] Made `Configuration.drawio`.

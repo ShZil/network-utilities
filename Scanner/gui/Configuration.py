@@ -37,19 +37,20 @@ def display_configuration(*_):
         return '\n\n'.join(markdowned)
 
     title = f"Configuration of {name}"
+    if name == 'scans':
+        popup(title, "## No scan selected.\n\nHere you may configure scans that have configurable properties.\n\nSelect a scan to configure it.", warning=True)
+        return
+    if len(Configuration()[name]) == 0:
+        popup(title, "## No configurable customisable properties.", warning=True)
+        return
     do_edit = popup(title, "Configure the scan (OK) or view the current configuration (Cancel)?", cancel=True)
     if do_edit:
-        if len(Configuration()[name]) == 0:
-            popup(title, "## No configurable customisable properties.", warning=True)
         for key, value in Configuration()[name].items():
             result = get_string(title, f"Enter new value for '{key}' [currently '{value}']:")
             if result.strip() == '':
                 continue
             Configuration()[name, key] = result
     else:
-        if len(Configuration()[name]) == 0:
-            popup(title, "## No configurable customisable properties.", warning=True)
-            return
         popup(title, _construct_content(Configuration()[name]), info=True)
 
 
