@@ -3497,3 +3497,11 @@ and using the configuration values in the scan.
 [23:03] I decided against shoing the Public Address in the router's Device Profile,
 because the Public Address is its own entity,
 and it already has a device profile.
+
+
+
+### 2023-06-08
+[20:06] This is the last day to work on the project.
+I'm presenting it tomorrow.
+I did some final work on it today, in Cyber class, as well as testing.
+Gonna upload some changes now.
