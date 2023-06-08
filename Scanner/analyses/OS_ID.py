@@ -9,7 +9,7 @@ def operating_system_fingerprinting() -> None:
     from scapy.all import Ether, IP
 
     def _determine_os(packet):
-        # do more testing on this *************
+        # This is a primitive approach. Could be more sophisticated.
         return "Linux or Android" if packet.ttl <= 64 else "Windows"
 
     def fingerprint(packet):

@@ -3545,3 +3545,8 @@ Gonna upload some changes now.
 [20:17] Added `recommend probabilities.bat`.
 
 [20:29] Updated `modules extended.drawio`.
+
+[20:31] For tomorrow:
+Computer 1 -- the programme running.
+Computer 2 -- the code on VSCode, and a Reveal Myself agent.
+Computer 3 -- diagrams (MS Paint) and portfolio (Docs).
