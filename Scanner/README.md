@@ -3595,3 +3595,9 @@ The problem was a `.add` which was supposed to be `.add_widget`. That's all.
 [21:48] Made `Discovery.drawio`.
 
 [22:06] Made `recommend.drawio`.
+
+[22:16] Added comments.
+Left to do:
+- create a graph of how long I've worked on this project, using the journal.
+- print out the "Choices" and "Changes Since" documents.
+- look in the Docs, is there anything else left to do?
