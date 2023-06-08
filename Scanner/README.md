@@ -3593,3 +3593,5 @@ because it's called by both branches and expresses the same behaviour.
 The problem was a `.add` which was supposed to be `.add_widget`. That's all.
 
 [21:48] Made `Discovery.drawio`.
+
+[22:06] Made `recommend.drawio`.
