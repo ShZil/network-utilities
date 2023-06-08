@@ -3548,8 +3548,15 @@ Gonna upload some changes now.
 
 [20:31] For tomorrow:
 Computer 1 -- the programme running.
-Computer 2 -- the code on VSCode, and a Reveal Myself agent, and the repos on github.com.
+Computer 2 -- the code on VSCode*, and a Reveal Myself agent, and the repos on github.com.
 Computer 3 -- diagrams (MS Paint) and portfolio (Docs).
+
+* Extensions:
+Atom One Dark Syntax Theme
+Draw.io Integration
+Hex Editor
+indent-rainbow
+
 
 [20:36] First get a password, then build the file.
 Because building the file can be quite long (if NetworkStorage has thousands of entities to resolve),
@@ -3566,3 +3573,5 @@ to fit with the RGB theme of the project.
 
 [20:46] "The View screen should have a well-positioned Pages widget."
 It does now.
+
+[20:58] Uploading the `files.py` debugging I did today in Cyber class.

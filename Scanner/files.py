@@ -49,7 +49,7 @@ def exporter():
 
     from register import Register
     scan_history = [
-        int(timestamp).to_bytes(4, byteorder='big') + str(name).encode() + int(duration).to_bytes(3, byteorder='big')
+        int(timestamp).to_bytes(4, byteorder='big') + str(name).encode() + int(duration * (duration > 0)).to_bytes(3, byteorder='big')
         for (name, timestamp, duration) in Register().get_history()
     ]
     builder.add_many(scan_history)
@@ -118,7 +118,7 @@ def importer():
         """
         if isinstance(t, bytes | bytes):
             t = int.from_bytes(t, byteorder='big')
-        return f'for {t}[s]' if t > -1 else f'indefinitely'
+        return f'for {t}[s]' if t > 0 else f'indefinitely'
     history = [format_timestamp(timestamp) + f' {name} {format_duration(duration)}.' for (timestamp, name, duration) in history if name != '']
     history = '\n'.join(history)
 
@@ -256,7 +256,7 @@ class ScanFileBuilder:
         return {
             "scan_id": scan_id.decode(),
             "network_entities": [x.decode() for x in entities.split(self.COMMA)],
-            "scan_history": [(x[:4], x[4:-3].decode(), x[:-3]) for x in history.split(self.COMMA)]
+            "scan_history": [(x[:4], x[4:-3].decode(), x[-3:]) for x in history.split(self.COMMA)]
         }
 
 
