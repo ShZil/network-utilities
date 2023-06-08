@@ -3591,3 +3591,5 @@ because it's called by both branches and expresses the same behaviour.
 
 [21:42] A sudden crash of the programme almost gave me a heart attack.
 The problem was a `.add` which was supposed to be `.add_widget`. That's all.
+
+[21:48] Made `Discovery.drawio`.
