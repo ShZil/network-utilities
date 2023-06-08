@@ -20,9 +20,9 @@ def get_password():
 def exporter():
     """Exports a file.
     - First chooses a path (user)
+    - Requests a password (user),
     - Then gets all the information (software),
     - and constructs the file (ScanFileBuilder)
-    - Requests a password (user)
     - Saves the file (OS)
 
     Returns:
@@ -43,7 +43,7 @@ def exporter():
     builder.add(scan_id)
 
     from NetworkStorage import NetworkStorage
-    network_entities = [str(x).encode() for x in NetworkStorage()]  # ********* change this to `entity.encode()` and implement that method
+    network_entities = [str(x).encode() for x in NetworkStorage()]
     builder.add_many(network_entities)
 
     from register import Register
@@ -144,9 +144,6 @@ def decrypt(token: bytes, password: str) -> bytes:
     Returns:
         bytes: the decoded message.
     """
-    # decrypter_with_timeout = SetTimeout(files_cryptography.password_decrypt, timeout=10)
-    # is_done, is_timeout, erro_message, results = decrypter_with_timeout(token, password)
-    # return results if is_done else ""
     return files_cryptography.password_decrypt(token, password)
 
 
@@ -254,7 +251,7 @@ class ScanFileBuilder:
 
         return {
             "scan_id": scan_id.decode(),
-            "network_entities": [x.decode() for x in entities.split(self.COMMA)],  # ******* change this to NetworkEntity.decode(x) and implement that method
+            "network_entities": [x.decode() for x in entities.split(self.COMMA)],
             "scan_history": [(x[:4], x[4:-3].decode(), x[:-3]) for x in history.split(self.COMMA)]
         }
 
