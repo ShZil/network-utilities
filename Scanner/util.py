@@ -158,7 +158,8 @@ def threadify(f: Callable, silent=False):
         options = {**options, **f.options}
     except AttributeError:
         pass
-
+    
+    # copy the name (without "_base") of the function
     name = f.__name__
     name = name.replace("_base", "")
     if silent:
@@ -238,6 +239,7 @@ def threadify(f: Callable, silent=False):
             """
             from globalstuff import terminator
             # Activate the threads, waiting for threads to be freed if needed.
+            # If `terminator` is set while creating threads, stop.
             for thread in threads:
                 thread.start()
                 while active_count() >= MAX_THREADS and MAX_THREADS > 0:
@@ -251,6 +253,7 @@ def threadify(f: Callable, silent=False):
         # Rename `threadify_start_threads` to user-friendly name
         threadify_start_threads.__name__ = f.__name__ + '_threadify_master'
 
+        # Allocate a thread for threadify_start_threads and start it
         starter = Thread(target=threadify_start_threads, args=(threads, ))
         starter.start()
 
@@ -277,7 +280,7 @@ def threadify(f: Callable, silent=False):
             )
             print("\n")
 
-        # Join all threads
+        # Join all threads.
         # You have to join `starter` first, because if somehow some thread is
         # still not active, joining it will raise a RuntimeError.
         # Also, if the `terminator` was set, not all threads will have been started, and you need to catch those RuntimeErrors.
@@ -305,9 +308,8 @@ def threadify(f: Callable, silent=False):
         if options["output"] and output.strip() != "":
             print("\n\nTasks' output:\n", output, sep='')
             print("\n\n")
-        # print()
 
-        # Returning logic.
+        # Returning logic. See docstring for explanation.
         if options["give"] == "output":
             return output
         if options["give"] == "both":

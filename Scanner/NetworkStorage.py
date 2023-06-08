@@ -60,20 +60,30 @@ class NetworkEntity:
         Returns:
             bool: whether the NetworkEntity-ies are equal.
         """
+        # cannot compare with non-NetworkEntity objects
         if not isinstance(other, NetworkEntity):
             return False
+        
+        # the `intersection` list will inlude all the addresses that both entities have.
+        # e.g., in the comparison `B == C` above, `intersection = ["ip"]`.
         intersection = []
         for address in ["mac", "ip", "ipv6"]:
             if self[address] != nothing[address] and other[address] != nothing[address]:
                 intersection.append(address)
 
+        # if there's no intersection, then we have no basis to decide whether they are equal (see `C == D`).
+        # This will also make `nothing == nothing` return False.
         if len(intersection) == 0:
             return False
 
+        # if there's a conflict, even just once, they're not equal.
+        # a conflict is when both entities have that key, but the values don't match.
         for address in intersection:
             if self[address] != other[address]:
                 return False
 
+        # the code will get here if and only if there's some intersection and no conflicts.
+        # this is a reasonable basis to conclude that the entities are indeed equal, and probably represent the same device.
         return True
 
     def __getitem__(self, key):
