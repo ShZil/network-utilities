@@ -94,26 +94,30 @@ def importer():
     history = result["scan_history"]
     from datetime import datetime
 
-    def format_timestamp(t: int) -> str:
+    def format_timestamp(t: int | bytes) -> str:
         """Formats a timestamp (Unix; seconds since 00:00:00 UTC on 1 January 1970 epoch) to YYYY-MM-DD HH:MM:SS.
 
         Args:
-            t (int): the timestamp.
+            t (int | bytes): the timestamp.
 
         Returns:
             str: the formatted date and time.
         """
+        if isinstance(t, bytes):
+            t = int.from_bytes(t, byteorder='big')
         return datetime.fromtimestamp(t).strftime('%Y-%m-%d %H:%M:%S')
 
     def format_duration(t: int) -> str:
         """Formats a duration (seconds) to "34[s]" (example) or "indefinitely" for negative values.
 
         Args:
-            t (int): the duration in seconds.
+            t (int | bytes): the duration in seconds.
 
         Returns:
             str: the human-readable meaning.
         """
+        if isinstance(t, bytes | bytes):
+            t = int.from_bytes(t, byteorder='big')
         return f'for {t}[s]' if t > -1 else f'indefinitely'
     history = [format_timestamp(timestamp) + f' {name} {format_duration(duration)}.' for (timestamp, name, duration) in history if name != '']
     history = '\n'.join(history)

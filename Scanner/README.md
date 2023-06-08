@@ -3554,3 +3554,9 @@ Computer 3 -- diagrams (MS Paint) and portfolio (Docs).
 [20:36] First get a password, then build the file.
 Because building the file can be quite long (if NetworkStorage has thousands of entities to resolve),
 I don't wanna keep the user waiting for too long.
+
+[20:37] "If and only if a network entity has no fields except the name, compare it by name."
+Not gonna mess with this algorithm the day before.
+It's fine.
+
+[20:38] 
