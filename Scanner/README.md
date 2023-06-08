@@ -3501,7 +3501,43 @@ and it already has a device profile.
 
 
 ### 2023-06-08
-[20:06] This is the last day to work on the project.
+[11:25] In Cyber class, I'd advise myself (loudly): "DO NOT RECOMMEND Reveal Myself!"
+
+[11:51] Update the `modules extended.png` diagram. Have it on full-screen during the presentation, as well as access to the Portfolio and other diagrams. Use `MS Paint` when fullscreening the image, because it gives a white background (necessary).
+
+[11:53] Find attention grabbers “*****” and resolve them! Or at least hide them.
+
+[11:55] Move `builder.set_password(get_password())` under `files.py:exporter` to right after the initialisation of the builder (i.e. to line 40).
+
+[11:58] If and only if a network entity has no fields except the name, compare it by name.
+
+[12:16] Under `files.py:format_timestamp` and also `files.py:format_duration`, add this code:
+```py
+if isinstance(t, bytes):
+	T = int.from_bytes(t, byteorder='big')
+```
+
+[12:27] Change the colour scheme of Save Screen to reddish?
+
+[12:36] The View screen should have a well-positioned Pages widget.
+
+[12:49] Under `files.py:exporter:scan_history<listcomp>:`, replace `duration` with `duration * (duration > 0)`.
+
+[13:01] BUGFIX: under `files.py:ScanFileBuilder:parse`, last line, replace `x[:-3]` with `x[-3:]`.
+
+[13:04] Under `format_duration`, change `t > -1` to `t > 0`.
+
+[13:36] Print myself the “Choices” page and “Changes since”.
+
+[13:41] Sketch a diagram for Configuration, All Revealed, Recommend Probabilities.
+
+[13:56] Add more comments under `@threadify` and `.equals`.
+
+[14:38] Using WhatsApp Analyser, create a diagram of my work on the project, including months and hours and days, and print it out. Use the journal.
+
+[20:06] Back home. This is the last day to work on the project.
 I'm presenting it tomorrow.
 I did some final work on it today, in Cyber class, as well as testing.
 Gonna upload some changes now.
+
+[20:08] No longer recommending `Reveal Myself`.

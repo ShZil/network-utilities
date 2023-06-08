@@ -43,7 +43,7 @@ def construct_graph():
     R.add_weighted_edges_from(list((n, n, -1 if n.startswith("Live") else -0.5) for n in R.nodes))  # negative diagonal
     # positive values are "Yeah, if you executed `v`, consider executing `u`".
     # negative values are "If you executed `v`, please do not execute `u`".
-    probabilities = {node: 1 for node in R}
+    probabilities = {node: 0 if node == 'Reveal Myself' else 1 for node in R}
 
 
 def normalise():
