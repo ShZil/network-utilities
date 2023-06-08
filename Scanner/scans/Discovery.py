@@ -11,6 +11,7 @@ DST_PORT = 3581
 padding = "Hello there, sir "
 ending = padding[-4:]
 
+
 def reveal_myself():
     from gui.dialogs import get_string
     name = get_string("Reveal Myself As", "Starting Device Discovery\nInsert the name you wish to reveal to others:")

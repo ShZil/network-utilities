@@ -91,7 +91,7 @@ class ViewScreen(Screen):
         )
         body.add_widget(title)
         body.add_widget(ViewScreenInfo())
-        everything.add(body)
+        everything.add_widget(body)
 
         self.add_widget(everything)
 

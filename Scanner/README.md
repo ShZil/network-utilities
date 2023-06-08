@@ -3550,6 +3550,7 @@ Gonna upload some changes now.
 Computer 1 -- the programme running.
 Computer 2 -- the code on VSCode*, and a Reveal Myself agent, and the repos on github.com.
 Computer 3 -- diagrams (MS Paint) and portfolio (Docs).
+Physical -- "Choices" and "Changes Since Portfolio".
 
 * Extensions:
 Atom One Dark Syntax Theme
@@ -3587,3 +3588,6 @@ outside the `if do_edit` block,
 because it's called by both branches and expresses the same behaviour.
 
 [21:29] Made `Configuration.drawio`.
+
+[21:42] A sudden crash of the programme almost gave me a heart attack.
+The problem was a `.add` which was supposed to be `.add_widget`. That's all.
