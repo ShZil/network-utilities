@@ -3602,3 +3602,16 @@ Left to do:
 - create a graph of how long I've worked on this project, using the journal.
 - print out the "Choices" and "Changes Since" documents.
 - look in the Docs, is there anything else left to do?
+
+
+
+### 2023-06-09
+[13:09] I presented the project today.
+That's it. This is the final day.
+The grade is really just a bonus - I honestly enjoyed working on this.
+Nonetheless, I hope for a good grade.
+I'm probably gonna keep developing this,
+like with my project from 2 years ago.
+This has been an incredible year-long experience.
+It was fun.
+Goodbye!
