@@ -2155,6 +2155,16 @@ Currently a non-functional version, solve this bug.
 
 
 ### 2023-04-23
+[14:36] Matt & I are having a convo over some tea, and we got to discussing the Discovery extension.
+
+"Why not utilise a server", he asked.
+Security & Privacy. I don't want users of this service/tool to have any information exposed.
+
+[14:41] You don't have to enable it, and it should be possible to detect others without revealing yourself.
+Maybe just UDP broadcast with Raw=name?
+
+Suggested he, check how DHCP broadcasts work, and do similarly.
+
 [20:39] Placed an if and a breakpoint to debug why the assertion fails.
 ```py
 if self.widget is None:
