@@ -2155,6 +2155,18 @@ Currently a non-functional version, solve this bug.
 
 
 ### 2023-04-23
+[01:34] Post-shower.
+Cyber project - heavily thread based architecture.
+Has _bottlenecks_ - code that unites information from multiple threads into 1 resource (e.g. `NetworkStorage`).
+Draw a diagram of these and explain thread-safety.
+
+Give definitions for "safety" chance etc. (Referring to Information about each scan)
+
+Implement a "Discover Me!" scan-like, that sends broadcast UDP, and when detected by another,
+the other saves it in SpecialInformation & renders something special.
+
+`files.py` - save Special Information?
+
 [14:36] Matt & I are having a convo over some tea, and we got to discussing the Discovery extension.
 
 "Why not utilise a server", he asked.
