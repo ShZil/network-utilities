@@ -8,43 +8,6 @@ class ImportDefence:
     attempting to install the not-found module using `pip install`,
     and restarting the script / instructing the user.
 
-    Line-by-line breakdown of the ModuleNotFoundError handler:
-    - necessary imports: sys, os, subprocess
-
-    ```py
-    import sys
-    from subprocess import check_call as do_command, CalledProcessError
-    import os
-    ```
-
-    - print the failure
-
-    ```py
-    print(f"Module `{err.name}` was not found. Attempting `pip install {err.name}`...\n")
-    ```
-
-    - try to pip install it
-
-    ```py
-    try:
-        do_command([sys.executable, "-m", "pip", "install", err.name])
-    ```
-
-    - if failed, request manual installation
-
-    ```py
-    except CalledProcessError:
-        print(f"\\nModule `{err.name}` could not be pip-installed. Please install manually.")
-        sys.exit(1)
-    ```
-
-    - if succeeded, restart the script
-
-    ```py
-    argv = ['\"' + sys.argv[0] + '\"'] + sys.argv[1:]
-    os.execv(sys.executable, ['python'] + argv)
-    ```
-
     **Usage:**
     ```py
     from import_handler import ImportDefence
@@ -92,17 +55,18 @@ class ImportDefence:
             to_install = err.name
             # Some modules have `pip install X` and `import Y`, where `X != Y`.
             # These have to be added manually, since there's no pattern.
+            name_map = {
+                'cv2': 'opencv-python',
+                'Crypto': 'pycryptodome',
+                'PIL': 'pillow',
+                '_curses': 'windows-curses',
+                'bidi': 'python-bidi'
+            }
+            to_install = to_install.split('.')[0]
             if 'win32' in to_install:
                 to_install = 'pywin32'
-            if to_install == 'cv2':
-                to_install = 'opencv-python'
-            if to_install == 'Crypto':
-                to_install = 'pycryptodome'
-            if to_install == 'PIL':
-                to_install = 'pillow'
-            if to_install == '_curses':
-                to_install = 'windows-curses'
-            to_install = to_install.split('.')[0]
+            if to_install in name_map:
+                to_install = name_map[to_install]
 
             print(
                 f"Module `{err.name}` was not found. Attempting `pip install {to_install}`...\n"
