@@ -131,3 +131,9 @@ Run by typing `run` in the command line (batch file which calls `main.py`).
 2. Read cache (if requested)
 3. Split to sniffing ARP thread and graph rendering thread.
 4. On each packet, save it. On each graph closed, display updated one.
+
+
+## Network Scanner
+TODO:
+- override Thread to catch exceptions to a global handling queue
+- default back to GUI-less interface if any GUI excpetion is raised
